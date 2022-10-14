@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj": {}
+    "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj": {
+    "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj",
+        "projectUniqueName": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj",
         "projectName": "DevOpsWeb.Client",
-        "projectPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj",
-        "packagesPath": "C:\\Users\\kerem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Client\\obj\\",
+        "projectPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj",
+        "packagesPath": "C:\\Users\\Angela\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Angela\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj": {
-                "projectPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj"
+              "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj": {
+                "projectPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj"
               }
             }
           }
@@ -85,17 +85,17 @@
         }
       }
     },
-    "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj": {
+    "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj",
+        "projectUniqueName": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj",
         "projectName": "DevOpsWeb.Server",
-        "projectPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj",
-        "packagesPath": "C:\\Users\\kerem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Server\\obj\\",
+        "projectPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Server\\DevOpsWeb.Server.csproj",
+        "packagesPath": "C:\\Users\\Angela\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Angela\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -109,11 +109,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj": {
-                "projectPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj"
+              "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj": {
+                "projectPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Client\\DevOpsWeb.Client.csproj"
               },
-              "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj": {
-                "projectPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj"
+              "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj": {
+                "projectPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj"
               }
             }
           }
@@ -156,17 +156,17 @@
         }
       }
     },
-    "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj": {
+    "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj",
         "projectName": "DevOpsWeb.Shared",
-        "projectPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj",
-        "packagesPath": "C:\\Users\\kerem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kerem\\git\\devops-22-23-dotnet-g01\\DevOpsWeb\\Shared\\obj\\",
+        "projectPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\DevOpsWeb.Shared.csproj",
+        "packagesPath": "C:\\Users\\Angela\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Angela\\Documents\\2022-2023\\DevOpsWeb\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Angela\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
