@@ -1,0 +1,47 @@
+﻿:root {
+    /* Colors */
+    --lighter-blue: #508bcb;
+    --light-blue: #f2f7fb;
+    --blue: #508bcb;
+    --dark-blue: #3c6999;
+    --white: #ffffff;
+    --light-gray: #f8f9fa;
+    --dark-gray: #6c757d;
+    --black: #343a40;
+    
+    /* Screen size breakpoints */
+    --extra-small: 480px;
+    --small: 640px;
+    --medium: 768px;
+    --large: 1024px;
+    --extra-large: 1280px;
+    --extremely-large: 1600px;
+    
+    /* Fonts */
+    --font-stack: Graphik, sans-serif;
+    --text-sm: 0.875rem;
+    --text-md: 0.938rem;
+    --text-lg: 1.125rem;
+   
+    /* Borders */
+    --border-size: 2px;
+    --border-size-md: 3px;
+    --border-radius: 2px;
+    --indicator-radius: 12px;
+    
+    /* Widths. */
+    --three-column-gap: 66px;
+    --three-column-width: calc((extremely-large - 2 * three-column-gap) / 3);
+    
+    /* Heights. */
+    --card-height: 48px;
+    --search-bar-height: calc(2 * $card-height);
+    --nav-height: 80px;
+
+    /* Padding. */
+    --padding-sm: 5px;
+    --padding-md: 10px;
+    --padding-lg: 20px;
+    --data-card-gap: 10px;
+    --card-padding: 17px;
+}
