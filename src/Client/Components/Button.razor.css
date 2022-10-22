@@ -6,6 +6,7 @@
     padding: var(--padding-sm) calc(2 * var(--padding-sm));
     border-radius: calc(4 * var(--padding-sm));
     text-decoration: none;
+    width: min-content;
 }
 
 .button:hover {

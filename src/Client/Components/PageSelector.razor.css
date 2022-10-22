@@ -7,14 +7,15 @@
     display: inline-block;
 }
 
-.page-selector button {
-    font-family: Graphik, sans-serif;
-    height: 36px;
-    padding: 0px 10px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-}
+    .page-selector button {
+        font-family: Graphik, sans-serif;
+        height: 36px;
+        padding: 0px 10px;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        margin: 0px var(--padding-sm);
+    }
 
 .page-selector button:hover {
     background-color: #f2f7fb;
