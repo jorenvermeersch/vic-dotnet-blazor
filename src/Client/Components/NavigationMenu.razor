@@ -1,0 +1,58 @@
+﻿<nav class="navigation-bar-wide">
+    <ul>
+        <li>
+            <a href=".">
+                <i class="fa-solid fa-vr-cardboard"></i>
+                Virtual IT Company
+            </a>
+        </li>
+        <li>
+            <a href=".">Klanten</a>
+        </li>
+        <li>
+            <a href=".">Machines</a>
+        </li>
+        <li>
+            <a href=".">Verbruik</a>
+        </li>
+        <li>@name</li>
+    </ul>
+</nav>
+
+<div class="navigation-bar-narrow-wrapper">
+    <nav class="navigation-bar-narrow">
+        <ul>
+            <li>
+                <a href=".">
+                    <i class="fa-solid fa-vr-cardboard"></i>
+                    Virtual IT Company
+                </a>
+            </li>
+            <li>
+                <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+            </li>
+        </ul>
+    </nav>
+    <div class="navigation-options">
+        <ul>
+            <li class="selected"><a href=".">@name</a></li>
+            <li>
+                <a href=".">Klanten</a>
+            </li>
+            <li>
+                <a href=".">Machines</a>
+            </li>
+            <li>
+                <a href=".">Verbruik</a>
+            </li>
+        </ul>
+        <div class="logout">
+            <a href="" class="button-inverse">Uitloggen</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string name { get; set; } = "Name"; 
+}
