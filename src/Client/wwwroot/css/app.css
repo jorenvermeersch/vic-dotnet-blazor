@@ -33,3 +33,11 @@
 .blazor-error-boundary::after {
   content: "An error has occurred.";
 }
+
+.card {
+    color: #343a40;
+    background-color: #f8f9fa;
+    border-radius: 2px;
+    padding: 17px;
+    font-size: 0.875rem;
+}

@@ -1,2 +1,36 @@
-﻿body {
+﻿.data-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
+.data-card .entry {
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*    flex-wrap: nowrap;
+text-overflow: ellipsis;
+gap: var(--padding-lg);*/
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--padding-lg);
+    
+}
+
+.data-card .entry .label {
+    font-weight: 600;
+    flex: 1;
+    padding-bottom: 5px;
+}
+
+.data-card .entry .value {
+    width: 100%;
+    text-overflow: ellipsis;
+    text-align: right;
+    overflow: hidden;
+}
+
+

@@ -69,6 +69,8 @@
   height: calc(100vh - var(--nav-height));
   padding: var(--padding-md);
   background-color: var(--dark-blue);
+  position: fixed;
+  width: 100vw;
 }
 
 .navigation-bar-narrow-wrapper .navigation-options ul {
