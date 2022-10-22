@@ -1,14 +1,17 @@
 ﻿<div class="card data-card">
     <div class="entry">
         <p class="label">E-mailadres</p>
-        <p class="value" title="joren.vermeersch@student.hogent.be" alt='test'>joren.vermeersch@student.hogent.be</p>
+        <p class="value" title="@Email" alt='test'>@Email</p>
+        @*<p class="value" title="joren.vermeersch@student.hogent.be" alt='test'>joren.vermeersch@student.hogent.be</p>*@
     </div>
     <div class="entry">
         <p class="label">Telefoonnummer</p>
-        <p class="value">09 235 49 54</p>
+        <p class="value">@TelephoneNumber</p>
+        @*<p class="value">09 235 49 54</p>*@
     </div>
 </div>
 
 @code {
-
+    [Parameter] public string Email { get; set; } = "Email niet beschikbaar";
+    [Parameter] public string TelephoneNumber { get; set; } = "Telefoonnummer niet beschikbaar";
 }
