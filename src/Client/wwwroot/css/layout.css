@@ -13,12 +13,11 @@ body {
   margin: 0px;
 }
 
-
 /* Three column system */
 .two-columns-container,
 .one-third,
 .two-thirds {
-    --three-column-width: calc( (var(--extremely-large) - 2 * var(--three-column-gap)) / 3 );
+    --three-column-width: calc((var(--extremely-large) - 2 * var(--three-column-gap)) / 3);
 }
 
 .one-third,
