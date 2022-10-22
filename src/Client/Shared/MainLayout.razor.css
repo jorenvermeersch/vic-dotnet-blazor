@@ -1,0 +1,23 @@
+main {
+  --three-column-width: calc(
+    (var(--extremely-large) - 2 * var(--three-column-gap)) / 3
+  );
+}
+
+/* Center main */
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  margin: 0px var(--padding-md);
+  gap: var(--three-column-gap);
+  max-width: var(--extremely-large);
+}
+
+@media screen and (min-width: 509.3333333333px) {
+  main {
+    grid-template-columns: repeat(auto-fill, var(--three-column-width));
+    margin: auto;
+  }
+}
+
