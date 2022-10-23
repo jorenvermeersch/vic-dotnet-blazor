@@ -12,4 +12,11 @@
 
 <DataCard />
 <PageSelector NumberOfPages=6 />
+<Input Type="@Input.InputType.SELECT" Items="@Options" PlaceHolder="Select an option from the list"/>
+<Input Type="@Input.InputType.TEXT" PlaceHolder="TXT INPUT" />
+<AvailabilityOptionSelect />
 
+  
+@code {
+    public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
+}

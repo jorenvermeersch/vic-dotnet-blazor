@@ -1,0 +1,26 @@
+﻿<div>
+    <div class="input-container">
+        <label for="">Label:</label>
+        @if(Type == InputType.TEXT){
+            <input class="input" type="text" placeholder="@PlaceHolder" />
+        }
+        else if(Type == InputType.SELECT){
+            <select class="input" type="text" placeholder="@PlaceHolder">
+                @foreach (var item in Items)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string PlaceHolder { get; set; } = "placeholder";
+    [Parameter] public InputType Type { get; set; } = InputType.TEXT;
+    [Parameter] public List<string> Items { get; set; } = new();
+
+    public enum InputType {
+        SELECT, TEXT
+    }
+}

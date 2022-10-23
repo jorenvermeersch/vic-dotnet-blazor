@@ -1,0 +1,38 @@
+﻿<div class="input-container multioption">
+    <select class="input" type="text">
+        @foreach (string day in Enum.GetNames(typeof(Availability)))
+        {
+            <option value="@day">@day</option>
+        }
+    </select>
+
+    <select class="input" type="text">
+        @foreach (string partofday in new List<string>(Enum.GetValues(typeof(PartOfDay)).Cast<PartOfDay>().Select(v => v.ToString().Replace("_", " "))))
+        {
+            <option value="@partofday">@partofday</option>
+        }
+    </select>
+</div>
+
+
+
+
+
+@code {
+    public enum Availability {
+        Maandag,
+        Dinsdag,
+        Woensdag,
+        Donderdag,
+        Vrijdag,
+        Zaterdag,
+        Zondag
+    }
+
+    public enum PartOfDay {
+        Voormiddag,
+        Namiddag,
+        Hele_dag
+    }
+
+}
