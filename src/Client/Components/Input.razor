@@ -1,6 +1,6 @@
 ﻿<div>
     <div class="input-container">
-        <label for="">Label:</label>
+        <label for="">@_label</label>
         @if(Type == InputType.TEXT){
             <input class="input" type="text" placeholder="@PlaceHolder" />
         }
@@ -16,9 +16,16 @@
 </div>
 
 @code {
+    private string _label = "Label: ";
+
     [Parameter] public string PlaceHolder { get; set; } = "placeholder";
     [Parameter] public InputType Type { get; set; } = InputType.TEXT;
     [Parameter] public List<string> Items { get; set; } = new();
+    [Parameter] public string Label { get { return _label; } set { _label = $"{value}: "; } }
+
+
+    //[Parameter] public string Label { get; set; } = "Label: ";
+
 
     public enum InputType {
         SELECT, TEXT
