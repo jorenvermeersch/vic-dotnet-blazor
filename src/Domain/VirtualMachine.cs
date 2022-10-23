@@ -19,6 +19,8 @@ public class VirtualMachine : IVirtualMachine {
     public IHost Host { get; set; }
     public ISet<Credential> Credentials { get; set; }
     public Account Account { get; set; }
+    public ICustomer Requester { get; set; }
+    public ICustomer User { get; set; }
     #endregion
     #region Constructors
     public VirtualMachine(VirtualMachineBuilder b) {
@@ -39,6 +41,8 @@ public class VirtualMachine : IVirtualMachine {
         Host = b.Host;
         Credentials = b.Credentials;
         Account = b.Account;
+        Requester = b.Requester;
+        User = b.User;
     }
     #endregion
     #region Builder
@@ -61,6 +65,8 @@ public class VirtualMachine : IVirtualMachine {
         private IHost _host;
         private ISet<Credential> _credentials;
         private Account _account;
+        private ICustomer _requester;
+        private ICustomer _user;
         #endregion
         #region Properties
         public string Name => _name;
@@ -80,6 +86,8 @@ public class VirtualMachine : IVirtualMachine {
         public IHost Host => _host;
         public ISet<Credential> Credentials => _credentials;
         public Account Account => _account;
+        public ICustomer Requester => _requester;
+        public ICustomer User => _user;
         #endregion
         #region Methods
         public VirtualMachineBuilder SetName(string name) {
@@ -148,6 +156,14 @@ public class VirtualMachine : IVirtualMachine {
         }
         public VirtualMachineBuilder SetCredentials(ISet<Credential> credentials) {
             _credentials = credentials;
+            return this;
+        }
+        public VirtualMachineBuilder SetRequester(ICustomer customer) {
+            _requester = customer;
+            return this;
+        }
+        public VirtualMachineBuilder SetUser(ICustomer user) {
+            _user = user;
             return this;
         }
         public VirtualMachine Build() {

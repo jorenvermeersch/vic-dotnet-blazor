@@ -11,4 +11,6 @@ public interface IVirtualMachine : IMachine{
     public string Reason { get; set; }
     public ISet<Port> Ports { get; set; }
     public IHost Host { get; set; }
+    public ICustomer Requester { get; set; }
+    public ICustomer User { get; set; }
 }
