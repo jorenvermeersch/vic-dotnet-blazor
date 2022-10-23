@@ -1,15 +1,19 @@
 ﻿<div class="input-container multioption">
-    <select class="input" type="text">
+    <select class="input" type="text" style="@customCss">
         @foreach (string day in Enum.GetNames(typeof(Availability.DayOfWeek)))
         {
             <option value="@day">@day</option>
         }
     </select>
 
-    <select class="input" type="text">
+    <select class="input" type="text" style="@customCss">
         @foreach (string partofday in new List<string>(Enum.GetValues(typeof(Availability.PartOfDay)).Cast<Availability.PartOfDay>().Select(v => v.ToString().Replace("_", " "))))
         {
             <option value="@partofday">@partofday</option>
         }
     </select>
 </div>
+
+@code {
+    [Parameter] public string customCss { get; set; } = "";
+}

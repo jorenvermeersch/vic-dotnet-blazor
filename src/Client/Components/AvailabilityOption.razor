@@ -1,4 +1,4 @@
-﻿<div class="availabilityoption">
+﻿<div class="availabilityoption" style="@customCss">
     <span class="availabilityday">@DayOfWeek.ToString()</span>
     <span class="availabilitytrash">
         <span>@PartOfDay.ToString()</span>
@@ -11,4 +11,5 @@
 @code {
     [Parameter] public Availability.DayOfWeek? DayOfWeek { get; set; } = Availability.DayOfWeek.Woensdag;
     [Parameter] public Availability.PartOfDay? PartOfDay { get; set; } = Availability.PartOfDay.Voormiddag;
+    [Parameter] public string customCss { get; set; } = "";
 }

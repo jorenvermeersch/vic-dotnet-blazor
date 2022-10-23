@@ -2,10 +2,11 @@
     <div class="input-container">
         <label for="">@_label</label>
         @if(Type == InputType.TEXT){
-            <input class="input" type="text" placeholder="@PlaceHolder" />
+            <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" />
         }
         else if(Type == InputType.SELECT){
-            <select class="input" type="text" placeholder="@PlaceHolder">
+            <select class="input" style="@customCss" type="text" placeholder="@PlaceHolder">
+                <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)
                 {
                     <option value="@item">@item</option>
@@ -22,7 +23,7 @@
     [Parameter] public InputType Type { get; set; } = InputType.TEXT;
     [Parameter] public List<string> Items { get; set; } = new();
     [Parameter] public string Label { get { return _label; } set { _label = $"{value}: "; } }
-
+    [Parameter] public string customCss { get; set; } = "";
 
     //[Parameter] public string Label { get; set; } = "Label: ";
 

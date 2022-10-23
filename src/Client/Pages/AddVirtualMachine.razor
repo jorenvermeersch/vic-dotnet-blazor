@@ -1,0 +1,66 @@
+﻿@page "/addvm"
+
+<div class="background-color-change"></div>
+
+<div class="one-third">
+    <Title text="Configuratie" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="FQDN" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Mode" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Template" customCss="@_customcss" />
+
+    <Title text="Poorten" />
+    <Input PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" customCss="@_customcss" />
+    <div class="buttonList">
+        <Button Text="HTTP"/>
+        <Button Text="SSH"/>
+    </div>
+
+    <Title text="Specificaties" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Host" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="vCPUs" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Geheugen" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Opslag" customCss="@_customcss" />    
+</div>
+<div class="one-third">
+    <Title text="Beschikbaarheid" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Start" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Einde" customCss="@_customcss" />
+    <AvailabilityOptionSelect customCss="@_customcss" />
+    <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+        <Button Text="Toevoegen" />
+    </div>
+    <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Woensdag" PartOfDay="Availability.PartOfDay.Voormiddag" customCss="@_customcss" />
+    <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Donderdag" PartOfDay="Availability.PartOfDay.Namiddag" customCss="@_customcss"/>
+    <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Vrijdag" PartOfDay="Availability.PartOfDay.Hele_dag" customCss="@_customcss" />
+
+    <Title text="Back-ups" />
+    <Input PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" customCss="@_customcss" />
+</div>
+<div class="one-third">
+    <Title text="Logingegevens" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Gebruikersnaam" customCss="@_customcss" />
+    <Input PlaceHolder="" Type="@Input.InputType.SELECT" Label="Wachtwoord" customCss="@_customcss" />
+    <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+        <Button Text="Toevoegen" />
+    </div>
+    <DataCard Entries="@_entries" customCss="@_customcss" />
+    <DataCard Entries="@_entries" customCss="@_customcss" />
+
+</div>
+
+
+
+@code {
+    private string _customcss = "background-color: white";
+
+    public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
+    public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
+    private Dictionary<string, string> _entries = new();
+
+    protected override void OnInitialized()
+    {
+        _entries.Add("Gebruikernaam", "admin");
+        _entries.Add("Wachtwoord", "*******");
+    }
+
+}

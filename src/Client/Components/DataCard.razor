@@ -1,4 +1,4 @@
-﻿<div class="card data-card">
+﻿<div class="card data-card" style="@customCss">
     @foreach (KeyValuePair<string, string> entry in Entries)
     {
         <div class="entry">
@@ -7,5 +7,9 @@
         </div>
     }
 </div>
+
+@code {
+    [Parameter] public string customCss { get; set; } = "";
+}
 
 

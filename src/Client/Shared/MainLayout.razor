@@ -1,9 +1,22 @@
 ﻿@inherits LayoutComponentBase
 @using Client.Components
+@inject NavigationManager NavigationManager
+
 
 <NavigationMenu />
-<GlobalSearchBar />
+@if(!_currentUrl.EndsWith("/addvm")){
+    <GlobalSearchBar />
+}
 <main>
     @Body
 </main>
+
+@code {
+    private string _currentUrl = "";
+
+    protected override void OnInitialized()
+    {
+        _currentUrl = NavigationManager.Uri;
+    }
+}
 

@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using Client.Components
+
 
 <div class="one-third">
     <Title text="Configuratie"/>
@@ -17,7 +17,6 @@
 <AvailabilityOptionSelect />
 <AvailabilityOption />
 
-  
 @code {
     public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
 }
