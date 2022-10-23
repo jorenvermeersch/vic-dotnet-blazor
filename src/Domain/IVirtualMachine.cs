@@ -10,4 +10,5 @@ public interface IVirtualMachine : IMachine{
     public Status Status { get; set; }
     public string Reason { get; set; }
     public ISet<Port> Ports { get; set; }
+    public IHost Host { get; set; }
 }

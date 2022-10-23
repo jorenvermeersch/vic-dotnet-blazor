@@ -1,5 +1,6 @@
 ﻿namespace Domain;
 public class VirtualMachine : IVirtualMachine {
+    #region Properties
     public int Id { get; set; }
     public string Name { get; set; }
     public int VCpu { get; set; }
@@ -15,7 +16,11 @@ public class VirtualMachine : IVirtualMachine {
     public Status Status { get; set; }
     public string Reason { get; set; }
     public ISet<Port> Ports { get; set; }
-
+    public IHost Host { get; set; }
+    public ISet<Credential> Credentials { get; set; }
+    public Account Account { get; set; }
+    #endregion
+    #region Constructors
     public VirtualMachine(VirtualMachineBuilder b) {
         Name = b.Name;
         VCpu = b.VCpu;
@@ -31,8 +36,14 @@ public class VirtualMachine : IVirtualMachine {
         Status = b.Status;
         Reason = b.Reason;
         Ports = b.Ports;
+        Host = b.Host;
+        Credentials = b.Credentials;
+        Account = b.Account;
     }
+    #endregion
+    #region Builder
     public class VirtualMachineBuilder {
+        #region Fields
         private string _name;
         private int _vcpu;
         private int _memory;
@@ -40,14 +51,18 @@ public class VirtualMachine : IVirtualMachine {
         private Template _template;
         private Mode _mode;
         private string _fqdn;
-        private HashSet<Availability> _availabilities = new();
+        private ISet<Availability> _availabilities;
         private BackupFrequenty _backupFrequenty;
         private DateTime _applicationDate;
         private Duration _duration;
         private Status _status;
         private string _reason;
-        private HashSet<Port> _ports = new();
-
+        private ISet<Port> _ports;
+        private IHost _host;
+        private ISet<Credential> _credentials;
+        private Account _account;
+        #endregion
+        #region Properties
         public string Name => _name;
         public int VCpu => _vcpu;
         public int GbMemory => _memory;
@@ -62,6 +77,11 @@ public class VirtualMachine : IVirtualMachine {
         public Status Status => _status;
         public string Reason => _reason;
         public ISet<Port> Ports => _ports;
+        public IHost Host => _host;
+        public ISet<Credential> Credentials => _credentials;
+        public Account Account => _account;
+        #endregion
+        #region Methods
         public VirtualMachineBuilder SetName(string name) {
             _name = name;
             return this;
@@ -90,7 +110,7 @@ public class VirtualMachine : IVirtualMachine {
             _fqdn = fqdn;
             return this;
         }
-        public VirtualMachineBuilder SetAvailabilities(HashSet<Availability> availabilities) {
+        public VirtualMachineBuilder SetAvailabilities(ISet<Availability> availabilities) {
             _availabilities = availabilities;
             return this;
         }
@@ -114,13 +134,26 @@ public class VirtualMachine : IVirtualMachine {
             _reason = reason;
             return this;
         }
-        public VirtualMachineBuilder SetPorts(HashSet<Port> ports) {
+        public VirtualMachineBuilder SetPorts(ISet<Port> ports) {
             _ports = ports;
+            return this;
+        }
+        public VirtualMachineBuilder SetHost(IHost host) {
+            _host = host;
+            return this;
+        }
+        public VirtualMachineBuilder SetAccount(Account account) {
+            _account = account;
+            return this;
+        }
+        public VirtualMachineBuilder SetCredentials(ISet<Credential> credentials) {
+            _credentials = credentials;
             return this;
         }
         public VirtualMachine Build() {
             return new VirtualMachine(this);
         }
+        #endregion
     }
-
+    #endregion
 }
