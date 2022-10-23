@@ -1,6 +1,6 @@
 ﻿namespace Domain;
 public enum Role {
-    Master, 
-    Admin, 
-    Observer
+    Observer,
+    Admin,
+    Master
 }
