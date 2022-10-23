@@ -21,8 +21,8 @@ namespace Domain
 
         public enum PartOfDay
         {
-            Voormiddag,
-            Namiddag,
+            //Voormiddag,
+            //Namiddag,
             Hele_dag
         }
     }
