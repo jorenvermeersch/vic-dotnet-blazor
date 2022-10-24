@@ -20,6 +20,7 @@ public class VirtualMachineTests {
     private Template _temp = Template.AI;
     private int _processors = 2;
     #endregion
+
     [Fact]
     public void VirtualMachine_creation_is_correct() {
         VirtualMachine vm = new VirtualMachine.VirtualMachineBuilder()
@@ -43,6 +44,7 @@ public class VirtualMachineTests {
             .SetUser(_req)
             .SetProcessors(_processors)
             .Build();
+
         vm.Account.ShouldBe(_account);
         vm.ApplicationDate.ShouldBe(_appDate);
         vm.Availabilities.ShouldBe(_availability);
@@ -52,6 +54,15 @@ public class VirtualMachineTests {
         vm.Fqdn.ShouldBe(_fqdn);
         vm.Host.ShouldBe(_host);
         vm.Memory.ShouldBe(_memo); 
-
+        vm.Mode.ShouldBe(_mode);
+        vm.Name.ShouldBe(_name);
+        vm.Ports.ShouldBe(_ports);
+        vm.Reason.ShouldBe(_reason);
+        vm.Requester.ShouldBe(_req);
+        vm.Status.ShouldBe(_status);
+        vm.Storage.ShouldBe(_storage);
+        vm.Template.ShouldBe(_temp);
+        vm.User.ShouldBe(_req);
+        vm.Processors.ShouldBe(_processors);
     }
 }
