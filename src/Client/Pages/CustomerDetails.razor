@@ -1,0 +1,42 @@
+﻿@page "/detailcustomer"
+@layout MainLayout
+
+<PageTitle>Virtuele Machine Toevoegen</PageTitle>
+
+<div class="one-third">
+    <DataCard Entries="@_username" />
+
+    <Title text="Algemeen" />
+    <DataCard Entries="@_general" />
+
+    <Title text="Contactgegevens" />
+    <DataCard Entries="@_contactInformation" />
+    <DataCard Entries="@_contactInformation" />
+
+
+
+</div>
+<div class="one-third">
+
+</div>
+
+
+
+@code {
+    private Dictionary<string, string> _username = new();
+    private Dictionary<string, string> _general = new();
+    private Dictionary<string, string> _contactInformation = new();
+
+    protected override void OnInitialized()
+    {
+        _username.Add("Naam", "[customer name]");
+
+        _general.Add("Department", "IT en Digitale Innovatie");
+        _general.Add("Opleidnig", "Toegepaste Informatica");
+        _general.Add("Type", "Student");
+
+        _contactInformation.Add("Naam", "[customer name]");
+        _contactInformation.Add("E-mailadres", "[customer mail]"); 
+        _contactInformation.Add("Telefoonnummer", "[customer tel]"); 
+    }
+}
