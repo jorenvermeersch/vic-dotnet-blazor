@@ -1,4 +1,6 @@
-﻿namespace Domain.Domain;
+﻿using Ardalis.GuardClauses;
+
+namespace Domain.Domain;
 public class Duration
 {
     #region Properties
@@ -8,8 +10,16 @@ public class Duration
     #region Constructors
     public Duration(DateTime startDate, DateTime endDate)
     {
-        StartDate = startDate;
-        EndDate = endDate;
+        if (endDate > startDate)
+        {
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+        else
+        {
+            throw new ArgumentException("end date should be after start date");
+        }
+        
     }
     #endregion
 }

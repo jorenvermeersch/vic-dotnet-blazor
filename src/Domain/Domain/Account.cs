@@ -21,7 +21,7 @@ public class Account
         LastName = lastName;
         Role = role;
         PasswordHash = HashPassword(password);
-        IsActive = false;
+        IsActive = true;
         Department = department;
         Opleiding = opleiding;
     }
