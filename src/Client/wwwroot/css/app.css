@@ -106,7 +106,6 @@ select {
 }
 
 
-
 .buttonList{
     display: flex;
     gap: var(--padding-md);

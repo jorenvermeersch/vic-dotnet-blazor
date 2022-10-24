@@ -1,7 +1,13 @@
 ﻿@page "/detailcustomer"
 @layout MainLayout
 
-<PageTitle>Virtuele Machine Toevoegen</PageTitle>
+<PageTitle>Klant [customer name] Details</PageTitle>
+
+<div class="three-thirds">
+    <div style="display: flex">
+        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title"><i class="fa-solid fa-arrow-left"></i><span>Terug</span></span>
+    </div>
+</div>
 
 <div class="one-third">
     <DataCard Entries="@_username" />
@@ -12,12 +18,25 @@
     <Title text="Contactgegevens" />
     <DataCard Entries="@_contactInformation" />
     <DataCard Entries="@_contactInformation" />
-
-
-
 </div>
 <div class="one-third">
 
+    <div style="display: flex; align-items: flex-end; height: 50px;">
+        <span style="flex: 1">
+            <Button Text="Actief" />
+        </span>
+        <span>
+            <Button Text="Beheren" />
+        </span>
+    </div>
+
+    <Title text="Virtuele machines" />
+    @for(int i = 0; i < 6; i++){
+        _virtualMachines = new Dictionary<string, string>();
+        _virtualMachines.Add("devops-proj1.vichogent.be", i % 3 == 0 ? "in-use" : "not-in-use");
+        <DataCard Entries="@_virtualMachines" />
+    }
+    <PageSelector NumberOfPages="5"/>
 </div>
 
 
@@ -26,6 +45,8 @@
     private Dictionary<string, string> _username = new();
     private Dictionary<string, string> _general = new();
     private Dictionary<string, string> _contactInformation = new();
+    private Dictionary<string, string> _virtualMachines = new();
+
 
     protected override void OnInitialized()
     {
@@ -37,6 +58,6 @@
 
         _contactInformation.Add("Naam", "[customer name]");
         _contactInformation.Add("E-mailadres", "[customer mail]"); 
-        _contactInformation.Add("Telefoonnummer", "[customer tel]"); 
+        _contactInformation.Add("Telefoonnummer", "[customer tel]");
     }
 }
