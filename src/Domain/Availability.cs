@@ -10,20 +10,18 @@ namespace Domain
     {
         public enum DayOfWeek
         {
-            Maandag,
-            Dinsdag,
-            Woensdag,
-            Donderdag,
-            Vrijdag,
-            Zaterdag,
-            Zondag
+            Monday,
+            Tuesday,
+            Wednesday,
+            Thursday,
+            Friday,
+            Saturday,
+            Sunday
         }
 
         public enum PartOfDay
         {
-            //Voormiddag,
-            //Namiddag,
-            Hele_dag
+            FullDay
         }
     }
 }

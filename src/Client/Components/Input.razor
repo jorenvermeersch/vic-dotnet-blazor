@@ -1,7 +1,7 @@
 ﻿<div>
     <div class="input-container">
         <label for="">@_label</label>
-        @if(Type == InputType.TEXT){
+        @if(Type == InputType.TEXT) {
             <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" />
         }
         else if(Type == InputType.SELECT){
@@ -19,7 +19,7 @@
 @code {
     private string _label = "Label: ";
 
-    [Parameter] public string PlaceHolder { get; set; } = "placeholder";
+    [Parameter] public string PlaceHolder { get; set; } = "";
     [Parameter] public InputType Type { get; set; } = InputType.TEXT;
     [Parameter] public List<string> Items { get; set; } = new();
     [Parameter] public string Label { get { return _label; } set { _label = $"{value}: "; } }
