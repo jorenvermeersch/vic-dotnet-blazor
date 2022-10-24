@@ -8,6 +8,7 @@ public class ContactPerson
     public string PhoneNumber { get; set; }
 
     #endregion
+
     #region Constructors
     public ContactPerson(string firstname, string lastname, string email, string phoneNumber) {
         throw new NotImplementedException();

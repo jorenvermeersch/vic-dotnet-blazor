@@ -11,8 +11,9 @@ public class ExternalCustomer : ICustomer
     public IList<IVirtualMachine> VirtualMachines { get; set; }
     #endregion
     #region Construcors
-    public ExternalCustomer(string name, string type, ContactPerson contactPerson, ContactPerson backupContact) {
+    public ExternalCustomer(string name, string type, ContactPerson contactPerson, ContactPerson? backupContact=null) {
         throw new NotImplementedException();
     }
     #endregion
+
 }

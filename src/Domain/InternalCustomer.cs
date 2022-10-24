@@ -9,8 +9,9 @@ public class InternalCustomer : ICustomer
     public ContactPerson BackupContactPerson { get; set; }
     public IList<IVirtualMachine> VirtualMachines { get; set; }
     #endregion
+
     #region Constructors
-    public InternalCustomer(string education, string department, ContactPerson contactPerson, ContactPerson backupContact) {
+    public InternalCustomer(string education, string department, ContactPerson contactPerson, ContactPerson? backupContact = null) {
         throw new NotImplementedException();
     }
     #endregion
