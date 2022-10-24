@@ -1,4 +1,5 @@
 ﻿using System.Security.Principal;
+using Ardalis.GuardClauses;
 using Domain.Constants;
 
 namespace Domain.Domain;
@@ -6,24 +7,24 @@ public class Account
 {
     #region Properties
     public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string Firstname { get; set; }
+    public string Lastname { get; set; }
     public Role Role { get; set; }
     public string PasswordHash { get; set; }
     public bool IsActive { get; set; }
     public string Department { get; set; }
-    public string Opleiding { get; set; }
+    public string Education { get; set; }
     #endregion
     #region Constructors
-    public Account(string firstName, string lastName, Role role, string password, string department, string opleiding)
+    public Account(string firstname, string lastname, Role role, string password, string department, string education)
     {
-        FirstName = firstName;
-        LastName = lastName;
+        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[a-zA-Z]+");
+        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[a-zA-Z]+");
         Role = role;
         PasswordHash = HashPassword(password);
         IsActive = true;
-        Department = department;
-        Opleiding = opleiding;
+        Education = Guard.Against.InvalidFormat(education, nameof(education), "^.{0}$|^[a-zA-Z]+[ a-zA-Z]*");
+        Department = Guard.Against.InvalidFormat(department, nameof(department), "^[a-zA-Z]+[ a-zA-Z]*");
     }
     #endregion
     #region Methods

@@ -1,4 +1,6 @@
-﻿namespace Domain.Domain;
+﻿using Ardalis.GuardClauses;
+
+namespace Domain.Domain;
 public class Port
 {
     #region Properties
@@ -8,8 +10,8 @@ public class Port
     #region Constructors
     public Port(int number, string service)
     {
-        Number = number;
-        Service = service;
+        Number = Guard.Against.NegativeOrZero(number, nameof(number));
+        Service = Guard.Against.NullOrWhiteSpace(service, nameof(service));
     }
     #endregion
 }
