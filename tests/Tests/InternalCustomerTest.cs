@@ -17,7 +17,7 @@ public class InternalCustomerTest
         Assert.Equal("Toegepaste Informatica", customer.Education);
         Assert.Equal("DIT", customer.Departement);
         Assert.Equal("jane.doe@hotmail.com", customer.ContactPerson.Email);
-        Assert.Equal("alice.smith@hotmail.com", customer.BackupContactPerson.Email);
+        Assert.Equal("alice.smith@hotmail.com", customer?.BackupContactPerson?.Email);
     }
 
     [Fact]

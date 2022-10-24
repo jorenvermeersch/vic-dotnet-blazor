@@ -17,7 +17,7 @@ public class ContactPersonTest
         Assert.NotNull(contact);
         Assert.Equal("Jane", contact.Firstname);
         Assert.Equal("Doe", contact.Lastname);
-        Assert.Equal("jane.doe@hotmail.com", contact.Lastname);
+        Assert.Equal("jane.doe@hotmail.com", contact.Email);
         Assert.Equal("+3247259836", contact.PhoneNumber);
     }
 
@@ -30,7 +30,6 @@ public class ContactPersonTest
     [InlineData("abc/uin@cde.com")]
     public void NewContactPerson_InvalidEmail_ThrowsException(string email)
     {
-        ContactPerson contact = new ("Jane", "Doe", email, "+3247259836");
         Assert.Throws<ArgumentException>(()=>new ContactPerson("Jane", "Doe", email, "+3247259836"));
     }
 
@@ -43,21 +42,18 @@ public class ContactPersonTest
     [InlineData("125-8675252365896")]
     public void NewContactPerson_InvalidPhoneNumber_ThrowsException(string phoneNumber)
     {
-       
         Assert.Throws<ArgumentException>(() => new ContactPerson("Jane", "Doe", "jane.doe@hotmail.com", phoneNumber));
     }
 
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
-    [InlineData("abc")]
     [InlineData("abc142")]
     [InlineData("1435")] //o ipv 0
     [InlineData("abn/djik")]
     [InlineData("abn.djik")]
     public void NewContactPerson_InvalidFirstAndLastName_ThrowsException(string name)
     {
-        ContactPerson contact = new(name, name, "jane.doe@hotmail.com", "+3247259836");
         Assert.Throws<ArgumentException>(() => new ContactPerson(name, name, "jane.doe@hotmail.com", "+3247259836"));
     }
 
@@ -68,6 +64,7 @@ public class ContactPersonTest
     public void NewContactPerson_ValidEmail_CreatesContactPerson(string email)
     {
         ContactPerson contact = new("Jane", "Doe", email, "+3247259836");
-        Assert.Throws<ArgumentException>(() => new ContactPerson("Jane", "Doe", email, "+3247259836"));
+        Assert.NotNull(contact);
+        Assert.Equal(email, contact.Email);
     }
 }
