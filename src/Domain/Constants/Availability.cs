@@ -1,5 +1,6 @@
-﻿namespace Domain;
-public enum Availability {
+﻿namespace Domain.Constants;
+public enum Availability
+{
     Monday,
     Tuesday,
     Wednesday,

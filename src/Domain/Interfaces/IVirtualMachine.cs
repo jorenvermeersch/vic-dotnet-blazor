@@ -1,5 +1,9 @@
-﻿namespace Domain;
-public interface IVirtualMachine : IMachine{
+﻿using Domain.Constants;
+using Domain.Domain;
+
+namespace Domain.Interfaces;
+public interface IVirtualMachine : IMachine
+{
     public Template Template { get; set; }
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Domain;
+namespace Domain.Domain;
 public class ContactPerson
 {
     #region Properties
@@ -12,7 +12,8 @@ public class ContactPerson
     #endregion
 
     #region Constructors
-    public ContactPerson(string firstname, string lastname, string email, string phoneNumber) {
+    public ContactPerson(string firstname, string lastname, string email, string phoneNumber)
+    {
         Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[a-zA-Z]+");
         Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[a-zA-Z]+");
         Lastname = Guard.Against.NullOrWhiteSpace(lastname, nameof(lastname));

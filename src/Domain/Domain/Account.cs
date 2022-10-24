@@ -1,7 +1,9 @@
 ﻿using System.Security.Principal;
+using Domain.Constants;
 
-namespace Domain;
-public class Account {
+namespace Domain.Domain;
+public class Account
+{
     #region Properties
     public int Id { get; set; }
     public string FirstName { get; set; }
@@ -13,7 +15,8 @@ public class Account {
     public string Opleiding { get; set; }
     #endregion
     #region Constructors
-    public Account(string firstName, string lastName, Role role, string password, string department, string opleiding) {
+    public Account(string firstName, string lastName, Role role, string password, string department, string opleiding)
+    {
         FirstName = firstName;
         LastName = lastName;
         Role = role;
@@ -24,10 +27,12 @@ public class Account {
     }
     #endregion
     #region Methods
-    private string HashPassword(string password) {
+    private string HashPassword(string password)
+    {
         throw new NotImplementedException();
     }
-    private string ChangePassword(string newPassword) {
+    private string ChangePassword(string newPassword)
+    {
         throw new NotImplementedException();
     }
     #endregion

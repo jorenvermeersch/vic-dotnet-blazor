@@ -1,5 +1,8 @@
-﻿namespace Domain;
-public class Server : IHost {
+﻿using Domain.Interfaces;
+
+namespace Domain.Domain;
+public class Server : IHost
+{
     #region Properties
     public int Id { get; set; }
     public string Name { get; set; }
@@ -8,7 +11,8 @@ public class Server : IHost {
     public int GbStorage { get; set; }
     #endregion
     #region Constructors
-    public Server(string name, int vCpu, int gbMemory, int gbStorage) {
+    public Server(string name, int vCpu, int gbMemory, int gbStorage)
+    {
         Name = name;
         VCpu = vCpu;
         GbMemory = gbMemory;

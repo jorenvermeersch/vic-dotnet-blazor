@@ -1,5 +1,9 @@
-﻿namespace Domain;
-public class VirtualMachine : IVirtualMachine {
+﻿using Domain.Constants;
+using Domain.Interfaces;
+
+namespace Domain.Domain;
+public class VirtualMachine : IVirtualMachine
+{
     #region Properties
     public int Id { get; set; }
     public string Name { get; set; }
@@ -23,7 +27,8 @@ public class VirtualMachine : IVirtualMachine {
     public ICustomer User { get; set; }
     #endregion
     #region Constructors
-    public VirtualMachine(VirtualMachineBuilder b) {
+    public VirtualMachine(VirtualMachineBuilder b)
+    {
         Name = b.Name;
         VCpu = b.VCpu;
         GbMemory = b.GbMemory;
@@ -46,7 +51,8 @@ public class VirtualMachine : IVirtualMachine {
     }
     #endregion
     #region Builder
-    public class VirtualMachineBuilder {
+    public class VirtualMachineBuilder
+    {
         #region Fields
         private string _name;
         private int _vcpu;
@@ -90,83 +96,103 @@ public class VirtualMachine : IVirtualMachine {
         public ICustomer User => _user;
         #endregion
         #region Methods
-        public VirtualMachineBuilder SetName(string name) {
+        public VirtualMachineBuilder SetName(string name)
+        {
             _name = name;
             return this;
         }
-        public VirtualMachineBuilder SetVCpu(int cpu) {
+        public VirtualMachineBuilder SetVCpu(int cpu)
+        {
             _vcpu = cpu;
             return this;
         }
-        public VirtualMachineBuilder SetMemory(int memory) {
+        public VirtualMachineBuilder SetMemory(int memory)
+        {
             _memory = memory;
             return this;
         }
-        public VirtualMachineBuilder SetStorage(int storage) {
+        public VirtualMachineBuilder SetStorage(int storage)
+        {
             _storage = storage;
             return this;
         }
-        public VirtualMachineBuilder SetTemplate(Template template) {
+        public VirtualMachineBuilder SetTemplate(Template template)
+        {
             _template = template;
             return this;
         }
-        public VirtualMachineBuilder SetMode(Mode mode) {
+        public VirtualMachineBuilder SetMode(Mode mode)
+        {
             _mode = mode;
             return this;
         }
-        public VirtualMachineBuilder SetFqdn(string fqdn) {
+        public VirtualMachineBuilder SetFqdn(string fqdn)
+        {
             _fqdn = fqdn;
             return this;
         }
-        public VirtualMachineBuilder SetAvailabilities(ISet<Availability> availabilities) {
+        public VirtualMachineBuilder SetAvailabilities(ISet<Availability> availabilities)
+        {
             _availabilities = availabilities;
             return this;
         }
-        public VirtualMachineBuilder SetBackupFrequenty(BackupFrequenty backupFrequenty) {
+        public VirtualMachineBuilder SetBackupFrequenty(BackupFrequenty backupFrequenty)
+        {
             _backupFrequenty = backupFrequenty;
             return this;
         }
-        public VirtualMachineBuilder SetApplicationDate(DateTime applicationDate) {
+        public VirtualMachineBuilder SetApplicationDate(DateTime applicationDate)
+        {
             _applicationDate = applicationDate;
             return this;
         }
-        public VirtualMachineBuilder SetDuration(Duration duration) {
+        public VirtualMachineBuilder SetDuration(Duration duration)
+        {
             _duration = duration;
             return this;
         }
-        public VirtualMachineBuilder SetStatus(Status status) {
+        public VirtualMachineBuilder SetStatus(Status status)
+        {
             _status = status;
             return this;
         }
-        public VirtualMachineBuilder SetReason(string reason) {
+        public VirtualMachineBuilder SetReason(string reason)
+        {
             _reason = reason;
             return this;
         }
-        public VirtualMachineBuilder SetPorts(ISet<Port> ports) {
+        public VirtualMachineBuilder SetPorts(ISet<Port> ports)
+        {
             _ports = ports;
             return this;
         }
-        public VirtualMachineBuilder SetHost(IHost host) {
+        public VirtualMachineBuilder SetHost(IHost host)
+        {
             _host = host;
             return this;
         }
-        public VirtualMachineBuilder SetAccount(Account account) {
+        public VirtualMachineBuilder SetAccount(Account account)
+        {
             _account = account;
             return this;
         }
-        public VirtualMachineBuilder SetCredentials(ISet<Credential> credentials) {
+        public VirtualMachineBuilder SetCredentials(ISet<Credential> credentials)
+        {
             _credentials = credentials;
             return this;
         }
-        public VirtualMachineBuilder SetRequester(ICustomer customer) {
+        public VirtualMachineBuilder SetRequester(ICustomer customer)
+        {
             _requester = customer;
             return this;
         }
-        public VirtualMachineBuilder SetUser(ICustomer user) {
+        public VirtualMachineBuilder SetUser(ICustomer user)
+        {
             _user = user;
             return this;
         }
-        public VirtualMachine Build() {
+        public VirtualMachine Build()
+        {
             return new VirtualMachine(this);
         }
         #endregion

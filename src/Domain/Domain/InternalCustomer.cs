@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.Interfaces;
 
-namespace Domain;
+namespace Domain.Domain;
 public class InternalCustomer : ICustomer
 {
     #region Properties
@@ -13,7 +14,8 @@ public class InternalCustomer : ICustomer
     #endregion
 
     #region Constructors
-    public InternalCustomer(string education, string department, ContactPerson contactPerson, ContactPerson? backupContact = null) {
+    public InternalCustomer(string education, string department, ContactPerson contactPerson, ContactPerson? backupContact = null)
+    {
         Education = Guard.Against.InvalidFormat(education, nameof(education), "^.{0}$|^[a-zA-Z]+[ a-zA-Z]*");
         Departement = Guard.Against.InvalidFormat(department, nameof(department), "^[a-zA-Z]+[ a-zA-Z]*");
         ContactPerson = contactPerson;
