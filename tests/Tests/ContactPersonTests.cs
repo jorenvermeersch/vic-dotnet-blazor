@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Tests;
 
-public class ContactPersonTest
+public class ContactPersonTests
 {
 
     [Fact]
-    public void NewContactPerson_CreatedCorrectly()
+    public void ContactPerson_creation_is_correct()
     {
         ContactPerson contact = new ("Jane", "Doe", "jane.doe@hotmail.com", "+3247259836");
-        Assert.NotNull(contact);
-        Assert.Equal("Jane", contact.Firstname);
-        Assert.Equal("Doe", contact.Lastname);
-        Assert.Equal("jane.doe@hotmail.com", contact.Email);
-        Assert.Equal("+3247259836", contact.PhoneNumber);
+        contact.ShouldNotBeNull();
+        contact.Firstname.ShouldBe("Jane");
+        contact.Lastname.ShouldBe("Doe");
+        contact.Email.ShouldBe("jane.doe@hotmail.com");
+        contact.PhoneNumber.ShouldBe("+3247259836");
     }
 
     [Theory]
@@ -28,9 +29,9 @@ public class ContactPersonTest
     [InlineData("abc.ijk.com")]
     [InlineData("abc@cde")]
     [InlineData("abc/uin@cde.com")]
-    public void NewContactPerson_InvalidEmail_ThrowsException(string email)
+    public void ContactPerson_email_with_incorrect_structure_is_invalid(string email)
     {
-        Assert.Throws<ArgumentException>(()=>new ContactPerson("Jane", "Doe", email, "+3247259836"));
+        Should.Throw<ArgumentException>(() => new ContactPerson("Jane", "Doe", email, "+3247259836"));
     }
 
     [Theory]
@@ -40,9 +41,9 @@ public class ContactPersonTest
     [InlineData("AAA14725868")]
     [InlineData("+324725983O")] //o ipv 0
     [InlineData("125-8675252365896")]
-    public void NewContactPerson_InvalidPhoneNumber_ThrowsException(string phoneNumber)
+    public void ContactPerson_phoneNumber_with_incorrect_structure_is_invalid(string phoneNumber)
     {
-        Assert.Throws<ArgumentException>(() => new ContactPerson("Jane", "Doe", "jane.doe@hotmail.com", phoneNumber));
+        Should.Throw<ArgumentException>(() => new ContactPerson("Jane", "Doe", "jane.doe@hotmail.com", phoneNumber));
     }
 
     [Theory]
@@ -52,19 +53,19 @@ public class ContactPersonTest
     [InlineData("1435")] //o ipv 0
     [InlineData("abn/djik")]
     [InlineData("abn.djik")]
-    public void NewContactPerson_InvalidFirstAndLastName_ThrowsException(string name)
+    public void ContactPerson_firstAndLastName_without_letters_is_invalid(string name)
     {
-        Assert.Throws<ArgumentException>(() => new ContactPerson(name, name, "jane.doe@hotmail.com", "+3247259836"));
+        Should.Throw<ArgumentException>(() => new ContactPerson(name, name, "jane.doe@hotmail.com", "+3247259836"));
     }
 
     [Theory]
     [InlineData("jane.doe@student.hogent.be")]
     [InlineData("janedoe@hogent.be")]
     [InlineData("jane.doe@student.hogent.com")]
-    public void NewContactPerson_ValidEmail_CreatesContactPerson(string email)
+    public void ContactPerson_creation_with_valid_email_is_correct(string email)
     {
         ContactPerson contact = new("Jane", "Doe", email, "+3247259836");
-        Assert.NotNull(contact);
-        Assert.Equal(email, contact.Email);
+        contact.ShouldNotBeNull();
+        contact.Email.ShouldBe(email);
     }
 }
