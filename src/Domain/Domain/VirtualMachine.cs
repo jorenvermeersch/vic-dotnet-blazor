@@ -7,9 +7,9 @@ public class VirtualMachine : IVirtualMachine
     #region Properties
     public int Id { get; set; }
     public string Name { get; set; }
-    public int VCpu { get; set; }
-    public int GbMemory { get; set; }
-    public int GbStorage { get; set; }
+    public int Processors { get; set; }
+    public int Memory { get; set; }
+    public int Storage { get; set; }
     public Template Template { get; set; }
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }
@@ -30,9 +30,9 @@ public class VirtualMachine : IVirtualMachine
     public VirtualMachine(VirtualMachineBuilder b)
     {
         Name = b.Name;
-        VCpu = b.VCpu;
-        GbMemory = b.GbMemory;
-        GbStorage = b.GbStorage;
+        Processors = b.Processors;
+        Memory = b.Memory;
+        Storage = b.Storage;
         Template = b.Template;
         Mode = b.Mode;
         Fqdn = b.Fqdn;
@@ -55,7 +55,7 @@ public class VirtualMachine : IVirtualMachine
     {
         #region Fields
         private string _name;
-        private int _vcpu;
+        private int _processors;
         private int _memory;
         private int _storage;
         private Template _template;
@@ -76,9 +76,9 @@ public class VirtualMachine : IVirtualMachine
         #endregion
         #region Properties
         public string Name => _name;
-        public int VCpu => _vcpu;
-        public int GbMemory => _memory;
-        public int GbStorage => _storage;
+        public int Processors => _processors;
+        public int Memory => _memory;
+        public int Storage => _storage;
         public Template Template => _template;
         public Mode Mode => _mode;
         public string Fqdn => _fqdn;
@@ -101,9 +101,9 @@ public class VirtualMachine : IVirtualMachine
             _name = name;
             return this;
         }
-        public VirtualMachineBuilder SetVCpu(int cpu)
+        public VirtualMachineBuilder SetProcessors(int cpu)
         {
-            _vcpu = cpu;
+            _processors = cpu;
             return this;
         }
         public VirtualMachineBuilder SetMemory(int memory)

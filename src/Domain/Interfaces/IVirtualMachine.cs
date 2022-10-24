@@ -5,6 +5,7 @@ namespace Domain.Interfaces;
 public interface IVirtualMachine : IMachine
 {
     public Template Template { get; set; }
+    public Account Account { get; set; }
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }
     public ISet<Availability> Availabilities { get; set; }

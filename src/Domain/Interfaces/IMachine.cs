@@ -3,7 +3,7 @@ public interface IMachine
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int VCpu { get; set; }
-    public int GbMemory { get; set; }
-    public int GbStorage { get; set; }
+    public int Processors { get; set; }
+    public int Memory { get; set; }
+    public int Storage { get; set; }
 }
