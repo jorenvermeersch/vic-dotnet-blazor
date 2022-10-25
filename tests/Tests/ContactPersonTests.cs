@@ -50,10 +50,10 @@ public class ContactPersonTests
     [InlineData("")]
     [InlineData("   ")]
     [InlineData("abc142")]
-    [InlineData("1435")] //o ipv 0
+    [InlineData("1435")] 
     [InlineData("abn/djik")]
     [InlineData("abn.djik")]
-    public void ContactPerson_firstAndLastName_without_letters_is_invalid(string name)
+    public void ContactPerson_firstAndLastName_with_characters_besides_alphabets_is_invalid(string name)
     {
         Should.Throw<ArgumentException>(() => new ContactPerson(name, name, "jane.doe@hotmail.com", "+3247259836"));
     }

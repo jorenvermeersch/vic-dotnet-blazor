@@ -37,9 +37,9 @@ public class InternalCustomerTests
     [InlineData(" ")]
     [InlineData("   ")]
     [InlineData(".")]
-    [InlineData("/")]
+    [InlineData("k66")]
     [InlineData("")]
-    public void InternalCustomer_departement_without_letters_is_invalid(string departement)
+    public void InternalCustomer_departement_with_characters_besides_alphabets_is_invalid(string departement)
     {
         Should.Throw<ArgumentException>(() => new InternalCustomer("Toegepaste Informatica", departement, new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), null));
     }

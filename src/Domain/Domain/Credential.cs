@@ -11,7 +11,7 @@ public class Credential
     public Credential(string username, string password)
     {
         Username = Guard.Against.NullOrWhiteSpace(username, nameof(username));
-        Password = Guard.Against.InvalidFormat(password, nameof(password), "[a-zA-Z0-9.@&?+]{6,}");
+        Password = Guard.Against.InvalidFormat(password, nameof(password), "[^ ].{6,}");
     }
     #endregion
 }
