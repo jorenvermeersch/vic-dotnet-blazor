@@ -61,11 +61,6 @@
     border-radius: var(--border-radius);
 }
 
-.graph .column .value, 
-.graph .column .white-space {
-    height: 0px; 
-}
-
 
 @media screen and (min-width: 480px) {
     .graph-container {
