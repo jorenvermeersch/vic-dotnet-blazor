@@ -95,5 +95,23 @@ main {
     margin: 0px var(--padding-md);
 }
 
+/* Context menu */
+.context-menu {
+    max-width: 489.33333px; 
+}
+
+@media screen and (min-width: 1065px) {
+    .context-menu {
+        max-width: 1045px; 
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .context-menu {
+        max-width: var(--extremely-large);
+    }
+}
+
+
 
 
