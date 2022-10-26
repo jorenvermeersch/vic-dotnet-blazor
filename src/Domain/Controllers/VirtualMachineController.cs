@@ -1,4 +1,5 @@
-﻿using Domain.Domain;
+﻿using Domain.Args;
+using Domain.Domain;
 
 namespace Domain.Controllers;
 public class VirtualMachineController {

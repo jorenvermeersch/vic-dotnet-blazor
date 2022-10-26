@@ -1,4 +1,5 @@
-﻿using Domain.Constants;
+﻿using Domain.Args;
+using Domain.Constants;
 using Domain.Repositories;
 
 namespace Domain.Domain;
@@ -40,13 +41,10 @@ public class VIC {
             .SetReason(args.reason)
             .SetPorts(ports)
             .SetCredentials(credentials)
+            .SetAccount(AccountRepo.GetAccountByEmail(args.accountEmail))
+            .SetRequester(CustomerRepo.GetCustomerByEmail(args.requesterEmail))
+            .SetUser(CustomerRepo.GetCustomerByEmail(args.userEmail))
             .Build();
-
-        // TODO: Pas implementeren als account repo gemaakt is
-        //.SetAccount() --> op email vinden
-
-        // TODO: Pas implementeren als customer repo gemaakt is
-        //.SetRequester() --> op email vinden
 
         // TODO: pas implementeren als server repo gemaakt is
         //.SetHost() --> op naam vinden

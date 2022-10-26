@@ -1,7 +1,8 @@
 ﻿using Domain.Constants;
 
-namespace Domain.Domain;
-public class VirtualMachineArgs {
+namespace Domain.Args;
+public class VirtualMachineArgs
+{
     #region Properties
     public string name { get; set; }
     public int processors { get; set; }
@@ -19,12 +20,13 @@ public class VirtualMachineArgs {
     public IDictionary<int, string> ports { get; set; }
     public string hostName { get; set; }
     public IDictionary<string, string> credentials { get; set; }
-    public string accountEmail{ get; set; }
-    public string requesterEmail{ get; set; }
+    public string accountEmail { get; set; }
+    public string requesterEmail { get; set; }
     public string userEmail { get; set; }
     #endregion
     #region Constructors
-    public VirtualMachineArgs() {
+    public VirtualMachineArgs()
+    {
 
     }
     #endregion

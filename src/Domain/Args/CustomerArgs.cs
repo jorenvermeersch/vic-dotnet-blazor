@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Domain;
+namespace Domain.Args;
 
 public class CustomerArgs
 {
@@ -28,5 +28,5 @@ public class CustomerArgs
 
     public CustomerArgs() { }
 
-    
+
 }
