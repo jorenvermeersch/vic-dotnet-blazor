@@ -93,6 +93,7 @@ body {
 /* Padding on narrow screens */
 main {
     margin: 0px var(--padding-md);
+    padding-bottom: 100px;
 }
 
 /* Context menu */

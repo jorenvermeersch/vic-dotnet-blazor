@@ -32,9 +32,7 @@
 
     <Title text="Virtuele machines" />
     @for(int i = 0; i < 6; i++){
-        _virtualMachines = new Dictionary<string, string>();
-        _virtualMachines.Add("devops-proj1.vichogent.be", i % 3 == 0 ? "in-use" : "not-in-use");
-        <DataCard Entries="@_virtualMachines" />
+            <EntityCard Value="devops-proj1.vichogent.be" Active="@(i % 3 == 0 ? true : false)" />
     }
     <PageSelector NumberOfPages="5"/>
 </div>
@@ -48,7 +46,6 @@
     private Dictionary<string, string> _username = new();
     private Dictionary<string, string> _general = new();
     private Dictionary<string, string> _contactInformation = new();
-    private Dictionary<string, string> _virtualMachines = new();
 
 
     protected override void OnInitialized()

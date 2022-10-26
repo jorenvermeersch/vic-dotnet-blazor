@@ -4,12 +4,14 @@
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
 
 <div class="context-menu">
+     <span class="context-menu-label"></span>
      <Button Text="Machine toevoegen" />
 </div>
 <div class="three-column-layout">
     <div class="one-third">
         <Title text="Configuratie" />
-        <Input Type="@Input.InputType.SELECT" Label="FQDN" customCss="@_customcss" />
+        @message
+        <Input Type="@Input.InputType.TEXT" Label="FQDN" customCss="@_customcss" />
         <Input Type="@Input.InputType.SELECT" Label="Mode" customCss="@_customcss" />
         <Input Type="@Input.InputType.SELECT" Label="Template" customCss="@_customcss" />
 
@@ -48,8 +50,10 @@
         <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
             <Button Text="Toevoegen" />
         </div>
-        <DataCard Entries="@_entries" customCss="@_customcss" />
-        <DataCard Entries="@_entries" customCss="@_customcss" />
+        
+        @foreach(KeyValuePair<int, Dictionary<string, string>> entry in _entries) {
+            <DataCard OnClick="() => ClickHandler(entry.Key)" Entries="@entry.Value" customCss="@_customcss" />
+        }
 
     </div>
 </div>
@@ -62,12 +66,20 @@
 
     public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
-    private Dictionary<string, string> _entries = new();
+    private Dictionary<int, Dictionary<string, string>> _entries = new();
 
     protected override void OnInitialized()
     {
-        _entries.Add("Gebruikernaam", "admin");
-        _entries.Add("Wachtwoord", "*******");
+        _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Wachtwoord", "*******" } });
+        _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Wachtwoord", "*********" } });
+    }
+
+    string message = "Hello from ParentComponent";
+
+
+    void ClickHandler(int id)
+    {
+        _entries.Remove(id);
     }
 
 }

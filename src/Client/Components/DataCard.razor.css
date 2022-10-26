@@ -4,14 +4,25 @@
   gap: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  position: relative;
+}
+
+.methodexecutor{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background:none;
+    border: none;
+    color: var(--dark-blue);
+    cursor: pointer;
 }
 
 .data-card .entry {
-  display: flex;
-  flex-wrap: wrap;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  text-overflow: ellipsis;
+    display: flex;
+    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    text-overflow: ellipsis;
 }
 
 .data-card .entry .label {

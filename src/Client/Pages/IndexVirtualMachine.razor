@@ -1,0 +1,52 @@
+﻿@page "/virtual-machine/list"
+@layout MainLayout
+
+<div class="context-menu">
+    <Label Text="Toevoegen" />
+    <Button Text="Virtuele machine" />
+    <Button Text="Server" />
+    <Button Text="Cluster" />
+</div>
+<div class="three-column-layout">
+    <div class="one-third">
+        <Title text="Filteropties" />
+        <div class="filterbuttonarea">
+            <Button Text="Filteren" />
+        </div>
+        <Searchbar />
+    </div>
+    <div class="two-thirds">
+        <Title text="Alle virtuele machines" />
+        <div class="two-columns-container">
+            <div>
+                @foreach(KeyValuePair<string, bool> entry in _vms){
+                    <EntityCard Value="@entry.Key" Active="@entry.Value" />
+                }
+            </div>
+            <div>
+                @foreach (KeyValuePair<string, bool> entry in _vms)
+                {
+                    <EntityCard Value="@entry.Key" Active="@entry.Value" />
+                }
+            </div>
+
+        </div>
+        <PageSelector />
+
+
+
+
+    </div>
+</div>
+
+@code {
+    private Dictionary<string, bool> _vms = new();
+
+    protected override void OnInitialized()
+    {
+        Random random = new();
+        for(int i = 0; i < 10; i++){
+            _vms.Add($"devops-proj1.vichogent.be#{i}", random.Next(2) == 1);
+        }
+    }
+}

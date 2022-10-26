@@ -6,7 +6,7 @@
         }
     </select>
 
-    <select class="input" type="text" style="@customCss">
+    <select class="input" type="text" style="@customCss" disabled>
         @foreach (string partofday in new List<string>(Enum.GetValues(typeof(Availability.PartOfDay)).Cast<Availability.PartOfDay>().Select(v => v.ToString().Replace("_", " "))))
         {
             <option value="@partofday">@partofday</option>

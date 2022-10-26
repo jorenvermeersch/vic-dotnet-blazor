@@ -1,0 +1,34 @@
+﻿﻿.search-container {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    font-size: 0.875rem;
+    background-color: #f8f9fa;
+    padding: 17px;
+    width: 100%;
+}
+
+
+.search-container .input {
+    width: 100%;
+    font-family: Graphik, sans-serif;
+    border: none;
+    outline: none;
+    padding: 17px;
+    background-color: #f8f9fa;
+    border-radius: 2px;
+}
+
+.input-container .input::placeholder {
+    color: #6c757d;
+}
+
+.validation-error {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3c6999;
+}
+
+.validation-error i {
+    color: #508bcb;
+}
