@@ -1,5 +1,11 @@
-﻿<a class="button" href=".">@Text</a>
+﻿@{
+    string style =  "button" + (Inverse ? " button-inverse" : ""); 
+}
+<a class="@style" href=".">@Text</a>
 
 @code {
-    [Parameter] public string Text { get; set; } = "Button";
+    [Parameter] 
+    public string Text { get; set; } = "Button";
+    [Parameter]
+    public bool Inverse { get; set; } = false; 
 }
