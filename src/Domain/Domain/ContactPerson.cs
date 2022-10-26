@@ -14,9 +14,8 @@ public class ContactPerson
     #region Constructors
     public ContactPerson(string firstname, string lastname, string email, string phoneNumber)
     {
-        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[a-zA-Z]+");
-        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[a-zA-Z]+");
-        Lastname = Guard.Against.NullOrWhiteSpace(lastname, nameof(lastname));
+        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[^0-9\\\\W]+");
+        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[^0-9\\W]+");
         Email = Guard.Against.InvalidFormat(email, nameof(email), "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-z]+)$");
         PhoneNumber = Guard.Against.InvalidFormat(phoneNumber, nameof(phoneNumber), "[+]*[0-9]+");
     }
