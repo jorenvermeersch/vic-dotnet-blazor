@@ -12,6 +12,7 @@ public class Account
     public int Id { get; private set; }
     public string Firstname { get; private set; }
     public string Lastname { get; private set; }
+    public string Email { get; private set; }
     public Role Role { get; private set; }
     public string PasswordHash { get; private set; }
     public bool IsActive { get; private set; }
@@ -19,10 +20,11 @@ public class Account
     public string Education { get; private set; }
     #endregion
     #region Constructors
-    public Account(string firstname, string lastname, Role role, string password, string department, string education)
+    public Account(string firstname, string lastname,string email, Role role, string password, string department, string education)
     {
         Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[^0-9\\W]+");
         Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[^0-9\\W]+");
+        Email = Guard.Against.InvalidFormat(email, nameof(email), "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-z]+)$");
         Role = role;
         PasswordHash = HashPassword(Guard.Against.InvalidFormat(password, nameof(password), "[^ ].{6,}"));
         IsActive = true;

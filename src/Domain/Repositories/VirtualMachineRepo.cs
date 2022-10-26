@@ -26,7 +26,7 @@ public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
     }
     private void SeedData() {
         VirtualMachine vm1 = new VirtualMachine.VirtualMachineBuilder()
-            .SetAccount(new Account("kerem", "yilmaz", Role.Admin, "password", "DIT", "Toegepaste Informatica"))
+            .SetAccount(new Account("kerem", "yilmaz","kerem.yilmaz@hotmail.com", Role.Admin, "password", "DIT", "Toegepaste Informatica"))
             .SetApplicationDate(DateTime.Now)
             .SetAvailabilities(new HashSet<Availability> { Availability.Saturday, Availability.Monday })
             .SetBackupFrequenty(BackupFrequenty.Daily)
@@ -46,7 +46,7 @@ public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
             .Build();
 
         VirtualMachine vm2 = new VirtualMachine.VirtualMachineBuilder()
-            .SetAccount(new Account("angela", "degryse", Role.Observer, "password", "DIT", "Toegepaste Informatica"))
+            .SetAccount(new Account("angela", "degryse","angela.degryse@hotmail.com", Role.Observer, "password", "DIT", "Toegepaste Informatica"))
             .SetApplicationDate(DateTime.Now)
             .SetAvailabilities(new HashSet<Availability> { Availability.Monday, Availability.Tuesday, Availability.Wednesday })
             .SetBackupFrequenty(BackupFrequenty.Monthly)

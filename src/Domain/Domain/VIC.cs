@@ -12,6 +12,7 @@ public class VIC {
     #endregion
     #region Repositories
     public VirtualMachineRepo VirtualMachineRepo { get; }
+    public AccountRepo AccountRepo { get; }
     #endregion
     #region VirtualMachine methods
     public void CreateVirtualMachine(VirtualMachineArgs args) {
@@ -50,6 +51,16 @@ public class VIC {
         //.SetHost() --> op naam vinden
 
         VirtualMachineRepo.AddMachine(vm);
+    }
+
+
+    #endregion
+
+    #region Account methods
+    internal void CreateAccount(AccountArgs args)
+    {
+        Account account = new(args.Firstname, args.Lastname, args.Email, args.Role, args.Password, args.Department, args.Education);
+        AccountRepo.AddAccount(account);
     }
     #endregion
 

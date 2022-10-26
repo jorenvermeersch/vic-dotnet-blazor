@@ -1,7 +1,7 @@
 ﻿namespace Tests;
 public class VirtualMachineTests {
     #region Fields
-    private Account _account = new("kerem", "yilmaz", Role.Admin, "password", "department", "opleiding");
+    private Account _account = new("kerem", "yilmaz","kerem.yilmaz@hotmail.com", Role.Admin, "password", "department", "opleiding");
     private DateTime _applicationDate = DateTime.Now;
     private HashSet<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
     private BackupFrequenty _bfreq = BackupFrequenty.Monthly;
