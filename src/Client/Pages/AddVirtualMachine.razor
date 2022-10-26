@@ -3,57 +3,57 @@
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
 
-<div class="three-thirds">
-    <div style="display: flex">
-        <span style="flex: 1" class="small_title">Virtuele machine toevoegen</span>
-        <Button Text="Machine toevoegen" />
+<div class="context-menu">
+     <Button Text="Machine toevoegen" />
+</div>
+<div class="three-column-layout">
+    <div class="one-third">
+        <Title text="Configuratie" />
+        <Input Type="@Input.InputType.SELECT" Label="FQDN" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="Mode" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="Template" customCss="@_customcss" />
+
+        <Title text="Poorten" />
+        <Input PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" customCss="@_customcss" />
+        <div class="buttonList">
+            <Button Text="HTTP" />
+            <Button Text="SSH" />
+        </div>
+
+        <Title text="Specificaties" />
+        <Input Type="@Input.InputType.SELECT" Label="Host" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="vCPUs" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="Geheugen" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="Opslag" customCss="@_customcss" />
+    </div>
+    <div class="one-third">
+        <Title text="Beschikbaarheid" />
+        <Input Type="@Input.InputType.SELECT" Label="Start" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="Einde" customCss="@_customcss" />
+        <AvailabilityOptionSelect customCss="@_customcss" />
+        <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+            <Button Text="Toevoegen" />
+        </div>
+        <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Wednesday" PartOfDay="Availability.PartOfDay.FullDay" customCss="@_customcss" />
+        <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Thursday" PartOfDay="Availability.PartOfDay.FullDay" customCss="@_customcss" />
+        <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Friday" PartOfDay="Availability.PartOfDay.FullDay" customCss="@_customcss" />
+
+        <Title text="Back-ups" />
+        <Input PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" customCss="@_customcss" />
+    </div>
+    <div class="one-third">
+        <Title text="Logingegevens" />
+        <Input Type="@Input.InputType.SELECT" Label="Gebruikersnaam" customCss="@_customcss" />
+        <Input Type="@Input.InputType.SELECT" Label="Wachtwoord" customCss="@_customcss" />
+        <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+            <Button Text="Toevoegen" />
+        </div>
+        <DataCard Entries="@_entries" customCss="@_customcss" />
+        <DataCard Entries="@_entries" customCss="@_customcss" />
+
     </div>
 </div>
-<div class="one-third">
-    <Title text="Configuratie" />
-    <Input Type="@Input.InputType.SELECT" Label="FQDN" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="Mode" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="Template" customCss="@_customcss" />
 
-    <Title text="Poorten" />
-    <Input PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" customCss="@_customcss" />
-    <div class="buttonList">
-        <Button Text="HTTP"/>
-        <Button Text="SSH"/>
-    </div>
-
-    <Title text="Specificaties" />
-    <Input Type="@Input.InputType.SELECT" Label="Host" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="vCPUs" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="Geheugen" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="Opslag" customCss="@_customcss" />    
-</div>
-<div class="one-third">
-    <Title text="Beschikbaarheid" />
-    <Input Type="@Input.InputType.SELECT" Label="Start" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="Einde" customCss="@_customcss" />
-    <AvailabilityOptionSelect customCss="@_customcss" />
-    <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-        <Button Text="Toevoegen" />
-    </div>
-    <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Wednesday" PartOfDay="Availability.PartOfDay.FullDay" customCss="@_customcss" />
-    <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Thursday" PartOfDay="Availability.PartOfDay.FullDay" customCss="@_customcss"/>
-    <AvailabilityOption DayOfWeek="Availability.DayOfWeek.Friday" PartOfDay="Availability.PartOfDay.FullDay" customCss="@_customcss" />
-
-    <Title text="Back-ups" />
-    <Input PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" customCss="@_customcss" />
-</div>
-<div class="one-third">
-    <Title text="Logingegevens" />
-    <Input Type="@Input.InputType.SELECT" Label="Gebruikersnaam" customCss="@_customcss" />
-    <Input Type="@Input.InputType.SELECT" Label="Wachtwoord" customCss="@_customcss" />
-    <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-        <Button Text="Toevoegen" />
-    </div>
-    <DataCard Entries="@_entries" customCss="@_customcss" />
-    <DataCard Entries="@_entries" customCss="@_customcss" />
-
-</div>
 
 
 
