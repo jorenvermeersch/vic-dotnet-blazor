@@ -14,7 +14,7 @@ public class VirtualMachineTests {
     private string _name = "VMName";
     private HashSet<Port> _ports = new() { new(1, "port1"), new(2, "port2") };
     private string _reason = "reason";
-    private ICustomer _req = new InternalCustomer("educ", "depar", new ContactPerson("fname", "name", "email", "0483756789"));
+    private ICustomer _req = new InternalCustomer("educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
     private Status _status = Status.Requested;
     private int _storage = 2;
     private Template _temp = Template.AI;

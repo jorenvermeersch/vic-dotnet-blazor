@@ -1,8 +1,4 @@
-﻿using Domain.Domain;
-using Shouldly;
-using System.Xml.Linq;
-
-namespace Tests;
+﻿namespace Tests;
 
 public class ExternalCustomerTests
 {
