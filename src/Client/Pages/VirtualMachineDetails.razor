@@ -1,15 +1,16 @@
-﻿@page "/detailvm"
+﻿@page "/virtual-machine/details"
 @layout MainLayout
 
 <PageTitle>Virtual Machine [virtual machine name] Details</PageTitle>
 
-<div class="three-thirds">
+<div class="context-menu">
     <div style="display: flex">
         <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title"><i class="fa-solid fa-arrow-left"></i><span>Terug</span></span>
     </div>
 </div>
 
-<div class="one-third">
+<div class="three-column-layout">
+    <div class="one-third">
     <DataCard Entries="@_defaultInformation" />
 
     <Title text="Specificaties en configuratie" />
@@ -43,6 +44,8 @@
     <Title text="Verantwoordelijken" />
     <DataCard Entries="@_personincharge" />
 </div>
+</div>
+
 
 
 
