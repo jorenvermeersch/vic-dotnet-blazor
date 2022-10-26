@@ -43,8 +43,7 @@ body {
 /* Three column system */
 .two-columns-container,
 .one-third,
-.two-thirds
-.three-thirds {
+.two-thirds {
     --three-column-width: calc((var(--extremely-large) - 2 * var(--three-column-gap)) / 3);
 }
 
@@ -64,12 +63,6 @@ body {
     max-width: calc(2 * var(--three-column-width) + var(--three-column-gap));
 }
 
-.three-thirds {
-    grid-column: 1 / 3;
-    gap: var(--data-card-gap);
-    max-width: calc(3 * var(--three-column-width) + 2 * var(--three-column-gap));
-}
-
 .two-columns-container {
     display: grid;
     gap: var(--data-card-gap) var(--three-column-gap);
@@ -86,10 +79,20 @@ body {
         grid-column: 2 / span 2;
     }
 
+    .context-menu {
+        padding-left: 0px; 
+        padding-right: 0px; 
+    }
+
     .two-columns-container {
         display: grid;
         grid-template-columns: repeat(3, var(--three-column-width));
     }
+}
+
+/* Padding on narrow screens */
+main {
+    margin: 0px var(--padding-md);
 }
 
 

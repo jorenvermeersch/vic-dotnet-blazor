@@ -7,8 +7,3 @@
     top: 0;
     z-index: -5;
 }
-
-/* Padding on narrow screens */
-main {
-    margin: var(--padding-md); 
-}
