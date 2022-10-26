@@ -3,6 +3,7 @@
 }
 
 .title h2 {
+  color: var(--black); 
   font-size: var(--text-md);
   font-weight: 600;
   padding: var(--padding-lg) 0px var(--padding-md) 0px;
