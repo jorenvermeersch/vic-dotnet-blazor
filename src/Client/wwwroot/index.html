@@ -19,14 +19,26 @@
     <script defer src="scripts/index.js"></script>
 </head>
 
-  <body>
-    <div id="app">Loading...</div>
+<body>
+    <!--<div id="app">Loading...</div>-->
+
+    <div id="app">
+        <div class="loading-screen-wrapper">
+            <div class="loading-screen">
+                <div class="loading-items">
+                    <span><i class="fa-solid fa-vr-cardboard"></i> Virtual IT Company</span>
+                    
+                    <div class="loading-line" />
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
-      An unhandled error has occurred.
-      <a href="" class="reload">Reload</a>
-      <a class="dismiss">🗙</a>
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
-  </body>
+</body>
 </html>
