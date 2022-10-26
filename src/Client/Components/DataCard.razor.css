@@ -1,50 +1,47 @@
 ﻿.data-card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .data-card .entry {
-    display: flex;
-    flex-wrap: wrap;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    text-overflow: ellipsis;    
+  display: flex;
+  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  text-overflow: ellipsis;
 }
 
 .data-card .entry .label {
-    font-weight: 600;
-    flex: 1;
-    padding-bottom: 5px;
+  font-weight: 600;
+  flex: 1;
+  padding-bottom: 5px;
 }
 
 .data-card .entry .value {
-    /*width: 100%;*/
-    text-align: left;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 480px) {
+  .data-card .entry {
+    flex-direction: row;
+  }
 
-    .data-card .entry {
-        flex-direction: row;
-    }
+  .data-card .entry .label {
+    width: 0px;
+    min-width: min-content;
+    flex-grow: 1;
+    padding-bottom: 0px;
+  }
 
-    .data-card .entry .label {
-        min-width: min-content;
-        flex-grow: 1;
-        padding-bottom: 0px;
-    }
-
-    .data-card .entry .value {
-        flex-grow: 2;
-        overflow: hidden;
-        text-align: right;
-        text-overflow: ellipsis;
-    }
+  .data-card .entry .value {
+    width: 0px;
+    flex-grow: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
-
-

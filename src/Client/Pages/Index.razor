@@ -4,18 +4,20 @@
 <div class="one-third">
     <Title text="Configuratie"/>
     <Button />
+    <DataCard />
+    <PageSelector NumberOfPages=6 />
 </div>
 <div class="two-thirds">
     <Title text="Virtuele machines" />
     <Button />
+    <Input Type="@Input.InputType.SELECT" Items="@Options" Label="Selecteer een item" PlaceHolder="Select an option from the list" />
+    <Input Type="@Input.InputType.TEXT" PlaceHolder="Naam" Label="Naam" />
+    <AvailabilityOptionSelect />
+    <AvailabilityOption />
 </div>
 
-<DataCard />
-<PageSelector NumberOfPages=6 />
-<Input Type="@Input.InputType.SELECT" Items="@Options" Label="Selecteer een item" PlaceHolder="Select an option from the list"/>
-<Input Type="@Input.InputType.TEXT" PlaceHolder="Naam" Label="Naam" />
-<AvailabilityOptionSelect />
-<AvailabilityOption />
+
+
 
 @code {
     public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
