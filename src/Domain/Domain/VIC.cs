@@ -13,9 +13,10 @@ public class VIC {
     #region Repositories
     public VirtualMachineRepo VirtualMachineRepo { get; }
     public AccountRepo AccountRepo { get; }
+    public CustomerRepo CustomerRepo { get; }
     #endregion
     #region VirtualMachine methods
-    public void CreateVirtualMachine(VirtualMachineArgs args) {
+    internal void CreateVirtualMachine(VirtualMachineArgs args) {
         HashSet<Port> ports = new();
         HashSet<Credential> credentials = new();
         foreach(var keyset in args.ports) {
@@ -61,6 +62,20 @@ public class VIC {
     {
         Account account = new(args.Firstname, args.Lastname, args.Email, args.Role, args.Password, args.Department, args.Education);
         AccountRepo.AddAccount(account);
+    }
+    #endregion
+
+    #region Customer methods
+    internal void CreateInternalCustomer(CustomerArgs args)
+    {
+        InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname,args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        CustomerRepo.AddInternalCustomer(customer);
+    }
+
+    internal void CreateExternalCustomer(CustomerArgs args)
+    {
+        ExternalCustomer customer = new(args.Name, args.Type, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        CustomerRepo.AddExternalCustomer(customer);
     }
     #endregion
 
