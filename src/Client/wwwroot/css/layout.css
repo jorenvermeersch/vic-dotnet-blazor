@@ -52,7 +52,7 @@ body {
 .three-thirds {
     display: flex;
     flex-direction: column;
-    gap: var(--data-card-gap);
+    gap: 15px;
 }
 
 .one-third {

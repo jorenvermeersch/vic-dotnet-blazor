@@ -2,27 +2,33 @@
 
 
 <div class="context-menu">
-    Content
+    <Label Text="Toevoegen" />
+    <Button Text="Klant"/>
+    <Button Text="Virtuele machine" />
+    <Button Text="Server" />
+    <Button Text="Cluster" />
 </div>
 <div class="three-column-layout">
     <div class="one-third">
-        <Title text="Configuratie" />
-        <Button />
-        <DataCard />
+        <Title text="Onafgewerkte virtuele machines" />
+        
+        @for (var i = 0; i < 8; i++)
+       {
+            <EntityCard Value="devops-proj1.vichogent.be"/>
+        }
+
         <PageSelector NumberOfPages=6 />
     </div>
     <div class="two-thirds">
-        <Title text="Virtuele machines" />
+        <Title text="Verbruik deze week" />
         <div class="two-columns-container">
             <div>
-                <Graph />
-                <Button />
-                <Input Type="@Input.InputType.SELECT" Items="@Options" Label="Selecteer een item" PlaceHolder="Select an option from the list" />
-                <Input Type="@Input.InputType.TEXT" PlaceHolder="Naam" Label="Naam" />
+                <Graph Title="Virtuele machines" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel"/>
+                <Graph Title="Virtuele processoren" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
             </div>
             <div>
-                 <AvailabilityOptionSelect />
-                <AvailabilityOption />
+                <Graph Title="Geheugen" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
+                <Graph Title="Opslag" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
             </div>
             
         </div>
@@ -33,11 +39,6 @@
     </div>
 </div>
 
-
-
-
-
-
 @code {
-    public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
+   string _startLabel = "24/10", _endLabel = "30/10";    
 }

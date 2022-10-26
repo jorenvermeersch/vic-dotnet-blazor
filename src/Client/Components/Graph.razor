@@ -24,13 +24,14 @@
 </div>
 
 @code {
-    public IList<int> Data { get; set; } = new List<int>();
-    public int UpperBound { get; set; } = 78;
+    
+    [Parameter] public IList<int> Data { get; set; } = new List<int>();
+    [Parameter] public int UpperBound { get; set; } = 10;
 
-    public string Title { get; set; } = "Title"; 
-    public string Unit { get; set; } = "Unit"; 
-    public string StartLabel { get; set; } = "Start"; 
-    public string EndLabel { get; set; } = "End";
+    [Parameter] public string Title { get; set; } = "Title";
+    [Parameter] public string Unit { get; set; } = "Unit";
+    [Parameter] public string StartLabel { get; set; } = "Start";
+    [Parameter] public string EndLabel { get; set; } = "End";
 
     protected override void OnInitialized()
     {
@@ -41,7 +42,7 @@
         Data.Add(0);
         Data.Add(2);
         Data.Add(3);
-        Data.Add(78); 
+        Data.Add(10);
     }
 
 }

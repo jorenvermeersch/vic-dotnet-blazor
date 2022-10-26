@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\EntityCard.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\EntityCard.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\variables.css" />
   </ItemGroup>
 
