@@ -7,9 +7,6 @@ public class VirtualMachine : IVirtualMachine
     #region Properties
     public int Id { get; set; }
     public string Name { get; set; }
-    public int Processors { get; set; }
-    public int Memory { get; set; }
-    public int Storage { get; set; }
     public Template Template { get; set; }
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }
@@ -25,14 +22,12 @@ public class VirtualMachine : IVirtualMachine
     public Account Account { get; set; }
     public ICustomer Requester { get; set; }
     public ICustomer User { get; set; }
+    public Resource Resource { get; set; }
     #endregion
     #region Constructors
     public VirtualMachine(VirtualMachineBuilder b)
     {
         Name = b.Name;
-        Processors = b.Processors;
-        Memory = b.Memory;
-        Storage = b.Storage;
         Template = b.Template;
         Mode = b.Mode;
         Fqdn = b.Fqdn;
@@ -48,16 +43,17 @@ public class VirtualMachine : IVirtualMachine
         Account = b.Account;
         Requester = b.Requester;
         User = b.User;
+        Resource = b.Resource;
     }
+    
+
     #endregion
     #region Builder
     public class VirtualMachineBuilder
     {
         #region Fields
         private string _name;
-        private int _processors;
-        private int _memory;
-        private int _storage;
+        private Resource _resource;
         private Template _template;
         private Mode _mode;
         private string _fqdn;
@@ -76,9 +72,7 @@ public class VirtualMachine : IVirtualMachine
         #endregion
         #region Properties
         public string Name => _name;
-        public int Processors => _processors;
-        public int Memory => _memory;
-        public int Storage => _storage;
+        public Resource Resource => _resource;
         public Template Template => _template;
         public Mode Mode => _mode;
         public string Fqdn => _fqdn;
@@ -101,19 +95,8 @@ public class VirtualMachine : IVirtualMachine
             _name = name;
             return this;
         }
-        public VirtualMachineBuilder SetProcessors(int cpu)
-        {
-            _processors = cpu;
-            return this;
-        }
-        public VirtualMachineBuilder SetMemory(int memory)
-        {
-            _memory = memory;
-            return this;
-        }
-        public VirtualMachineBuilder SetStorage(int storage)
-        {
-            _storage = storage;
+        public VirtualMachineBuilder SetResource(Resource resource) {
+            _resource = resource;
             return this;
         }
         public VirtualMachineBuilder SetTemplate(Template template)

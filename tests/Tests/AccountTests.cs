@@ -1,12 +1,4 @@
-﻿using Domain.Domain;
-using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tests;
+﻿namespace Tests;
 
 public class AccountTests
 {
