@@ -1,20 +1,38 @@
 ﻿@page "/"
 
 
-<div class="one-third">
-    <Title text="Configuratie"/>
-    <Button />
-    <DataCard />
-    <PageSelector NumberOfPages=6 />
+<div class="context-menu">
+    Content
 </div>
-<div class="two-thirds">
-    <Title text="Virtuele machines" />
-    <Button />
-    <Input Type="@Input.InputType.SELECT" Items="@Options" Label="Selecteer een item" PlaceHolder="Select an option from the list" />
-    <Input Type="@Input.InputType.TEXT" PlaceHolder="Naam" Label="Naam" />
-    <AvailabilityOptionSelect />
-    <AvailabilityOption />
+<div class="three-column-layout">
+    <div class="one-third">
+        <Title text="Configuratie" />
+        <Button />
+        <DataCard />
+        <PageSelector NumberOfPages=6 />
+    </div>
+    <div class="two-thirds">
+        <Title text="Virtuele machines" />
+        <div class="two-columns-container">
+            <div>
+                <Button />
+                <Input Type="@Input.InputType.SELECT" Items="@Options" Label="Selecteer een item" PlaceHolder="Select an option from the list" />
+                <Input Type="@Input.InputType.TEXT" PlaceHolder="Naam" Label="Naam" />
+            </div>
+            <div>
+                 <AvailabilityOptionSelect />
+                <AvailabilityOption />
+            </div>
+            
+        </div>
+        
+       
+       
+
+    </div>
 </div>
+
+
 
 
 
