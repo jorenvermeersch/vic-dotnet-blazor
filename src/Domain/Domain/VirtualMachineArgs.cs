@@ -17,11 +17,11 @@ public class VirtualMachineArgs {
     public Status status { get; set; }
     public string reason { get; set; }
     public IDictionary<int, string> ports { get; set; }
-    public int hostId { get; set; }
+    public string hostName { get; set; }
     public IDictionary<string, string> credentials { get; set; }
-    public int accountId { get; set; }
-    public int requesterId { get; set; }
-    public int userId { get; set; }
+    public string accountEmail{ get; set; }
+    public string requesterEmail{ get; set; }
+    public string userEmail { get; set; }
     #endregion
     #region Constructors
     public VirtualMachineArgs() {

@@ -5,28 +5,26 @@ using Domain.Interfaces;
 namespace Domain.Repositories;
 public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
 {
+    #region Fields
     private readonly ISet<VirtualMachine> _machines = new HashSet<VirtualMachine>();
     public ISet<VirtualMachine> Machines => _machines;
-    public VirtualMachineRepo()
-    {
+    #endregion
+    #region Constructors
+    public VirtualMachineRepo() {
         SeedData();
     }
-    public void AddMachine(VirtualMachine vm)
-    {
+    #endregion
+    #region Methods
+    public void AddMachine(VirtualMachine vm) {
         Machines.Add(vm);
     }
-
-    public VirtualMachine GetMachineByName(string name)
-    {
-        return Machines.First(m => m.Name == name);
+    public VirtualMachine GetMachineByFqdn(string fqdn) {
+        return _machines.First(m => m.Fqdn == fqdn);
     }
-    public ISet<VirtualMachine> GetVirtualMachineFromUser(string name)
-    {
-        return _machines.Where(m => m.User.ContactPerson.Firstname == name).ToHashSet();
+    public ISet<VirtualMachine> GetVirtualMachinesByUserEmail(string email) {
+        return _machines.Where(m => m.User.ContactPerson.Email == email).ToHashSet();
     }
-
-    private void SeedData()
-    {
+    private void SeedData() {
         VirtualMachine vm1 = new VirtualMachine.VirtualMachineBuilder()
             .SetAccount(new Account("kerem", "yilmaz", Role.Admin, "password", "DIT", "Toegepaste Informatica"))
             .SetApplicationDate(DateTime.Now)
@@ -71,3 +69,4 @@ public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
         AddMachine(vm2);
     }
 }
+#endregion
