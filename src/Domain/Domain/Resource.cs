@@ -1,4 +1,5 @@
 ﻿namespace Domain.Domain;
+[ToString]
 public class Resource {
     #region Properties
     public int Processors { get; set; }

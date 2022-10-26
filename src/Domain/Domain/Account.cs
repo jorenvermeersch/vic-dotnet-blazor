@@ -5,6 +5,7 @@ using Ardalis.GuardClauses;
 using Domain.Constants;
 
 namespace Domain.Domain;
+[ToString]
 public class Account
 {
     #region Properties

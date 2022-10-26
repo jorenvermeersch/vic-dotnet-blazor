@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 
 namespace Domain.Domain;
+[ToString]
 public class ContactPerson
 {
     #region Properties

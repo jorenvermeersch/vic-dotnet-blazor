@@ -1,16 +1,20 @@
-﻿using Domain.Controllers;
-using Domain.Interfaces;
+﻿using Domain.Repositories;
 
 namespace Domain.Domain;
 public class VIC {
     #region Singleton pattern
     private static VIC _instance = new VIC();
-    private VIC() { }
+    private VIC() {
+    VirtualMachineRepo = new VirtualMachineRepo();
+    }
     public static VIC Instance => _instance;
     #endregion
 
-    private static VirtualMachineRepo _virtualMachineRepo = new VirtualMachineRepo();
-    public IVirtualMachine FindVirtualMachineByName(string name) {
-        return _virtualMachineRepo.GetMachine(name);
+    public VirtualMachineRepo VirtualMachineRepo { get; }
+
+    public void CreateVirtualMachine(VirtualMachineArgs args) {
+        VirtualMachine vm = new VirtualMachine.VirtualMachineBuilder()
+            .
+        VirtualMachineRepo.AddMachine(vm);
     }
 }

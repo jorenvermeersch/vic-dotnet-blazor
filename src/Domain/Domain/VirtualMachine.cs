@@ -2,6 +2,7 @@
 using Domain.Interfaces;
 
 namespace Domain.Domain;
+[ToString]
 public class VirtualMachine : IVirtualMachine
 {
     #region Properties
