@@ -22,7 +22,7 @@ public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
         return _machines.First(m => m.Fqdn == fqdn);
     }
     public ISet<VirtualMachine> GetVirtualMachinesByUserEmail(string email) {
-        return _machines.Where(m => m.User.ContactPerson.Email == email).ToHashSet();
+        return _machines.Where(m => m.User?.ContactPerson.Email == email).ToHashSet();
     }
     private void SeedData() {
         VirtualMachine vm1 = new VirtualMachine.VirtualMachineBuilder()

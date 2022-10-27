@@ -20,11 +20,15 @@ public class VIC {
     internal void CreateVirtualMachine(VirtualMachineArgs args) {
         HashSet<Port> ports = new();
         HashSet<Credential> credentials = new();
-        foreach(var keyset in args.ports) {
-            ports.Add(new Port(keyset.Key, keyset.Value));
+        if(args.ports != null) {
+            foreach(var keyset in args.ports) {
+                ports.Add(new Port(keyset.Key, keyset.Value));
+            }
         }
-        foreach(var keyset in args.credentials) {
-            credentials.Add(new Credential(keyset.Key, keyset.Value));
+        if(args.credentials != null) {
+            foreach(var keyset in args.credentials) {
+                credentials.Add(new Credential(keyset.Key, keyset.Value));
+            }
         }
 
         VirtualMachine vm = new VirtualMachine.VirtualMachineBuilder()
@@ -36,7 +40,8 @@ public class VIC {
             .SetAvailabilities(args.availabilities)
             .SetBackupFrequenty(args.backupFrequenty)
             .SetApplicationDate(args.applicationDate)
-            .SetDuration(new Duration(args.duration.First(), args.duration.Last()))
+            // TODO: test dit via gui of het werkt
+            //.SetDuration(new Duration(args.duration.First(), args.duration.Last()))
             .SetStatus(args.status)
             .SetReason(args.reason)
             .SetPorts(ports)
