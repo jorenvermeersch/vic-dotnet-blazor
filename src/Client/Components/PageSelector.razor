@@ -1,10 +1,13 @@
 ﻿<div class="page-selector-wrapper">
     <div class="page-selector">     
-        @for(int i = 1; i < NumberOfPages + 1; i++){
-            if(i == 1) {
+        @for (int i = 1; i < NumberOfPages + 1; i++)
+        {
+            if (i == 1) 
+            {
                 <button class="selected">@i</button>
             }
-            else{
+            else
+            {
                 <button>@i</button>
             }
         }
