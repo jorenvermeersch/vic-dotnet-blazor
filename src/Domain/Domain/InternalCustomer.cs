@@ -12,7 +12,8 @@ public class InternalCustomer : Customer
     #endregion
 
     #region Constructors
-    public InternalCustomer(string education, string department, ContactPerson contactPerson, ContactPerson backupContact, IList<IVirtualMachine> virtualMachines) : base(contactPerson, backupContact, virtualMachines)
+    public InternalCustomer(string education, string department, ContactPerson contactPerson, ContactPerson backupContact, IList<IVirtualMachine> virtualMachines)
+    : base(contactPerson, backupContact, virtualMachines)
     {
         Education = Guard.Against.InvalidFormat(education, nameof(education), "^.{0}$|^[a-zA-Z]+[ a-zA-Z]*");
         Department = Guard.Against.InvalidFormat(department, nameof(department), "^[a-zA-Z]+[ a-zA-Z]*");

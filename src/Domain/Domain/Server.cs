@@ -10,10 +10,10 @@ public class Server : Entity, IHost
 
     #endregion
     #region Constructors
-    public Server(string name, Resources resource)
+    public Server(string name, Resources resources)
     {
         Name = name;
-        Resource = resource;
+        Resource = resources;
     }
     #endregion
 }

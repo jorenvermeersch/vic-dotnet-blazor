@@ -2,7 +2,7 @@
 
 namespace Domain.Domain;
 [ToString]
-public class ContactPerson
+public class ContactPerson : Entity
 {
     #region Properties
     public string Firstname { get; set; }

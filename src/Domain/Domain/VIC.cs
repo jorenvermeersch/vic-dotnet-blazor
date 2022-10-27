@@ -58,8 +58,9 @@ public class VIC
             .SetPorts(ports)
             .SetCredentials(credentials)
             .SetAccount(AccountRepository.GetAccountByEmail(args.accountEmail))
-            .SetRequester(CustomerRepository.GetCustomerByEmail(args.requesterEmail))
-            .SetUser(CustomerRepository.GetCustomerByEmail(args.userEmail))
+            // TODO: Use id instead of email. 
+            //.SetRequester(CustomerRepository.GetCustomerByEmail(args.requesterEmail))
+            //.SetUser(CustomerRepository.GetCustomerByEmail(args.userEmail))
             .Build();
 
         // TODO: pas implementeren als server repo gemaakt is
@@ -83,13 +84,13 @@ public class VIC
     internal void CreateInternalCustomer(CustomerArgs args)
     {
         InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber), new List<IVirtualMachine>());
-        CustomerRepository.AddInternalCustomer(customer);
+        CustomerRepository.Add(customer);
     }
 
     internal void CreateExternalCustomer(CustomerArgs args)
     {
         ExternalCustomer customer = new(args.Name, args.Type, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber), new List<IVirtualMachine>());
-        CustomerRepository.AddExternalCustomer(customer);
+        CustomerRepository.Add(customer);
     }
     #endregion
 
