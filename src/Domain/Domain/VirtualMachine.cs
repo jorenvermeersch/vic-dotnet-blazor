@@ -3,10 +3,9 @@ using Domain.Interfaces;
 
 namespace Domain.Domain;
 [ToString]
-public class VirtualMachine : IVirtualMachine
+public class VirtualMachine : Entity, IVirtualMachine
 {
     #region Properties
-    public int Id { get; set; }
     public string Name { get; set; }
     public Template Template { get; set; }
     public Mode Mode { get; set; }
@@ -19,42 +18,44 @@ public class VirtualMachine : IVirtualMachine
     public string Reason { get; set; }
     public ISet<Port> Ports { get; set; }
     public IHost Host { get; set; }
-    public ISet<Credential> Credentials { get; set; }
+    public ISet<Credentials> Credentials { get; set; }
     public Account Account { get; set; }
     public ICustomer Requester { get; set; }
     public ICustomer User { get; set; }
-    public Resource Resource { get; set; }
+    public Resources Resource { get; set; }
     #endregion
+
     #region Constructors
-    public VirtualMachine(VirtualMachineBuilder b)
+    public VirtualMachine(VirtualMachineBuilder builder)
     {
-        Name = b.Name;
-        Template = b.Template;
-        Mode = b.Mode;
-        Fqdn = b.Fqdn;
-        Availabilities = b.Availabilities;
-        BackupFrequenty = b.BackupFrequenty;
-        ApplicationDate = b.ApplicationDate;
-        Duration = b.Duration;
-        Status = b.Status;
-        Reason = b.Reason;
-        Ports = b.Ports;
-        Host = b.Host;
-        Credentials = b.Credentials;
-        Account = b.Account;
-        Requester = b.Requester;
-        User = b.User;
-        Resource = b.Resource;
+        Name = builder.Name;
+        Template = builder.Template;
+        Mode = builder.Mode;
+        Fqdn = builder.Fqdn;
+        Availabilities = builder.Availabilities;
+        BackupFrequenty = builder.BackupFrequenty;
+        ApplicationDate = builder.ApplicationDate;
+        Duration = builder.Duration;
+        Status = builder.Status;
+        Reason = builder.Reason;
+        Ports = builder.Ports;
+        Host = builder.Host;
+        Credentials = builder.Credentials;
+        Account = builder.Account;
+        Requester = builder.Requester;
+        User = builder.User;
+        Resource = builder.Resource;
     }
-    
+
 
     #endregion
+
     #region Builder
     public class VirtualMachineBuilder
     {
         #region Fields
         private string _name;
-        private Resource _resource;
+        private Resources _resource;
         private Template _template;
         private Mode _mode;
         private string _fqdn;
@@ -66,14 +67,14 @@ public class VirtualMachine : IVirtualMachine
         private string _reason;
         private ISet<Port> _ports;
         private IHost _host;
-        private ISet<Credential> _credentials;
+        private ISet<Credentials> _credentials;
         private Account _account;
         private ICustomer _requester;
         private ICustomer _user;
         #endregion
         #region Properties
         public string Name => _name;
-        public Resource Resource => _resource;
+        public Resources Resource => _resource;
         public Template Template => _template;
         public Mode Mode => _mode;
         public string Fqdn => _fqdn;
@@ -85,7 +86,7 @@ public class VirtualMachine : IVirtualMachine
         public string Reason => _reason;
         public ISet<Port> Ports => _ports;
         public IHost Host => _host;
-        public ISet<Credential> Credentials => _credentials;
+        public ISet<Credentials> Credentials => _credentials;
         public Account Account => _account;
         public ICustomer Requester => _requester;
         public ICustomer User => _user;
@@ -96,7 +97,8 @@ public class VirtualMachine : IVirtualMachine
             _name = name;
             return this;
         }
-        public VirtualMachineBuilder SetResource(Resource resource) {
+        public VirtualMachineBuilder SetResource(Resources resource)
+        {
             _resource = resource;
             return this;
         }
@@ -160,7 +162,7 @@ public class VirtualMachine : IVirtualMachine
             _account = account;
             return this;
         }
-        public VirtualMachineBuilder SetCredentials(ISet<Credential> credentials)
+        public VirtualMachineBuilder SetCredentials(ISet<Credentials> credentials)
         {
             _credentials = credentials;
             return this;

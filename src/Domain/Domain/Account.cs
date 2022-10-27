@@ -1,15 +1,13 @@
-﻿using System.Security.Cryptography;
-using System.Security.Principal;
-using System.Text;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Domain.Constants;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Domain.Domain;
 [ToString]
-public class Account
+public class Account : Entity
 {
     #region Properties
-    public int Id { get; private set; }
     public string Firstname { get; private set; }
     public string Lastname { get; private set; }
     public string Email { get; private set; }
@@ -19,8 +17,9 @@ public class Account
     public string Department { get; private set; }
     public string Education { get; private set; }
     #endregion
+
     #region Constructors
-    public Account(string firstname, string lastname,string email, Role role, string password, string department, string education)
+    public Account(string firstname, string lastname, string email, Role role, string password, string department, string education)
     {
         Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[^0-9\\W]+");
         Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[^0-9\\W]+");
@@ -32,6 +31,7 @@ public class Account
         Department = Guard.Against.InvalidFormat(department, nameof(department), "^[a-zA-Z]+[ a-zA-Z]*");
     }
     #endregion
+
     #region Methods
     private string HashPassword(string password)
     {

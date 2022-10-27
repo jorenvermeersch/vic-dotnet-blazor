@@ -5,7 +5,7 @@ public class VirtualMachineTests {
     private DateTime _applicationDate = DateTime.Now;
     private HashSet<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
     private BackupFrequenty _bfreq = BackupFrequenty.Monthly;
-    private HashSet<Credential> _creds = new() { new("name", "password"), new("user", "password") };
+    private HashSet<Credentials> _creds = new() { new("name", "password"), new("user", "password") };
     private Duration _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
     private string _fqdn = "domain.name";
     private IHost _host = new Server("s1", new(4,4,4));
@@ -16,7 +16,7 @@ public class VirtualMachineTests {
     private ICustomer _req = new InternalCustomer("educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
     private Status _status = Status.Requested;
     private Template _temp = Template.AI;
-    private Resource _resource = new(2, 2, 2);
+    private Resources _resource = new(2, 2, 2);
     #endregion
 
     [Fact]

@@ -3,15 +3,15 @@ using Domain.Interfaces;
 
 namespace Domain.Domain;
 [ToString]
-public class InternalCustomer : ICustomer
+public class InternalCustomer : Entity, ICustomer
 {
     #region Properties
-    public int Id { get; set; }
     public string? Education { get; set; }
     public string Department { get; set; }
     public ContactPerson ContactPerson { get; set; }
     public ContactPerson? BackupContactPerson { get; set; }
     public IList<IVirtualMachine>? VirtualMachines { get; set; }
+
     #endregion
 
     #region Constructors

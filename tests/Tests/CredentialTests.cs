@@ -5,7 +5,7 @@ public class CredentialTests
     [Fact]
     public void Credential_creation_is_correct()
     {
-        Credential credential = new("Jane.Doe", "janedoespasswoord123");
+        Credentials credential = new("Jane.Doe", "janedoespasswoord123");
         credential.Username.ShouldBe("Jane.Doe");
         credential.Password.ShouldBe("janedoespasswoord123");
     }
@@ -16,7 +16,7 @@ public class CredentialTests
     [InlineData("12345")]
     public void Credential_password_length_smaller_than_6_is_invalid(string password)
     {
-        Should.Throw<ArgumentException>(() => new Credential("JaneDoe", password));
+        Should.Throw<ArgumentException>(() => new Credentials("JaneDoe", password));
     }
 
     [Theory]
@@ -25,6 +25,6 @@ public class CredentialTests
     [InlineData("   ")]
     public void Credential_empty_username_is_invalid(string username)
     {
-        Should.Throw<ArgumentException>(() => new Credential(username, "1425375fgk"));
+        Should.Throw<ArgumentException>(() => new Credentials(username, "1425375fgk"));
     }
 }

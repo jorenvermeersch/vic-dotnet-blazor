@@ -32,14 +32,7 @@ namespace Domain.Repositories
 
         public T GetById(long id)
         {
-            T? entity = _entities.First(entity => entity.Id == id);
-
-            if (entity == null)
-            {
-                throw new InvalidOperationException($"{typeof(T)} with id {id} does not exist");
-            }
-
-            return entity;
+            return _entities.First(entity => entity.Id == id);
         }
 
         public void UpdateById(long id, T entity)

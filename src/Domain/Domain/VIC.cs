@@ -9,6 +9,8 @@ public class VIC
     private VIC()
     {
         VirtualMachineRepository = new VirtualMachineRepository();
+        AccountRepository = new AccountRepository();
+        CustomerRepository = new CustomerRepository();
     }
     public static VIC Instance => _instance;
     #endregion
@@ -23,7 +25,7 @@ public class VIC
     internal void CreateVirtualMachine(VirtualMachineArgs args)
     {
         HashSet<Port> ports = new();
-        HashSet<Credential> credentials = new();
+        HashSet<Credentials> credentials = new();
         if (args.ports != null)
         {
             foreach (var keyset in args.ports)
@@ -35,13 +37,13 @@ public class VIC
         {
             foreach (var keyset in args.credentials)
             {
-                credentials.Add(new Credential(keyset.Key, keyset.Value));
+                credentials.Add(new Credentials(keyset.Key, keyset.Value));
             }
         }
 
         VirtualMachine vm = new VirtualMachine.VirtualMachineBuilder()
             .SetName(args.name)
-            .SetResource(new Resource(args.processors, args.memory, args.storage))
+            .SetResource(new Resources(args.processors, args.memory, args.storage))
             .SetTemplate(args.template)
             .SetMode(args.mode)
             .SetFqdn(args.fqdn)
