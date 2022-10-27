@@ -5,12 +5,12 @@ using Domain.Interfaces;
 
 namespace Domain.Repositories;
 
-public class CustomerRepo
+public class CustomerRepository
 {
     private readonly ISet<ICustomer> _customers = new HashSet<ICustomer>();
     public ISet<ICustomer> Customers => _customers;
 
-    public CustomerRepo()
+    public CustomerRepository()
     {
         SeedData();
     }

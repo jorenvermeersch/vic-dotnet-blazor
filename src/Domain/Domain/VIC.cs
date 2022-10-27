@@ -8,15 +8,15 @@ public class VIC
     private static VIC _instance = new();
     private VIC()
     {
-        VirtualMachineRepository = new VirtualMachineRepo();
+        VirtualMachineRepository = new VirtualMachineRepository();
     }
     public static VIC Instance => _instance;
     #endregion
 
     #region Properties
-    public VirtualMachineRepo VirtualMachineRepository { get; }
-    public AccountRepo AccountRepository { get; }
-    public CustomerRepo CustomerRepository { get; }
+    public VirtualMachineRepository VirtualMachineRepository { get; }
+    public AccountRepository AccountRepository { get; }
+    public CustomerRepository CustomerRepository { get; }
     #endregion
 
     #region Methods VirtualMachine

@@ -2,19 +2,19 @@
 
 namespace Domain.Repositories;
 
-public class AccountRepo
+public class AccountRepository
 {
     private readonly ISet<Account> _accounts = new HashSet<Account>();
     public ISet<Account> Accounts => _accounts;
 
-    public AccountRepo()
+    public AccountRepository()
     {
         SeedData();
     }
 
     public Account GetAccountByEmail(string email)
     {
-        return _accounts.First(a=>a.Email == email);
+        return _accounts.First(a => a.Email == email);
     }
 
 

@@ -3,28 +3,28 @@ using Domain.Domain;
 using Domain.Interfaces;
 
 namespace Domain.Repositories;
-public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
+public class VirtualMachineRepository : IMachineRepository<IVirtualMachine>
 {
     #region Fields
-    private readonly ISet<VirtualMachine> _machines = new HashSet<VirtualMachine>();
-    public ISet<VirtualMachine> Machines => _machines;
+    private readonly ISet<IVirtualMachine> _machines = new HashSet<IVirtualMachine>();
+    public ISet<IVirtualMachine> Machines => _machines;
     #endregion
     #region Constructors
-    public VirtualMachineRepo()
+    public VirtualMachineRepository()
     {
         SeedData();
     }
     #endregion
     #region Methods
-    public void AddMachine(VirtualMachine vm)
+    public void AddMachine(IVirtualMachine vm)
     {
         Machines.Add(vm);
     }
-    public VirtualMachine GetMachineByFqdn(string fqdn)
+    public IVirtualMachine GetMachineByFqdn(string fqdn)
     {
         return _machines.First(m => m.Fqdn == fqdn);
     }
-    public ISet<VirtualMachine> GetVirtualMachinesByUserEmail(string email)
+    public ISet<IVirtualMachine> GetVirtualMachinesByUserEmail(string email)
     {
         return _machines.Where(m => m.User?.ContactPerson.Email == email).ToHashSet();
     }
