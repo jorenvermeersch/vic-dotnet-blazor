@@ -6,12 +6,14 @@
             <p class="value" title="@entry.Value">@entry.Value</p>
             @*<i class="fa-solid fa-xmark methodexecutor" onclick=""></i>*@
         </div>
-        <button class="fa-solid fa-xmark methodexecutor" @onclick="@(() => OnClick.InvokeAsync())"></button>
+        @if(OnClick.HasDelegate){
+            <button class="fa-solid fa-xmark methodexecutor" @onclick="@(() => OnClick.InvokeAsync())"></button>
+        }
     }
 </div>
 
 @code {
-    [Parameter] public EventCallback<string> OnClick { get; set; }
+    [Parameter] public EventCallback<string> OnClick { get; set; } = new();
 
     [Parameter] public string customCss { get; set; } = "";
 }

@@ -1,0 +1,13 @@
+﻿@inherits Input
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        customCss = "background-color: white";
+    }
+}

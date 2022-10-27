@@ -10,27 +10,27 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title text="Configuratie" />
-        <Input Type="@Input.InputType.TEXT" Label="FQDN" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="Mode" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="Template" customCss="@_customcss" />
+        <AddInput Type="@Input.InputType.TEXT" Label="FQDN"/>
+        <AddInput Type="@Input.InputType.SELECT" Label="Mode"/>
+        <AddInput Type="@Input.InputType.SELECT" Label="Template" />
 
         <Title text="Poorten" />
-        <Input PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" customCss="@_customcss" />
+        <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" />
         <div class="buttonList">
             <Button Text="HTTP" />
             <Button Text="SSH" />
         </div>
 
         <Title text="Specificaties" />
-        <Input Type="@Input.InputType.SELECT" Label="Host" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="vCPUs" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="Geheugen" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="Opslag" customCss="@_customcss" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Host" />
+        <AddInput Type="@Input.InputType.SELECT" Label="vCPUs" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Geheugen" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Opslag" />
     </div>
     <div class="one-third">
         <Title text="Beschikbaarheid" />
-        <Input Type="@Input.InputType.SELECT" Label="Start" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="Einde" customCss="@_customcss" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Start" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Einde" />
         <AvailabilityOptionSelect customCss="@_customcss" />
         <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
             <Button Text="Toevoegen" />
@@ -40,12 +40,12 @@
         <AvailabilityOption DayOfWeek="Availability.Friday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
 
         <Title text="Back-ups" />
-        <Input PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" customCss="@_customcss" />
+        <AddInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" />
     </div>
     <div class="one-third">
         <Title text="Logingegevens" />
-        <Input Type="@Input.InputType.SELECT" Label="Gebruikersnaam" customCss="@_customcss" />
-        <Input Type="@Input.InputType.SELECT" Label="Wachtwoord" customCss="@_customcss" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Gebruikersnaam"/>
+        <AddInput Type="@Input.InputType.SELECT" Label="Wachtwoord" />
         <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
             <Button Text="Toevoegen" />
         </div>
