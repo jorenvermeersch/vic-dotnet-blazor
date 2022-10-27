@@ -9,7 +9,7 @@
 
 
 @code {
-    [Parameter] public Availability.DayOfWeek? DayOfWeek { get; set; } = Availability.DayOfWeek.Wednesday;
-    [Parameter] public Availability.PartOfDay? PartOfDay { get; set; } = Availability.PartOfDay.FullDay;
+    [Parameter] public Availability DayOfWeek { get; set; } = Availability.Wednesday;
+    [Parameter] public PartOfDay PartOfDay { get; set; } = PartOfDay.FullDay;
     [Parameter] public string customCss { get; set; } = "";
 }
