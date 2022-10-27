@@ -1,4 +1,5 @@
 ﻿using Domain.Args;
+using Domain.Interfaces;
 using Domain.Repositories;
 
 namespace Domain.Domain;
@@ -64,7 +65,7 @@ public class VIC
         // TODO: pas implementeren als server repo gemaakt is
         //.SetHost() --> op naam vinden
 
-        VirtualMachineRepository.AddMachine(vm);
+        VirtualMachineRepository.Add(vm);
     }
 
 
@@ -74,20 +75,20 @@ public class VIC
     internal void CreateAccount(AccountArgs args)
     {
         Account account = new(args.Firstname, args.Lastname, args.Email, args.Role, args.Password, args.Department, args.Education);
-        AccountRepository.AddAccount(account);
+        AccountRepository.Add(account);
     }
     #endregion
 
     #region Methods Customer
     internal void CreateInternalCustomer(CustomerArgs args)
     {
-        InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber), new List<IVirtualMachine>());
         CustomerRepository.AddInternalCustomer(customer);
     }
 
     internal void CreateExternalCustomer(CustomerArgs args)
     {
-        ExternalCustomer customer = new(args.Name, args.Type, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        ExternalCustomer customer = new(args.Name, args.Type, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber), new List<IVirtualMachine>());
         CustomerRepository.AddExternalCustomer(customer);
     }
     #endregion

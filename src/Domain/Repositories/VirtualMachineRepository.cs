@@ -1,32 +1,20 @@
 ﻿using Domain.Constants;
 using Domain.Domain;
-using Domain.Interfaces;
 
 namespace Domain.Repositories;
-public class VirtualMachineRepository : IMachineRepository<IVirtualMachine>
+public class VirtualMachineRepository : EntityRepository<VirtualMachine>
 {
-    #region Fields
-    private readonly ISet<IVirtualMachine> _machines = new HashSet<IVirtualMachine>();
-    public ISet<IVirtualMachine> Machines => _machines;
-    #endregion
     #region Constructors
-    public VirtualMachineRepository()
+    public VirtualMachineRepository() : base()
     {
         SeedData();
     }
     #endregion
+
     #region Methods
-    public void AddMachine(IVirtualMachine vm)
+    public ISet<VirtualMachine> GetByCustomerEmail(string email)
     {
-        Machines.Add(vm);
-    }
-    public IVirtualMachine GetMachineByFqdn(string fqdn)
-    {
-        return _machines.First(m => m.Fqdn == fqdn);
-    }
-    public ISet<IVirtualMachine> GetVirtualMachinesByUserEmail(string email)
-    {
-        return _machines.Where(m => m.User?.ContactPerson.Email == email).ToHashSet();
+        return Entities.Where(machine => machine.User?.ContactPerson?.Email == email).ToHashSet();
     }
     private void SeedData()
     {
@@ -70,8 +58,8 @@ public class VirtualMachineRepository : IMachineRepository<IVirtualMachine>
             .SetUser(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812")))
             .Build();
 
-        AddMachine(vm1);
-        AddMachine(vm2);
+        Entities.Add(vm1);
+        Entities.Add(vm2);
     }
 }
 #endregion
