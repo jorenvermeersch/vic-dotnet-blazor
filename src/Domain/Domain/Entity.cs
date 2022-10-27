@@ -2,9 +2,7 @@
 {
     public virtual long Id { get; protected set; }
 
-    protected Entity()
-    {
-    }
+    protected Entity() { }
 
     protected Entity(long id)
     {

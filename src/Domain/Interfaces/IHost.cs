@@ -1,4 +1,3 @@
 ﻿namespace Domain.Interfaces;
-public interface IHost : IMachine
-{
-}
+
+public interface IHost : IMachine { }

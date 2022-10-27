@@ -2,16 +2,19 @@
 using Domain.Repositories;
 
 namespace Domain.Domain;
+
 public class VIC
 {
     #region Singleton
     private static VIC _instance = new();
+
     private VIC()
     {
         VirtualMachineRepository = new VirtualMachineRepository();
         AccountRepository = new AccountRepository();
         CustomerRepository = new CustomerRepository();
     }
+
     public static VIC Instance => _instance;
     #endregion
 
@@ -57,7 +60,7 @@ public class VIC
             .SetPorts(ports)
             .SetCredentials(credentials)
             .SetAccount(AccountRepository.GetAccountByEmail(args.accountEmail))
-            // TODO: Use id instead of email. 
+            // TODO: Use id instead of email.
             //.SetRequester(CustomerRepository.GetCustomerByEmail(args.requesterEmail))
             //.SetUser(CustomerRepository.GetCustomerByEmail(args.userEmail))
             .Build();
@@ -68,13 +71,21 @@ public class VIC
         VirtualMachineRepository.Add(vm);
     }
 
-
     #endregion
 
     #region Methods Account
     public void CreateAccount(AccountArgs args)
     {
-        Account account = new(args.Firstname, args.Lastname, args.Email, args.Role, args.Password, args.Department, args.Education);
+        Account account =
+            new(
+                args.Firstname,
+                args.Lastname,
+                args.Email,
+                args.Role,
+                args.Password,
+                args.Department,
+                args.Education
+            );
         AccountRepository.Add(account);
     }
     #endregion
@@ -82,15 +93,36 @@ public class VIC
     #region Methods Customer
     public void CreateInternalCustomer(CustomerArgs args)
     {
-        InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        InternalCustomer customer =
+            new(
+                args.Education,
+                args.Department,
+                new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber),
+                new ContactPerson(
+                    args.BackupFirstname,
+                    args.BackupLastname,
+                    args.BackupEmail,
+                    args.BackupPhoneNumber
+                )
+            );
         CustomerRepository.Add(customer);
     }
 
     public void CreateExternalCustomer(CustomerArgs args)
     {
-        ExternalCustomer customer = new(args.Name, args.Type, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        ExternalCustomer customer =
+            new(
+                args.Name,
+                args.Type,
+                new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber),
+                new ContactPerson(
+                    args.BackupFirstname,
+                    args.BackupLastname,
+                    args.BackupEmail,
+                    args.BackupPhoneNumber
+                )
+            );
         CustomerRepository.Add(customer);
     }
     #endregion
-
 }

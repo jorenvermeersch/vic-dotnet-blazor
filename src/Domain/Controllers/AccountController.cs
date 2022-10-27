@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Args;
+﻿using Domain.Args;
 using Domain.Domain;
 
 namespace Domain.Controllers;
@@ -12,22 +10,19 @@ public class AccountController
     #endregion
 
     #region Constructors
-    public AccountController()
-    {
-
-    }
+    public AccountController() { }
     #endregion
 
     #region Methods
     public ISet<Account> GetAll()
     {
-        return _vic.AccountRepository.Accounts;
+        return _vic.AccountRepository.Entities;
     }
 
     public Account GetById(long id)
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
 
     public void Add(AccountArgs args)
@@ -38,7 +33,7 @@ public class AccountController
     public void UpdateById(long id, AccountArgs args)
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
     #endregion
 }

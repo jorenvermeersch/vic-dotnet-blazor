@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Args;
+﻿using Domain.Args;
 using Domain.Domain;
 using Domain.Interfaces;
 
@@ -15,13 +13,13 @@ public class CustomerController
     #region Methods
     public ISet<ICustomer> GetAll()
     {
-        return _vic.CustomerRepository.Customers;
+        return _vic.CustomerRepository.Entities.Select(entity => (ICustomer)entity).ToHashSet<ICustomer>();
     }
 
     public ICustomer GetById()
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
 
     public void Add(CustomerArgs args)
@@ -33,7 +31,7 @@ public class CustomerController
     public void UpdateById(long id, CustomerArgs args)
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
     #endregion
 }

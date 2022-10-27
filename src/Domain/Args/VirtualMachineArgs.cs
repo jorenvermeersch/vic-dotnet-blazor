@@ -1,6 +1,7 @@
 ﻿using Domain.Constants;
 
 namespace Domain.Args;
+
 public class VirtualMachineArgs
 {
     #region Properties
@@ -25,9 +26,6 @@ public class VirtualMachineArgs
     public string userEmail { get; set; }
     #endregion
     #region Constructors
-    public VirtualMachineArgs()
-    {
-
-    }
+    public VirtualMachineArgs() { }
     #endregion
 }

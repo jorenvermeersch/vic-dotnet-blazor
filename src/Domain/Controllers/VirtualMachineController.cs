@@ -3,6 +3,7 @@ using Domain.Domain;
 using Domain.Interfaces;
 
 namespace Domain.Controllers;
+
 public class VirtualMachineController
 {
     #region Fields
@@ -12,19 +13,19 @@ public class VirtualMachineController
     #region Methods
     public ISet<IVirtualMachine> GetAll()
     {
-        throw new NotImplementedException();
-        // TODO: Implement method. 
+        return _vic.VirtualMachineRepository.Entities.Select(entity => (IVirtualMachine)entity).ToHashSet<IVirtualMachine>();
     }
 
     public IVirtualMachine GetById(long id)
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
+
     public ISet<IVirtualMachine> GetByCustomerId(long id)
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
 
     public void Add(VirtualMachineArgs args)
@@ -35,8 +36,7 @@ public class VirtualMachineController
     public void UpdateById(long id, VirtualMachineArgs args)
     {
         throw new NotImplementedException();
-        // TODO: Implement method. 
+        // TODO: Implement method.
     }
     #endregion
-
 }

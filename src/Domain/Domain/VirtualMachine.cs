@@ -2,6 +2,7 @@
 using Domain.Interfaces;
 
 namespace Domain.Domain;
+
 [ToString]
 public class VirtualMachine : Entity, IVirtualMachine
 {
@@ -46,7 +47,6 @@ public class VirtualMachine : Entity, IVirtualMachine
         User = builder.User;
         Resource = builder.Resource;
     }
-
 
     #endregion
 
@@ -97,86 +97,103 @@ public class VirtualMachine : Entity, IVirtualMachine
             _name = name;
             return this;
         }
+
         public VirtualMachineBuilder SetResource(Resources resource)
         {
             _resource = resource;
             return this;
         }
+
         public VirtualMachineBuilder SetTemplate(Template template)
         {
             _template = template;
             return this;
         }
+
         public VirtualMachineBuilder SetMode(Mode mode)
         {
             _mode = mode;
             return this;
         }
+
         public VirtualMachineBuilder SetFqdn(string fqdn)
         {
             _fqdn = fqdn;
             return this;
         }
+
         public VirtualMachineBuilder SetAvailabilities(ISet<Availability> availabilities)
         {
             _availabilities = availabilities;
             return this;
         }
+
         public VirtualMachineBuilder SetBackupFrequenty(BackupFrequenty backupFrequenty)
         {
             _backupFrequenty = backupFrequenty;
             return this;
         }
+
         public VirtualMachineBuilder SetApplicationDate(DateTime applicationDate)
         {
             _applicationDate = applicationDate;
             return this;
         }
+
         public VirtualMachineBuilder SetDuration(Duration duration)
         {
             _duration = duration;
             return this;
         }
+
         public VirtualMachineBuilder SetStatus(Status status)
         {
             _status = status;
             return this;
         }
+
         public VirtualMachineBuilder SetReason(string reason)
         {
             _reason = reason;
             return this;
         }
+
         public VirtualMachineBuilder SetPorts(ISet<Port> ports)
         {
             _ports = ports;
             return this;
         }
+
         public VirtualMachineBuilder SetHost(IHost host)
         {
             _host = host;
             return this;
         }
+
         public VirtualMachineBuilder SetAccount(Account account)
         {
             _account = account;
             return this;
         }
+
         public VirtualMachineBuilder SetCredentials(ISet<Credentials> credentials)
         {
             _credentials = credentials;
             return this;
         }
+
         public VirtualMachineBuilder SetRequester(ICustomer customer)
         {
             _requester = customer;
             return this;
         }
+
         public VirtualMachineBuilder SetUser(ICustomer user)
         {
             _user = user;
             return this;
         }
+
         public VirtualMachine Build()
         {
             return new VirtualMachine(this);

@@ -1,4 +1,5 @@
 ﻿namespace Domain.Constants;
+
 public enum Role
 {
     Customer,

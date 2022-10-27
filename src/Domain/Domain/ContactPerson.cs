@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 
 namespace Domain.Domain;
+
 [ToString]
 public class ContactPerson : Entity
 {
@@ -17,7 +18,11 @@ public class ContactPerson : Entity
     {
         Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[^0-9\\\\W]+");
         Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[^0-9\\W]+");
-        Email = Guard.Against.InvalidFormat(email, nameof(email), "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-z]+)$");
+        Email = Guard.Against.InvalidFormat(
+            email,
+            nameof(email),
+            "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-z]+)$"
+        );
         PhoneNumber = Guard.Against.InvalidFormat(phoneNumber, nameof(phoneNumber), "[+]*[0-9]+");
     }
     #endregion

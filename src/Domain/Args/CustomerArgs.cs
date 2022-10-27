@@ -27,6 +27,4 @@ public class CustomerArgs
 
 
     public CustomerArgs() { }
-
-
 }

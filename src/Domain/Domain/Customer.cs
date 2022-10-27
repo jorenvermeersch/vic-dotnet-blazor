@@ -11,7 +11,11 @@ namespace Domain.Domain
         #endregion
 
         #region Constructors
-        public Customer(ContactPerson contactPerson, ContactPerson backupContact, IList<IVirtualMachine> virtualMachines)
+        public Customer(
+            ContactPerson contactPerson,
+            ContactPerson backupContact,
+            IList<IVirtualMachine> virtualMachines
+        )
         {
             ContactPerson = contactPerson;
             BackupContactPerson = backupContact;
@@ -19,10 +23,7 @@ namespace Domain.Domain
         }
 
         public Customer(ContactPerson contactPerson, ContactPerson backupContact)
-        : this(contactPerson, backupContact, new List<IVirtualMachine>())
-        {
-
-        }
+            : this(contactPerson, backupContact, new List<IVirtualMachine>()) { }
         #endregion
     }
 }

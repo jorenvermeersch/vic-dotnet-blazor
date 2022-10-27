@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces;
 
 namespace Domain.Domain;
+
 [ToString]
 public class Server : Entity, IHost
 {

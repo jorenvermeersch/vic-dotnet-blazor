@@ -1,4 +1,5 @@
 ﻿namespace Domain.Domain;
+
 [ToString]
 public class Duration
 {
@@ -19,7 +20,6 @@ public class Duration
         {
             throw new ArgumentException("end date should be after start date");
         }
-
     }
     #endregion
 }

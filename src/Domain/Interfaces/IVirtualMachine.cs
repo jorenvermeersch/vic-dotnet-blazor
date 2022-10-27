@@ -2,6 +2,7 @@
 using Domain.Domain;
 
 namespace Domain.Interfaces;
+
 public interface IVirtualMachine : IMachine
 {
     public Template Template { get; set; }
