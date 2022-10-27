@@ -13,7 +13,9 @@ public class CustomerController
     #region Methods
     public ISet<ICustomer> GetAll()
     {
-        return _vic.CustomerRepository.Entities.Select(entity => (ICustomer)entity).ToHashSet<ICustomer>();
+        return _vic.CustomerRepository.Entities
+            .Select(entity => (ICustomer)entity)
+            .ToHashSet<ICustomer>();
     }
 
     public ICustomer GetById()

@@ -13,7 +13,9 @@ public class VirtualMachineController
     #region Methods
     public ISet<IVirtualMachine> GetAll()
     {
-        return _vic.VirtualMachineRepository.Entities.Select(entity => (IVirtualMachine)entity).ToHashSet<IVirtualMachine>();
+        return _vic.VirtualMachineRepository.Entities
+            .Select(entity => (IVirtualMachine)entity)
+            .ToHashSet<IVirtualMachine>();
     }
 
     public IVirtualMachine GetById(long id)
