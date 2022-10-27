@@ -31,11 +31,11 @@ public class VirtualMachineRepository : EntityRepository<VirtualMachine>
             .SetPorts(new HashSet<Port>() { new(1, "port1"), new(2, "port2") })
             .SetReason("Ik heb een VM nodig voor Ai te trainen.")
             .SetName("VirtualMachine1")
-            .SetRequester(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Kerem", "Yilmaz", "kerem.yilmaz@valid.com", "0483447325")))
+            .SetRequester(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Kerem", "Yilmaz", "kerem.yilmaz@valid.com", "0483447325"), new ContactPerson("Kerem", "Yilmaz", "kerem.yilmaz@valid.com", "0483447325")))
             .SetResource(new Resources(2, 2, 2))
             .SetStatus(Status.Requested)
             .SetTemplate(Template.AI)
-            .SetUser(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Kerem", "Yilmaz", "kerem.yilmaz@valid.com", "0483788945")))
+            .SetUser(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Kerem", "Yilmaz", "kerem.yilmaz@valid.com", "0483788945"), new ContactPerson("Kerem", "Yilmaz", "kerem.yilmaz@valid.com", "0483447325")))
             .Build();
 
         VirtualMachine vm2 = new VirtualMachine.VirtualMachineBuilder()
@@ -51,11 +51,11 @@ public class VirtualMachineRepository : EntityRepository<VirtualMachine>
             .SetPorts(new HashSet<Port>() { new(1, "port1"), new(2, "port2") })
             .SetReason("Ik heb een VM nodig om mijn website te hosten.")
             .SetName("VirtualMachine2")
-            .SetRequester(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812")))
+            .SetRequester(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812"), new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812")))
             .SetResource(new Resources(2, 2, 2))
             .SetStatus(Status.Requested)
             .SetTemplate(Template.AI)
-            .SetUser(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812")))
+            .SetUser(new InternalCustomer("Toegepaste Informatica", "DIT", new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812"), new ContactPerson("Angela", "Degryse", "angela.degryse@valid.com", "0483567812")))
             .Build();
 
         Entities.Add(vm1);

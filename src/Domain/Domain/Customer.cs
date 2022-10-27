@@ -17,6 +17,12 @@ namespace Domain.Domain
             BackupContactPerson = backupContact;
             VirtualMachines = virtualMachines;
         }
+
+        public Customer(ContactPerson contactPerson, ContactPerson backupContact)
+        : this(contactPerson, backupContact, new List<IVirtualMachine>())
+        {
+
+        }
         #endregion
     }
 }

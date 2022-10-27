@@ -18,5 +18,11 @@ public class InternalCustomer : Customer
         Education = Guard.Against.InvalidFormat(education, nameof(education), "^.{0}$|^[a-zA-Z]+[ a-zA-Z]*");
         Department = Guard.Against.InvalidFormat(department, nameof(department), "^[a-zA-Z]+[ a-zA-Z]*");
     }
+
+    public InternalCustomer(string name, string type, ContactPerson contactPerson, ContactPerson backupContact)
+    : this(name, type, contactPerson, backupContact, new List<IVirtualMachine>())
+    {
+
+    }
     #endregion
 }
