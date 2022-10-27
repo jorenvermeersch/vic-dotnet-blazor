@@ -1,24 +1,42 @@
 ﻿using Domain.Args;
 using Domain.Domain;
+using Domain.Interfaces;
 
 namespace Domain.Controllers;
-public class VirtualMachineController {
+public class VirtualMachineController
+{
+    #region Fields
     private VIC _vic = VIC.Instance;
+    #endregion
 
-    public ISet<VirtualMachine> FindAllVirtualMachines() {
-        return _vic.VirtualMachineRepo.Machines;
-    }
-    public VirtualMachine FindVirtualMachineByFqdn(string fqdn) {
-        return _vic.VirtualMachineRepo.GetMachineByFqdn(fqdn);
-    }
-    public ISet<VirtualMachine> FindVirtualMachinesByUserEmail(string email) {
-        return _vic.VirtualMachineRepo.GetVirtualMachinesByUserEmail(email);
+    #region Methods
+    public ISet<IVirtualMachine> GetAll()
+    {
+        throw new NotImplementedException();
+        // TODO: Implement method. 
     }
 
-    public void AddVirtualMachine(VirtualMachineArgs args)
+    public IVirtualMachine GetById(long id)
+    {
+        throw new NotImplementedException();
+        // TODO: Implement method. 
+    }
+    public ISet<IVirtualMachine> GetByCustomerId(long id)
+    {
+        throw new NotImplementedException();
+        // TODO: Implement method. 
+    }
+
+    public void Add(VirtualMachineArgs args)
     {
         _vic.CreateVirtualMachine(args);
     }
 
-    public VirtualMachineController() {}
+    public void UpdateById(long id, VirtualMachineArgs args)
+    {
+        throw new NotImplementedException();
+        // TODO: Implement method. 
+    }
+    #endregion
+
 }

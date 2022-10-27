@@ -10,23 +10,28 @@ public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
     public ISet<VirtualMachine> Machines => _machines;
     #endregion
     #region Constructors
-    public VirtualMachineRepo() {
+    public VirtualMachineRepo()
+    {
         SeedData();
     }
     #endregion
     #region Methods
-    public void AddMachine(VirtualMachine vm) {
+    public void AddMachine(VirtualMachine vm)
+    {
         Machines.Add(vm);
     }
-    public VirtualMachine GetMachineByFqdn(string fqdn) {
+    public VirtualMachine GetMachineByFqdn(string fqdn)
+    {
         return _machines.First(m => m.Fqdn == fqdn);
     }
-    public ISet<VirtualMachine> GetVirtualMachinesByUserEmail(string email) {
+    public ISet<VirtualMachine> GetVirtualMachinesByUserEmail(string email)
+    {
         return _machines.Where(m => m.User?.ContactPerson.Email == email).ToHashSet();
     }
-    private void SeedData() {
+    private void SeedData()
+    {
         VirtualMachine vm1 = new VirtualMachine.VirtualMachineBuilder()
-            .SetAccount(new Account("kerem", "yilmaz","kerem.yilmaz@hotmail.com", Role.Admin, "password", "DIT", "Toegepaste Informatica"))
+            .SetAccount(new Account("kerem", "yilmaz", "kerem.yilmaz@hotmail.com", Role.Admin, "password", "DIT", "Toegepaste Informatica"))
             .SetApplicationDate(DateTime.Now)
             .SetAvailabilities(new HashSet<Availability> { Availability.Saturday, Availability.Monday })
             .SetBackupFrequenty(BackupFrequenty.Daily)
@@ -46,7 +51,7 @@ public class VirtualMachineRepo : IMachineRepository<VirtualMachine>
             .Build();
 
         VirtualMachine vm2 = new VirtualMachine.VirtualMachineBuilder()
-            .SetAccount(new Account("angela", "degryse","angela.degryse@hotmail.com", Role.Observer, "password", "DIT", "Toegepaste Informatica"))
+            .SetAccount(new Account("angela", "degryse", "angela.degryse@hotmail.com", Role.Observer, "password", "DIT", "Toegepaste Informatica"))
             .SetApplicationDate(DateTime.Now)
             .SetAvailabilities(new HashSet<Availability> { Availability.Monday, Availability.Tuesday, Availability.Wednesday })
             .SetBackupFrequenty(BackupFrequenty.Monthly)

@@ -8,20 +8,32 @@ namespace Domain.Controllers;
 
 public class CustomerController
 {
+    #region Fields
     private VIC _vic = VIC.Instance;
+    #endregion
 
-    public ISet<ICustomer> GetAllCustomers()
+    #region Methods
+    public ISet<ICustomer> GetAll()
     {
-        return _vic.CustomerRepo.Customers;
+        return _vic.CustomerRepository.Customers;
     }
 
-    public ICustomer GetCustomerByEmail(string email)
+    public ICustomer GetById()
     {
-        return _vic.CustomerRepo.GetCustomerByEmail(email);
+        throw new NotImplementedException();
+        // TODO: Implement method. 
     }
 
-    public void CreateAccount(AccountArgs args)
+    public void Add(CustomerArgs args)
     {
-        _vic.CreateAccount(args);
+        throw new NotImplementedException();
+        // TODO: Implement method.
     }
+
+    public void UpdateById(long id, CustomerArgs args)
+    {
+        throw new NotImplementedException();
+        // TODO: Implement method. 
+    }
+    #endregion
 }

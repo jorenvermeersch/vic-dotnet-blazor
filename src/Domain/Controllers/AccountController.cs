@@ -7,20 +7,38 @@ namespace Domain.Controllers;
 
 public class AccountController
 {
+    #region Fields
     private VIC _vic = VIC.Instance;
+    #endregion
 
-    public ISet<Account> GetAllAccounts()
+    #region Constructors
+    public AccountController()
     {
-        return _vic.AccountRepo.Accounts;
+
+    }
+    #endregion
+
+    #region Methods
+    public ISet<Account> GetAll()
+    {
+        return _vic.AccountRepository.Accounts;
     }
 
-    public Account GetAccountByEmail(string email)
+    public Account GetById(long id)
     {
-        return _vic.AccountRepo.GetAccountByEmail(email);
+        throw new NotImplementedException();
+        // TODO: Implement method. 
     }
 
-    public void CreateAccount(AccountArgs args)
+    public void Add(AccountArgs args)
     {
         _vic.CreateAccount(args);
     }
+
+    public void UpdateById(long id, AccountArgs args)
+    {
+        throw new NotImplementedException();
+        // TODO: Implement method. 
+    }
+    #endregion
 }

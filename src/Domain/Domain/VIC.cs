@@ -1,32 +1,40 @@
 ﻿using Domain.Args;
-using Domain.Constants;
 using Domain.Repositories;
 
 namespace Domain.Domain;
-public class VIC {
-    #region Singleton pattern
-    private static VIC _instance = new VIC();
-    private VIC() {
-    VirtualMachineRepo = new VirtualMachineRepo();
+public class VIC
+{
+    #region Singleton
+    private static VIC _instance = new();
+    private VIC()
+    {
+        VirtualMachineRepository = new VirtualMachineRepo();
     }
     public static VIC Instance => _instance;
     #endregion
-    #region Repositories
-    public VirtualMachineRepo VirtualMachineRepo { get; }
-    public AccountRepo AccountRepo { get; }
-    public CustomerRepo CustomerRepo { get; }
+
+    #region Properties
+    public VirtualMachineRepo VirtualMachineRepository { get; }
+    public AccountRepo AccountRepository { get; }
+    public CustomerRepo CustomerRepository { get; }
     #endregion
-    #region VirtualMachine methods
-    internal void CreateVirtualMachine(VirtualMachineArgs args) {
+
+    #region Methods VirtualMachine
+    internal void CreateVirtualMachine(VirtualMachineArgs args)
+    {
         HashSet<Port> ports = new();
         HashSet<Credential> credentials = new();
-        if(args.ports != null) {
-            foreach(var keyset in args.ports) {
+        if (args.ports != null)
+        {
+            foreach (var keyset in args.ports)
+            {
                 ports.Add(new Port(keyset.Key, keyset.Value));
             }
         }
-        if(args.credentials != null) {
-            foreach(var keyset in args.credentials) {
+        if (args.credentials != null)
+        {
+            foreach (var keyset in args.credentials)
+            {
                 credentials.Add(new Credential(keyset.Key, keyset.Value));
             }
         }
@@ -46,39 +54,39 @@ public class VIC {
             .SetReason(args.reason)
             .SetPorts(ports)
             .SetCredentials(credentials)
-            .SetAccount(AccountRepo.GetAccountByEmail(args.accountEmail))
-            .SetRequester(CustomerRepo.GetCustomerByEmail(args.requesterEmail))
-            .SetUser(CustomerRepo.GetCustomerByEmail(args.userEmail))
+            .SetAccount(AccountRepository.GetAccountByEmail(args.accountEmail))
+            .SetRequester(CustomerRepository.GetCustomerByEmail(args.requesterEmail))
+            .SetUser(CustomerRepository.GetCustomerByEmail(args.userEmail))
             .Build();
 
         // TODO: pas implementeren als server repo gemaakt is
         //.SetHost() --> op naam vinden
 
-        VirtualMachineRepo.AddMachine(vm);
+        VirtualMachineRepository.AddMachine(vm);
     }
 
 
     #endregion
 
-    #region Account methods
+    #region Methods Account
     internal void CreateAccount(AccountArgs args)
     {
         Account account = new(args.Firstname, args.Lastname, args.Email, args.Role, args.Password, args.Department, args.Education);
-        AccountRepo.AddAccount(account);
+        AccountRepository.AddAccount(account);
     }
     #endregion
 
-    #region Customer methods
+    #region Methods Customer
     internal void CreateInternalCustomer(CustomerArgs args)
     {
-        InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname,args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
-        CustomerRepo.AddInternalCustomer(customer);
+        InternalCustomer customer = new(args.Education, args.Department, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
+        CustomerRepository.AddInternalCustomer(customer);
     }
 
     internal void CreateExternalCustomer(CustomerArgs args)
     {
         ExternalCustomer customer = new(args.Name, args.Type, new ContactPerson(args.Firstname, args.Lastname, args.Email, args.PhoneNumber), new ContactPerson(args.BackupFirstname, args.BackupLastname, args.BackupEmail, args.BackupPhoneNumber));
-        CustomerRepo.AddExternalCustomer(customer);
+        CustomerRepository.AddExternalCustomer(customer);
     }
     #endregion
 
