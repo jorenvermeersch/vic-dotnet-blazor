@@ -3,7 +3,7 @@
 namespace Domain.Domain;
 
 [ToString]
-public class Port
+public class Port : Entity
 {
     #region Properties
     public int Number { get; set; }
