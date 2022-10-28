@@ -25,7 +25,4 @@ public class VirtualMachineArgs
     public string requesterEmail { get; set; }
     public string userEmail { get; set; }
     #endregion
-    #region Constructors
-    public VirtualMachineArgs() { }
-    #endregion
 }

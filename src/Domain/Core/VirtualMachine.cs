@@ -26,7 +26,7 @@ public class VirtualMachine : Machine
 
     #region Constructors
     public VirtualMachine(VirtualMachineBuilder builder)
-    : base(builder.Name, builder.Specifications)
+        : base(builder.Name, builder.Specifications)
     {
         Template = builder.Template;
         Mode = builder.Mode;
@@ -51,7 +51,9 @@ public class VirtualMachine : Machine
     public class VirtualMachineBuilder
     {
         #region Fields
-        private string _name, _fqdn, _reason;
+        private string _name,
+            _fqdn,
+            _reason;
         private Specifications _specifications;
         private Template _template;
         private Mode _mode;
@@ -64,7 +66,8 @@ public class VirtualMachine : Machine
         private Host _host;
         private IList<Credentials> _credentials;
         private Account _account;
-        private Customer _requester, _user;
+        private Customer _requester,
+            _user;
 
         #endregion
 

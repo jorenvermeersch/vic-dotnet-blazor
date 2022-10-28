@@ -68,6 +68,5 @@ public class Account : Entity
         }
         return builder.ToString();
     }
-
     #endregion
 }
