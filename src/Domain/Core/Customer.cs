@@ -1,29 +1,23 @@
-﻿using Domain.Interfaces;
+﻿namespace Domain.Domain;
 
-namespace Domain.Domain
+public class Customer : Entity
 {
-    public abstract class Customer : Entity, ICustomer
+    #region Properties
+    public ContactPerson ContactPerson { get; set; }
+    public ContactPerson BackupContactPerson { get; set; }
+    public IList<VirtualMachine> VirtualMachines { get; set; }
+    #endregion
+
+    #region Constructors
+    public Customer(
+        ContactPerson contactPerson,
+        ContactPerson backupContact,
+        IList<VirtualMachine>? virtualMachines = null
+    )
     {
-        #region Properties
-        public ContactPerson ContactPerson { get; set; }
-        public ContactPerson BackupContactPerson { get; set; }
-        public IList<IVirtualMachine> VirtualMachines { get; set; }
-        #endregion
-
-        #region Constructors
-        public Customer(
-            ContactPerson contactPerson,
-            ContactPerson backupContact,
-            IList<IVirtualMachine> virtualMachines
-        )
-        {
-            ContactPerson = contactPerson;
-            BackupContactPerson = backupContact;
-            VirtualMachines = virtualMachines;
-        }
-
-        public Customer(ContactPerson contactPerson, ContactPerson backupContact)
-            : this(contactPerson, backupContact, new List<IVirtualMachine>()) { }
-        #endregion
+        ContactPerson = contactPerson;
+        BackupContactPerson = backupContact;
+        VirtualMachines = virtualMachines ?? new List<VirtualMachine>();
     }
+    #endregion
 }

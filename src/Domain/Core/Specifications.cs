@@ -1,7 +1,7 @@
 ﻿namespace Domain.Domain;
 
 [ToString]
-public class Resources
+public class Specifications
 {
     #region Properties
     public int Processors { get; set; }
@@ -10,7 +10,7 @@ public class Resources
     #endregion
 
     #region Constructors
-    public Resources(int processors, int memory, int storage)
+    public Specifications(int processors, int memory, int storage)
     {
         Processors = processors;
         Memory = memory;

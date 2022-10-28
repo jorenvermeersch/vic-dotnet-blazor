@@ -16,7 +16,7 @@ public class VirtualMachineTests {
     private ICustomer _req = new InternalCustomer("educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
     private Status _status = Status.Requested;
     private Template _temp = Template.AI;
-    private Resources _resource = new(2, 2, 2);
+    private Specifications _resource = new(2, 2, 2);
     #endregion
 
     [Fact]

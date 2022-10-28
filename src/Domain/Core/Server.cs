@@ -1,21 +1,11 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Core;
 
 namespace Domain.Domain;
 
 [ToString]
-public class Server : Entity, IHost
+public class Server : Host
 {
-    #region Properties
-    public string Name { get; set; }
-    public Resources Resources { get; set; }
-
-    #endregion
-
     #region Constructors
-    public Server(string name, Resources resources)
-    {
-        Name = name;
-        Resources = resources;
-    }
+    public Server(string name, Specifications resources) : base(name, resources) { }
     #endregion
 }

@@ -1,5 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using Domain.Interfaces;
 
 namespace Domain.Domain;
 
@@ -17,18 +16,11 @@ public class ExternalCustomer : Customer
         string type,
         ContactPerson contactPerson,
         ContactPerson backupContact,
-        IList<IVirtualMachine> virtualMachines
+        IList<VirtualMachine>? virtualMachines = null
     ) : base(contactPerson, backupContact, virtualMachines)
     {
         Name = Guard.Against.InvalidFormat(name, nameof(name), "^[a-zA-Z]+[ a-zA-Z]*");
         Type = Guard.Against.InvalidFormat(type, nameof(type), "^[a-zA-Z]+[ a-zA-Z]*");
     }
-
-    public ExternalCustomer(
-        string name,
-        string type,
-        ContactPerson contactPerson,
-        ContactPerson backupContact
-    ) : this(name, type, contactPerson, backupContact, new List<IVirtualMachine>()) { }
     #endregion
 }

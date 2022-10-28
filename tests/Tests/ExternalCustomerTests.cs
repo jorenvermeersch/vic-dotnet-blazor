@@ -2,6 +2,13 @@
 
 public class ExternalCustomerTests
 {
+
+    public void test()
+    {
+        ContactPerson p = new("jane", "doe", "jane.doe@hotmail.com", "+3245867952");
+        Customer customer = new(p, p);
+    }
+
     [Fact]
     public void ExternalCustomer_creation_is_correct()
     {

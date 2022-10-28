@@ -1,13 +1,12 @@
 ﻿using Domain.Constants;
-using Domain.Interfaces;
+using Domain.Core;
 
 namespace Domain.Domain;
 
 [ToString]
-public class VirtualMachine : Entity, IVirtualMachine
+public class VirtualMachine : Machine
 {
     #region Properties
-    public string Name { get; set; }
     public Template Template { get; set; }
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }
@@ -18,12 +17,12 @@ public class VirtualMachine : Entity, IVirtualMachine
     public Status Status { get; set; }
     public string Reason { get; set; }
     public ISet<Port> Ports { get; set; }
-    public IHost Host { get; set; }
+    public Host Host { get; set; }
     public ISet<Credentials> Credentials { get; set; }
     public Account Account { get; set; }
-    public ICustomer Requester { get; set; }
-    public ICustomer User { get; set; }
-    public Resources Resources { get; set; }
+    public Customer Requester { get; set; }
+    public Customer User { get; set; }
+    public Specifications Resources { get; set; }
     #endregion
 
     #region Constructors
@@ -55,7 +54,7 @@ public class VirtualMachine : Entity, IVirtualMachine
     {
         #region Fields
         private string _name;
-        private Resources _resource;
+        private Specifications _resource;
         private Template _template;
         private Mode _mode;
         private string _fqdn;
@@ -74,7 +73,7 @@ public class VirtualMachine : Entity, IVirtualMachine
         #endregion
         #region Properties
         public string Name => _name;
-        public Resources Resource => _resource;
+        public Specifications Resource => _resource;
         public Template Template => _template;
         public Mode Mode => _mode;
         public string Fqdn => _fqdn;
@@ -98,7 +97,7 @@ public class VirtualMachine : Entity, IVirtualMachine
             return this;
         }
 
-        public VirtualMachineBuilder SetResource(Resources resource)
+        public VirtualMachineBuilder SetResource(Specifications resource)
         {
             _resource = resource;
             return this;
