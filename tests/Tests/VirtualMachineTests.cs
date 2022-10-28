@@ -57,6 +57,6 @@ public class VirtualMachineTests {
         vm.Status.ShouldBe(_status);
         vm.Template.ShouldBe(_temp);
         vm.User.ShouldBe(_req);
-        vm.Resource.ShouldBe(_resource);
+        vm.Resources.ShouldBe(_resource);
     }
 }

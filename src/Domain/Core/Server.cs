@@ -7,14 +7,15 @@ public class Server : Entity, IHost
 {
     #region Properties
     public string Name { get; set; }
-    public Resources Resource { get; set; }
+    public Resources Resources { get; set; }
 
     #endregion
+
     #region Constructors
     public Server(string name, Resources resources)
     {
         Name = name;
-        Resource = resources;
+        Resources = resources;
     }
     #endregion
 }

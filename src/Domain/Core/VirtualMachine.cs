@@ -23,7 +23,7 @@ public class VirtualMachine : Entity, IVirtualMachine
     public Account Account { get; set; }
     public ICustomer Requester { get; set; }
     public ICustomer User { get; set; }
-    public Resources Resource { get; set; }
+    public Resources Resources { get; set; }
     #endregion
 
     #region Constructors
@@ -45,7 +45,7 @@ public class VirtualMachine : Entity, IVirtualMachine
         Account = builder.Account;
         Requester = builder.Requester;
         User = builder.User;
-        Resource = builder.Resource;
+        Resources = builder.Resource;
     }
 
     #endregion
