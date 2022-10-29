@@ -13,7 +13,7 @@ public class VirtualMachineArgs
     public Mode mode { get; set; }
     public string fqdn { get; set; }
     public ISet<Availability> availabilities { get; set; }
-    public BackupFrequenty backupFrequenty { get; set; }
+    public BackupFrequency backupFrequency { get; set; }
     public DateTime applicationDate { get; set; }
     public ISet<DateTime> duration { get; set; }
     public Status status { get; set; }

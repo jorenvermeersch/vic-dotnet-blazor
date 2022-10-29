@@ -11,7 +11,7 @@ public class VirtualMachine : Machine
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
-    public BackupFrequenty BackupFrequenty { get; set; }
+    public BackupFrequency BackupFrequency { get; set; }
     public DateTime ApplicationDate { get; set; }
     public Duration Duration { get; set; }
     public Status Status { get; set; }
@@ -32,7 +32,7 @@ public class VirtualMachine : Machine
         Mode = builder.Mode;
         Fqdn = builder.Fqdn;
         Availabilities = builder.Availabilities;
-        BackupFrequenty = builder.BackupFrequenty;
+        BackupFrequency = builder.BackupFrequency;
         ApplicationDate = builder.ApplicationDate;
         Duration = builder.Duration;
         Status = builder.Status;
@@ -51,14 +51,12 @@ public class VirtualMachine : Machine
     public class VirtualMachineBuilder
     {
         #region Fields
-        private string _name,
-            _fqdn,
-            _reason;
+        private string _name, _fqdn, _reason;
         private Specifications _specifications;
         private Template _template;
         private Mode _mode;
         private IList<Availability> _availabilities;
-        private BackupFrequenty _backupFrequenty;
+        private BackupFrequency _backupFrequency;
         private DateTime _applicationDate;
         private Duration _duration;
         private Status _status;
@@ -66,9 +64,7 @@ public class VirtualMachine : Machine
         private Host _host;
         private IList<Credentials> _credentials;
         private Account _account;
-        private Customer _requester,
-            _user;
-
+        private Customer _requester, _user;
         #endregion
 
         #region Properties
@@ -78,7 +74,7 @@ public class VirtualMachine : Machine
         public Mode Mode => _mode;
         public string Fqdn => _fqdn;
         public IList<Availability> Availabilities => _availabilities;
-        public BackupFrequenty BackupFrequenty => _backupFrequenty;
+        public BackupFrequency BackupFrequency => _backupFrequency;
         public DateTime ApplicationDate => _applicationDate;
         public Duration Duration => _duration;
         public Status Status => _status;
@@ -92,103 +88,103 @@ public class VirtualMachine : Machine
         #endregion
 
         #region Methods
-        public VirtualMachineBuilder WithName(string name)
+        public VirtualMachineBuilder SetName(string name)
         {
             _name = name;
             return this;
         }
 
-        public VirtualMachineBuilder WithSpecifications(Specifications specifications)
+        public VirtualMachineBuilder SetSpecifications(Specifications specifications)
         {
             _specifications = specifications;
             return this;
         }
 
-        public VirtualMachineBuilder WithTemplate(Template template)
+        public VirtualMachineBuilder SetTemplate(Template template)
         {
             _template = template;
             return this;
         }
 
-        public VirtualMachineBuilder WithMode(Mode mode)
+        public VirtualMachineBuilder SetMode(Mode mode)
         {
             _mode = mode;
             return this;
         }
 
-        public VirtualMachineBuilder WithFqdn(string fqdn)
+        public VirtualMachineBuilder SetFqdn(string fqdn)
         {
             _fqdn = fqdn;
             return this;
         }
 
-        public VirtualMachineBuilder WithAvailabilities(IList<Availability> availabilities)
+        public VirtualMachineBuilder SetAvailabilities(IList<Availability> availabilities)
         {
             _availabilities = availabilities;
             return this;
         }
 
-        public VirtualMachineBuilder WithBackupFrequenty(BackupFrequenty backupFrequenty)
+        public VirtualMachineBuilder SetBackupBackupFrequency(BackupFrequency backupFrequeny)
         {
-            _backupFrequenty = backupFrequenty;
+            _backupFrequency = backupFrequeny;
             return this;
         }
 
-        public VirtualMachineBuilder WithApplicationDate(DateTime applicationDate)
+        public VirtualMachineBuilder SetApplicationDate(DateTime applicationDate)
         {
             _applicationDate = applicationDate;
             return this;
         }
 
-        public VirtualMachineBuilder WithDuration(Duration duration)
+        public VirtualMachineBuilder SetDuration(Duration duration)
         {
             _duration = duration;
             return this;
         }
 
-        public VirtualMachineBuilder WithStatus(Status status)
+        public VirtualMachineBuilder SetStatus(Status status)
         {
             _status = status;
             return this;
         }
 
-        public VirtualMachineBuilder WithReason(string reason)
+        public VirtualMachineBuilder SetReason(string reason)
         {
             _reason = reason;
             return this;
         }
 
-        public VirtualMachineBuilder WithPorts(IList<Port> ports)
+        public VirtualMachineBuilder SetPorts(IList<Port> ports)
         {
             _ports = ports;
             return this;
         }
 
-        public VirtualMachineBuilder WithHost(Host host)
+        public VirtualMachineBuilder SetHost(Host host)
         {
             _host = host;
             return this;
         }
 
-        public VirtualMachineBuilder WithAccount(Account account)
+        public VirtualMachineBuilder SetAccount(Account account)
         {
             _account = account;
             return this;
         }
 
-        public VirtualMachineBuilder WithCredentials(IList<Credentials> credentials)
+        public VirtualMachineBuilder SetCredentials(IList<Credentials> credentials)
         {
             _credentials = credentials;
             return this;
         }
 
-        public VirtualMachineBuilder WithRequester(Customer customer)
+        public VirtualMachineBuilder SetRequester(Customer customer)
         {
             _requester = customer;
             return this;
         }
 
-        public VirtualMachineBuilder WithUser(Customer user)
+        public VirtualMachineBuilder SetUser(Customer user)
         {
             _user = user;
             return this;

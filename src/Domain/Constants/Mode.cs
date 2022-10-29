@@ -3,5 +3,6 @@
 public enum Mode
 {
     IAAS,
-    PAAS
+    PAAS,
+    SAAS
 }

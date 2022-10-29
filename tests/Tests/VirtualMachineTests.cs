@@ -1,14 +1,15 @@
 ﻿namespace Tests;
-public class VirtualMachineTests {
+public class VirtualMachineTests
+{
     #region Fields
-    private Account _account = new("kerem", "yilmaz","kerem.yilmaz@hotmail.com", Role.Admin, "password", "department", "opleiding");
+    private Account _account = new("kerem", "yilmaz", "kerem.yilmaz@hotmail.com", Role.Admin, "password", "department", "opleiding");
     private DateTime _applicationDate = DateTime.Now;
     private HashSet<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
-    private BackupFrequenty _bfreq = BackupFrequenty.Monthly;
+    private BackupFrequency _bfreq = BackupFrequency.Monthly;
     private HashSet<Credentials> _creds = new() { new("name", "password"), new("user", "password") };
     private Duration _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
     private string _fqdn = "domain.name";
-    private IHost _host = new Server("s1", new(4,4,4));
+    private IHost _host = new Server("s1", new(4, 4, 4));
     private Mode _mode = Mode.PAAS;
     private string _name = "VMName";
     private HashSet<Port> _ports = new() { new(1, "port1"), new(2, "port2") };
@@ -20,7 +21,8 @@ public class VirtualMachineTests {
     #endregion
 
     [Fact]
-    public void VirtualMachine_creation_is_correct() {
+    public void VirtualMachine_creation_is_correct()
+    {
         VirtualMachine vm = new VirtualMachine.VirtualMachineBuilder()
             .SetAccount(_account)
             .SetApplicationDate(_applicationDate)
@@ -44,7 +46,7 @@ public class VirtualMachineTests {
         vm.Account.ShouldBe(_account);
         vm.ApplicationDate.ShouldBe(_applicationDate);
         vm.Availabilities.ShouldBe(_availability);
-        vm.BackupFrequenty.ShouldBe(_bfreq);
+        vm.BackupFrequency.ShouldBe(_bfreq);
         vm.Credentials.ShouldBe(_creds);
         vm.Duration.ShouldBe(_dur);
         vm.Fqdn.ShouldBe(_fqdn);

@@ -3,5 +3,6 @@
 public enum Template
 {
     NoTemplate,
-    AI
+    AI,
+    WebServer
 }
