@@ -1,6 +1,8 @@
 ﻿public abstract class Entity
 {
     public virtual long Id { get; protected set; }
+    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     protected Entity() { }
 
@@ -9,8 +11,10 @@
         Id = id;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
+        if (obj == null) return false;
+
         if (obj is not Entity other)
             return false;
 
