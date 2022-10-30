@@ -1,4 +1,4 @@
-﻿namespace Shared;
+﻿namespace Shared.customer;
 
 public interface ICustomerService
 {

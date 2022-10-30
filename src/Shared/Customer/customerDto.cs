@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared;
+namespace Shared.customer;
 
 public static class CustomerDto
 {
     public class Index
     {
         public long Id { get; set; }
-        public string CustomerName { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
     }
 
     public class Details

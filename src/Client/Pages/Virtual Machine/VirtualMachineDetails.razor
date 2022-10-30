@@ -1,8 +1,11 @@
-﻿@page "/virtual-machine/details"
+﻿@page "/virtual-machine/{id:long}"
 @layout MainLayout
+@namespace Shared
+@using Shared.VirtualMachine
+@inject IVirtualMachineService VirtualMachineService
 @attribute [Authorize]
 
-<PageTitle>Virtual Machine [virtual machine name] Details</PageTitle>
+<PageTitle>Virtual Machine @virtualMachine.Name  Details</PageTitle>
 
 <div class="context-menu">
     <div style="display: flex">
@@ -37,10 +40,10 @@
 </div>
 <div class="one-third">
     <Title text="Aanvrager" />
-    <DataCard Entries="@_person" />
+    <DataCard Entries="@_requester" />
 
     <Title text="Gebruiker" />
-    <DataCard Entries="@_person" />
+    <DataCard Entries="@_user" />
 
     <Title text="Verantwoordelijken" />
     <DataCard Entries="@_personincharge" />
@@ -51,43 +54,56 @@
 
 
 @code {
+    private VirtualMachineDto.Details? virtualMachine;
+
+    [Parameter] public long Id { get; set; }
+
     private Dictionary<string, string> _defaultInformation = new();
     private Dictionary<string, string> _specs = new();
     private Dictionary<string, string> _config = new();
     private Dictionary<string, string> _available = new();
     private Dictionary<string, string> _backups = new();
     private Dictionary<string, string> _logindata = new();
-    private Dictionary<string, string> _person = new();
+    private Dictionary<string, string> _user = new();
+    private Dictionary<string, string> _requester = new();
     private Dictionary<string, string> _personincharge = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        virtualMachine = await VirtualMachineService.GetDetailAsync(Id);
 
+        _defaultInformation.Add("FQDN", virtualMachine.FQDN);
+        _defaultInformation.Add("Host", virtualMachine.Name);
+
+        _config.Add("Mode", virtualMachine.Mode);
+        _config.Add("Template", virtualMachine.Template);
+        _config.Add("Reden", virtualMachine.Reason);
+
+        _specs.Add("vCPUs", virtualMachine.Specification.Processors.ToString());
+        _specs.Add("Geheugen", virtualMachine.Specification.Memory.ToString());
+        _specs.Add("Opslag", virtualMachine.Specification.Storage.ToString());
+
+        _available.Add("Beschikbaarheid", string.Join(", ",virtualMachine.Availabilities));
+        _available.Add("Backups", virtualMachine.BackupFrequenty);
+
+        _backups.Add("Aangevraagd op", virtualMachine.ApplicationDate.ToShortDateString());
+        _backups.Add("Start", virtualMachine.TimeSpan.StartDate.ToShortDateString());
+        _backups.Add("Einde", virtualMachine.TimeSpan.EndDate.ToShortDateString());
+
+        _personincharge.Add("Opgezet door", virtualMachine.Account.Name);
+        _personincharge.Add("Ondersteuning", virtualMachine.Account.Name);
+
+        _user.Add("Naam", virtualMachine.User.Name);
+        _user.Add("Email", virtualMachine.User.Email);
+
+        _requester.Add("Naam", virtualMachine.Requester.Name);
+        _requester.Add("Email", virtualMachine.Requester.Email);
+
+        _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.ConvertAll<string>(p=>p.Service)));
+    }
     protected override void OnInitialized()
     {
-        _defaultInformation.Add("FQDN", "devops-proj1.vichogent.be");
-        _defaultInformation.Add("Host", "EU-SERV-1");
-
-        _specs.Add("vCPUs", "4");
-        _specs.Add("Geheugen", "32 GB");
-        _specs.Add("Opslag", "512 GB");
-
-        _config.Add("Mode", "SAAS");
-        _config.Add("Template", "Artificial Intelligence");
-        _config.Add("Externe Toegang", "SSH, HTTP");
-
-        _available.Add("Beschikbaarheid", "Maandag: \n Woensdag: 13:00 - 16:00");
-        _available.Add("Backups", "Weekelijks");
-
-        _backups.Add("Aangevraagd op", "2022-10-03");
-        _backups.Add("Start", "2022-10-03");
-        _backups.Add("Einde", "2022-10-03");
-
         _logindata.Add("Gebruikersnaam", "admin");
         _logindata.Add("Wachtwoord", "*********");
-
-        _person.Add("Naam", "[voornaam achternaam]");
-        _person.Add("Departement", "IT en Digitale Innovatie");
-
-        _personincharge.Add("Opgezet door", "[voornaam].[achternaam]");
-        _personincharge.Add("Ondersteuning", "[voornaam].[achternaam]");
     }
 }

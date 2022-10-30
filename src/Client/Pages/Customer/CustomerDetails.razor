@@ -1,6 +1,7 @@
-﻿@page "/customer/{id:int}"
+﻿@page "/customer/{id:long}"
 @layout MainLayout
 @namespace Shared
+@using Shared.customer
 @inject ICustomerService customerService
 @attribute [Authorize]
 
@@ -48,7 +49,7 @@
 @code {
     private CustomerDto.Details? customer;
 
-    [Parameter] public int Id { get; set; }
+    [Parameter] public long Id { get; set; }
 
     private Dictionary<string, string> _username = new();
     private Dictionary<string, string> _general = new();
@@ -59,7 +60,7 @@
     {
         customer = await customerService.GetDetailAsync(Id);
 
-        _username.Add("Naam", customer.ContactPersonDto.Firstname);
+        _username.Add("Naam", string.Concat(customer.ContactPersonDto.Firstname, " ", customer.ContactPersonDto.Lastname));
 
         if(customer.Type==null){
             _general.Add("Departement", customer.Department);

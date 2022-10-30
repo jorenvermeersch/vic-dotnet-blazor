@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared;
+namespace Shared.customer;
 public class ContactPersonDto
 {
     public long Id { get; set; }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared;
+namespace Shared.customer;
 
 public class FakeCustomerService : ICustomerService
 {
@@ -54,7 +54,22 @@ public class FakeCustomerService : ICustomerService
                 Firstname = "Robin",
                 Lastname = "Vermeire",
                 Phonenumber = "+3256859021",
-                Email = "robin.vermeire@voka.be"
+                Email = "robin.vermeire@hogent.be"
+            },
+
+        });
+        _customers.Add(new()
+        {
+            Id = 3,
+            Education = "Toegepaste Informatica",
+            Department = "DIT",
+            ContactPersonDto = new ContactPersonDto()
+            {
+                Id = 4,
+                Firstname = "Robin",
+                Lastname = "Vermeire",
+                Phonenumber = "+3256859021",
+                Email = "robin.vermeire@hogent.be"
             },
 
         });
@@ -70,7 +85,7 @@ public class FakeCustomerService : ICustomerService
         return Task.FromResult(_customers.Select(x => new CustomerDto.Index
         {
             Id = x.Id,
-            CustomerName = x.ContactPersonDto.Firstname + " " + x.ContactPersonDto.Lastname
+            Name = x.ContactPersonDto.Firstname + " " + x.ContactPersonDto.Lastname
         }));
     }
 }

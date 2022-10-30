@@ -1,4 +1,7 @@
 ﻿@page "/virtual-machine/list"
+@namespace Shared
+@using Shared.VirtualMachine
+@inject IVirtualMachineService VirtualMachineService
 @layout MainLayout
 @attribute [Authorize]
 
@@ -19,7 +22,7 @@
     <div class="two-thirds">
         <Title text="Alle virtuele machines" />
         <div class="two-columns-container">
-            <div>
+            <!--<div>
                 @foreach(KeyValuePair<string, bool> entry in _vms){
                     <EntityCard Value="@entry.Key" Active="@entry.Value" />
                 }
@@ -28,6 +31,12 @@
                 @foreach (KeyValuePair<string, bool> entry in _vms)
                 {
                     <EntityCard Value="@entry.Key" Active="@entry.Value" />
+                }
+            </div>-->
+            <div>
+                @foreach (var vm in virtualMachines)
+                {
+                        <EntityCard Value="@vm.FQDN" Active="@vm.IsActive" Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                 }
             </div>
 
@@ -41,6 +50,14 @@
 </div>
 
 @code {
+    private IEnumerable<VirtualMachineDto.Index> virtualMachines;
+
+    protected override async Task OnInitializedAsync()
+    {
+        virtualMachines = await VirtualMachineService.GetIndexAsync();
+
+    }
+    /*
     private Dictionary<string, bool> _vms = new();
 
     protected override void OnInitialized()
@@ -49,5 +66,5 @@
         for(int i = 0; i < 10; i++){
             _vms.Add($"devops-proj1.vichogent.be#{i}", random.Next(2) == 1);
         }
-    }
+    }*/
 }

@@ -1,6 +1,7 @@
 ﻿@page "/customer/list"
 @layout MainLayout
 @namespace Shared
+@using Shared.customer
 @inject ICustomerService customerService
 @attribute [Authorize]
 
@@ -34,7 +35,7 @@
             </div>--> 
             <div>
                 @foreach(var customer in customers){
-                    <EntityCard Value="@customer.CustomerName" Active="@true" Href=@string.Concat("customer/", customer.Id)></EntityCard>
+                    <EntityCard Value="@customer.Name" Active="@true" Href=@string.Concat("customer/", customer.Id)></EntityCard>
                 }
             </div>
 
