@@ -15,7 +15,7 @@ public class VirtualMachineArgs
     public ISet<Availability> availabilities { get; set; }
     public BackupFrequency backupFrequency { get; set; }
     public DateTime applicationDate { get; set; }
-    public ISet<DateTime> duration { get; set; }
+    public ISet<DateTime> timeSpan { get; set; }
     public Status status { get; set; }
     public string reason { get; set; }
     public IDictionary<int, string> ports { get; set; }

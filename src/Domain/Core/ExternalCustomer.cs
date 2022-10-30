@@ -19,8 +19,8 @@ public class ExternalCustomer : Customer
         IList<VirtualMachine>? virtualMachines = null
     ) : base(contactPerson, backupContact, virtualMachines)
     {
-        Name = Guard.Against.InvalidFormat(name, nameof(name), "^[a-zA-Z]+[ a-zA-Z]*");
-        Type = Guard.Against.InvalidFormat(type, nameof(type), "^[a-zA-Z]+[ a-zA-Z]*");
+        Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        Type = Guard.Against.NullOrWhiteSpace(type, nameof(type)); // TODO: What is meant by Type? Change validation once known.
     }
     #endregion
 }

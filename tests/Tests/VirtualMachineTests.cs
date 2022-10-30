@@ -7,7 +7,7 @@ public class VirtualMachineTests
     private HashSet<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
     private BackupFrequency _bfreq = BackupFrequency.Monthly;
     private HashSet<Credentials> _creds = new() { new("name", "password"), new("user", "password") };
-    private Duration _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
+    private Domain.Domain.TimeSpan _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
     private string _fqdn = "domain.name";
     private IHost _host = new Server("s1", new(4, 4, 4));
     private Mode _mode = Mode.PAAS;
@@ -48,7 +48,7 @@ public class VirtualMachineTests
         vm.Availabilities.ShouldBe(_availability);
         vm.BackupFrequency.ShouldBe(_bfreq);
         vm.Credentials.ShouldBe(_creds);
-        vm.Duration.ShouldBe(_dur);
+        vm.TimeSpan.ShouldBe(_dur);
         vm.Fqdn.ShouldBe(_fqdn);
         vm.Host.ShouldBe(_host);
         vm.Mode.ShouldBe(_mode);

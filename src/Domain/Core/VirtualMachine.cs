@@ -13,7 +13,7 @@ public class VirtualMachine : Machine
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
     public BackupFrequency BackupFrequency { get; set; }
     public DateTime ApplicationDate { get; set; }
-    public Duration Duration { get; set; }
+    public TimeSpan TimeSpan { get; set; }
     public Status Status { get; set; }
     public string Reason { get; set; }
     public IList<Port> Ports { get; set; } = new List<Port>();
@@ -34,7 +34,7 @@ public class VirtualMachine : Machine
         Availabilities = builder.Availabilities;
         BackupFrequency = builder.BackupFrequency;
         ApplicationDate = builder.ApplicationDate;
-        Duration = builder.Duration;
+        TimeSpan = builder.TimeSpan;
         Status = builder.Status;
         Reason = builder.Reason;
         Ports = builder.Ports;
@@ -51,20 +51,23 @@ public class VirtualMachine : Machine
     public class VirtualMachineBuilder
     {
         #region Fields
-        private string _name, _fqdn, _reason;
+        private string _name,
+            _fqdn,
+            _reason;
         private Specifications _specifications;
         private Template _template;
         private Mode _mode;
         private IList<Availability> _availabilities;
         private BackupFrequency _backupFrequency;
         private DateTime _applicationDate;
-        private Duration _duration;
+        private TimeSpan _timeSpan;
         private Status _status;
         private IList<Port> _ports;
         private Host _host;
         private IList<Credentials> _credentials;
         private Account _account;
-        private Customer _requester, _user;
+        private Customer _requester,
+            _user;
         #endregion
 
         #region Properties
@@ -76,7 +79,7 @@ public class VirtualMachine : Machine
         public IList<Availability> Availabilities => _availabilities;
         public BackupFrequency BackupFrequency => _backupFrequency;
         public DateTime ApplicationDate => _applicationDate;
-        public Duration Duration => _duration;
+        public TimeSpan TimeSpan => _timeSpan;
         public Status Status => _status;
         public string Reason => _reason;
         public IList<Port> Ports => _ports;
@@ -136,9 +139,9 @@ public class VirtualMachine : Machine
             return this;
         }
 
-        public VirtualMachineBuilder SetDuration(Duration duration)
+        public VirtualMachineBuilder SetDuration(TimeSpan timeSpan)
         {
-            _duration = duration;
+            _timeSpan = timeSpan;
             return this;
         }
 

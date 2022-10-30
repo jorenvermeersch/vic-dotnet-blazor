@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.Constants;
 
 namespace Domain.Domain;
 
@@ -9,21 +10,30 @@ public class ContactPerson : Entity
     public string Firstname { get; set; }
     public string Lastname { get; set; }
     public string Email { get; set; }
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
     #endregion
 
     #region Constructors
-    public ContactPerson(string firstname, string lastname, string email, string phoneNumber)
+    public ContactPerson(
+        string firstname,
+        string lastname,
+        string email,
+        string? phoneNumber = null
+    )
     {
-        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[^0-9\\\\W]+");
-        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[^0-9\\W]+");
-        Email = Guard.Against.InvalidFormat(
-            email,
-            nameof(email),
-            "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-z]+)$"
-        );
-        PhoneNumber = Guard.Against.InvalidFormat(phoneNumber, nameof(phoneNumber), "[+]*[0-9]+");
+        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), Validation.Name);
+        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), Validation.Name);
+        Email = Guard.Against.InvalidFormat(email, nameof(email), Validation.Email);
+
+        if (phoneNumber != null)
+        {
+            PhoneNumber = Guard.Against.InvalidFormat(
+                phoneNumber,
+                nameof(phoneNumber),
+                Validation.PhoneNumber
+            );
+        }
     }
     #endregion
 }

@@ -30,28 +30,14 @@ public class Account : Entity
         string education
     )
     {
-        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), "[^0-9\\W]+");
-        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), "[^0-9\\W]+");
-        Email = Guard.Against.InvalidFormat(
-            email,
-            nameof(email),
-            "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-z]+)$"
-        );
-        Role = role;
-        PasswordHash = HashPassword(
-            Guard.Against.InvalidFormat(password, nameof(password), "[^ ].{6,}")
-        );
+        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), Validation.Name);
+        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), Validation.Name);
+        Email = Guard.Against.InvalidFormat(email, nameof(email), Validation.Email);
+        Role = Guard.Against.EnumOutOfRange(role, nameof(role));
+        PasswordHash = HashPassword(Guard.Against.InvalidFormat(password, nameof(password), Validation.Password));
         IsActive = true;
-        Education = Guard.Against.InvalidFormat(
-            education,
-            nameof(education),
-            "^.{0}$|^[a-zA-Z]+[ a-zA-Z]*"
-        );
-        Department = Guard.Against.InvalidFormat(
-            department,
-            nameof(department),
-            "^[a-zA-Z]+[ a-zA-Z]*"
-        );
+        Education = Guard.Against.InvalidFormat(education, nameof(education), Validation.Education);
+        Department = Guard.Against.InvalidFormat(department, nameof(department), Validation.Departement);
     }
     #endregion
 
@@ -64,7 +50,7 @@ public class Account : Entity
         StringBuilder builder = new();
         for (int i = 0; i < bytes.Length; i++)
         {
-            builder.Append(bytes[i].ToString("x2")); //convert byte to hexadecimal
+            builder.Append(bytes[i].ToString("x2")); // Convert byte to hexadecimal.
         }
         return builder.ToString();
     }
