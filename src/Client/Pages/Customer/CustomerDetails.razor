@@ -1,5 +1,7 @@
-﻿@page "/customer/details"
+﻿@page "/customer/{id:int}"
 @layout MainLayout
+@namespace Shared
+@inject ICustomerService customerService
 @attribute [Authorize]
 
 <PageTitle>Klant [customer name] Details</PageTitle>
@@ -18,7 +20,7 @@
 
     <Title text="Contactgegevens" />
     <DataCard Entries="@_contactInformation" />
-    <DataCard Entries="@_contactInformation" />
+        <DataCard Entries="@_backupContactInformation" />
 </div>
 <div class="one-third">
 
@@ -44,21 +46,42 @@
 
 
 @code {
+    private CustomerDto.Details? customer;
+
+    [Parameter] public int Id { get; set; }
+
     private Dictionary<string, string> _username = new();
     private Dictionary<string, string> _general = new();
     private Dictionary<string, string> _contactInformation = new();
+    private Dictionary<string, string> _backupContactInformation = new();
 
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _username.Add("Naam", "[customer name]");
+        customer = await customerService.GetDetailAsync(Id);
 
-        _general.Add("Department", "IT en Digitale Innovatie");
-        _general.Add("Opleidnig", "Toegepaste Informatica");
-        _general.Add("Type", "Student");
+        _username.Add("Naam", customer.ContactPersonDto.Firstname);
 
-        _contactInformation.Add("Naam", "[customer name]");
-        _contactInformation.Add("E-mailadres", "[customer mail]"); 
-        _contactInformation.Add("Telefoonnummer", "[customer tel]");
+        if(customer.Type==null){
+            _general.Add("Departement", customer.Department);
+            _general.Add("Opleiding", customer.Education);
+            _general.Add("Type klant", "Intern");
+        }else{
+            _general.Add("Naam", customer.Name);
+            _general.Add("Type", customer.Type);
+            _general.Add("Type klant", "Extern");
+
+        }
+
+        _contactInformation.Add("Naam", string.Concat(customer.ContactPersonDto.Firstname, " ", customer.ContactPersonDto.Lastname));
+        _contactInformation.Add("E-mailadres", customer.ContactPersonDto.Email);
+        _contactInformation.Add("Telefoonnummer", customer.ContactPersonDto.Phonenumber);
+
+        if(customer.BackupContactPersonDto!=null){
+            _backupContactInformation.Add("Naam", string.Concat(customer.BackupContactPersonDto.Firstname, " ", customer.BackupContactPersonDto.Lastname));
+            _backupContactInformation.Add("E-mailadres", customer.BackupContactPersonDto.Email);
+            _backupContactInformation.Add("Telefoonnummer", customer.BackupContactPersonDto.Phonenumber);
+        }
+        
+        
     }
 }

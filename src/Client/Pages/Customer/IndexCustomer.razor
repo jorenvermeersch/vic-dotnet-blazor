@@ -1,5 +1,7 @@
 ﻿@page "/customer/list"
 @layout MainLayout
+@namespace Shared
+@inject ICustomerService customerService
 @attribute [Authorize]
 
 <div class="context-menu">
@@ -18,7 +20,7 @@
     <div class="two-thirds">
         <Title text="Alle klanten" />
         <div class="two-columns-container">
-            <div>
+           <!--<div>
                 @foreach (KeyValuePair<string, bool> entry in _vms)
                 {
                         <EntityCard Value="@entry.Key" Active="@entry.Value" />
@@ -28,6 +30,11 @@
                 @foreach (KeyValuePair<string, bool> entry in _vms)
                 {
                         <EntityCard Value="@entry.Key" Active="@entry.Value" />
+                }
+            </div>--> 
+            <div>
+                @foreach(var customer in customers){
+                    <EntityCard Value="@customer.CustomerName" Active="@true" Href=@string.Concat("customer/", customer.Id)></EntityCard>
                 }
             </div>
 
@@ -41,6 +48,14 @@
 </div>
 
 @code {
+    
+    private IEnumerable<CustomerDto.Index> customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await customerService.GetIndexAsync();
+    }
+    /*
     private Dictionary<string, bool> _vms = new();
 
     protected override void OnInitialized()
@@ -50,5 +65,5 @@
         {
             _vms.Add($"[user]#{i}", random.Next(2) == 1);
         }
-    }
+    }*/
 }
