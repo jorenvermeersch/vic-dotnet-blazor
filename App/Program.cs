@@ -3,7 +3,7 @@ using Domain.Controllers;
 using Domain.Domain;
 
 #region VM Testen in CL
-VirtualMachineController vmController = new();
+/*VirtualMachineController vmController = new();
 //lijst zou 2 vm's moeten hebben (die zijn geseed)
 Console.WriteLine($"Aantal vms in de lijst: {vmController.FindAllVirtualMachines().Count()}");
 
@@ -36,6 +36,6 @@ Console.WriteLine($"new vm opzoeken via zijn Fqdn:" +
 //Opezoeken vms van een user via zijn mail
 Console.WriteLine($"Vm van kerem.yilmaz@valid.com: ");
 ISet<VirtualMachine> vms = vmController.FindVirtualMachinesByUserEmail("kerem.yilmaz@valid.com");
-Console.WriteLine(vms.First());
+Console.WriteLine(vms.First());*/
 
 #endregion

@@ -1,4 +1,16 @@
-﻿<nav class="navigation-bar-wide">
+﻿@using System.Security.Claims;
+@inject FakeAuthenticationProvider FakeAuthenticationProvider
+
+
+<div>
+    <button @onclick="LoginAsMaster">@FakeAuthenticationProvider.Master.FindFirst(ClaimTypes.Name)?.Value</button>
+    <button @onclick="LoginAsAdmin">@FakeAuthenticationProvider.Administrator.FindFirst(ClaimTypes.Name)?.Value</button>
+    <button @onclick="LoginAsObserver">@FakeAuthenticationProvider.Observer.FindFirst(ClaimTypes.Name)?.Value</button>
+    <button @onclick="LoginAsAnonymous">Anonymous</button>
+    <span>Currenty logged-in as: @FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value</span>
+</div>
+
+<nav class="navigation-bar-wide">
     <ul>
         <li>
             <a href=".">
@@ -55,4 +67,23 @@
 @code {
     [Parameter]
     public string name { get; set; } = "Name"; 
+
+    @code {
+        void LoginAsAdmin()
+        {
+            FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Administrator);
+        }
+        void LoginAsAnonymous()
+        {
+            FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Anonymous);
+        }
+        void LoginAsMaster()
+        {
+            FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Master);
+        }
+        void LoginAsObserver()
+        {
+            FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Observer);
+        }
+    }
 }

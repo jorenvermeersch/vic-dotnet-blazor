@@ -1,5 +1,6 @@
 ﻿@page "/virtual-machine/add"
 @layout NoGlobalSearchLayout 
+@attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
 

@@ -1,5 +1,6 @@
 ﻿@page "/customer/add"
 @layout NoGlobalSearchLayout
+@attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Klant Toevoegen</PageTitle>
 
