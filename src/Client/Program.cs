@@ -6,6 +6,7 @@ using Domain.Domain;
 using Client.Shared;
 using Shared.customer;
 using Shared.VirtualMachine;
+using Shared.Customer;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -16,7 +17,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<FakeAuthenticationProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<FakeAuthenticationProvider>());
 
-builder.Services.AddScoped<ICustomerService, FakeCustomerService>();
+builder.Services.AddScoped<ICustomerService, BogusCustomerService>();
 builder.Services.AddScoped<IVirtualMachineService, FakeVirtualMachineService>();
 
 await builder.Build().RunAsync();

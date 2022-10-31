@@ -22,7 +22,7 @@ public static class CustomerDto
         public string Type { get; set; }
         public string Education { get; set; }
         public string Department { get; set; }
-        public ContactPersonDto ContactPersonDto { get; set; }
-        public ContactPersonDto BackupContactPersonDto { get; set; }
+        public ContactPersonDto ContactPerson { get; set; }
+        public ContactPersonDto BackupContactPerson { get; set; }
     }
 }

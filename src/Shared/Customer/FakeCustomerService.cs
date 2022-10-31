@@ -17,7 +17,7 @@ public class FakeCustomerService : ICustomerService
             Id = 1,
             Name = "VOKA",
             Type = "Voka",
-            ContactPersonDto = new ContactPersonDto()
+            ContactPerson = new ContactPersonDto()
             {
                 Id = 1,
                 Firstname = "Jennifer",
@@ -25,7 +25,7 @@ public class FakeCustomerService : ICustomerService
                 Phonenumber = "+3256859572",
                 Email = "jennifer.dedonder@voka.be"
             },
-            BackupContactPersonDto = new ContactPersonDto()
+            BackupContactPerson = new ContactPersonDto()
             {
                 Id = 2,
                 Firstname = "Jaden",
@@ -40,7 +40,7 @@ public class FakeCustomerService : ICustomerService
             Id = 2,
             Education = "Toegepaste Informatica",
             Department = "DIT",
-            ContactPersonDto = new ContactPersonDto()
+            ContactPerson = new ContactPersonDto()
             {
                 Id = 3,
                 Firstname = "Kerem",
@@ -48,7 +48,7 @@ public class FakeCustomerService : ICustomerService
                 Phonenumber = "+3256887672",
                 Email = "kerem.yilmaz@student.hogent.be"
             },
-            BackupContactPersonDto = new ContactPersonDto()
+            BackupContactPerson = new ContactPersonDto()
             {
                 Id = 4,
                 Firstname = "Robin",
@@ -63,7 +63,7 @@ public class FakeCustomerService : ICustomerService
             Id = 3,
             Education = "Toegepaste Informatica",
             Department = "DIT",
-            ContactPersonDto = new ContactPersonDto()
+            ContactPerson = new ContactPersonDto()
             {
                 Id = 4,
                 Firstname = "Robin",
@@ -85,7 +85,7 @@ public class FakeCustomerService : ICustomerService
         return Task.FromResult(_customers.Select(x => new CustomerDto.Index
         {
             Id = x.Id,
-            Name = x.ContactPersonDto.Firstname + " " + x.ContactPersonDto.Lastname
+            Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname
         }));
     }
 }
