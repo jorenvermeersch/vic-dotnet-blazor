@@ -9,6 +9,7 @@ namespace Shared.VirtualMachine;
 
 public interface IVirtualMachineService
 {
+
     Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync();
     Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId);
 }

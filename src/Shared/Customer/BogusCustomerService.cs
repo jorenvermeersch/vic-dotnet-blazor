@@ -7,7 +7,7 @@ namespace Shared.Customer;
 
 public class BogusCustomerService : ICustomerService
 {
-    private readonly List<CustomerDto.Details> _customers = new();
+    public readonly List<CustomerDto.Details> customers = new();
     private readonly List<ContactPersonDto> _contacts = new();
     public BogusCustomerService()
     {
@@ -20,7 +20,7 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.Email, f => f.Internet.Email())
             .RuleFor(x => x.Phonenumber, f => f.Phone.PhoneNumber());
 
-        _contacts = contactPersonFaker.Generate(100);
+        _contacts = contactPersonFaker.Generate(60);
 
         var departments = new[] { "DIT", "DBO", "DBT" };
         var educations = new[] { "", "Toegepaste Informatica", "Bedrijfsmanagement", "Elektro-mechanica" };
@@ -45,21 +45,22 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
             .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts));
 
-        _customers = internalcustomerFaker.Generate(30);
-        _customers.AddRange(externalcustomerFaker.Generate(15));
+        customers = internalcustomerFaker.Generate(30);
+        customers.AddRange(externalcustomerFaker.Generate(15));
 
         var rnd = new Random();
-        _customers = _customers.OrderBy(c => rnd.Next()).ToList();
+        customers = customers.OrderBy(c => rnd.Next()).ToList();
 
     }
+
     Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
     {
-        return Task.FromResult(_customers.Single(x => x.Id == customerId));
+        return Task.FromResult(customers.Single(x => x.Id == customerId));
     }
 
     Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync()
     {
-        return Task.FromResult(_customers.Select(x => new CustomerDto.Index
+        return Task.FromResult(customers.Select(x => new CustomerDto.Index
         {
             Id = x.Id,
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname

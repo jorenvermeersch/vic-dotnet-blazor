@@ -23,19 +23,13 @@ public class FakeVirtualMachineService:IVirtualMachineService
             Availabilities = new List<string>() { "Maandag", "Dinsdag", "Woensdag" },
             BackupFrequenty = "Dagelijks",
             ApplicationDate = DateTime.Now,
-            TimeSpan = new TimeSpanDto() 
-            { 
-                StartDate = new DateTime(2022,11,1),
-                EndDate = new DateTime(2022, 12, 1)
-            },
+            StartDate = new DateTime(2022,11,1),
+            EndDate = new DateTime(2022, 12, 1)  ,         
             Status = "Afgewerkt",
             Reason = "Bachelor proef",
-            Specification = new()
-            {
-                Storage = 500,
-                Memory=24,
-                Processors=5
-            },
+            Storage = 500,
+            Memory=24,
+            Processors=5,
             Account = new()
             {
                 Id = 1,
@@ -73,19 +67,13 @@ public class FakeVirtualMachineService:IVirtualMachineService
             Availabilities = new List<string>() { "Dinsdag", "Woensdag" },
             BackupFrequenty = "Wekelijks",
             ApplicationDate = new DateTime(2022,9,20),
-            TimeSpan = new TimeSpanDto()
-            {
-                StartDate = new DateTime(2022, 9, 30),
-                EndDate = new DateTime(2022, 10, 25)
-            },
+            StartDate = new DateTime(2022, 9, 30),
+            EndDate = new DateTime(2022, 10, 25),
             Status = "Afgewerkt",
             Reason = "Bachelor proef",
-            Specification = new()
-            {
-                Storage = 1000,
-                Memory = 36,
-                Processors = 10
-            },
+            Storage = 1000,
+            Memory = 36,
+            Processors = 10,
             Account = new()
             {
                 Id = 2,
@@ -129,24 +117,18 @@ public class FakeVirtualMachineService:IVirtualMachineService
             Availabilities = new List<string>() { "Woensdag" },
             BackupFrequenty = "Maandelijks",
             ApplicationDate = new DateTime(2022, 10, 20),
-            TimeSpan = new TimeSpanDto()
-            {
-                StartDate = new DateTime(2022, 10, 25),
-                EndDate = new DateTime(2022, 11, 25)
-            },
+            StartDate = new DateTime(2022, 10, 25),
+            EndDate = new DateTime(2022, 11, 25),
             Status = "Afgewerkt",
             Reason = "Database draaien",
-            Specification = new()
-            {
-                Storage = 255,
-                Memory = 16,
-                Processors = 4
-            },
+            Storage = 255,
+            Memory = 16,
+            Processors = 4,
             Account = new()
             {
-                Id=3,
-                Name="Jack Sparrow",
-                Email="jack.sparrow@hogent.be"
+                Id = 3,
+                Name = "Jack Sparrow",
+                Email = "jack.sparrow@hogent.be"
             },
             Requester = new()
             {
@@ -162,19 +144,19 @@ public class FakeVirtualMachineService:IVirtualMachineService
             },
             Ports = new List<PortDto>
             {
-                new PortDto()
-                {
-                    Number=22,
-                    Service = "SSH"
-                },
-                new PortDto()
-                {
-                    Number=80,
-                    Service = "Http"
-                }
-            }
+                        new PortDto()
+                        {
+                            Number = 22,
+                            Service = "SSH"
+                        },
+                        new PortDto()
+                        {
+                            Number = 80,
+                            Service = "Http"
+                        }
+                    }
 
-        });
+        }) ;
     }
     public Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId)
     {
@@ -187,7 +169,7 @@ public class FakeVirtualMachineService:IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.TimeSpan.EndDate<=DateTime.Now && x.TimeSpan.StartDate>=DateTime.Now, //Werkt niet
+            IsActive = x.EndDate<=DateTime.Now && x.StartDate>=DateTime.Now, //Werkt niet
         }));
     }
 }
