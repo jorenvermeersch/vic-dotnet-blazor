@@ -34,10 +34,16 @@ public class Account : Entity
         Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), Validation.Name);
         Email = Guard.Against.InvalidFormat(email, nameof(email), Validation.Email);
         Role = Guard.Against.EnumOutOfRange(role, nameof(role));
-        PasswordHash = HashPassword(Guard.Against.InvalidFormat(password, nameof(password), Validation.Password));
+        PasswordHash = HashPassword(
+            Guard.Against.InvalidFormat(password, nameof(password), Validation.Password)
+        );
         IsActive = true;
         Education = Guard.Against.InvalidFormat(education, nameof(education), Validation.Education);
-        Department = Guard.Against.InvalidFormat(department, nameof(department), Validation.Departement);
+        Department = Guard.Against.InvalidFormat(
+            department,
+            nameof(department),
+            Validation.Departement
+        );
     }
     #endregion
 

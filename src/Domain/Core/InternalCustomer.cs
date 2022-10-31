@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.Constants;
 
 namespace Domain.Domain;
 
@@ -6,20 +7,23 @@ namespace Domain.Domain;
 public class InternalCustomer : Customer
 {
     #region Properties
-    public string Education { get; set; }
+    public Institution Institution { get; set; }
     public string Department { get; set; }
-
+    public string Education { get; set; }
     #endregion
 
     #region Constructors
     public InternalCustomer(
-        string education,
+        Institution institution,
         string department,
+        string education,
         ContactPerson contactPerson,
         ContactPerson backupContact,
         IList<VirtualMachine>? virtualMachines = null
     ) : base(contactPerson, backupContact, virtualMachines)
     {
+        Institution = Guard.Against.EnumOutOfRange(institution, nameof(institution));
+
         Education = Guard.Against.InvalidFormat(
             education,
             nameof(education),
