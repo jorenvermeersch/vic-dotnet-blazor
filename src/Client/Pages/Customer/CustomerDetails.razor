@@ -37,10 +37,16 @@
     </div>
 
     <Title text="Virtuele machines" />
-    @foreach(var vm in virtualMachine){
+    @if(virtualMachine.Any()){
+        @foreach(var vm in virtualMachine){
             <EntityCard Value=@vm.FQDN Active=@vm.IsActive />
-    }
+        }
     <PageSelector NumberOfPages="5"/>
+    }
+    else{
+        <p>Geen virtual machines beschikbaar</p>
+    }
+    
 </div>
 </div>
 
