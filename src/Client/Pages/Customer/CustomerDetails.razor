@@ -1,8 +1,10 @@
 ﻿@page "/customer/{id:long}"
 @layout MainLayout
 @namespace Shared
+@using Shared.VirtualMachine
 @using Shared.customer
 @inject ICustomerService customerService
+@inject IVirtualMachineService virtualMachineService
 @attribute [Authorize]
 
 <PageTitle>Klant [customer name] Details</PageTitle>
@@ -35,8 +37,8 @@
     </div>
 
     <Title text="Virtuele machines" />
-    @for(int i = 0; i < 6; i++){
-            <EntityCard Value="devops-proj1.vichogent.be" Active="@(i % 3 == 0 ? true : false)" />
+    @foreach(var vm in virtualMachine){
+            <EntityCard Value=@vm.FQDN Active=@vm.IsActive />
     }
     <PageSelector NumberOfPages="5"/>
 </div>
@@ -48,6 +50,7 @@
 
 @code {
     private CustomerDto.Details? customer;
+    private IEnumerable<VirtualMachineDto.Index>? virtualMachine;
 
     [Parameter] public long Id { get; set; }
 
@@ -59,6 +62,7 @@
     protected override async Task OnInitializedAsync()
     {
         customer = await customerService.GetDetailAsync(Id);
+        virtualMachine = await virtualMachineService.GetVirtualMachinesByUserId(Id);
 
         _username.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
 

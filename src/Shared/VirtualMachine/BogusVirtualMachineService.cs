@@ -86,4 +86,14 @@ public class BogusVirtualMachineService : IVirtualMachineService
             IsActive = x.EndDate <= DateTime.Now && x.StartDate >= DateTime.Now, //Werkt niet
         })) ;
     }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId)
+    {
+        return Task.FromResult(_virtualMachines.Where(vm=>vm.User.Id==userId).Select(x => new VirtualMachineDto.Index
+        {
+            Id = x.Id,
+            FQDN = x.FQDN,
+            IsActive = x.EndDate <= DateTime.Now && x.StartDate >= DateTime.Now, //Werkt niet
+        }));
+    }
 }
