@@ -7,16 +7,6 @@ public class CredentialTests
     {
         Credentials credential = new("Jane.Doe", "janedoespasswoord123");
         credential.Username.ShouldBe("Jane.Doe");
-        credential.Password.ShouldBe("janedoespasswoord123");
-    }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData("       ")]
-    [InlineData("12345")]
-    public void Credential_password_length_smaller_than_6_is_invalid(string password)
-    {
-        Should.Throw<ArgumentException>(() => new Credentials("JaneDoe", password));
     }
 
     [Theory]

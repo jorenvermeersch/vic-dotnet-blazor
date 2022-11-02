@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Domain.Domain;
+namespace Domain.Core;
 
 [ToString]
 public class ExternalCustomer : Customer
@@ -20,7 +20,7 @@ public class ExternalCustomer : Customer
     ) : base(contactPerson, backupContact, virtualMachines)
     {
         Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-        Type = Guard.Against.NullOrWhiteSpace(type, nameof(type)); // TODO: What is meant by Type? Change validation once known.
+        Type = Guard.Against.NullOrWhiteSpace(type, nameof(type));
     }
     #endregion
 }

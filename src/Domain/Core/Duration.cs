@@ -1,7 +1,7 @@
-﻿namespace Domain.Domain;
+﻿namespace Domain.Core;
 
 [ToString]
-public class TimeSpan
+public class Duration
 {
     #region Properties
     public DateTime StartDate { get; set; }
@@ -9,7 +9,7 @@ public class TimeSpan
     #endregion
 
     #region Constructors
-    public TimeSpan(DateTime startDate, DateTime endDate)
+    public Duration(DateTime startDate, DateTime endDate)
     {
         if (endDate < startDate)
         {

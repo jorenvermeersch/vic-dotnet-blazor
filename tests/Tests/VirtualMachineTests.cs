@@ -1,20 +1,22 @@
-﻿namespace Tests;
+﻿using Domain.Core;
+
+namespace Tests;
 public class VirtualMachineTests
 {
     #region Fields
-    private Account _account = new("kerem", "yilmaz", "kerem.yilmaz@hotmail.com", Role.Admin, "password", "department", "opleiding");
+    private Account _account = new("kerem", "yilmaz", "kerem.yilmaz@hotmail.com", Role.Admin, "Password123@", "department", "opleiding");
     private DateTime _applicationDate = DateTime.Now;
-    private HashSet<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
+    private List<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
     private BackupFrequency _bfreq = BackupFrequency.Monthly;
-    private HashSet<Credentials> _creds = new() { new("name", "password"), new("user", "password") };
-    private Domain.Domain.TimeSpan _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
+    private List<Credentials> _creds = new() { new("name", "Admin"), new("user", "User") };
+    private Duration _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
     private string _fqdn = "domain.name";
-    private IHost _host = new Server("s1", new(4, 4, 4));
+    private Host _host = new Server("s1", new(4, 4, 4));
     private Mode _mode = Mode.PAAS;
     private string _name = "VMName";
-    private HashSet<Port> _ports = new() { new(1, "port1"), new(2, "port2") };
+    private List<Port> _ports = new() { new(1, "port1"), new(2, "port2") };
     private string _reason = "reason";
-    private ICustomer _req = new InternalCustomer("educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
+    private Customer _req = new InternalCustomer(Institution.HoGent,"educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"), new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
     private Status _status = Status.Requested;
     private Template _temp = Template.AI;
     private Specifications _resource = new(2, 2, 2);
@@ -38,7 +40,7 @@ public class VirtualMachineTests
             .SetReason(_reason)
             .SetRequester(_req)
             .SetStatus(_status)
-            .SetResource(_resource)
+            .SetSpecifications(_resource)
             .SetTemplate(_temp)
             .SetUser(_req)
             .Build();
@@ -59,6 +61,6 @@ public class VirtualMachineTests
         vm.Status.ShouldBe(_status);
         vm.Template.ShouldBe(_temp);
         vm.User.ShouldBe(_req);
-        vm.Resources.ShouldBe(_resource);
+        vm.Specifications.ShouldBe(_resource);
     }
 }

@@ -5,8 +5,9 @@ public class InternalCustomerTests
     [Fact]
     public void InternalCustomer_creation_is_correct()
     {
-        InternalCustomer customer = new("Toegepaste Informatica", "DIT", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), new ContactPerson("Alice", "Smith", "alice.smith@hotmail.com", "+3285768245"));
+        InternalCustomer customer = new(Institution.HoGent,"DIT","Toegepaste Informatica", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), new ContactPerson("Alice", "Smith", "alice.smith@hotmail.com", "+3285768245"));
         customer.ShouldNotBeNull();
+        customer.Institution.ShouldBe(Institution.HoGent);
         customer.Education.ShouldBe("Toegepaste Informatica");
         customer.Department.ShouldBe("DIT");
         customer.ContactPerson.Email.ShouldBe("jane.doe@hotmail.com");
@@ -14,16 +15,16 @@ public class InternalCustomerTests
     }
 
     [Fact]
-    public void InternalCustomer_creation_without_education_and_backupContactPerson_is_correct()
+    public void InternalCustomer_creation_without_education_is_correct()
     {
-        InternalCustomer customer = new("", "DIT", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"));
+        InternalCustomer customer = new(Institution.HoGent, "DIT","", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"),new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"));
         customer.ShouldNotBeNull();
+        customer.Institution.ShouldBe(Institution.HoGent);
         customer.Education.ShouldBe("");
         customer.Department.ShouldBe("DIT");
         customer.ContactPerson.Email.ShouldBe("jane.doe@hotmail.com");
-        customer?.BackupContactPerson?.Email.ShouldBe("");
+        customer.BackupContactPerson.Email.ShouldBe("jane.doe@hotmail.com");
     }
-
 
     [Theory]
     [InlineData(" ")]
@@ -33,6 +34,6 @@ public class InternalCustomerTests
     [InlineData("")]
     public void InternalCustomer_departement_with_characters_besides_alphabets_is_invalid(string departement)
     {
-        Should.Throw<ArgumentException>(() => new InternalCustomer("Toegepaste Informatica", departement, new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), null));
+        Should.Throw<ArgumentException>(() => new InternalCustomer(Institution.HoGent, departement, "Toegepaste Informatica", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), null));
     }
 }

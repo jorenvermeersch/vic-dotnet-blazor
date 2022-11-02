@@ -3,7 +3,7 @@ using Domain.Constants;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Domain.Domain;
+namespace Domain.Core;
 
 [ToString]
 public class Account : Entity

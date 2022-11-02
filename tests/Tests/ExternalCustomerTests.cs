@@ -23,26 +23,16 @@ public class ExternalCustomerTests
     [Theory]
     [InlineData(" ")]
     [InlineData("   ")]
-    [InlineData(".")]
-    [InlineData("/")]
-    [InlineData("")]
-    [InlineData("io255")]
-    [InlineData("255")]
     public void ExternalCustomer_name_without_letters_is_invalid(string name)
     {
-        Should.Throw<ArgumentException>(() => new ExternalCustomer(name, "VOKA", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952")));
+        Should.Throw<ArgumentException>(() => new ExternalCustomer(name, "VOKA", new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952")));
     }
 
     [Theory]
     [InlineData(" ")]
     [InlineData("   ")]
-    [InlineData(".")]
-    [InlineData("/")]
-    [InlineData("")]
-    [InlineData("io255")]
-    [InlineData("255")]
     public void ExternalCustomer_type_without_letters_is_invalid(string type)
     {
-        Should.Throw<ArgumentException>(() => new ExternalCustomer("Name", type, new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952")));
+        Should.Throw<ArgumentException>(() => new ExternalCustomer("Name", type, new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952"), new ContactPerson("jane", "doe", "jane.doe@hotmail.com", "+3245867952")));
     }
 }

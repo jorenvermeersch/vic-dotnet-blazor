@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Constants;
 
-namespace Domain.Domain;
+namespace Domain.Core;
 
 [ToString]
 public class InternalCustomer : Customer

@@ -5,12 +5,12 @@ public class AccountTests
     [Fact]
     public void Account_creation_is_correct()
     {
-        Account account = new("Jane", "Doe","jane.doe@hotmail.com", Domain.Constants.Role.Admin, "password123", "DIT", "Toegepaste Informatica");
+        Account account = new("Jane", "Doe","jane.doe@hotmail.com", Domain.Constants.Role.Admin, "Password123@", "DIT", "Toegepaste Informatica");
         account.Firstname.ShouldBe("Jane");
         account.Lastname.ShouldBe("Doe");
         account.Email.ShouldBe("jane.doe@hotmail.com");
         account.Role.ToString().ShouldBe("Admin");
-        account.PasswordHash.ShouldBe("ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f");
+        account.PasswordHash.ShouldBe("d85fb61a933e0b8a45f88c89888502573a3d318657a576ef5529bf948b98882c");
         account.Department.ShouldBe("DIT");
         account.Education.ShouldBe("Toegepaste Informatica");
     }
@@ -50,7 +50,7 @@ public class AccountTests
     [Fact]
     public void Account_education_with_empty_string_is_valid()
     {
-        Account account = new("Jane", "Doe", "jane.doe@hotmail.com", Domain.Constants.Role.Admin, "password123", "DIT", "");
+        Account account = new("Jane", "Doe", "jane.doe@hotmail.com", Domain.Constants.Role.Admin, "Password123@", "DIT", "");
         account.ShouldNotBeNull();
         account.Education.ShouldBe("");
         account.Department.ShouldBe("DIT");

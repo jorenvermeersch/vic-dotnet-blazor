@@ -1,10 +1,10 @@
-﻿namespace Domain.Domain;
+﻿namespace Domain.Core;
 
 public class Customer : Entity
 {
     #region Properties
     public ContactPerson ContactPerson { get; set; }
-    public ContactPerson? BackupContactPerson { get; set; }
+    public ContactPerson BackupContactPerson { get; set; }
     public IList<VirtualMachine> VirtualMachines { get; set; }
     #endregion
 

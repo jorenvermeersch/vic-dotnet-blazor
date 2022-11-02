@@ -1,4 +1,6 @@
-﻿namespace Tests;
+﻿using Domain.Core;
+
+namespace Tests;
 public class ContactPersonTests
 {
 

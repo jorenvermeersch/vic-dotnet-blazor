@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Domain.Domain;
+namespace Domain.Core;
 
 [ToString]
 public class Port : Entity

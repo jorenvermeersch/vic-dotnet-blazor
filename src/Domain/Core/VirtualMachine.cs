@@ -1,7 +1,6 @@
 ﻿using Domain.Constants;
-using Domain.Core;
 
-namespace Domain.Domain;
+namespace Domain.Core;
 
 [ToString]
 public class VirtualMachine : Machine
@@ -13,7 +12,7 @@ public class VirtualMachine : Machine
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
     public BackupFrequency BackupFrequency { get; set; }
     public DateTime ApplicationDate { get; set; }
-    public TimeSpan TimeSpan { get; set; }
+    public Duration TimeSpan { get; set; }
     public Status Status { get; set; }
     public string Reason { get; set; }
     public IList<Port> Ports { get; set; } = new List<Port>();
@@ -60,7 +59,7 @@ public class VirtualMachine : Machine
         private IList<Availability> _availabilities;
         private BackupFrequency _backupFrequency;
         private DateTime _applicationDate;
-        private TimeSpan _timeSpan;
+        private Duration _timeSpan;
         private Status _status;
         private IList<Port> _ports;
         private Host _host;
@@ -79,7 +78,7 @@ public class VirtualMachine : Machine
         public IList<Availability> Availabilities => _availabilities;
         public BackupFrequency BackupFrequency => _backupFrequency;
         public DateTime ApplicationDate => _applicationDate;
-        public TimeSpan TimeSpan => _timeSpan;
+        public Duration TimeSpan => _timeSpan;
         public Status Status => _status;
         public string Reason => _reason;
         public IList<Port> Ports => _ports;
@@ -127,7 +126,7 @@ public class VirtualMachine : Machine
             return this;
         }
 
-        public VirtualMachineBuilder SetBackupBackupFrequency(BackupFrequency backupFrequeny)
+        public VirtualMachineBuilder SetBackupFrequenty(BackupFrequency backupFrequeny)
         {
             _backupFrequency = backupFrequeny;
             return this;
@@ -139,7 +138,7 @@ public class VirtualMachine : Machine
             return this;
         }
 
-        public VirtualMachineBuilder SetDuration(TimeSpan timeSpan)
+        public VirtualMachineBuilder SetDuration(Duration timeSpan)
         {
             _timeSpan = timeSpan;
             return this;

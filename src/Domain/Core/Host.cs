@@ -1,6 +1,4 @@
-﻿using Domain.Domain;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 public abstract class Host : Machine
 {
