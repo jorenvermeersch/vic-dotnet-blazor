@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Client;
-using Domain.Domain;
 using Client.Shared;
 using Shared.customer;
 using Shared.VirtualMachine;
 using Shared.Customer;
+using Domain.Core;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

@@ -1,6 +1,7 @@
 ﻿using Domain.Constants;
 
 namespace Domain.Args;
+
 public class VirtualMachineArgs
 {
     #region Properties
@@ -12,9 +13,9 @@ public class VirtualMachineArgs
     public Mode mode { get; set; }
     public string fqdn { get; set; }
     public ISet<Availability> availabilities { get; set; }
-    public BackupFrequenty backupFrequenty { get; set; }
+    public BackupFrequency backupFrequency { get; set; }
     public DateTime applicationDate { get; set; }
-    public ISet<DateTime> duration { get; set; }
+    public ISet<DateTime> timeSpan { get; set; }
     public Status status { get; set; }
     public string reason { get; set; }
     public IDictionary<int, string> ports { get; set; }
@@ -23,11 +24,5 @@ public class VirtualMachineArgs
     public string accountEmail { get; set; }
     public string requesterEmail { get; set; }
     public string userEmail { get; set; }
-    #endregion
-    #region Constructors
-    public VirtualMachineArgs()
-    {
-
-    }
     #endregion
 }

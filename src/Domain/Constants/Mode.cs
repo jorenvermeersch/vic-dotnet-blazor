@@ -1,6 +1,8 @@
 ﻿namespace Domain.Constants;
+
 public enum Mode
 {
     IAAS,
-    PAAS
+    PAAS,
+    SAAS
 }

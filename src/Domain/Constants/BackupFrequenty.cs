@@ -1,5 +1,6 @@
 ﻿namespace Domain.Constants;
-public enum BackupFrequenty
+
+public enum BackupFrequency
 {
     NoBackup,
     Daily,

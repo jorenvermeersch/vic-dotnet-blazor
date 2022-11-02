@@ -1,6 +1,5 @@
-﻿using Ardalis.GuardClauses;
+﻿namespace Domain.Core;
 
-namespace Domain.Domain;
 [ToString]
 public class Duration
 {
@@ -8,19 +7,16 @@ public class Duration
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     #endregion
+
     #region Constructors
     public Duration(DateTime startDate, DateTime endDate)
     {
-        if (endDate > startDate)
+        if (endDate < startDate)
         {
-            StartDate = startDate;
-            EndDate = endDate;
+            throw new ArgumentException("End Date must be later than Start Date");
         }
-        else
-        {
-            throw new ArgumentException("end date should be after start date");
-        }
-        
+        StartDate = startDate;
+        EndDate = endDate;
     }
     #endregion
 }

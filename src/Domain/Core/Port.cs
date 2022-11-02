@@ -1,13 +1,15 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Domain.Domain;
+namespace Domain.Core;
+
 [ToString]
-public class Port
+public class Port : Entity
 {
     #region Properties
     public int Number { get; set; }
     public string Service { get; set; }
     #endregion
+
     #region Constructors
     public Port(int number, string service)
     {
