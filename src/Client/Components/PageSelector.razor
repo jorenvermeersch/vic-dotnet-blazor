@@ -1,19 +1,30 @@
 ﻿<div class="page-selector-wrapper">
     <div class="page-selector">     
-        @for (int i = 1; i < NumberOfPages + 1; i++)
-        {
-            if (i == 1) 
-            {
-                <button class="selected">@i</button>
-            }
-            else
-            {
-                <button>@i</button>
-            }
+       
+        @for(int i=1; i<=NumberOfPages;i++){
+            int index = i;
+            string classname = index == SelectedPage? "selected":"";
+            <button class=@classname @onclick="@(() => OnClick.InvokeAsync(index))">@i</button>
         }
     </div>
 </div>
 
 @code {
     [Parameter] public int NumberOfPages { get; set; } = 5;
+
+    [Parameter] public EventCallback<int> OnClick { get; set; }
+
+    [Parameter] public int SelectedPage { get; set; } = 1;
+
+     /*@for (int i = 1; i <= NumberOfPages; i++)
+        {
+            if (i == 1) 
+            {
+                <button class="selected" @onclick="@(() => OnClick.InvokeAsync(i))">@i</button>
+            }
+            else
+            {
+                <button @onclick="@(() => OnClick.InvokeAsync(i))">@i</button>
+            //}
+        }*/
 }

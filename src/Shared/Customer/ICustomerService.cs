@@ -2,6 +2,7 @@
 
 public interface ICustomerService
 {
-    Task<IEnumerable<CustomerDto.Index>> GetIndexAsync();
+    Task<IEnumerable<CustomerDto.Index>> GetIndexAsync(int offset);
     Task<CustomerDto.Details> GetDetailAsync(long customerId);
+    Task<int> GetCount();
 }

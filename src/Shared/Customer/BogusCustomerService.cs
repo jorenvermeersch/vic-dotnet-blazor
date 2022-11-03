@@ -45,8 +45,8 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
             .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts));
 
-        customers = internalcustomerFaker.Generate(30);
-        customers.AddRange(externalcustomerFaker.Generate(15));
+        customers = internalcustomerFaker.Generate(40);
+        customers.AddRange(externalcustomerFaker.Generate(25));
 
         var rnd = new Random();
         customers = customers.OrderBy(c => rnd.Next()).ToList();
@@ -58,12 +58,17 @@ public class BogusCustomerService : ICustomerService
         return Task.FromResult(customers.Single(x => x.Id == customerId));
     }
 
-    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync()
+    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
     {
-        return Task.FromResult(customers.Select(x => new CustomerDto.Index
+        return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
         {
             Id = x.Id,
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname
         }));
     }
+    Task<int> ICustomerService.GetCount()
+    {
+        return Task.FromResult(customers.Count());
+    }
+
 }

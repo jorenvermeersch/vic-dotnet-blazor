@@ -158,14 +158,20 @@ public class FakeVirtualMachineService:IVirtualMachineService
 
         }) ;
     }
+
+    public Task<int> GetCount()
+    {
+        return Task.FromResult(_virtualMachines.Count);
+    }
+
     public Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId)
     {
         return Task.FromResult(_virtualMachines.Single(x => x.Id == virtualMachineId));
     }
 
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync()
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync(int offset)
     {
-        return Task.FromResult(_virtualMachines.Select(x => new VirtualMachineDto.Index
+        return Task.FromResult(_virtualMachines.Skip(offset).Take(20).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
             FQDN = x.FQDN,

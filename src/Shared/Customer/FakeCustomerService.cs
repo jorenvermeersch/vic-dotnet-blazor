@@ -75,14 +75,19 @@ public class FakeCustomerService : ICustomerService
         });
     }
 
+    public Task<int> GetCount()
+    {
+        return Task.FromResult(customers.Count());
+    }
+
     Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
     {
         return Task.FromResult(_customers.Single(x => x.Id == customerId));
     }
 
-    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync()
+    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
     {
-        return Task.FromResult(_customers.Select(x => new CustomerDto.Index
+        return Task.FromResult(_customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
         {
             Id = x.Id,
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname

@@ -22,26 +22,21 @@
     <div class="two-thirds">
         <Title text="Alle virtuele machines" />
         <div class="two-columns-container">
-            <!--<div>
-                @foreach(KeyValuePair<string, bool> entry in _vms){
-                    <EntityCard Value="@entry.Key" Active="@entry.Value" />
-                }
-            </div>
             <div>
-                @foreach (KeyValuePair<string, bool> entry in _vms)
-                {
-                    <EntityCard Value="@entry.Key" Active="@entry.Value" />
-                }
-            </div>-->
-            <div>
-                @foreach (var vm in virtualMachines)
+                @foreach (var vm in virtualMachines.Take(10))
                 {
                         <EntityCard Value="@vm.FQDN" Active="@vm.IsActive" Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                 }
             </div>
+            <div>
+                @foreach (var vm in virtualMachines.Skip(10).Take(10))
+                {
+                    <EntityCard Value="@vm.FQDN" Active="@vm.IsActive" Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+                }
+            </div>
 
         </div>
-        <PageSelector />
+        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage"/>
 
 
 
@@ -51,20 +46,23 @@
 
 @code {
     private IEnumerable<VirtualMachineDto.Index> virtualMachines;
+    int offset = 0;
+    int totalVirtualMachines = 0;
+    int totalPages;
+    int selectedPage = 1;
 
     protected override async Task OnInitializedAsync()
     {
-        virtualMachines = await VirtualMachineService.GetIndexAsync();
-
+        virtualMachines = await VirtualMachineService.GetIndexAsync(offset);
+        totalVirtualMachines = await VirtualMachineService.GetCount();
+        totalPages = (totalVirtualMachines / 20) + 1;
     }
-    /*
-    private Dictionary<string, bool> _vms = new();
 
-    protected override void OnInitialized()
+    async Task ClickHandler(int pageNr)
     {
-        Random random = new();
-        for(int i = 0; i < 10; i++){
-            _vms.Add($"devops-proj1.vichogent.be#{i}", random.Next(2) == 1);
-        }
-    }*/
+        offset = (pageNr - 1) * 20;
+        virtualMachines = await VirtualMachineService.GetIndexAsync(offset);
+        selectedPage = pageNr;
+    }
+
 }
