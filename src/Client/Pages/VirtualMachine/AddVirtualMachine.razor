@@ -16,10 +16,12 @@
         <AddInput Type="@Input.InputType.SELECT" Label="Template" />
 
         <Title text="Poorten" />
-        <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" />
+        <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" Action="(value) => AddPortToList(value)" />
         <div class="buttonList">
-            <Button Text="HTTP" />
-            <Button Text="SSH" />
+            @foreach(var item in _ports){
+                <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
+            }
+            
         </div>
 
         <Title text="Specificaties" />
@@ -63,7 +65,8 @@
 @code {
     private string _customcss = "background-color: white";
 
-    public List<string> Options { get; set; } = new() { "SelectOptionOne", "SelectOptionTwo", "SelectOptionThree" };
+    private HashSet<string> _ports = new();
+    public List<string> Options { get; set; } = new() { "HTTP", "HTTPS", "SSH" };
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
     private Dictionary<int, Dictionary<string, string>> _entries = new();
 
@@ -77,6 +80,15 @@
     void ClickHandler(int id)
     {
         _entries.Remove(id);
+    }
+
+    public void AddPortToList(string value)
+    {
+        _ports.Add(value);
+    }
+
+    public void RemovePortFromList(string value){
+        _ports.Remove(value);
     }
 
 }

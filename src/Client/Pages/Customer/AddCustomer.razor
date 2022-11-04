@@ -8,11 +8,13 @@
     <span class="context-menu-label">Klant toevoegen</span>
     <Button Text="Toevoegen" />
 </div>
+
 <div class="three-column-layout">
     <div class="one-third">
         <Title text="Algemene informatie" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Department" Required="@true" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true"  />
+        <AddInput Type="@Input.InputType.SELECT" Label="Instituut" Required="@true" Items="@_institution"/>
+        <AddInput Type="@Input.InputType.SELECT" Label="Departement" Required="@true" />
         <AddInput Type="@Input.InputType.SELECT" Label="Opleiding" Required="@true" />
         <AddInput PlaceHolder="" Type="@Input.InputType.SELECT" Label="Type" Required="@true" />
     </div>
@@ -29,13 +31,13 @@
         <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="1" />
         <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="2" />
         <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" />
-
     </div>
-
 </div>
 
 
 @code {
+    private List<string> _institution = new() {"Hogent", "EhB"};
+
     private string _customcss = "background-color: white";
 
     private bool _backuprequired = false;
