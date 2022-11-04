@@ -1,0 +1,33 @@
+﻿@page "/host/list"
+@namespace Shared
+@using Shared.VirtualMachine
+@inject IVirtualMachineService VirtualMachineService
+@layout MainLayout
+@attribute [Authorize]
+
+<div class="context-menu">
+    <Label Text="Toevoegen" />
+    <Button Href="/host/add" Text="Host" />
+    <Button Href="/virtual-machine/add" Text="Virtuele machine" />
+</div>
+<div class="three-column-layout">
+    <div class="one-third">
+        <Title text="Filteropties" />
+        <div class="filterbuttonarea">
+            <Button Text="Filteren" />
+        </div>
+        <Searchbar PlaceHolder="Geef een zoekterm in" />
+    </div>
+    <div class="two-thirds">
+        <Title text="Alle Hosts" />
+        <div class="two-columns-container">
+            <div>
+                <EntityCard Value="ServerNaam" Active=true Href=@string.Concat("host/1")></EntityCard>
+            </div>
+        </div> 
+    </div>
+</div>
+
+@code {
+    
+}
