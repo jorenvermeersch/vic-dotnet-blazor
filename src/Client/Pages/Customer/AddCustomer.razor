@@ -11,29 +11,43 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title text="Algemene informatie" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Department" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Opleiding" />
-        <AddInput PlaceHolder="" Type="@Input.InputType.SELECT" Label="Type" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Department" Required="@true" />
+        <AddInput Type="@Input.InputType.SELECT" Label="Opleiding" Required="@true" />
+        <AddInput PlaceHolder="" Type="@Input.InputType.SELECT" Label="Type" Required="@true" />
     </div>
     <div class="one-third">
         <Title text="Contactgegevens" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
-        <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@true" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" />
+        <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@true" />
         <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" />
     </div>
     <div class="one-third">
         <Title text="Back-up contactgegevens" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
-        <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="0" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="1" />
+        <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="2" />
         <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" />
 
     </div>
+
 </div>
 
 
 @code {
     private string _customcss = "background-color: white";
+
+    private bool _backuprequired = false;
+
+    private string[] _values = new string[3] { "", "", "" };
+
+    public void Makerequired(string value) {
+        int index = int.Parse(value.Substring(0, 1));
+        string txt = value.Substring(1);
+        _values[index] = txt;
+
+        _backuprequired = _values.All(e => (e == "" || e == null)) ? false : true;
+    }
+
 }

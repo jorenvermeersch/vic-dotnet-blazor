@@ -15,6 +15,10 @@
   z-index: 1000;
 }
 
+.requiredinput{
+    color: var(--blue);
+}
+
 .loading-screen-wrapper {
     width: 100vw;
     height: 100vh;

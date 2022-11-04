@@ -1,11 +1,17 @@
 ﻿<div>
     <div class="input-container">
-        <label for="">@_label</label>
+        <label for="">
+            @_label
+            @if(Required){
+                <sup class="requiredinput">*</sup>
+            }
+        </label>
         @if(Type == InputType.TEXT) {
-            <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" />
+            <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required"  @oninput="(ChangeEventArgs __e) => Action.InvokeAsync(string.Concat(this.OptionalId, __e?.Value?.ToString()))" />
+            @*<input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required"  @oninput="@(ChangeEventArgs __e) => Action.InvokeAsync({this.OptionalId}_{__e?.Value?.ToString()})" />*@
         }
         else if(Type == InputType.SELECT){
-            <select class="input" style="@customCss" type="text" placeholder="@PlaceHolder">
+            <select class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
                 <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)
                 {
@@ -16,19 +22,4 @@
     </div>
 </div>
 
-@code {
-    private string _label = "Label: ";
 
-    [Parameter] public string PlaceHolder { get; set; } = "";
-    [Parameter] public InputType Type { get; set; } = InputType.TEXT;
-    [Parameter] public List<string> Items { get; set; } = new();
-    [Parameter] public string Label { get { return _label; } set { _label = $"{value}: "; } }
-    [Parameter] public string customCss { get; set; } = "";
-
-    //[Parameter] public string Label { get; set; } = "Label: ";
-
-
-    public enum InputType {
-        SELECT, TEXT
-    }
-}

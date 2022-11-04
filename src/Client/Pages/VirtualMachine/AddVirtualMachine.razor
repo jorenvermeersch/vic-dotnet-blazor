@@ -50,12 +50,11 @@
         <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
             <Button Text="Toevoegen" />
         </div>
+        </div>
         
         @foreach(KeyValuePair<int, Dictionary<string, string>> entry in _entries) {
             <DataCard OnClick="() => ClickHandler(entry.Key)" Entries="@entry.Value" customCss="@_customcss" />
         }
-
-    </div>
 </div>
 
 
