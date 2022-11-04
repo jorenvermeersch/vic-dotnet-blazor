@@ -14,6 +14,7 @@ public class BogusHostService
 
         var hostFaker = new Faker<HostDto>("nl")
             .UseSeed(1337)
+            .RuleFor(x => x.Id, _ => hostId++)
             .RuleFor(x => x.Name, f => f.Internet.DomainWord())
             .RuleFor(x => x.Storage, f => f.Random.Number(2, 1000))
             .RuleFor(x => x.Memory, f => f.Random.Number(2, 128))
