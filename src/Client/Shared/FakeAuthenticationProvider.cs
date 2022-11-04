@@ -29,7 +29,7 @@ public class FakeAuthenticationProvider : AuthenticationStateProvider
          {
          new Claim(ClaimTypes.Name, "Fake observer"),
          new Claim(ClaimTypes.Email, "fake-observer@gmail.com"),
-         new Claim(ClaimTypes.Role, "observer"),
+         new Claim(ClaimTypes.Role, "Observer"),
          }, "Fake Authentication"));
 
     public ClaimsPrincipal Current { get; private set; } = Anonymous;
