@@ -1,11 +1,4 @@
-﻿using Bogus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shared.customer;
+﻿namespace Shared.customer;
 
 public class FakeCustomerService : ICustomerService
 {
@@ -77,7 +70,7 @@ public class FakeCustomerService : ICustomerService
 
     public Task<int> GetCount()
     {
-        return Task.FromResult(customers.Count());
+        return Task.FromResult(_customers.Count());
     }
 
     Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
