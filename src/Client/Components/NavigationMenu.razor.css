@@ -131,3 +131,21 @@
         display: none;
     }
 }
+
+
+/* Fake authentication */
+.fake-auth {
+    display: flex;
+    gap: var(--padding-md);
+    align-items: center;
+    max-width: var(--extremely-large);
+    margin: auto;
+    padding: var(--padding-md);
+    background-color: var(--white);
+    font-size: var(--text-md); 
+    font-weight: 600; 
+}
+
+.fake-auth > a {
+    cursor: pointer; 
+}

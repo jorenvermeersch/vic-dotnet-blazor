@@ -2,7 +2,8 @@
 @inject FakeAuthenticationProvider FakeAuthenticationProvider
 
 
-<div class ="context-menu">
+<div class ="fake-auth">
+    <p>Beschikbare rollen: </p>
     <Button OnClick="LoginAsMaster" Text="@FakeAuthenticationProvider.Master.FindFirst(ClaimTypes.Name)?.Value"/>
     <Button OnClick="LoginAsAdmin" Text="@FakeAuthenticationProvider.Administrator.FindFirst(ClaimTypes.Name)?.Value"/>
     <Button OnClick="LoginAsObserver" Text="@FakeAuthenticationProvider.Observer.FindFirst(ClaimTypes.Name)?.Value"/>
