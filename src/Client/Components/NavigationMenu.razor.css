@@ -141,7 +141,6 @@
     max-width: var(--extremely-large);
     margin: auto;
     padding: var(--padding-md);
-    background-color: var(--white);
     font-size: var(--text-md); 
     font-weight: 600; 
 }
