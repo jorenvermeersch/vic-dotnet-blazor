@@ -45,9 +45,9 @@ public class FakeCustomerService : ICustomerService
             {
                 Id = 4,
                 Firstname = "Robin",
-                Lastname = "Vermeire",
+                Lastname = "Vermeir",
                 Phonenumber = "+3256859021",
-                Email = "robin.vermeire@hogent.be"
+                Email = "robin.vermeir@hogent.be"
             },
 
         });
@@ -60,9 +60,9 @@ public class FakeCustomerService : ICustomerService
             {
                 Id = 4,
                 Firstname = "Robin",
-                Lastname = "Vermeire",
+                Lastname = "Vermeir",
                 Phonenumber = "+3256859021",
-                Email = "robin.vermeire@hogent.be"
+                Email = "robin.vermeir@hogent.be"
             },
 
         });
