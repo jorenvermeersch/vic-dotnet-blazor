@@ -2,7 +2,7 @@
 @layout MainLayout
 @namespace Shared
 @using Shared.customer
-@inject ICustomerService customerService
+@inject IHostService customerService
 @attribute [Authorize]
 
 <div class="context-menu">
@@ -36,9 +36,6 @@
 
         </div>
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage"/>
-
-
-
 
     </div>
 </div>

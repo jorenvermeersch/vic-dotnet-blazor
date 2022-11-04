@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Shared.Customer;
 
-public class BogusCustomerService : ICustomerService
+public class BogusCustomerService : IHostService
 {
     public readonly List<CustomerDto.Details> customers = new();
     private readonly List<ContactPersonDto> _contacts = new();
@@ -53,12 +53,12 @@ public class BogusCustomerService : ICustomerService
 
     }
 
-    Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
+    Task<CustomerDto.Details> IHostService.GetDetailAsync(long customerId)
     {
         return Task.FromResult(customers.Single(x => x.Id == customerId));
     }
 
-    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
+    Task<IEnumerable<CustomerDto.Index>> IHostService.GetIndexAsync(int offset)
     {
         return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
         {
@@ -66,7 +66,7 @@ public class BogusCustomerService : ICustomerService
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname
         }));
     }
-    Task<int> ICustomerService.GetCount()
+    Task<int> IHostService.GetCount()
     {
         return Task.FromResult(customers.Count());
     }

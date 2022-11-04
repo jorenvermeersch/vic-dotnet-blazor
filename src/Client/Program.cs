@@ -17,7 +17,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<FakeAuthenticationProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<FakeAuthenticationProvider>());
 
-builder.Services.AddScoped<ICustomerService, BogusCustomerService>();
+builder.Services.AddScoped<IHostService, BogusCustomerService>();
 builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
 
 await builder.Build().RunAsync();

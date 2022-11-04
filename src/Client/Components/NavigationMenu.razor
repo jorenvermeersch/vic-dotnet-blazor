@@ -10,7 +10,7 @@
     <Button OnClick="LoginAsAnonymous" Text="Anonymous"/>
 </div>
 
-<AuthorizeView Roles="Master, Observer, Administrator">
+
     <nav class="navigation-bar-wide">
         <ul>
             <li>
@@ -19,6 +19,7 @@
                     Virtual IT Company
                 </a>
             </li>
+            <AuthorizeView Roles="Master, Observer, Administrator">
             <li>
                 <a href="/customer/list">Klanten</a>
             </li>
@@ -28,7 +29,13 @@
             <li>
                 <a href=".">Verbruik</a>
             </li>
+        </AuthorizeView>
+        @if (@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value=="Anonymous"){
+            <li></li>
+        }else{
             <li>@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value</li>
+        }
+            
         </ul>
     </nav>
 
@@ -64,7 +71,7 @@
             </div>
         </div>
     </div>
-</AuthorizeView>
+
 
 
 

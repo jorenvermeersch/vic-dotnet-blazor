@@ -1,5 +1,6 @@
 ﻿using Shared.Account;
 using Shared.customer;
+using Shared.Host;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ public static class VirtualMachineDto
         public int Memory { get; set; }
         public int Storage { get; set; }
         public HostDto Host { get; set; } 
-        public List<CredentialDto> Credentials { get; set; } //todo
+        public List<CredentialDto> Credentials { get; set; } 
         public AccountDto.Index Account { get; set; } 
         public CustomerDto.Index Requester { get; set; } 
         public CustomerDto.Index User { get; set; } 
