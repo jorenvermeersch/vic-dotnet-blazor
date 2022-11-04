@@ -15,6 +15,11 @@
   z-index: 1000;
 }
 
+
+option{
+    padding: 100px 20px;
+}
+
 .requiredinput{
     color: var(--blue);
 }
