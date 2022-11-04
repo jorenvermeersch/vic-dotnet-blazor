@@ -2,7 +2,7 @@
 @inject FakeAuthenticationProvider FakeAuthenticationProvider
 
 
-<div class ="fake-auth">
+<div class="fake-auth" style="display: @_display">
     <p>Beschikbare rollen: </p>
     <Button OnClick="LoginAsMaster" Text="@FakeAuthenticationProvider.Master.FindFirst(ClaimTypes.Name)?.Value"/>
     <Button OnClick="LoginAsAdmin" Text="@FakeAuthenticationProvider.Administrator.FindFirst(ClaimTypes.Name)?.Value"/>
@@ -36,7 +36,7 @@
         @if (@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value=="Anonymous"){
             <li></li>
         }else{
-            <li>@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value</li>
+            <li style="cursor:pointer" @onclick="() => showOrHideChangeRole()">@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value</li>
         }
             
         </ul>
@@ -82,6 +82,12 @@
 
 
 @code {
+    private string _display = "flex";
+
+    private void showOrHideChangeRole(){
+        _display = _display == "flex" ? "none" : "flex";
+    }
+
     [Parameter]
     public string name { get; set; } = "Name";
 
