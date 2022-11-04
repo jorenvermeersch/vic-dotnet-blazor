@@ -40,5 +40,17 @@ namespace Client.Components
             SELECT,
             TEXT
         }
+
+        public string SelectedOption
+        {
+            get { return _selectedOption; }
+            set
+            {
+                _selectedOption = value;
+                Action.InvokeAsync(_selectedOption);
+            }
+        }
+
+        private string _selectedOption = "";
     }
 }

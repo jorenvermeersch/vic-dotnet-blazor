@@ -1,7 +1,7 @@
 ﻿@{
     string style = "button" + (Inverse ? " button-inverse" : ""); 
 }
-<a class="@style" href="@Href" @onclick="@(() => OnClick.InvokeAsync())">@Text</a>
+<a class="@style" style="@customCss" href="@Href" @onclick="@(() => OnClick.InvokeAsync())">@Text</a>
 
 
 @code {
@@ -9,5 +9,7 @@
     [Parameter] public string Text { get; set; } = "Forgot text";
     [Parameter] public bool Inverse { get; set; } = false;
     [Parameter] public EventCallback<string> OnClick { get; set; } = new();
+
+    [Parameter] public string customCss { get; set; }
 
 }

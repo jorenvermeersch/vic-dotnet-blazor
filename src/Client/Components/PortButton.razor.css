@@ -1,0 +1,27 @@
+﻿.button,
+.button-inverse {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--padding-sm) calc(2 * var(--padding-sm));
+    border-radius: calc(4 * var(--padding-sm));
+    text-decoration: none;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.button:hover {
+    color: white;
+    background-color: #d14a45;
+    border-color: #d14a45;
+}
+
+.button {
+    color: var(--dark-blue);
+    border: var(--border-size) solid var(--dark-blue);
+}
+
+.button-inverse {
+    color: var(--white);
+    border: var(--border-size) solid var(--white);
+}
