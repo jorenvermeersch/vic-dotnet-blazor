@@ -3,13 +3,14 @@
 @namespace Shared
 @using Shared.VirtualMachine
 @inject IVirtualMachineService VirtualMachineService
+@inject NavigationManager Navigation
 @attribute [Authorize]
 
 <PageTitle>Virtual Machine @virtualMachine.Name  Details</PageTitle>
 
 <div class="context-menu">
     <div style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title"><i class="fa-solid fa-arrow-left"></i><span>Terug</span></span>
+        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i><span>Terug</span></span>
     </div>
 </div>
 
@@ -24,6 +25,7 @@
     <Title text="Beschikbaarheid en back-ups" />
     <DataCard Entries="@_available" />
     <DataCard Entries="@_backups" />
+
 </div>
 <div class="one-third">
 
@@ -34,9 +36,10 @@
     </div>
 
     <Title text="Logingegevens" />
-    @for(int i = 0; i < 3; i++){
-        <DataCard Entries="@_logindata" />
+    @foreach(var data in _logindata){
+            <DataCard Entries="@data" />
     }
+     
 </div>
 <div class="one-third">
     <Title text="Aanvrager" />
@@ -63,17 +66,23 @@
     private Dictionary<string, string> _config = new();
     private Dictionary<string, string> _available = new();
     private Dictionary<string, string> _backups = new();
-    private Dictionary<string, string> _logindata = new();
+    //private Dictionary<string, string> _logindata = new();
     private Dictionary<string, string> _user = new();
     private Dictionary<string, string> _requester = new();
     private Dictionary<string, string> _personincharge = new();
+
+    private List<Dictionary<string, string>> _logindata = new();
+    private Dictionary<string, string> _host = new();
+
+
 
     protected override async Task OnInitializedAsync()
     {
         virtualMachine = await VirtualMachineService.GetDetailAsync(Id);
 
+        _defaultInformation.Add("Naam", virtualMachine.Name);
         _defaultInformation.Add("FQDN", virtualMachine.FQDN);
-        _defaultInformation.Add("Host", virtualMachine.Name);
+        _defaultInformation.Add("Hostnaam", virtualMachine.Host.Name);
 
         _config.Add("Mode", virtualMachine.Mode);
         _config.Add("Template", virtualMachine.Template);
@@ -100,10 +109,18 @@
         _requester.Add("Email", virtualMachine.Requester.Email);
 
         _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Number)));
+
+        foreach(var credential in virtualMachine.Credentials){
+            _logindata.Add(new Dictionary<string, string>(){
+                {"Gebruikersnaam", credential.Username},
+                {"Rol", credential.Role}
+            });
+        }
+
+        _host.Add("Naam", virtualMachine.Host.Name);
     }
-    protected override void OnInitialized()
+    private void NavigateBack()
     {
-        _logindata.Add("Gebruikersnaam", "admin");
-        _logindata.Add("Wachtwoord", "*********");
+        Navigation.NavigateTo("virtual-machine/list");
     }
 }

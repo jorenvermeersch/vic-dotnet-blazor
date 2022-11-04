@@ -3,15 +3,16 @@
 @namespace Shared
 @using Shared.VirtualMachine
 @using Shared.customer
-@inject ICustomerService customerService
+@inject IHostService customerService
 @inject IVirtualMachineService virtualMachineService
 @attribute [Authorize]
+@inject NavigationManager Navigation
 
 <PageTitle>Klant [customer name] Details</PageTitle>
 
-<div class="context-menu">
+<div class="context-menu" >
     <div style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title"><i class="fa-solid fa-arrow-left"></i><span>Terug</span></span>
+        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i><span>Terug</span></span>
     </div>
 </div>
 <div class="three-column-layout">
@@ -94,5 +95,10 @@
         }
         
         
+    } 
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("customer/list");
     }
 }
