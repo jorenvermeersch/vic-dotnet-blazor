@@ -1,0 +1,23 @@
+﻿@page "/host/add"
+@layout NoGlobalSearchLayout
+
+<PageTitle>Host Toevoegen</PageTitle>
+
+<div class="context-menu">
+    <span class="context-menu-label">Host Toevoegen</span>
+    <Button Text="Toevoegen" />
+</div>
+<div class="three-column-layout">
+    <div class="one-third">
+        <Title text="Algemene informatie" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Naam*" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Vcpu*" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Opslag*" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Geheugen*" />
+    </div>
+    <div class="one-third" ></div>
+    <div class="one-third" ></div>
+</div>
+@code {
+
+}
