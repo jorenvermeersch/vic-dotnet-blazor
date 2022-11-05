@@ -6,11 +6,13 @@
                 <sup class="requiredinput">*</sup>
             }
         </label>
+
         @if(Type == InputType.TEXT) {
             <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required"  @oninput="(ChangeEventArgs __e) => Action.InvokeAsync(string.Concat(this.OptionalId, __e?.Value?.ToString()))" />
             @*<input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required"  @oninput="@(ChangeEventArgs __e) => Action.InvokeAsync({this.OptionalId}_{__e?.Value?.ToString()})" />*@
         }
-        else if(Type == InputType.SELECT){
+
+        @if(Type == InputType.SELECT){
             <select class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
                 <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)

@@ -10,21 +10,21 @@
 </div>
 <div class="three-column-layout">
     <div class="one-third">
-        <Title text="Algemene informatie" />
+        <Title Text="Algemene informatie" />
         <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" />
         <AddInput Type="@Input.InputType.SELECT" Label="Department" Required="@true" />
         <AddInput Type="@Input.InputType.SELECT" Label="Opleiding" Required="@true" />
         <AddInput PlaceHolder="" Type="@Input.InputType.SELECT" Label="Type" Required="@true" />
     </div>
     <div class="one-third">
-        <Title text="Contactgegevens" />
+        <Title Text="Contactgegevens" />
         <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@true" />
         <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" />
         <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@true" />
         <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" />
     </div>
     <div class="one-third">
-        <Title text="Back-up contactgegevens" />
+        <Title Text="Back-up contactgegevens" />
         <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="0" />
         <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="1" />
         <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="2" />

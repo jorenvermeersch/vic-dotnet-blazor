@@ -19,10 +19,10 @@
     <div class="one-third">
     <DataCard Entries="@_username" />
 
-    <Title text="Algemeen" />
+    <Title Text="Algemeen" />
     <DataCard Entries="@_general" />
 
-    <Title text="Contactgegevens" />
+    <Title Text="Contactgegevens" />
     <DataCard Entries="@_contactInformation" />
         <DataCard Entries="@_backupContactInformation" />
 </div>
@@ -37,7 +37,7 @@
         </span>
     </div>
 
-    <Title text="Virtuele machines" />
+    <Title Text="Virtuele machines" />
     @if(virtualMachine.Any()){
         @foreach(var vm in virtualMachine){
             <EntityCard Value=@vm.FQDN Active=@vm.IsActive Href=@string.Concat("virtual-machine/", vm.Id)/>
