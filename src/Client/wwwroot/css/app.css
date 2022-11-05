@@ -15,71 +15,6 @@
   z-index: 1000;
 }
 
-.requiredinput{
-    color: var(--blue);
-}
-
-.loading-screen-wrapper {
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(var(--dark-blue), var(--blue));
-    overflow: hidden;
-}
-
-.loading-screen {
-    color: white;
-    width: 100vw;
-    height: 100vh;
-    font-size: 6vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    gap: var(--padding-lg);
-/*    transition: all .5s ea*/
-    animation: loadinganimation 2s infinite;
-    overflow: hidden;
-}
-
-.loading-screen span {
-    text-shadow: 0px 0px 5px var(--dark-blue);
-}
-
-.loading-items{
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-lg);
-}
-
-.loading-line {
-    height: 5px;
-    width: 0%;
-    background-color: white;
-    border-radius: 50px;
-    animation: loadingline 2s infinite;
-}
-
-@keyframes loadinganimation {
-    50% {
-        transform: scale(0.98) 
-    }
-}
-
-@keyframes loadingline {
-    100%{
-        width: 100%;
-    }
-}
-
-.context-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--padding-md);
-}
-
-.context-menu-label {
-    flex: 1;
-}
 
 #blazor-error-ui .dismiss {
   cursor: pointer;
@@ -100,47 +35,6 @@
   content: "An error has occurred.";
 }
 
-.card {
-    color: #343a40;
-    background-color: #f8f9fa;
-    border-radius: 2px;
-    padding: 17px;
-    font-size: 0.875rem;
-}
-
-.input-container {
-    display: flex;
-    align-items: center;
-    height: 48px;
-    font-size: 0.875rem;
-}
-
-.input-container label {
-    flex: 1;
-    width: 0;
-    font-weight: 600;
-    color: #3c6999;
-}
-
-.multioption {
-    gap: var(--padding-md)
-}
-
-.input-container .input {
-    flex: 2;
-    width: 0;
-    font-family: Graphik, sans-serif;
-    /*font-weight: 600;*/
-    border: none;
-    outline: none;
-    padding: 17px;
-    background-color: #f8f9fa;
-    border-radius: 2px;
-}
-
-.input-container .input::placeholder {
-    color: #6c757d;
-}
 
 .validation-error {
     font-size: 0.875rem;
@@ -152,15 +46,82 @@
     color: #508bcb;
 }
 
-select {
-    /*    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    padding-right: 15px;
-    background-image: url('./assets/images/caret-down-solid.svg');
-    background-repeat: no-repeat;
-    background-position: calc(100% - 3px) center;*/
 
+/* Loading screen */
+.loading-screen-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(var(--dark-blue), var(--blue));
+    overflow: hidden;
+}
+
+.loading-screen {
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    font-size: 6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    gap: var(--padding-lg);
+    animation: loadinganimation 2s infinite;
+    overflow: hidden;
+}
+
+.loading-screen span {
+    text-shadow: 0px 0px 5px var(--dark-blue);
+}
+
+.loading-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-lg);
+}
+
+.loading-line {
+    height: 5px;
+    width: 0%;
+    background-color: white;
+    border-radius: 50px;
+    animation: loadingline 2s infinite;
+}
+
+@keyframes loadinganimation {
+    50% {
+        transform: scale(0.98)
+    }
+}
+
+@keyframes loadingline {
+    100% {
+        width: 100%;
+    }
+}
+
+/* Context menu */
+.context-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-md);
+}
+
+.context-menu-label {
+    flex: 1;
+}
+
+
+/* Misc */
+.card {
+    color: #343a40;
+    background-color: #f8f9fa;
+    border-radius: 2px;
+    padding: 17px;
+    font-size: 0.875rem;
+}
+
+/* Moved to input component CSS */
+/*select {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -169,8 +130,11 @@ select {
     background-repeat: no-repeat;
     background-position: calc(100% - 10px) center;
     background-size: 10px;
-}
+}*/
 
+.requiredinput {
+    color: var(--blue);
+}
 
 .buttonList{
     display: flex;
