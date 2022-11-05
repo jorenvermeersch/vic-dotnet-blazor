@@ -120,8 +120,9 @@
     font-size: 0.875rem;
 }
 
-/* Moved to input component CSS */
-/*select {
+
+/* Input */
+select {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -130,23 +131,72 @@
     background-repeat: no-repeat;
     background-position: calc(100% - 10px) center;
     background-size: 10px;
-}*/
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--text-sm);
+}
+
+    .input-container label {
+        font-weight: 600;
+        padding-bottom: 5px;
+        color: var(--dark-blue);
+    }
+
+    .input-container .input {
+        font-family: var(--font-stack);
+        height: var(--card-height);
+        border: none;
+        outline: none;
+        padding: 17px;
+        background-color: var(--light-gray);
+        border-radius: var( --border-radius);
+    }
+
+        .input-container .input::placeholder {
+            color: var(--dark-gray);
+        }
+
+.multioption {
+    gap: var(--padding-md)
+}
+
+@media screen and (min-width: 480px) {
+    .input-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+        .input-container label {
+            width: 0px;
+            min-width: min-content;
+            flex-grow: 1;
+            padding-bottom: 0px;
+        }
+
+        .input-container .input {
+            width: 0px;
+            flex-grow: 2;
+        }
+}
 
 .requiredinput {
     color: var(--blue);
 }
 
-.buttonList{
+.buttonList {
     display: flex;
     gap: var(--padding-md);
 }
 
-.small_title{
+.small_title {
     color: var(--dark-blue);
     font-weight: bold;
 }
 
-.filterbuttonarea{
+.filterbuttonarea {
     display: flex;
     justify-content: flex-end;
 }
