@@ -136,7 +136,7 @@
 /* Fake authentication */
 .fake-auth {
     display: flex;
-    /*display: none;*/
+    flex-wrap: wrap; 
     gap: var(--padding-md);
     align-items: center;
     max-width: var(--extremely-large);

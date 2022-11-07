@@ -18,11 +18,11 @@
     <div class="one-third">
     <DataCard Entries="@_defaultInformation" />
 
-    <Title text="Specificaties en configuratie" />
+    <Title Text="Specificaties en configuratie" />
     <DataCard Entries="@_specs" />
     <DataCard Entries="@_config" />
 
-    <Title text="Beschikbaarheid en back-ups" />
+    <Title Text="Beschikbaarheid en back-ups" />
     <DataCard Entries="@_available" />
     <DataCard Entries="@_backups" />
 
@@ -35,20 +35,20 @@
         </span>
     </div>
 
-    <Title text="Logingegevens" />
+    <Title Text="Logingegevens" />
     @foreach(var data in _logindata){
             <DataCard Entries="@data" />
     }
      
 </div>
 <div class="one-third">
-    <Title text="Aanvrager" />
+    <Title Text="Aanvrager" />
     <DataCard Entries="@_requester" />
 
-    <Title text="Gebruiker" />
+    <Title Text="Gebruiker" />
     <DataCard Entries="@_user" />
 
-    <Title text="Verantwoordelijken" />
+    <Title Text="Verantwoordelijken" />
     <DataCard Entries="@_personincharge" />
 </div>
 </div>

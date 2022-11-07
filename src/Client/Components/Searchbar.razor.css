@@ -3,7 +3,7 @@
     align-items: center;
     height: 48px;
     font-size: 0.875rem;
-    background-color: #f8f9fa;
+    background-color: var(--light-gray);
     padding: 17px;
     width: 100%;
 }
@@ -15,7 +15,7 @@
     border: none;
     outline: none;
     padding: 17px;
-    background-color: #f8f9fa;
+    background-color: var(--light-gray);
     border-radius: 2px;
 }
 
