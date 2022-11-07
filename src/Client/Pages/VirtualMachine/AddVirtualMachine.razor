@@ -11,6 +11,7 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title Text="Configuratie" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
         <AddInput Type="@Input.InputType.TEXT" Label="FQDN"/>
         <AddInput Type="@Input.InputType.SELECT" Label="Mode"/>
         <AddInput Type="@Input.InputType.SELECT" Label="Template" />
@@ -47,8 +48,8 @@
     </div>
     <div class="one-third">
         <Title Text="Logingegevens" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Gebruikersnaam"/>
-        <AddInput Type="@Input.InputType.SELECT" Label="Wachtwoord" />
+        <AddInput Type="@Input.InputType.TEXT" Label="Gebruikersnaam"/>
+        <AddInput Type="@Input.InputType.TEXT" Label="Rol" />
         <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
             <Button Text="Toevoegen" />
         </div>
@@ -74,8 +75,8 @@
 
     protected override void OnInitialized()
     {
-        _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Wachtwoord", "*******" } });
-        _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Wachtwoord", "*********" } });
+        _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Rol", "Admin" } });
+        _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Rol", "User" } });
     }
 
 
