@@ -11,9 +11,9 @@
 }
 
 .button:hover {
-    color: white;
-    background-color: #d14a45;
-    border-color: #d14a45;
+    color: var(--white);
+    background-color: #CC6B64;
+    border-color: #CC6B64;
 }
 
 .button {
