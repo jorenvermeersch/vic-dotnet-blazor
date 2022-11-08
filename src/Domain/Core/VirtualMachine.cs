@@ -1,4 +1,6 @@
-﻿using Domain.Constants;
+﻿using Ardalis.GuardClauses;
+using Domain.Constants;
+using System.Text.RegularExpressions;
 
 namespace Domain.Core;
 
@@ -24,24 +26,37 @@ public class VirtualMachine : Machine
     #endregion
 
     #region Constructors
+
     public VirtualMachine(VirtualMachineBuilder builder)
         : base(builder.Name, builder.Specifications)
     {
-        Template = builder.Template;
-        Mode = builder.Mode;
-        Fqdn = builder.Fqdn;
-        Availabilities = builder.Availabilities;
-        BackupFrequency = builder.BackupFrequency;
-        ApplicationDate = builder.ApplicationDate;
-        TimeSpan = builder.TimeSpan;
-        Status = builder.Status;
-        Reason = builder.Reason;
-        Ports = builder.Ports;
-        Host = builder.Host;
-        Credentials = builder.Credentials;
-        Account = builder.Account;
-        Requester = builder.Requester;
-        User = builder.User;
+        Template = Guard.Against.EnumOutOfRange(builder.Template, nameof(Template));
+        Mode = Guard.Against.EnumOutOfRange(builder.Mode, nameof(Mode));
+        Fqdn = Guard.Against.NullOrInvalidInput(
+            builder.Fqdn,
+            nameof(Fqdn),
+            input => Regex.IsMatch(input ?? "", Validation.Fqdn)
+        );
+        Availabilities = Guard.Against.NullOrInvalidInput(
+            builder.Availabilities,
+            nameof(Availabilities),
+            input => input.Count > 0
+        );
+        BackupFrequency = Guard.Against.EnumOutOfRange(BackupFrequency, nameof(BackupFrequency));
+        ApplicationDate = Guard.Against.Null(builder.ApplicationDate, nameof(ApplicationDate)); // Can be earlier than today.
+        TimeSpan = Guard.Against.Null(builder.TimeSpan, nameof(TimeSpan));
+        Status = Guard.Against.EnumOutOfRange(builder.Status, nameof(Status));
+        Reason = Guard.Against.NullOrWhiteSpace(builder.Reason, nameof(Reason));
+        Ports = Guard.Against.NullOrInvalidInput(
+            builder.Ports,
+            nameof(Ports),
+            input => input.Count > 0
+        );
+        Host = Guard.Against.Null(builder.Host, nameof(Host));
+        Credentials = Guard.Against.Null(builder.Credentials, nameof(Credentials));
+        Account = Guard.Against.Null(builder.Account, nameof(Account));
+        Requester = Guard.Against.Null(builder.Requester, nameof(Requester));
+        User = Guard.Against.Null(builder.User, nameof(User));
     }
 
     #endregion
@@ -49,146 +64,126 @@ public class VirtualMachine : Machine
     #region Builder
     public class VirtualMachineBuilder
     {
-        #region Fields
-        private string _name,
-            _fqdn,
-            _reason;
-        private Specifications _specifications;
-        private Template _template;
-        private Mode _mode;
-        private IList<Availability> _availabilities;
-        private BackupFrequency _backupFrequency;
-        private DateTime _applicationDate;
-        private Duration _timeSpan;
-        private Status _status;
-        private IList<Port> _ports;
-        private Host _host;
-        private IList<Credentials> _credentials;
-        private Account _account;
-        private Customer _requester,
-            _user;
-        #endregion
-
         #region Properties
-        public string Name => _name;
-        public Specifications Specifications => _specifications;
-        public Template Template => _template;
-        public Mode Mode => _mode;
-        public string Fqdn => _fqdn;
-        public IList<Availability> Availabilities => _availabilities;
-        public BackupFrequency BackupFrequency => _backupFrequency;
-        public DateTime ApplicationDate => _applicationDate;
-        public Duration TimeSpan => _timeSpan;
-        public Status Status => _status;
-        public string Reason => _reason;
-        public IList<Port> Ports => _ports;
-        public Host Host => _host;
-        public IList<Credentials> Credentials => _credentials;
-        public Account Account => _account;
-        public Customer Requester => _requester;
-        public Customer User => _user;
+        public string? Name { get; private set; }
+        public Specifications? Specifications { get; private set; }
+        public Template Template { get; private set; }
+        public Mode Mode { get; private set; }
+        public string? Fqdn { get; private set; }
+        public IList<Availability> Availabilities { get; private set; } = new List<Availability>();
+        public BackupFrequency BackupFrequency { get; private set; }
+        public DateTime ApplicationDate { get; private set; }
+        public Duration? TimeSpan { get; private set; }
+        public Status Status { get; private set; }
+        public string? Reason { get; private set; }
+        public IList<Port> Ports { get; private set; } = new List<Port>();
+        public Host? Host { get; private set; }
+        public IList<Credentials> Credentials { get; private set; } = new List<Credentials>();
+        public Account? Account { get; private set; }
+        public Customer? Requester { get; private set; }
+        public Customer? User { get; private set; }
         #endregion
 
         #region Methods
         public VirtualMachineBuilder SetName(string name)
         {
-            _name = name;
+            Name = name;
             return this;
         }
 
         public VirtualMachineBuilder SetSpecifications(Specifications specifications)
         {
-            _specifications = specifications;
+            Specifications = specifications;
             return this;
         }
 
         public VirtualMachineBuilder SetTemplate(Template template)
         {
-            _template = template;
+            Template = template;
             return this;
         }
 
         public VirtualMachineBuilder SetMode(Mode mode)
         {
-            _mode = mode;
+            Mode = mode;
             return this;
         }
 
         public VirtualMachineBuilder SetFqdn(string fqdn)
         {
-            _fqdn = fqdn;
+            Fqdn = fqdn;
             return this;
         }
 
         public VirtualMachineBuilder SetAvailabilities(IList<Availability> availabilities)
         {
-            _availabilities = availabilities;
+            Availabilities = availabilities;
             return this;
         }
 
         public VirtualMachineBuilder SetBackupFrequenty(BackupFrequency backupFrequeny)
         {
-            _backupFrequency = backupFrequeny;
+            BackupFrequency = backupFrequeny;
             return this;
         }
 
         public VirtualMachineBuilder SetApplicationDate(DateTime applicationDate)
         {
-            _applicationDate = applicationDate;
+            ApplicationDate = applicationDate;
             return this;
         }
 
         public VirtualMachineBuilder SetDuration(Duration timeSpan)
         {
-            _timeSpan = timeSpan;
+            TimeSpan = timeSpan;
             return this;
         }
 
         public VirtualMachineBuilder SetStatus(Status status)
         {
-            _status = status;
+            Status = status;
             return this;
         }
 
         public VirtualMachineBuilder SetReason(string reason)
         {
-            _reason = reason;
+            Reason = reason;
             return this;
         }
 
         public VirtualMachineBuilder SetPorts(IList<Port> ports)
         {
-            _ports = ports;
+            Ports = ports;
             return this;
         }
 
         public VirtualMachineBuilder SetHost(Host host)
         {
-            _host = host;
+            Host = host;
             return this;
         }
 
         public VirtualMachineBuilder SetAccount(Account account)
         {
-            _account = account;
+            Account = account;
             return this;
         }
 
         public VirtualMachineBuilder SetCredentials(IList<Credentials> credentials)
         {
-            _credentials = credentials;
+            Credentials = credentials;
             return this;
         }
 
         public VirtualMachineBuilder SetRequester(Customer customer)
         {
-            _requester = customer;
+            Requester = customer;
             return this;
         }
 
         public VirtualMachineBuilder SetUser(Customer user)
         {
-            _user = user;
+            User = user;
             return this;
         }
 

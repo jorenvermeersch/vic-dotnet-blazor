@@ -1,8 +1,6 @@
 ﻿public abstract class Entity
 {
     public virtual long Id { get; protected set; }
-    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     protected Entity() { }
 

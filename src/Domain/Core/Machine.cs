@@ -1,4 +1,6 @@
-﻿namespace Domain.Core;
+﻿using Ardalis.GuardClauses;
+
+namespace Domain.Core;
 
 public abstract class Machine : Entity
 {
@@ -10,8 +12,8 @@ public abstract class Machine : Entity
     #region Constructors
     public Machine(string name, Specifications specifications)
     {
-        Name = name;
-        Specifications = specifications;
+        Name = Guard.Against.NullOrWhiteSpace(name, nameof(Name));
+        Specifications = Guard.Against.Null(specifications, nameof(Specifications));
     }
     #endregion
 }

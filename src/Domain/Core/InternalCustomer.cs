@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Constants;
+using System.Text.RegularExpressions;
 
 namespace Domain.Core;
 
@@ -19,20 +20,19 @@ public class InternalCustomer : Customer
         string education,
         ContactPerson contactPerson,
         ContactPerson backupContact,
-        IList<VirtualMachine>? virtualMachines = null
+        IList<VirtualMachine>? virtualMachines
     ) : base(contactPerson, backupContact, virtualMachines)
     {
         Institution = Guard.Against.EnumOutOfRange(institution, nameof(institution));
-
-        Education = Guard.Against.InvalidFormat(
+        Education = Guard.Against.NullOrInvalidInput(
             education,
-            nameof(education),
-            "^.{0}$|^[a-zA-Z]+[ a-zA-Z]*"
+            nameof(Education),
+            input => Regex.IsMatch(input ?? "", Validation.Education)
         );
-        Department = Guard.Against.InvalidFormat(
+        Department = Guard.Against.NullOrInvalidInput(
             department,
-            nameof(department),
-            "^[a-zA-Z]+[ a-zA-Z]*"
+            nameof(Department),
+            input => Regex.IsMatch(input ?? "", Validation.Departement)
         );
     }
     #endregion
