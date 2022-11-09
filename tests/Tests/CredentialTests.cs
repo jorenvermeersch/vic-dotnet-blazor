@@ -4,9 +4,9 @@ public class CredentialTests
 {
 
     #region Correct values
-    private string _correctUsername = "jane.doe";
-    private string _correctPassword = "3Wv2J9^u9nd7!";
-    private string _correctRole = "admin";
+    private string _validUsername = "jane.doe";
+    private string _validPassword = "3Wv2J9^u9nd7!";
+    private string _validRole = "admin";
     #endregion
 
     private Credentials? _credentials;
@@ -14,10 +14,10 @@ public class CredentialTests
     [Fact]
     public void Credentials_are_created()
     {
-        _credentials = new(_correctUsername, _correctPassword, _correctRole);
-        _credentials.Username.ShouldBe(_correctUsername);
+        _credentials = new(_validUsername, _validPassword, _validRole);
+        _credentials.Username.ShouldBe(_validUsername);
         _credentials.PasswordHash.ShouldNotBeEmpty();
-        _credentials.Role.ShouldBe(_correctRole);
+        _credentials.Role.ShouldBe(_validRole);
     }
 
     [Theory]
@@ -25,9 +25,9 @@ public class CredentialTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("\t")]
-    public void Username_is_invalid(string username)
+    public void Show_error_when_username_is_invalid(string username)
     {
-        Should.Throw<ArgumentException>(() => new Credentials(username, _correctPassword, _correctRole));
+        Should.Throw<ArgumentException>(() => new Credentials(username, _validPassword, _validRole));
     }
 
     [Theory]
@@ -39,9 +39,9 @@ public class CredentialTests
     [InlineData("12345678!")] // No letter. 
     [InlineData("Abcdefgh!")] // No number. 
     [InlineData("3Wv2J9u9nd7")] // No special character. 
-    public void Password_is_invalid(string password)
+    public void Show_error_when_password_is_invalid(string password)
     {
-        Should.Throw<ArgumentException>(() => new Credentials(_correctUsername, password, _correctRole));
+        Should.Throw<ArgumentException>(() => new Credentials(_validUsername, password, _validRole));
     }
 
     [Theory]
@@ -49,8 +49,8 @@ public class CredentialTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("\t")]
-    public void Role_is_invalid(string role)
+    public void Show_error_when_role_is_invalid(string role)
     {
-        Should.Throw<ArgumentException>(() => new Credentials(_correctUsername, _correctPassword, role));
+        Should.Throw<ArgumentException>(() => new Credentials(_validUsername, _validPassword, role));
     }
 }
