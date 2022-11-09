@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Constants;
-using System.Text.RegularExpressions;
 
 namespace Domain.Core;
 
@@ -27,12 +26,12 @@ public class InternalCustomer : Customer
         Education = Guard.Against.NullOrInvalidInput(
             education,
             nameof(Education),
-            input => Regex.IsMatch(input ?? "", Validation.Education)
+            input => Validation.Education.IsMatch(input)
         );
         Department = Guard.Against.NullOrInvalidInput(
             department,
             nameof(Department),
-            input => Regex.IsMatch(input ?? "", Validation.Departement)
+            input => Validation.Departement.IsMatch(input)
         );
     }
     #endregion

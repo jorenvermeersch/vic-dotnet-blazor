@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.Constants;
 
 namespace Domain.Core;
 
@@ -12,11 +13,15 @@ public class Credentials
     #endregion
 
     #region Constructor
-    public Credentials(string username, string passwordHash, string role)
+    public Credentials(string username, string password, string role)
     {
-        Username = Guard.Against.NullOrWhiteSpace(username, nameof(Username));
-        PasswordHash = Guard.Against.NullOrWhiteSpace(passwordHash, nameof(PasswordHash));
-        Role = Guard.Against.NullOrWhiteSpace(role, nameof(Role));
+        Username = Guard.Against.NullOrWhiteSpace(username, nameof(username));
+        PasswordHash = Guard.Against.NullOrInvalidInput(
+            password,
+            nameof(password),
+            input => Validation.Password.IsMatch(input)
+        );
+        Role = Guard.Against.NullOrWhiteSpace(role, nameof(role));
     }
     #endregion
 }

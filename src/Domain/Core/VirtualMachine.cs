@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Constants;
-using System.Text.RegularExpressions;
 
 namespace Domain.Core;
 
@@ -35,7 +34,7 @@ public class VirtualMachine : Machine
         Fqdn = Guard.Against.NullOrInvalidInput(
             builder.Fqdn,
             nameof(Fqdn),
-            input => Regex.IsMatch(input ?? "", Validation.Fqdn)
+            input => Validation.Fqdn.IsMatch(input ?? "")
         );
         Availabilities = Guard.Against.NullOrInvalidInput(
             builder.Availabilities,

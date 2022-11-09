@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Constants;
-using System.Text.RegularExpressions;
 
 namespace Domain.Core;
 
@@ -18,13 +17,13 @@ public class ContactPerson : Entity
     #region Constructors
     public ContactPerson(string firstname, string lastname, string email, string? phoneNumber)
     {
-        Firstname = Guard.Against.InvalidFormat(firstname, nameof(Firstname), Validation.Name);
-        Lastname = Guard.Against.InvalidFormat(lastname, nameof(Lastname), Validation.Name);
-        Email = Guard.Against.InvalidFormat(email, nameof(Email), Validation.Email);
+        Firstname = Guard.Against.NullOrInvalidInput(firstname, nameof(firstname), input => Validation.Name.IsMatch(input));
+        Lastname = Guard.Against.NullOrInvalidInput(lastname, nameof(lastname), input => Validation.Name.IsMatch(input));
+        Email = Guard.Against.NullOrInvalidInput(email, nameof(email), input => Validation.Email.IsMatch(input));
         PhoneNumber = Guard.Against.NullOrInvalidInput(
             phoneNumber,
             nameof(PhoneNumber),
-            input => Regex.IsMatch(input ?? "", Validation.PhoneNumber)
+            input => Validation.PhoneNumber.IsMatch(input ?? "")
         );
     }
     #endregion

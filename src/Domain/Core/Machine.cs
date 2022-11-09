@@ -12,8 +12,8 @@ public abstract class Machine : Entity
     #region Constructors
     public Machine(string name, Specifications specifications)
     {
-        Name = Guard.Against.NullOrWhiteSpace(name, nameof(Name));
-        Specifications = Guard.Against.Null(specifications, nameof(Specifications));
+        Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        Specifications = Guard.Against.Null(specifications, nameof(specifications));
     }
     #endregion
 }

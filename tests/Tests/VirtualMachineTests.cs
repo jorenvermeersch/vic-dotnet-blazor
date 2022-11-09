@@ -1,6 +1,4 @@
-﻿using Domain.Core;
-
-namespace Tests;
+﻿namespace Tests;
 public class VirtualMachineTests
 {
     #region Fields
@@ -8,7 +6,7 @@ public class VirtualMachineTests
     private DateTime _applicationDate = DateTime.Now;
     private List<Availability> _availability = new() { Availability.Monday, Availability.Sunday };
     private BackupFrequency _bfreq = BackupFrequency.Monthly;
-    private List<Credentials> _creds = new() { new("name", "Admin"), new("user", "User") };
+    private List<Credentials> _creds = null; // new() { new("name", "Admin"), new("user", "User") };
     private Duration _dur = new(DateTime.Now, DateTime.Now.AddDays(20));
     private string _fqdn = "domain.name";
     private Host _host = new Server("s1", new(4, 4, 4));
@@ -16,7 +14,7 @@ public class VirtualMachineTests
     private string _name = "VMName";
     private List<Port> _ports = new() { new(1, "port1"), new(2, "port2") };
     private string _reason = "reason";
-    private Customer _req = new InternalCustomer(Institution.HoGent,"educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"), new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
+    private Customer _req = null; //  new InternalCustomer(Institution.HoGent,"educ", "depar", new ContactPerson("fname", "name", "email@valid.com", "0483756789"), new ContactPerson("fname", "name", "email@valid.com", "0483756789"));
     private Status _status = Status.Requested;
     private Template _temp = Template.AI;
     private Specifications _resource = new(2, 2, 2);

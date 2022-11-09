@@ -1,4 +1,6 @@
-﻿public abstract class Entity
+﻿using Ardalis.GuardClauses;
+
+public abstract class Entity
 {
     public virtual long Id { get; protected set; }
 
@@ -6,7 +8,7 @@
 
     protected Entity(long id)
     {
-        Id = id;
+        Id = Guard.Against.Negative(id);
     }
 
     public override bool Equals(object? obj)

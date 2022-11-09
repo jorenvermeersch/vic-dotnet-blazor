@@ -30,19 +30,23 @@ public class Account : Entity
         string education
     )
     {
-        Firstname = Guard.Against.InvalidFormat(firstname, nameof(firstname), Validation.Name);
-        Lastname = Guard.Against.InvalidFormat(lastname, nameof(lastname), Validation.Name);
-        Email = Guard.Against.InvalidFormat(email, nameof(email), Validation.Email);
+        Firstname = Guard.Against.NullOrInvalidInput(firstname, nameof(firstname), input => Validation.Name.IsMatch(input));
+        Lastname = Guard.Against.NullOrInvalidInput(lastname, nameof(lastname), input => Validation.Name.IsMatch(input));
+        Email = Guard.Against.NullOrInvalidInput(email, nameof(email), input => Validation.Email.IsMatch(input));
         Role = Guard.Against.EnumOutOfRange(role, nameof(role));
         PasswordHash = HashPassword(
-            Guard.Against.InvalidFormat(password, nameof(password), Validation.Password)
+            Guard.Against.NullOrInvalidInput(
+                password,
+                nameof(password),
+                input => Validation.Password.IsMatch(input)
+            )
         );
         IsActive = true;
-        Education = Guard.Against.InvalidFormat(education, nameof(education), Validation.Education);
-        Department = Guard.Against.InvalidFormat(
+        Education = Guard.Against.NullOrInvalidInput(education, nameof(education), input => Validation.Education.IsMatch(input));
+        Department = Guard.Against.NullOrInvalidInput(
             department,
             nameof(department),
-            Validation.Departement
+            input => Validation.Departement.IsMatch(input)
         );
     }
     #endregion

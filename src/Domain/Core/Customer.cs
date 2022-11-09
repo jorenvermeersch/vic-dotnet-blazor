@@ -13,11 +13,14 @@ public abstract class Customer : Entity
     #region Constructors
     public Customer(
         ContactPerson contactPerson,
-        ContactPerson? backupContact,
-        IList<VirtualMachine>? virtualMachines
+        ContactPerson? backupContact = null,
+        IList<VirtualMachine>? virtualMachines = null
     )
     {
-        ContactPerson = Guard.Against.Null(contactPerson, nameof(ContactPerson));
+        ContactPerson = Guard.Against.Null(contactPerson, nameof(contactPerson));
+
+        // TODO: Contact and backupContact cannot have the same contact information.
+
         BackupContactPerson = backupContact;
         VirtualMachines = virtualMachines ?? new List<VirtualMachine>();
     }
