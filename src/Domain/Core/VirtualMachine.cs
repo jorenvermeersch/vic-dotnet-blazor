@@ -1,5 +1,4 @@
-﻿using Domain.Args;
-using Domain.Constants;
+﻿using Domain.Constants;
 
 namespace Domain.Core;
 
@@ -26,8 +25,7 @@ public class VirtualMachine : Machine
 
     #region Constructors
 
-    public VirtualMachine(VirtualMachineArgs args)
-        : base(args.Name, args.Specifications)
+    public VirtualMachine(VirtualMachineArgs args) : base(args.Name, args.Specifications)
     {
         Template = args.Template;
         Mode = args.Mode;
@@ -46,5 +44,4 @@ public class VirtualMachine : Machine
         User = args.User;
     }
     #endregion
-
 }
