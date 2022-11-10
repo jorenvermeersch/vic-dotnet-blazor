@@ -1,4 +1,6 @@
-﻿namespace Domain.Core;
+﻿using Domain.Constants;
+
+namespace Domain.Core;
 
 public class VirtualMachineArgs
 {
