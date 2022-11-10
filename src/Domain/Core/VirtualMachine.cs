@@ -16,7 +16,7 @@ public class VirtualMachine : Machine
     public Status Status { get; set; }
     public string Reason { get; set; }
     public IList<Port> Ports { get; set; } = new List<Port>();
-    public Host Host { get; set; }
+    public Host<Machine> Host { get; set; }
     public IList<Credentials> Credentials { get; set; } = new List<Credentials>();
     public Account Account { get; set; }
     public Customer Requester { get; set; }
