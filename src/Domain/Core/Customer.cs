@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 public abstract class Customer : Entity
 {
@@ -17,10 +15,9 @@ public abstract class Customer : Entity
         IList<VirtualMachine>? virtualMachines = null
     )
     {
-        ContactPerson = Guard.Against.Null(contactPerson, nameof(contactPerson));
-
         // TODO: Contact and backupContact cannot have the same contact information.
 
+        ContactPerson = contactPerson;
         BackupContactPerson = backupContact;
         VirtualMachines = virtualMachines ?? new List<VirtualMachine>();
     }

@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 [ToString]
 public class Port : Entity
@@ -13,8 +11,8 @@ public class Port : Entity
     #region Constructors
     public Port(int number, string service)
     {
-        Number = Guard.Against.NegativeOrZero(number, nameof(number));
-        Service = Guard.Against.NullOrWhiteSpace(service, nameof(service));
+        Number = number;
+        Service = service;
     }
     #endregion
 }

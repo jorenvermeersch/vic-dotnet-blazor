@@ -1,6 +1,4 @@
-﻿using Domain.Core;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 [ToString]
 public class Server : Host

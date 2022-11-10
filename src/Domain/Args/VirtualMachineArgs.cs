@@ -1,28 +1,27 @@
 ﻿using Domain.Constants;
+using Domain.Core;
 
 namespace Domain.Args;
 
 public class VirtualMachineArgs
 {
     #region Properties
-    public string name { get; set; }
-    public int processors { get; set; }
-    public int memory { get; set; }
-    public int storage { get; set; }
-    public Template template { get; set; }
-    public Mode mode { get; set; }
-    public string fqdn { get; set; }
-    public ISet<Availability> availabilities { get; set; }
-    public BackupFrequency backupFrequency { get; set; }
-    public DateTime applicationDate { get; set; }
-    public ISet<DateTime> timeSpan { get; set; }
-    public Status status { get; set; }
-    public string reason { get; set; }
-    public IDictionary<int, string> ports { get; set; }
-    public string hostName { get; set; }
-    public IDictionary<string, string> credentials { get; set; }
-    public string accountEmail { get; set; }
-    public string requesterEmail { get; set; }
-    public string userEmail { get; set; }
+    public string Name { get; set; }
+    public Specifications Specifications { get; set; }
+    public Template Template { get; set; }
+    public Mode Mode { get; set; }
+    public string Fqdn { get; set; }
+    public IList<Availability> Availabilities { get; set; } = new List<Availability>();
+    public BackupFrequency BackupFrequency { get; set; }
+    public DateTime ApplicationDate { get; set; }
+    public Duration TimeSpan { get; set; }
+    public Status Status { get; set; }
+    public string Reason { get; set; }
+    public IList<Port> Ports { get; set; } = new List<Port>();
+    public Host Host { get; set; }
+    public IList<Credentials> Credentials { get; set; } = new List<Credentials>();
+    public Account Account { get; set; }
+    public Customer Requester { get; set; }
+    public Customer User { get; set; }
     #endregion
 }

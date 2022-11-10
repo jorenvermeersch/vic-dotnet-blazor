@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 [ToString]
 public class ExternalCustomer : Customer
@@ -19,8 +17,8 @@ public class ExternalCustomer : Customer
         IList<VirtualMachine>? virtualMachines = null
     ) : base(contactPerson, backupContact, virtualMachines)
     {
-        Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-        Type = Guard.Against.NullOrWhiteSpace(type, nameof(type));
+        Name = name;
+        Type = type;
     }
     #endregion
 }

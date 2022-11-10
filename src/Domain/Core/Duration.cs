@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 [ToString]
 public class Duration
@@ -13,9 +11,8 @@ public class Duration
     #region Constructors
     public Duration(DateTime startDate, DateTime endDate)
     {
-        StartDate = Guard.Against.Null(startDate, nameof(StartDate));
-        EndDate = Guard.Against.Null(endDate, nameof(EndDate));
-        ;
+        StartDate = startDate;
+        EndDate = endDate;
 
         if (endDate < startDate)
         {

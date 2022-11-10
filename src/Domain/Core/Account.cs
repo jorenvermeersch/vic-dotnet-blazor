@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using Domain.Constants;
+﻿using Domain.Constants;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -30,40 +29,14 @@ public class Account : Entity
         string education
     )
     {
-        Firstname = Guard.Against.NullOrInvalidInput(
-            firstname,
-            nameof(firstname),
-            input => Validation.Name.IsMatch(input)
-        );
-        Lastname = Guard.Against.NullOrInvalidInput(
-            lastname,
-            nameof(lastname),
-            input => Validation.Name.IsMatch(input)
-        );
-        Email = Guard.Against.NullOrInvalidInput(
-            email,
-            nameof(email),
-            input => Validation.Email.IsMatch(input)
-        );
-        Role = Guard.Against.EnumOutOfRange(role, nameof(role));
-        PasswordHash = HashPassword(
-            Guard.Against.NullOrInvalidInput(
-                password,
-                nameof(password),
-                input => Validation.Password.IsMatch(input)
-            )
-        );
+        Firstname = firstname;
+        Lastname = lastname;
+        Email = email;
+        Role = role;
+        PasswordHash = HashPassword(password);
         IsActive = true;
-        Education = Guard.Against.NullOrInvalidInput(
-            education,
-            nameof(education),
-            input => Validation.Education.IsMatch(input)
-        );
-        Department = Guard.Against.NullOrInvalidInput(
-            department,
-            nameof(department),
-            input => Validation.Departement.IsMatch(input)
-        );
+        Department = department;
+        Education = education;
     }
     #endregion
 

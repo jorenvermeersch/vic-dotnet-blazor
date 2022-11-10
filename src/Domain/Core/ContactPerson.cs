@@ -1,7 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using Domain.Constants;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 [ToString]
 public class ContactPerson : Entity
@@ -17,26 +14,10 @@ public class ContactPerson : Entity
     #region Constructors
     public ContactPerson(string firstname, string lastname, string email, string? phoneNumber)
     {
-        Firstname = Guard.Against.NullOrInvalidInput(
-            firstname,
-            nameof(firstname),
-            input => Validation.Name.IsMatch(input)
-        );
-        Lastname = Guard.Against.NullOrInvalidInput(
-            lastname,
-            nameof(lastname),
-            input => Validation.Name.IsMatch(input)
-        );
-        Email = Guard.Against.NullOrInvalidInput(
-            email,
-            nameof(email),
-            input => Validation.Email.IsMatch(input)
-        );
-        PhoneNumber = Guard.Against.NullOrInvalidInput(
-            phoneNumber,
-            nameof(PhoneNumber),
-            input => Validation.PhoneNumber.IsMatch(input ?? "")
-        );
+        Firstname = firstname;
+        Lastname = lastname;
+        Email = email;
+        PhoneNumber = phoneNumber;
     }
     #endregion
 }

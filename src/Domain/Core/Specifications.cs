@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace Domain.Core;
+﻿namespace Domain.Core;
 
 [ToString]
 public class Specifications
@@ -14,9 +12,9 @@ public class Specifications
     #region Constructors
     public Specifications(int processors, int memory, int storage)
     {
-        Processors = Guard.Against.NegativeOrZero(processors, nameof(processors));
-        Memory = Guard.Against.NegativeOrZero(memory, nameof(memory));
-        Storage = Guard.Against.NegativeOrZero(storage, nameof(storage));
+        Processors = processors;
+        Memory = memory;
+        Storage = storage;
     }
     #endregion
 }
