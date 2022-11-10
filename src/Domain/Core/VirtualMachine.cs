@@ -24,7 +24,6 @@ public class VirtualMachine : Machine
     #endregion
 
     #region Constructors
-
     public VirtualMachine(VirtualMachineArgs args) : base(args.Name, args.Specifications)
     {
         Template = args.Template;

@@ -4,8 +4,9 @@ public abstract class Host<T> : Machine where T : Machine
 {
     public Specifications RemainingCapacity { get; private set; }
     public ISet<T> Machines { get; private set; }
+
     public Host(string name, Specifications specifications, ISet<T> machines)
-    : base(name, specifications)
+        : base(name, specifications)
     {
         Machines = machines;
         RemainingCapacity = CalculateRemainingCapacity();
@@ -14,7 +15,9 @@ public abstract class Host<T> : Machine where T : Machine
     private Specifications CalculateRemainingCapacity()
     {
         Specifications ms;
-        int processors = 0, memory = 0, storage = 0;
+        int processors = 0,
+            memory = 0,
+            storage = 0;
 
         foreach (T machine in Machines)
         {
@@ -25,12 +28,11 @@ public abstract class Host<T> : Machine where T : Machine
             storage += ms.Storage;
         }
 
-        // Math.Max as safeguard since remaining capacity must be equal or larger than zero.  
+        // Math.Max as safeguard since remaining capacity must be equal or larger than zero.
         processors = Math.Max(Specifications.Processors - processors, 0);
         memory = Math.Max(Specifications.Memory - memory, 0);
         storage = Math.Max(Specifications.Storage - storage, 0);
 
         return new Specifications(processors, memory, storage);
     }
-
 }
