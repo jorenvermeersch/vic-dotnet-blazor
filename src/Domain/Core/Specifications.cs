@@ -7,6 +7,7 @@ public class Specifications
     public int Processors { get; set; }
     public int Memory { get; set; }
     public int Storage { get; set; }
+    public IList<int> Values => new List<int>() { Processors, Memory, Storage };
     #endregion
 
     #region Constructors
@@ -21,7 +22,9 @@ public class Specifications
     #region Methods
     public bool HasResourcesFor(Specifications specs)
     {
-        return (Processors >= specs.Processors) && (Memory >= specs.Memory) && (Storage >= specs.Memory);
+        return (Processors >= specs.Processors)
+            && (Memory >= specs.Memory)
+            && (Storage >= specs.Memory);
     }
 
     public override bool Equals(object? obj)
@@ -35,7 +38,9 @@ public class Specifications
         if (ReferenceEquals(this, other))
             return true;
 
-        return (other.Processors == Processors) && (other.Memory == Memory) && (other.Storage == Storage);
+        return (other.Processors == Processors)
+            && (other.Memory == Memory)
+            && (other.Storage == Storage);
     }
 
     public override int GetHashCode()
@@ -43,6 +48,4 @@ public class Specifications
         return base.GetHashCode();
     }
     #endregion
-
-
 }

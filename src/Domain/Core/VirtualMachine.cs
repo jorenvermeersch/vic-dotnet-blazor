@@ -5,23 +5,28 @@ namespace Domain.Core;
 [ToString]
 public class VirtualMachine : Machine
 {
+    #region Fields
+    private Host<Machine> _host;
+    #endregion
 
 
     #region Properties
-    public Specifications Specifications
+    public new Specifications Specifications
     {
         get => base.Specifications;
         set
         {
             Specifications increase = CalculateResourceIncrease(value);
 
-            if (!Host.RemainingResources.HasResourcesFor(increase))
+            if (!_host.RemainingResources.HasResourcesFor(increase))
             {
-                throw new ArgumentException($"{Host.GetType().Name} {Host.Name} cannot accommodate the increase in resources");
+                throw new ArgumentException(
+                    $"{_host.GetType().Name} {_host.Name} cannot accommodate the increase in resources"
+                );
             }
 
             base.Specifications = value;
-            Host.UpdateRemainingResources();
+            _host.UpdateRemainingResources(); // Host cannot detect itself when the required resources of the virtual machines it houses change.
         }
     }
 
@@ -31,11 +36,20 @@ public class VirtualMachine : Machine
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
     public BackupFrequency BackupFrequency { get; set; }
     public DateTime ApplicationDate { get; set; }
-    public Duration TimeSpan { get; set; }
+    public TimeSpan TimeSpan { get; set; }
     public Status Status { get; set; }
     public string Reason { get; set; }
     public IList<Port> Ports { get; set; } = new List<Port>();
-    public Host<Machine> Host { get; set; }
+    public Host<Machine> Host
+    {
+        get => _host;
+        set
+        {
+            value.Add(this); // Throws if new host does not have enough remaining resources.
+            _host.Remove(this); // Remove from old host.
+            _host = value;
+        }
+    }
     public IList<Credentials> Credentials { get; set; } = new List<Credentials>();
     public Account Account { get; set; }
     public Customer Requester { get; set; }
@@ -55,20 +69,24 @@ public class VirtualMachine : Machine
         Status = args.Status;
         Reason = args.Reason;
         Ports = args.Ports;
-        Host = args.Host;
+        _host = args.Host;
         Credentials = args.Credentials;
         Account = args.Account;
         Requester = args.Requester;
         User = args.User;
+
+        _host.Add(this); // Remaining resources host are automatically updated.
     }
     #endregion
 
     #region Methods
     private Specifications CalculateResourceIncrease(Specifications newSpecifications)
     {
-        int processorIncrease, memoryIncrease, storageIncrease;
+        int processorIncrease,
+            memoryIncrease,
+            storageIncrease;
 
-        // Decrease in resources is always possible. It is represented by the value zero to make checking easier. 
+        // Decrease in resources is always possible. It is represented by the value zero to make check logic easier.
         processorIncrease = Math.Max(0, newSpecifications.Processors - Specifications.Processors);
         memoryIncrease = Math.Max(0, newSpecifications.Memory - Specifications.Memory);
         storageIncrease = Math.Max(0, newSpecifications.Storage - Specifications.Storage);

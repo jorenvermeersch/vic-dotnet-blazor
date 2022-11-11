@@ -13,7 +13,7 @@ public class VirtualMachineArgs
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
     public BackupFrequency BackupFrequency { get; set; }
     public DateTime ApplicationDate { get; set; }
-    public Duration TimeSpan { get; set; }
+    public TimeSpan TimeSpan { get; set; }
     public Status Status { get; set; }
     public string Reason { get; set; }
     public IList<Port> Ports { get; set; } = new List<Port>();
