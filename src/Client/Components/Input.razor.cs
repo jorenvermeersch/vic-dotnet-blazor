@@ -30,6 +30,8 @@ public partial class Input
     [Parameter]
     public EventCallback<string> Action { get; set; } = new();
     //[Parameter] public string Label { get; set; } = "Label: ";
+
+    [Parameter] public string BindValue { get; set; } = "";
     public enum InputType
     {
         SELECT,

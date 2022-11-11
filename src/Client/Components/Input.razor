@@ -9,17 +9,17 @@
         </label>
         @if (Type == InputType.TEXT)
         {
-            <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required" @oninput="(ChangeEventArgs __e) => Action.InvokeAsync(string.Concat(this.OptionalId, __e?.Value?.ToString()))" />
+            <InputText @bind-Value="BindValue" class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required" @oninput="(ChangeEventArgs __e) => Action.InvokeAsync(string.Concat(this.OptionalId, __e?.Value?.ToString()))" />
         }
         @if (Type == InputType.SELECT)
         {
-            <select @bind="SelectedOption" class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
+            <InputSelect @bind-Value="SelectedOption" class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
                 <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)
                 {
                     <option value="@item">@item</option>
                 }
-            </select>
+            </InputSelect>
         }
     </div>
 </div>
