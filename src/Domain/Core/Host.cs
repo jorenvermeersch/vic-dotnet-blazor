@@ -65,4 +65,9 @@ public abstract class Host<T> : Machine where T : Machine
         Guard.Against.Null(machine, nameof(machine));
         Machines.Remove(machine);
     }
+
+    public void UpdateRemainingResources()
+    {
+        RemainingResources = CalculateRemainingResources();
+    }
 }

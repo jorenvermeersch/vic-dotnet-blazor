@@ -5,7 +5,26 @@ namespace Domain.Core;
 [ToString]
 public class VirtualMachine : Machine
 {
+
+
     #region Properties
+    public Specifications Specifications
+    {
+        get => base.Specifications;
+        set
+        {
+            Specifications increase = CalculateResourceIncrease(value);
+
+            if (!Host.RemainingResources.HasResourcesFor(increase))
+            {
+                throw new ArgumentException($"{Host.GetType().Name} {Host.Name} cannot accommodate the increase in resources");
+            }
+
+            base.Specifications = value;
+            Host.UpdateRemainingResources();
+        }
+    }
+
     public Template Template { get; set; }
     public Mode Mode { get; set; }
     public string Fqdn { get; set; }
@@ -41,6 +60,20 @@ public class VirtualMachine : Machine
         Account = args.Account;
         Requester = args.Requester;
         User = args.User;
+    }
+    #endregion
+
+    #region Methods
+    private Specifications CalculateResourceIncrease(Specifications newSpecifications)
+    {
+        int processorIncrease, memoryIncrease, storageIncrease;
+
+        // Decrease in resources is always possible. It is represented by the value zero to make checking easier. 
+        processorIncrease = Math.Max(0, newSpecifications.Processors - Specifications.Processors);
+        memoryIncrease = Math.Max(0, newSpecifications.Memory - Specifications.Memory);
+        storageIncrease = Math.Max(0, newSpecifications.Storage - Specifications.Storage);
+
+        return new Specifications(processorIncrease, memoryIncrease, storageIncrease);
     }
     #endregion
 }
