@@ -8,14 +8,14 @@ namespace Domain.Core;
 public class Account : Entity
 {
     #region Properties
-    public string Firstname { get; private set; }
-    public string Lastname { get; private set; }
-    public string Email { get; private set; }
-    public Role Role { get; private set; }
-    public string PasswordHash { get; private set; }
-    public bool IsActive { get; private set; }
-    public string Department { get; private set; }
-    public string Education { get; private set; }
+    public string Firstname { get; set; }
+    public string Lastname { get; set; }
+    public string Email { get; set; }
+    public Role Role { get; set; }
+    public string PasswordHash { get; set; }
+    public bool IsActive { get; set; }
+    public string Department { get; set; }
+    public string Education { get; set; }
     #endregion
 
     #region Constructors

@@ -17,7 +17,7 @@ public class InternalCustomer : Customer
         string department,
         string education,
         ContactPerson contactPerson,
-        ContactPerson backupContact,
+        ContactPerson? backupContact,
         IList<VirtualMachine>? virtualMachines
     ) : base(contactPerson, backupContact, virtualMachines)
     {

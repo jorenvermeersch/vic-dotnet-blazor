@@ -18,8 +18,31 @@ public class Specifications
     }
     #endregion
 
+    #region Methods
     public bool HasResourcesFor(Specifications specs)
     {
         return (Processors >= specs.Processors) && (Memory >= specs.Memory) && (Storage >= specs.Memory);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null)
+            return false;
+
+        if (obj is not Specifications other)
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        return (other.Processors == Processors) && (other.Memory == Memory) && (other.Storage == Storage);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+    #endregion
+
+
 }

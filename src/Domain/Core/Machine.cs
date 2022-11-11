@@ -14,4 +14,28 @@ public abstract class Machine : Entity
         Specifications = specifications;
     }
     #endregion
+
+    #region Methods
+    public override bool Equals(object? obj)
+    {
+        if (obj == null)
+            return false;
+
+        if (obj is not Machine other)
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        if (other.Name.Equals(Name) && other.Specifications.Equals(Specifications))
+            return true;
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+    #endregion
 }

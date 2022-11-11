@@ -4,8 +4,8 @@ namespace Domain.Core;
 
 public abstract class Host<T> : Machine where T : Machine
 {
-    public Specifications RemainingResources { get; private set; }
-    public ISet<T> Machines { get; private set; } = new HashSet<T>();
+    public Specifications RemainingResources { get; set; }
+    public ISet<T> Machines { get; set; } = new HashSet<T>();
 
     public Host(string name, Specifications specifications, ISet<T> machines)
     : base(name, specifications)
@@ -49,7 +49,7 @@ public abstract class Host<T> : Machine where T : Machine
 
         if (Machines.Contains(machine))
         {
-            throw new ArgumentException($"{machine.GetType().Name} {machine.Name} already running on {GetType().Name} {Name}");
+            throw new ArgumentException($"{machine.GetType().Name} {machine.Name} already linked to {GetType().Name} {Name}");
         }
 
         if (!HasResourcesFor(machine))
@@ -58,5 +58,11 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         Machines.Add(machine);
+    }
+
+    public void Remove(T machine)
+    {
+        Guard.Against.Null(machine, nameof(machine));
+        Machines.Remove(machine);
     }
 }
