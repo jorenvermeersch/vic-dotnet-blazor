@@ -1,12 +1,13 @@
-﻿using Domain.Constants;
+﻿using Ardalis.GuardClauses;
+using Domain.Constants;
 
 namespace Domain.Core;
 
-[ToString]
+//[ToString]
 public class VirtualMachine : Machine
 {
     #region Fields
-    private Host<Machine> _host;
+    private Host<VirtualMachine> _host;
     #endregion
 
 
@@ -40,14 +41,19 @@ public class VirtualMachine : Machine
     public Status Status { get; set; }
     public string Reason { get; set; }
     public IList<Port> Ports { get; set; } = new List<Port>();
-    public Host<Machine> Host
+    public Host<VirtualMachine> Host
     {
         get => _host;
         set
         {
-            value.Add(this); // Throws if new host does not have enough remaining resources.
-            _host.Remove(this); // Remove from old host.
-            _host = value;
+            Guard.Against.Null(value, nameof(Host));
+
+            if (!_host.Equals(value))
+            {
+                value.Add(this); // Throws if new host does not have enough remaining resources.
+                _host.Remove(this); // Remove from old host.
+                _host = value;
+            }
         }
     }
     public IList<Credentials> Credentials { get; set; } = new List<Credentials>();

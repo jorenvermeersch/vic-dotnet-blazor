@@ -21,6 +21,7 @@ public abstract class Host<T> : Machine where T : Machine
                     "New specifications are insufficient for running existing machines"
                 );
             }
+            RemainingResources = CalculateRemainingResources();
         }
     }
     public Specifications RemainingResources { get; set; }

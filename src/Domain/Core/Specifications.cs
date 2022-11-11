@@ -24,7 +24,7 @@ public class Specifications
     {
         return (Processors >= specs.Processors)
             && (Memory >= specs.Memory)
-            && (Storage >= specs.Memory);
+            && (Storage >= specs.Storage);
     }
 
     public override bool Equals(object? obj)
