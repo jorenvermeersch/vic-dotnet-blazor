@@ -1,10 +1,35 @@
-﻿namespace Domain.Core;
+﻿using Ardalis.GuardClauses;
+
+namespace Domain.Core;
 
 public abstract class Customer : Entity
 {
+    #region Fields
+    private ContactPerson _contactPerson;
+    private ContactPerson? _backupContactPerson;
+    #endregion
+
     #region Properties
-    public ContactPerson ContactPerson { get; set; }
-    public ContactPerson? BackupContactPerson { get; set; }
+    public ContactPerson ContactPerson
+    {
+        get => _contactPerson;
+        set
+        {
+            Guard.Against.Null(value, nameof(ContactPerson));
+
+            ValidateContacts(value, BackupContactPerson);
+            _contactPerson = value;
+        }
+    }
+    public ContactPerson? BackupContactPerson
+    {
+        get => _backupContactPerson;
+        set
+        {
+            ValidateContacts(ContactPerson, value);
+            _backupContactPerson = value;
+        }
+    }
     public IList<VirtualMachine> VirtualMachines { get; set; }
     #endregion
 
@@ -15,11 +40,19 @@ public abstract class Customer : Entity
         IList<VirtualMachine>? virtualMachines = null
     )
     {
-        // TODO: Contact and backupContact cannot have the same contact information.
-
-        ContactPerson = contactPerson;
-        BackupContactPerson = backupContact;
+        ValidateContacts(contactPerson, backupContact);
+        _contactPerson = contactPerson;
+        _backupContactPerson = backupContact;
         VirtualMachines = virtualMachines ?? new List<VirtualMachine>();
     }
     #endregion
+
+
+    private void ValidateContacts(ContactPerson contactPerson, ContactPerson? backupContact)
+    {
+        if (contactPerson.HasTheSameContactInformation(backupContact))
+        {
+            throw new ArgumentException("Contact person and backup contact should be different");
+        }
+    }
 }

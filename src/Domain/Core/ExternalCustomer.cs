@@ -13,8 +13,8 @@ public class ExternalCustomer : Customer
         string name,
         string type,
         ContactPerson contactPerson,
-        ContactPerson? backupContact,
-        IList<VirtualMachine>? virtualMachines
+        ContactPerson? backupContact = null,
+        IList<VirtualMachine>? virtualMachines = null
     ) : base(contactPerson, backupContact, virtualMachines)
     {
         Name = name;

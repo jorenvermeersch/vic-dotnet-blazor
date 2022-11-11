@@ -1,6 +1,6 @@
 ﻿namespace Domain.Core;
 
-[ToString]
+//[ToString]
 public class ContactPerson : Entity
 {
     #region Properties
@@ -12,7 +12,12 @@ public class ContactPerson : Entity
     #endregion
 
     #region Constructors
-    public ContactPerson(string firstname, string lastname, string email, string? phoneNumber)
+    public ContactPerson(
+        string firstname,
+        string lastname,
+        string email,
+        string? phoneNumber = null
+    )
     {
         Firstname = firstname;
         Lastname = lastname;
@@ -20,4 +25,22 @@ public class ContactPerson : Entity
         PhoneNumber = phoneNumber;
     }
     #endregion
+
+    public bool HasTheSameContactInformation(ContactPerson? other)
+    {
+        if (other is null)
+            return false;
+
+        if (Email == other.Email)
+            return true;
+
+        if (
+            PhoneNumber is not null
+            && other.PhoneNumber is not null
+            && PhoneNumber == other.PhoneNumber
+        )
+            return true;
+
+        return false;
+    }
 }
