@@ -17,4 +17,9 @@ public class Specifications
         Storage = storage;
     }
     #endregion
+
+    public bool HasResourcesFor(Specifications specs)
+    {
+        return (Processors >= specs.Processors) && (Memory >= specs.Memory) && (Storage >= specs.Memory);
+    }
 }

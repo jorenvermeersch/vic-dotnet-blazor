@@ -1,18 +1,20 @@
-﻿namespace Domain.Core;
+﻿using Ardalis.GuardClauses;
+
+namespace Domain.Core;
 
 public abstract class Host<T> : Machine where T : Machine
 {
-    public Specifications RemainingCapacity { get; private set; }
-    public ISet<T> Machines { get; private set; }
+    public Specifications RemainingResources { get; private set; }
+    public ISet<T> Machines { get; private set; } = new HashSet<T>();
 
     public Host(string name, Specifications specifications, ISet<T> machines)
-        : base(name, specifications)
+    : base(name, specifications)
     {
         Machines = machines;
-        RemainingCapacity = CalculateRemainingCapacity();
+        RemainingResources = CalculateRemainingResources();
     }
 
-    private Specifications CalculateRemainingCapacity()
+    private Specifications CalculateRemainingResources()
     {
         Specifications ms;
         int processors = 0,
@@ -34,5 +36,27 @@ public abstract class Host<T> : Machine where T : Machine
         storage = Math.Max(Specifications.Storage - storage, 0);
 
         return new Specifications(processors, memory, storage);
+    }
+
+    private bool HasResourcesFor(T machine)
+    {
+        return RemainingResources.HasResourcesFor(machine.Specifications);
+    }
+
+    public void Add(T machine)
+    {
+        Guard.Against.Null(machine, nameof(machine));
+
+        if (Machines.Contains(machine))
+        {
+            throw new ArgumentException($"{machine.GetType().Name} {machine.Name} already running on {GetType().Name} {Name}");
+        }
+
+        if (!HasResourcesFor(machine))
+        {
+            throw new ArgumentException($"{GetType().Name} {Name} does not have enough remaining resources");
+        }
+
+        Machines.Add(machine);
     }
 }
