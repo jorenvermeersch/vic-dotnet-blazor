@@ -5,6 +5,7 @@
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master, Administrator")]
 @inject ICustomerService customerService
+@inject NavigationManager Navigation
 
 <PageTitle>Klant Toevoegen</PageTitle>
 
@@ -16,19 +17,19 @@
         <Button Text="Toevoegen" OnClick="@HandleValidSubmit"/>
     </div>
     <DataAnnotationsValidator/>
-    <ValidationSummary/>
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Type van klant" Required="@true" Items="@_typesClient" Action="onChangeType" @bind-Value="@customerModel.TypeCustomer" For="@(() => customerModel.Institude)" />
-            @if (_selectedTypeClient == "Intern")
+            <AddInput Type="@Input.InputType.SELECT" Label="Type van klant" Required="@true" Items="@_typesClient" @bind-Value="@customerModel.TypeCustomer" For="@(() => customerModel.Institude)" />
+            @if (customerModel.TypeCustomer == "Intern")
             {
 
                 <AddInput Type="@Input.InputType.SELECT" Label="Instituut" Required="@true" Items="@_institution" @bind-Value="customerModel.Institude" For="@(() => customerModel.Institude)" />
                 <AddInput Type="@Input.InputType.TEXT" Label="Departement" Required="@true" @bind-Value="customerModel.Department" For="@(() => customerModel.Department)" />
                 <AddInput Type="@Input.InputType.TEXT" Label="Opleiding" Required="@false" @bind-Value="customerModel.Education" For="@(() => customerModel.Education)" />
             }
-            else if(_selectedTypeClient == "Extern"){
+            else if (customerModel.TypeCustomer == "Extern")
+            {
                 <AddInput PlaceHolder="" Type="@Input.InputType.TEXT" Label="Type extern" Required="@true" @bind-Value="@customerModel.Type" For="@(() => customerModel.Type)" />
                 <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="customerModel.Name" For="@(() => customerModel.Name)" />
             }
@@ -55,7 +56,6 @@
     private Customer customerModel = new();
     private EditForm? editForm { get; set; }
     private List<string> _typesClient = new() { "Extern", "Intern" };
-    private string _selectedTypeClient="";
     private List<string> _institution = new() {"Hogent", "EhB"};
 
     private string _customcss = "background-color: white";
@@ -71,10 +71,6 @@
         _values[index] = txt;
 
         _backuprequired = _values.All(e => (e == "" || e == null)) ? false : true;
-    }
-
-    private void onChangeType(string type){
-        _selectedTypeClient = type;
     }
 
     private void HandleValidSubmit(){
@@ -99,16 +95,19 @@
             customer.Institution = customerModel.Institude;
             customer.Type = customerModel.Type;
             customer.Name = customerModel.Name;
-            customer.Id = new Random().Next(30, 100);
+            //tijdelijk random id geven aan een klant
+            customer.Id = new Random().Next(70, 150);
 
-            Console.WriteLine(customerModel.Firstname);
             customerService.CreateCustomer(customer);
+            Navigation.NavigateTo("/customer/" + customer.Id);
+
 
         }
 
     }
     public class Customer
     {
+        [Required]
         public string TypeCustomer { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
