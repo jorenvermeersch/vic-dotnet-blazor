@@ -27,6 +27,11 @@ public class BogusHostService: IHostService
         hosts = hostFaker.Generate(10);
     }
 
+    public void CreateHost(HostDto.Details newHost)
+    {
+        hosts.Add(newHost);
+    }
+
     public Task<int> GetCount()
     {
         return Task.FromResult(hosts.Count());

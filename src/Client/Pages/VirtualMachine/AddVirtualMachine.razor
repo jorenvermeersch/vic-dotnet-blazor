@@ -4,68 +4,72 @@
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
 
-<div class="context-menu">
-     <span class="context-menu-label"></span>
-     <Button Text="Machine toevoegen" />
-</div>
-<div class="three-column-layout">
-    <div class="one-third">
-        <Title Text="Configuratie" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
-        <AddInput Type="@Input.InputType.TEXT" Label="FQDN"/>
-        <AddInput Type="@Input.InputType.SELECT" Label="Mode"/>
-        <AddInput Type="@Input.InputType.SELECT" Label="Template" />
+<EditForm  @ref="EditForm" Model="@VirtualMachineModel">
+    <div class="context-menu">
+         <span class="context-menu-label"></span>
+         <Button Text="Machine toevoegen" />
+    </div>
+    <div class="three-column-layout">
+        <div class="one-third">
+            <Title Text="Configuratie" />
+            <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
+            <AddInput Type="@Input.InputType.TEXT" Label="FQDN"/>
+            <AddInput Type="@Input.InputType.SELECT" Label="Mode"/>
+            <AddInput Type="@Input.InputType.SELECT" Label="Template" />
 
-        <Title Text="Poorten" />
-        <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" Action="(value) => AddPortToList(value)" />
-        <div class="buttonList">
-            @foreach(var item in _ports){
-                <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
-            }
+            <Title Text="Poorten" />
+            <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" Action="(value) => AddPortToList(value)" />
+            <div class="buttonList">
+                @foreach(var item in _ports){
+                    <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
+                }
             
-        </div>
+            </div>
 
-        <Title Text="Specificaties" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Host" />
-        <AddInput Type="@Input.InputType.SELECT" Label="vCPUs" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Geheugen" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Opslag" />
-    </div>
-    <div class="one-third">
-        <Title Text="Beschikbaarheid" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Start" />
-        <AddInput Type="@Input.InputType.SELECT" Label="Einde" />
-        <AvailabilityOptionSelect customCss="@_customcss" />
-        <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-            <Button Text="Toevoegen" />
+            <Title Text="Specificaties" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Host" />
+            <AddInput Type="@Input.InputType.SELECT" Label="vCPUs" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Geheugen" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Opslag" />
         </div>
-        <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-        <AvailabilityOption DayOfWeek="Availability.Thursday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-        <AvailabilityOption DayOfWeek="Availability.Friday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
+        <div class="one-third">
+            <Title Text="Beschikbaarheid" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Start" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Einde" />
+            <AvailabilityOptionSelect customCss="@_customcss" />
+            <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+                <Button Text="Toevoegen" />
+            </div>
+            <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
+            <AvailabilityOption DayOfWeek="Availability.Thursday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
+            <AvailabilityOption DayOfWeek="Availability.Friday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
 
-        <Title Text="Back-ups" />
-        <AddInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" />
-    </div>
-    <div class="one-third">
-        <Title Text="Logingegevens" />
-        <AddInput Type="@Input.InputType.TEXT" Label="Gebruikersnaam"/>
-        <AddInput Type="@Input.InputType.TEXT" Label="Rol" />
-        <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-            <Button Text="Toevoegen" />
+            <Title Text="Back-ups" />
+            <AddInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" />
         </div>
+        <div class="one-third">
+            <Title Text="Logingegevens" />
+            <AddInput Type="@Input.InputType.TEXT" Label="Gebruikersnaam"/>
+            <AddInput Type="@Input.InputType.TEXT" Label="Rol" />
+            <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+                <Button Text="Toevoegen" />
+            </div>
 
-        @foreach(KeyValuePair<int, Dictionary<string, string>> entry in _entries) {
-            <DataCard OnClick="() => ClickHandler(entry.Key)" Entries="@entry.Value" customCss="@_customcss" />
-        }
-    </div>
+            @foreach(KeyValuePair<int, Dictionary<string, string>> entry in _entries) {
+                <DataCard OnClick="() => ClickHandler(entry.Key)" Entries="@entry.Value" customCss="@_customcss" />
+            }
+        </div>
         
         
-</div>
+    </div>
+</EditForm>
 
 
 
 
 @code {
+    private EditForm? EditForm;
+    private VirtualMachine VirtualMachineModel = new();
     private string _customcss = "background-color: white";
 
     private HashSet<string> _ports = new();
@@ -94,4 +98,7 @@
         _ports.Remove(value);
     }
 
+    public class VirtualMachine{
+
+    }
 }
