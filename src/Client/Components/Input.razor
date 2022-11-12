@@ -1,4 +1,7 @@
-﻿<div>
+﻿@using System.Linq.Expressions
+
+@inherits InputBase<string>
+<div>
     <div class="input-container">
         <label for="">
             @_label
@@ -9,17 +12,19 @@
         </label>
         @if (Type == InputType.TEXT)
         {
-            <InputText @bind-Value="BindValue" class="input" type="text" style="@customCss" placeholder="@PlaceHolder" required="@Required" @oninput="(ChangeEventArgs __e) => Action.InvokeAsync(string.Concat(this.OptionalId, __e?.Value?.ToString()))" />
+            <input @bind="@CurrentValue" class="input" style="@customCss" placeholder="@PlaceHolder" required="@Required" />
         }
         @if (Type == InputType.SELECT)
         {
-            <InputSelect @bind-Value="SelectedOption" class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
+            //select werkt nog niet
+            <select @bind="@SelectedOption"  class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
                 <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)
                 {
                     <option value="@item">@item</option>
                 }
-            </InputSelect>
+            </select>
         }
     </div>
+     <ValidationMessage For=@For />
 </div>

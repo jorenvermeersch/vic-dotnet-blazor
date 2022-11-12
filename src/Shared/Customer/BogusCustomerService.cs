@@ -73,4 +73,8 @@ public class BogusCustomerService : ICustomerService
         return Task.FromResult(customers.Count());
     }
 
+    public void CreateCustomer(CustomerDto.Details newCustomer)
+    {
+        customers.Add(newCustomer);
+    }
 }

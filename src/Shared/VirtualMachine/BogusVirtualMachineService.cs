@@ -40,7 +40,11 @@ public class BogusVirtualMachineService : IVirtualMachineService
             Name = x.Firstname + " " + x.Lastname,
             Email = x.Email
         }).ToArray();
-        var hosts = BogusHostService.hosts;
+        var hosts = BogusHostService.hosts.Select(x=>new HostDto.Index
+        {
+            Id=x.Id,
+            Name= x.Name
+        });
 
 
         var portFaker = new Faker<PortDto>("nl")
@@ -51,7 +55,8 @@ public class BogusVirtualMachineService : IVirtualMachineService
         var credentialFaker = new Faker<CredentialDto>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Username, f => f.Internet.UserName())
-            .RuleFor(x => x.Role, f => f.PickRandom(new[] {"Admin", "User", "Observer" }));
+            .RuleFor(x => x.Role, f => f.PickRandom(new[] {"Admin", "User", "Observer" }))
+            .RuleFor(x=>x.PasswordHash, f=>f.Internet.Password());
 
 
         var virtualMachineFaker = new Faker<VirtualMachineDto.Details>("nl")
@@ -74,10 +79,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Account, f => f.PickRandom(accounts))
             .RuleFor(x=> x.Ports, f=> Enumerable.Range(1, f.Random.Int(1, 2)).Select(x => f.PickRandom(portFaker.Generate(5))).ToList())
             .RuleFor(x => x.Credentials, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(credentialFaker.Generate(25))).ToList())
-            /*.RuleFor(x=>x.Host, f=>f.PickRandom(hosts))*/;
-
-        //server-todo
-        //credentials-todo
+            .RuleFor(x=>x.Host, f=>f.PickRandom(hosts));
 
         _virtualMachines = virtualMachineFaker.Generate(25);
 

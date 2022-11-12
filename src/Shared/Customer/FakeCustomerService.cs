@@ -68,6 +68,11 @@ public class FakeCustomerService : ICustomerService
         });
     }
 
+    public void CreateCustomer(CustomerDto.Details newCustomer)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<int> GetCount()
     {
         return Task.FromResult(_customers.Count());
