@@ -1,7 +1,7 @@
 ﻿@page "/virtual-machine/{id:long}"
 @layout MainLayout
 @namespace Shared
-@using Shared.VirtualMachine
+@using VirtualMachine
 @inject IVirtualMachineService VirtualMachineService
 @inject NavigationManager Navigation
 @attribute [Authorize]
@@ -88,16 +88,16 @@
         _config.Add("Template", virtualMachine.Template);
         _config.Add("Reden", virtualMachine.Reason);
 
-        _specs.Add("vCPUs", virtualMachine.Processors.ToString());
-        _specs.Add("Geheugen", virtualMachine.Memory.ToString());
-        _specs.Add("Opslag", virtualMachine.Storage.ToString());
+        _specs.Add("vCPUs", virtualMachine.Specification.Processors.ToString());
+        _specs.Add("Geheugen", virtualMachine.Specification.Memory.ToString());
+        _specs.Add("Opslag", virtualMachine.Specification.Storage.ToString());
 
         _available.Add("Beschikbaarheid", string.Join(", ",virtualMachine.Availabilities));
         _available.Add("Backups", virtualMachine.BackupFrequenty);
 
         _backups.Add("Aangevraagd op", virtualMachine.ApplicationDate.ToShortDateString());
-        _backups.Add("Start", virtualMachine.StartDate.ToShortDateString());
-        _backups.Add("Einde", virtualMachine.EndDate.ToShortDateString());
+        _backups.Add("Start", virtualMachine.TimeSpan.StartDate.ToShortDateString());
+        _backups.Add("Einde", virtualMachine.TimeSpan.EndDate.ToShortDateString());
 
         _personincharge.Add("Opgezet door", virtualMachine.Account.Name);
         _personincharge.Add("Ondersteuning", virtualMachine.Account.Name);

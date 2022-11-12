@@ -1,13 +1,16 @@
 ﻿@page "/host/{id:long}"
 @layout MainLayout
 @namespace Shared
+@using Host
+@inject IHostService hostService
+@inject NavigationManager Navigation
 @attribute [Authorize]
 
 <PageTitle>Host [host name] Details</PageTitle>
 
 <div class="context-menu">
     <div style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title">
+        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Terug</span>
         </span>
@@ -25,9 +28,18 @@
 @code{
     private Dictionary<string, Dictionary<string, string>> _server = new();
     [Parameter] public long Id { get; set; }
+    private HostDto.Details? host;
 
-    protected override void OnInitialized() {
-        _server.Add("name", new() { { "Naam","Server_Hogent_456" }});
-        _server.Add("resources", new() { { "vCPU", "16" }, { "Geheugen", "64" }, { "Opslag", "512" } });
+    protected override async Task OnInitializedAsync()
+    {
+        host = await hostService.GetDetailAsync(Id);
+        _server.Add("name", new() { { "Naam", host.Name} });
+        _server.Add("resources", new() { { "vCPU", host.Specifications.Processors.ToString() }, { "Geheugen", host.Specifications.Memory.ToString() }, { "Opslag", host.Specifications.Storage.ToString() } });
+
+    }
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("host/list");
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Shared.Account;
 using Shared.customer;
 using Shared.Host;
+using Shared.Shared;
+using Shared.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,18 +27,15 @@ public static class VirtualMachineDto
         public string FQDN { get; set; }
         public string Template { get; set; }
         public string Mode { get; set; }
-        public List<string> Availabilities { get; set; }
+        public List<string> Availabilities { get; set; } 
         public string BackupFrequenty { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public TimeSpanDto TimeSpan { get; set; }
         public string Status { get; set; }
         public string Reason { get; set; }
         public List<PortDto> Ports { get; set; }
-        public int Processors { get; set; }
-        public int Memory { get; set; }
-        public int Storage { get; set; }
-        public HostDto Host { get; set; } 
+        public SpecificationDto Specification { get; set; }
+        public HostDto.Index Host { get; set; } 
         public List<CredentialDto> Credentials { get; set; } 
         public AccountDto.Index Account { get; set; } 
         public CustomerDto.Index Requester { get; set; } 

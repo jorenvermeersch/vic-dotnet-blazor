@@ -13,6 +13,7 @@ public class FakeVirtualMachineService:IVirtualMachineService
 
     public FakeVirtualMachineService()
     {
+        /*
         _virtualMachines.Add(new()
         {
             Id = 1,
@@ -157,6 +158,7 @@ public class FakeVirtualMachineService:IVirtualMachineService
                     }
 
         }) ;
+        */
     }
 
     public Task<int> GetCount()
@@ -175,7 +177,7 @@ public class FakeVirtualMachineService:IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.EndDate<=DateTime.Now && x.StartDate>=DateTime.Now, //Werkt niet
+            //IsActive = x.EndDate<=DateTime.Now && x.StartDate>=DateTime.Now, //Werkt niet
         }));
     }
 
@@ -185,7 +187,7 @@ public class FakeVirtualMachineService:IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.EndDate <= DateTime.Now && x.StartDate >= DateTime.Now, //Werkt niet
+            //IsActive = x.EndDate <= DateTime.Now && x.StartDate >= DateTime.Now, //Werkt niet
         }));
     }
 }

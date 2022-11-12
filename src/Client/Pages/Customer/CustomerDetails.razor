@@ -1,9 +1,9 @@
 ﻿@page "/customer/{id:long}"
 @layout MainLayout
 @namespace Shared
-@using Shared.VirtualMachine
-@using Shared.customer
-@inject IHostService customerService
+@using VirtualMachine
+@using customer
+@inject ICustomerService customerService
 @inject IVirtualMachineService virtualMachineService
 @attribute [Authorize]
 @inject NavigationManager Navigation

@@ -1,6 +1,6 @@
 ﻿namespace Shared.customer;
 
-public interface IHostService
+public interface ICustomerService
 {
     Task<IEnumerable<CustomerDto.Index>> GetIndexAsync(int offset);
     Task<CustomerDto.Details> GetDetailAsync(long customerId);

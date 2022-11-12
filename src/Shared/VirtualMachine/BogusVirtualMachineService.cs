@@ -3,6 +3,8 @@ using Shared.Account;
 using Shared.customer;
 using Shared.Customer;
 using Shared.Host;
+using Shared.Shared;
+using Shared.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ public class BogusVirtualMachineService : IVirtualMachineService
     BogusCustomerService BogusCustomerService { get; set; } = new BogusCustomerService();
     BogusAccountService BogusAccountService { get; set; } = new BogusAccountService();
     BogusHostService BogusHostService { get; set; } = new BogusHostService();
+    SpecificationService SpecificationService { get; set; } = new SpecificationService();
+    TimeSpanService TimeSapnService { get; set; } = new TimeSpanService();
     private readonly List<VirtualMachineDto.Details> _virtualMachines = new();
     
     public BogusVirtualMachineService()
@@ -63,17 +67,14 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Reason, f => f.PickRandom(new[] { "Bachelor proef", "AI trainen", "Database draaien" }))
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.ApplicationDate, f => f.Date.Past())
-            .RuleFor(x => x.Storage, f => f.Random.Number(2,1000))
-            .RuleFor(x => x.Memory, f => f.Random.Number(2, 128))
-            .RuleFor(x => x.Processors, f => f.Random.Number(2, 128))
-            .RuleFor(x => x.StartDate, (f, u) => f.Date.Between(u.ApplicationDate, new DateTime(2023,01,30)))
-            .RuleFor(x => x.EndDate, (f,u) => f.Date.Between(u.StartDate, new DateTime(2023, 01, 30)))
+            .RuleFor(x=>x.Specification, f=>f.PickRandom(SpecificationService.specifications))
+            .RuleFor(x=>x.TimeSpan, f=>f.PickRandom(TimeSapnService.timespan))
             .RuleFor(x => x.User, f => f.PickRandom(customers))
             .RuleFor(x => x.Requester, f => f.PickRandom(customers))
             .RuleFor(x => x.Account, f => f.PickRandom(accounts))
             .RuleFor(x=> x.Ports, f=> Enumerable.Range(1, f.Random.Int(1, 2)).Select(x => f.PickRandom(portFaker.Generate(5))).ToList())
             .RuleFor(x => x.Credentials, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(credentialFaker.Generate(25))).ToList())
-            .RuleFor(x=>x.Host, f=>f.PickRandom(hosts));
+            /*.RuleFor(x=>x.Host, f=>f.PickRandom(hosts))*/;
 
         //server-todo
         //credentials-todo
@@ -97,7 +98,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.EndDate <= DateTime.Now && x.StartDate >= DateTime.Now, //Werkt niet
+            IsActive = x.TimeSpan.EndDate <= DateTime.Now && x.TimeSpan.StartDate >= DateTime.Now, //Werkt niet
         })) ;
     }
 
@@ -107,7 +108,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.EndDate <= DateTime.Now && x.StartDate >= DateTime.Now, //Werkt niet
+            IsActive = x.TimeSpan.EndDate <= DateTime.Now && x.TimeSpan.StartDate >= DateTime.Now, //Werkt niet
         }));
     }
 }

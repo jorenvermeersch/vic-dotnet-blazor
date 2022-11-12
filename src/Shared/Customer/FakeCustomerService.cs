@@ -1,6 +1,6 @@
 ﻿namespace Shared.customer;
 
-public class FakeCustomerService : IHostService
+public class FakeCustomerService : ICustomerService
 {
     private readonly List<CustomerDto.Details> _customers = new();
     public FakeCustomerService()
@@ -73,12 +73,12 @@ public class FakeCustomerService : IHostService
         return Task.FromResult(_customers.Count());
     }
 
-    Task<CustomerDto.Details> IHostService.GetDetailAsync(long customerId)
+    Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
     {
         return Task.FromResult(_customers.Single(x => x.Id == customerId));
     }
 
-    Task<IEnumerable<CustomerDto.Index>> IHostService.GetIndexAsync(int offset)
+    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
     {
         return Task.FromResult(_customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
         {

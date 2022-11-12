@@ -1,8 +1,8 @@
 ﻿@page "/customer/list"
 @layout MainLayout
 @namespace Shared
-@using Shared.customer
-@inject IHostService customerService
+@using customer
+@inject ICustomerService customerService
 @attribute [Authorize]
 
 <div class="context-menu">

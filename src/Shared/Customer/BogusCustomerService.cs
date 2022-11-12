@@ -2,10 +2,11 @@
 using Shared.customer;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Shared.Customer;
 
-public class BogusCustomerService : IHostService
+public class BogusCustomerService : ICustomerService
 {
     public readonly List<CustomerDto.Details> customers = new();
     private readonly List<ContactPersonDto> _contacts = new();
@@ -28,6 +29,7 @@ public class BogusCustomerService : IHostService
         var internalcustomerFaker = new Faker<CustomerDto.Details>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => customerId++)
+            .RuleFor(x => x.Institution, f => "Hogent")
             .RuleFor(x => x.Department, f => f.PickRandom(departments))
             .RuleFor(x => x.Education, f => f.PickRandom(educations))
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
@@ -53,12 +55,12 @@ public class BogusCustomerService : IHostService
 
     }
 
-    Task<CustomerDto.Details> IHostService.GetDetailAsync(long customerId)
+    Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
     {
         return Task.FromResult(customers.Single(x => x.Id == customerId));
     }
 
-    Task<IEnumerable<CustomerDto.Index>> IHostService.GetIndexAsync(int offset)
+    Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
     {
         return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
         {
@@ -66,7 +68,7 @@ public class BogusCustomerService : IHostService
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname
         }));
     }
-    Task<int> IHostService.GetCount()
+    Task<int> ICustomerService.GetCount()
     {
         return Task.FromResult(customers.Count());
     }

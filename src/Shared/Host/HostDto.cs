@@ -1,12 +1,22 @@
-﻿using Shared.VirtualMachine;
+﻿using Shared.Specification;
 
 namespace Shared.Host;
 
-public class HostDto
+public static class HostDto
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public int Processors { get; set; }
-    public int Memory { get; set; }
-    public int Storage { get; set; }
+    public class Index
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+    public class Details
+    { 
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public SpecificationDto Specifications { get; set; }
+        public SpecificationDto RemainingResources { get; set; }
+        //public List<VirtualMachineDto.Details> Machines { get; set; }
+    }
+    
+
 }
