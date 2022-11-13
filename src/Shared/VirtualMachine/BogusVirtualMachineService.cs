@@ -27,11 +27,11 @@ public class BogusVirtualMachineService : IVirtualMachineService
     {
         var vmId = 0;
 
-        
-        var customers = BogusCustomerService.customers.Select(x => new CustomerDto.Index
-        {
+
+        var customers = BogusCustomerService.customers.Select(x => new CustomerDto.Index {
             Id = x.Id,
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname,
+            Email = x.ContactPerson.Email
         }).ToArray();
         var accounts = BogusAccountService.accounts.Select(x => new AccountDto.Index
         {

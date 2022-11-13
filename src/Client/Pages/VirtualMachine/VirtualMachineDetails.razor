@@ -106,10 +106,10 @@
         _personincharge.Add("Ondersteuning", virtualMachine.Account?.Firstname + " " + virtualMachine.Account?.Lastname);
 
         _user.Add("Naam", virtualMachine.User?.Name);
-        //_user.Add("Email", virtualMachine.User?.Email);
+        _user.Add("Email", virtualMachine.User?.Email);
 
         _requester.Add("Naam", virtualMachine.Requester?.Name);
-        //_requester.Add("Email", virtualMachine.Requester?.Email);
+        _requester.Add("Email", virtualMachine.Requester?.Email);
 
         _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Number)));
 

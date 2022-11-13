@@ -62,11 +62,11 @@ public class BogusCustomerService : ICustomerService
 
     Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
     {
-        return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
-        {
+        return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index {
             Id = x.Id,
-            Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname
-        }));
+            Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname,
+            Email = x.ContactPerson.Email
+        })) ;
     }
     Task<int> ICustomerService.GetCount()
     {
