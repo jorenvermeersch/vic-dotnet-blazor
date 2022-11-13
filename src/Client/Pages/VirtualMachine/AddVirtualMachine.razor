@@ -186,6 +186,28 @@
             specification.Storage = Convert.ToInt32(VirtualMachineModel.Storage);
             virtualMachine.Specification = specification;
 
+            CustomerDto.Details selectedUser= await customerService.GetDetailAsync(long.Parse(VirtualMachineModel.User.Split('-')[0].Trim()));
+            virtualMachine.User = new CustomerDto.Index {
+                Id=selectedUser.Id,
+                Name = selectedUser.ContactPerson.Firstname + " " + selectedUser.ContactPerson.Lastname,
+                Email = selectedUser.ContactPerson.Email
+            };
+            CustomerDto.Details selectedRequester = await customerService.GetDetailAsync(long.Parse(VirtualMachineModel.Requester.Split('-')[0].Trim()));
+            virtualMachine.Requester = new CustomerDto.Index
+                {
+                    Id = selectedUser.Id,
+                    Name = selectedUser.ContactPerson.Firstname + " " + selectedUser.ContactPerson.Lastname,
+                    Email = selectedUser.ContactPerson.Email
+            };
+            HostDto.Details selectedHost = await hostService.GetDetailAsync(long.Parse(VirtualMachineModel.Host.Split('-')[0].Trim()));
+            virtualMachine.Host = new HostDto.Index
+                {
+                    Id = selectedHost.Id,
+                    Name = selectedHost.Name,
+
+                };
+
+
 
             var newVirtualMachine = await virtualMachineService.Add(virtualMachine);
             Navigation.NavigateTo("/virtual-machine/" + newVirtualMachine.Id);
