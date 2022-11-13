@@ -68,7 +68,7 @@ public class FakeCustomerService : ICustomerService
         });
     }
 
-    public void CreateCustomer(CustomerDto.Details newCustomer)
+    public Task<CustomerDto.Details> Add(CustomerDto.Details newCustomer)
     {
         throw new NotImplementedException();
     }

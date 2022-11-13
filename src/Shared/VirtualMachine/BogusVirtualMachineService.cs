@@ -113,4 +113,11 @@ public class BogusVirtualMachineService : IVirtualMachineService
             IsActive = x.TimeSpan.EndDate <= DateTime.Now && x.TimeSpan.StartDate >= DateTime.Now, //Werkt niet
         }));
     }
+
+    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM)
+    {
+        newVM.Id = _virtualMachines.Count + 1;
+        _virtualMachines.Add(newVM);
+        return Task.FromResult(newVM);
+    }
 }

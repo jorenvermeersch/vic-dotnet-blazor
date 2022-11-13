@@ -161,6 +161,11 @@ public class FakeVirtualMachineService:IVirtualMachineService
         */
     }
 
+    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<int> GetCount()
     {
         return Task.FromResult(_virtualMachines.Count);

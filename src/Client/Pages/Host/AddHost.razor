@@ -36,7 +36,7 @@
     private EditForm? editForm { get; set; } = new();
     private Host hostModel { get; set; } = new();
 
-    private void HandleValidSubmit(){
+    private async void HandleValidSubmit(){
         HostDto.Details host = new();
         SpecificationDto specification = new();
         if (editForm.EditContext.Validate())
@@ -48,13 +48,12 @@
             specification.Storage = Convert.ToInt32(hostModel.Storage.Trim());
 
             host.Specifications = specification;
-            host.Id = new Random().Next(15, 50);
 
-            Console.WriteLine("nkf");
-            hostService.CreateHost(host);
-            Navigation.NavigateTo("host/" + host.Id);
+
+            HostDto.Details newHost = await hostService.Add(host);
+            Navigation.NavigateTo("host/" + newHost.Id);
         }
-        Console.WriteLine("shit");
+        
     }
 
     public class Host{

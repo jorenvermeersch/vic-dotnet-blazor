@@ -1,5 +1,5 @@
 ﻿@using System.ComponentModel.DataAnnotations;
-@namespace Shared
+@namespace Client
 @using customer
 @page "/customer/add"
 @layout NoGlobalSearchLayout
@@ -53,6 +53,8 @@
 
 
 @code {
+
+
     private Customer customerModel = new();
     private EditForm? editForm { get; set; }
     private List<string> _typesClient = new() { "Extern", "Intern" };
@@ -73,7 +75,7 @@
         _backuprequired = _values.All(e => (e == "" || e == null)) ? false : true;
     }
 
-    private void HandleValidSubmit(){
+    private async void HandleValidSubmit(){
         CustomerDto.Details customer = new();
         if(editForm.EditContext.Validate()){
             customer.ContactPerson = new ContactPersonDto()
@@ -95,38 +97,13 @@
             customer.Institution = customerModel.Institude;
             customer.Type = customerModel.Type;
             customer.Name = customerModel.Name;
-            //tijdelijk random id geven aan een klant
-            customer.Id = new Random().Next(70, 150);
+            
 
-            customerService.CreateCustomer(customer);
-            Navigation.NavigateTo("/customer/" + customer.Id);
+            CustomerDto.Details newCustomer = await customerService.Add(customer);
+            Navigation.NavigateTo("/customer/" + newCustomer.Id);
 
 
         }
 
-    }
-    public class Customer
-    {
-        [Required]
-        public string TypeCustomer { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Education { get; set; }
-        public string Department { get; set; }
-        public string Institude { get; set; }
-
-        [Required]
-        public string Firstname { get; set; }
-        [Required]
-        public string Lastname { get; set; }
-        [Required]
-        public string Phonenumber { get; set; }
-        [Required]
-        public string Email { get; set; }
-
-        public string BackupFirstname { get; set; }
-        public string BackupLastname { get; set; }
-        public string BackupPhonenumber { get; set; }
-        public string BackupEmail { get; set; }
     }
 }
