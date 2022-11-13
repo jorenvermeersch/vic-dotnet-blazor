@@ -17,21 +17,18 @@ public static class VirtualMachineDto
     {
         public long Id { get; set; }
         public string FQDN { get; set; }
-        public bool IsActive { get; set; }
+        public string Status { get; set; }
     }
 
-    public class Details
+    public class Details : Index
     {
-        public long Id { get; set; }
         public string Name { get; set; }
-        public string FQDN { get; set; }
         public string Template { get; set; }
         public string Mode { get; set; }
         public List<string> Availabilities { get; set; } 
         public string BackupFrequenty { get; set; }
         public DateTime ApplicationDate { get; set; }
         public TimeSpanDto TimeSpan { get; set; }
-        public string Status { get; set; }
         public string Reason { get; set; }
         public List<PortDto> Ports { get; set; }
         public SpecificationDto Specification { get; set; }

@@ -14,17 +14,18 @@ public static class CustomerDto
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
+        public string CustomerType { get; set; }
     }
 
-    public class Details
-    {
+    public class Details {
         public long Id { get; set; }
         public string Institution { get; set; }
-        public string Name { get; set; }
+        public string Department { get; set; }
         public string Type { get; set; }
         public string Education { get; set; }
-        public string Department { get; set; }
+        public string CustomerType { get; set; }
+        //Name from external customer company
+        public string Name { get; set; }
         public ContactPersonDto ContactPerson { get; set; }
         public ContactPersonDto BackupContactPerson { get; set; }
         public List<VirtualMachineDto.Index> VirtualMachines { get; set; }
