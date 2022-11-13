@@ -1,4 +1,7 @@
 ﻿namespace Domain.Constants;
-public enum CustomerType {
-    Intern, Extern
+
+public enum CustomerType
+{
+    Intern,
+    Extern
 }

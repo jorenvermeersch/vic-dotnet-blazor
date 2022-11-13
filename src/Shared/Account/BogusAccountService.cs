@@ -44,7 +44,8 @@ public class BogusAccountService:IAccountService
         return Task.FromResult(accounts.Select(x => new AccountDto.Index
         {
             Id = x.Id,
-            Name = x.Firstname + " " + x.Lastname,
+            Firstname = x.Firstname,
+            Lastname = x.Lastname,
             Email = x.Email
         }));
     }

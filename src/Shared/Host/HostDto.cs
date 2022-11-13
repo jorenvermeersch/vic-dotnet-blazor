@@ -10,8 +10,10 @@ public static class HostDto
         public int Id { get; set; }
         public string Name { get; set; }
     }
-    public class Details : Index
+    public class Details
     { 
+        public int Id { get; set; }
+        public string Name { get; set; }
         public SpecificationDto Specifications { get; set; }
         public SpecificationDto RemainingResources { get; set; }
         public List<VirtualMachineDto.Index> Machines { get; set; }

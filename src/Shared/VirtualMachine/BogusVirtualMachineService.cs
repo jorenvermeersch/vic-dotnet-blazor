@@ -32,12 +32,12 @@ public class BogusVirtualMachineService : IVirtualMachineService
         {
             Id = x.Id,
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname,
-            Email = x.ContactPerson.Email
         }).ToArray();
         var accounts = BogusAccountService.accounts.Select(x => new AccountDto.Index
         {
             Id = x.Id,
-            Name = x.Firstname + " " + x.Lastname,
+            Firstname = x.Firstname,
+            Lastname = x.Lastname,
             Email = x.Email
         }).ToArray();
         var hosts = BogusHostService.hosts.Select(x=>new HostDto.Index
@@ -100,7 +100,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.TimeSpan.EndDate <= DateTime.Now && x.TimeSpan.StartDate >= DateTime.Now, //Werkt niet
+            Status = x.Status,
         })) ;
     }
 
@@ -110,7 +110,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         {
             Id = x.Id,
             FQDN = x.FQDN,
-            IsActive = x.TimeSpan.EndDate <= DateTime.Now && x.TimeSpan.StartDate >= DateTime.Now, //Werkt niet
+            Status = x.Status,
         }));
     }
 
