@@ -40,7 +40,7 @@
     <Title Text="Virtuele machines" />
     @if(virtualMachine.Any()){
         @foreach(var vm in virtualMachine){
-            <EntityCard Value=@vm.FQDN Active=@vm.IsActive Href=@string.Concat("virtual-machine/", vm.Id)/>
+            <EntityCard Value=@vm.FQDN Active=@(vm.Status == "aanvraag" ? true : false) Href=@string.Concat("virtual-machine/", vm.Id)/>
         }
     <PageSelector NumberOfPages="5"/>
     }

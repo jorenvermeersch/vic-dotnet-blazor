@@ -102,14 +102,14 @@
         _backups.Add("Start", virtualMachine.TimeSpan.StartDate.ToShortDateString());
         _backups.Add("Einde", virtualMachine.TimeSpan.EndDate.ToShortDateString());
 
-        _personincharge.Add("Opgezet door", virtualMachine.Account?.Name);
-        _personincharge.Add("Ondersteuning", virtualMachine.Account?.Name);
+        _personincharge.Add("Opgezet door", virtualMachine.Account?.Firstname + " " + virtualMachine.Account?.Lastname);
+        _personincharge.Add("Ondersteuning", virtualMachine.Account?.Firstname + " " + virtualMachine.Account?.Lastname);
 
         _user.Add("Naam", virtualMachine.User?.Name);
-        _user.Add("Email", virtualMachine.User?.Email);
+        //_user.Add("Email", virtualMachine.User?.Email);
 
         _requester.Add("Naam", virtualMachine.Requester?.Name);
-        _requester.Add("Email", virtualMachine.Requester?.Email);
+        //_requester.Add("Email", virtualMachine.Requester?.Email);
 
         _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Number)));
 

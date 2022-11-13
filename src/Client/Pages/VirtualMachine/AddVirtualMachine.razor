@@ -190,14 +190,14 @@
             virtualMachine.User = new CustomerDto.Index {
                 Id=selectedUser.Id,
                 Name = selectedUser.ContactPerson.Firstname + " " + selectedUser.ContactPerson.Lastname,
-                Email = selectedUser.ContactPerson.Email
+                //Email = selectedUser.ContactPerson.Email
             };
             CustomerDto.Details selectedRequester = await customerService.GetDetailAsync(long.Parse(VirtualMachineModel.Requester.Split('-')[0].Trim()));
             virtualMachine.Requester = new CustomerDto.Index
                 {
                     Id = selectedUser.Id,
                     Name = selectedUser.ContactPerson.Firstname + " " + selectedUser.ContactPerson.Lastname,
-                    Email = selectedUser.ContactPerson.Email
+                    //Email = selectedUser.ContactPerson.Email
             };
             HostDto.Details selectedHost = await hostService.GetDetailAsync(long.Parse(VirtualMachineModel.Host.Split('-')[0].Trim()));
             virtualMachine.Host = new HostDto.Index
