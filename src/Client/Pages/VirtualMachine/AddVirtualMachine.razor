@@ -1,22 +1,39 @@
 ﻿@page "/virtual-machine/add"
 @layout NoGlobalSearchLayout 
+@namespace Shared
+@using Host
+@using Shared
+@using Specification
+@using customer
+@using System.ComponentModel.DataAnnotations
+@using VirtualMachine
+@inject IVirtualMachineService virtualMachineService
+@inject IHostService hostService
+@inject ICustomerService customerService
+@inject NavigationManager Navigation
 @attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
 
 <EditForm  @ref="EditForm" Model="@VirtualMachineModel">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
     <div class="context-menu">
          <span class="context-menu-label"></span>
-         <Button Text="Machine toevoegen" />
+         <Button Text="Machine toevoegen" OnClick="@HandleOnValidSubmit" />
     </div>
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Configuratie" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Naam" />
-            <AddInput Type="@Input.InputType.TEXT" Label="FQDN"/>
-            <AddInput Type="@Input.InputType.SELECT" Label="Mode"/>
-            <AddInput Type="@Input.InputType.SELECT" Label="Template" />
-
+            <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="VirtualMachineModel.Name" For="@(()=>VirtualMachineModel.Name)" />
+             <AddInput Type="@Input.InputType.TEXT" Label="FQDN" Required="@true" @bind-Value="VirtualMachineModel.FQDN" For="@(()=>VirtualMachineModel.FQDN)" />
+             <AddInput Type="@Input.InputType.SELECT" Label="Mode" Required="@true" Items="@Modes" @bind-Value="VirtualMachineModel.Mode" For="@(()=>VirtualMachineModel.Mode)" />
+             <AddInput Type="@Input.InputType.SELECT" Label="Template" Required="@true" Items="@Templates" @bind-Value="VirtualMachineModel.Template" For="@(()=>VirtualMachineModel.Template)" />
+            
+           
+            <AddInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachineModel.Reason" For="@(()=>VirtualMachineModel.Reason)" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Status" Items="@Statuses" @bind-Value="VirtualMachineModel.Status" For="@(()=>VirtualMachineModel.Status)" />
+                <!--
             <Title Text="Poorten" />
             <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" Action="(value) => AddPortToList(value)" />
             <div class="buttonList">
@@ -24,18 +41,40 @@
                     <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
                 }
             
-            </div>
+            </div>-->
 
             <Title Text="Specificaties" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Host" />
-            <AddInput Type="@Input.InputType.SELECT" Label="vCPUs" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Geheugen" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Opslag" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="VirtualMachineModel.Host" For="@(()=>VirtualMachineModel.Host)" />
+            <AddInput Type="@Input.InputType.TEXT" Label="vCPUs" @bind-Value="VirtualMachineModel.Processors" For="@(()=>VirtualMachineModel.Processors)" />
+            <AddInput Type="@Input.InputType.TEXT" Label="Geheugen" @bind-Value="VirtualMachineModel.Memory" For="@(()=>VirtualMachineModel.Memory)" />
+            <AddInput Type="@Input.InputType.TEXT" Label="Opslag" @bind-Value="VirtualMachineModel.Storage" For="@(()=>VirtualMachineModel.Storage)" />
         </div>
         <div class="one-third">
             <Title Text="Beschikbaarheid" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Start" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Einde" />
+            <div>
+                <div class="input-container">
+                    <label>Datum van Aanvraag: <sup class="requiredinput">*</sup></label>
+                    <InputDate @bind-Value="@VirtualMachineModel.ApplicationDate"></InputDate>
+                </div>
+             <ValidationMessage For="@(()=>VirtualMachineModel.ApplicationDate)"></ValidationMessage>
+            </div>
+
+            <div>
+                <div class="input-container">
+                    <label>StartDatum: <sup class="requiredinput">*</sup></label>
+                    <InputDate @bind-Value="VirtualMachineModel.StartDate"></InputDate>
+                </div>
+             <ValidationMessage For="@(()=>VirtualMachineModel.StartDate)"></ValidationMessage>
+            </div>
+
+            <div>
+                <div class="input-container">
+                    <label>Einddatum: <sup class="requiredinput">*</sup></label>
+                    <InputDate @bind-Value="VirtualMachineModel.EndDate"></InputDate>
+                </div>
+             <ValidationMessage For="@(()=>VirtualMachineModel.EndDate)"></ValidationMessage>
+            </div>
+            <!--
             <AvailabilityOptionSelect customCss="@_customcss" />
             <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
                 <Button Text="Toevoegen" />
@@ -43,11 +82,20 @@
             <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
             <AvailabilityOption DayOfWeek="Availability.Thursday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
             <AvailabilityOption DayOfWeek="Availability.Friday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-
+            -->
             <Title Text="Back-ups" />
-            <AddInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" />
+            <AddInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" @bind-Value="@VirtualMachineModel.BackupFrequenty" For="@(()=>VirtualMachineModel.BackupFrequenty)" />
         </div>
+ 
         <div class="one-third">
+            <Title Text="Gebruikers"></Title>
+            <AddInput Type="@Input.InputType.SELECT" Label="Aanvrager" Items="@Customers" @bind-Value="@VirtualMachineModel.Requester" For="@(()=>VirtualMachineModel.Requester)" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Gebruiker" Items="@Customers" @bind-Value="@VirtualMachineModel.User" For="@(()=>VirtualMachineModel.User)" />
+
+            <Title Text="Verantwoordelijke"></Title>
+            <AddInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Customers" @bind-Value="@VirtualMachineModel.Account" For="@(()=>VirtualMachineModel.Account)" />
+
+            <!--
             <Title Text="Logingegevens" />
             <AddInput Type="@Input.InputType.TEXT" Label="Gebruikersnaam"/>
             <AddInput Type="@Input.InputType.TEXT" Label="Rol" />
@@ -58,6 +106,7 @@
             @foreach(KeyValuePair<int, Dictionary<string, string>> entry in _entries) {
                 <DataCard OnClick="() => ClickHandler(entry.Key)" Entries="@entry.Value" customCss="@_customcss" />
             }
+            -->
         </div>
         
         
@@ -75,12 +124,27 @@
     private HashSet<string> _ports = new();
     public List<string> Options { get; set; } = new() { "HTTP", "HTTPS", "SSH" };
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
+    public List<string> Modes { get; set; } = new() { "SAAS", "PAAS", "IAAS" };
+    public List<string> Templates { get; set; } = new() { "geen", "AI" };
+    public List<string> Statuses { get; set; } = new() { "Aanvraag", "In verwerking", "Afgehandeld" };
+    private List<string>? Hosts { get; set; }
+    private List<string>? Customers { get; set; }
+    private List<string>? Accounts { get; set; } = new() { };
     private Dictionary<int, Dictionary<string, string>> _entries = new();
+
 
     protected override void OnInitialized()
     {
         _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Rol", "Admin" } });
         _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Rol", "User" } });
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        IEnumerable<HostDto.Index> hosts= await hostService.GetIndexAsync(0);
+        Hosts = hosts.Select(h => string.Concat(h.Id ," - " , h.Name)).ToList();
+        IEnumerable<CustomerDto.Index> customers = await customerService.GetIndexAsync(0);
+        Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
+        //TODO- haal lijst op van accounts
     }
 
 
@@ -98,7 +162,71 @@
         _ports.Remove(value);
     }
 
-    public class VirtualMachine{
+    public async void HandleOnValidSubmit()
+    {
+        VirtualMachineDto.Details virtualMachine = new();
+        if (EditForm.EditContext.Validate())
+        {
+            virtualMachine.Name = VirtualMachineModel.Name;
+            virtualMachine.FQDN = VirtualMachineModel.FQDN;
+            virtualMachine.Mode = VirtualMachineModel.Mode;
+            virtualMachine.Template = VirtualMachineModel.Template;
+            virtualMachine.ApplicationDate = VirtualMachineModel.ApplicationDate;
+            virtualMachine.Reason = VirtualMachineModel.Reason;
+            virtualMachine.BackupFrequenty = VirtualMachineModel.BackupFrequenty;
 
+            TimeSpanDto timespan = new();
+            timespan.StartDate = VirtualMachineModel.StartDate;
+            timespan.EndDate = VirtualMachineModel.EndDate;
+            virtualMachine.TimeSpan = timespan;
+
+            SpecificationDto specification = new();
+            specification.Processors = Convert.ToInt32(VirtualMachineModel.Processors);
+            specification.Memory = Convert.ToInt32(VirtualMachineModel.Memory);
+            specification.Storage = Convert.ToInt32(VirtualMachineModel.Storage);
+            virtualMachine.Specification = specification;
+
+
+            var newVirtualMachine = await virtualMachineService.Add(virtualMachine);
+            Navigation.NavigateTo("/virtual-machine/" + newVirtualMachine.Id);
+        }
+    }
+
+    public class VirtualMachine
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string FQDN { get; set; }
+        public string Template { get; set; }
+        public string Mode { get; set; }
+        public List<string> Availabilities { get; set; }
+        [Required]
+        public string BackupFrequenty { get; set; }
+        [Required]
+        public DateTime ApplicationDate { get; set; } = DateTime.Now;
+
+        //public TimeSpanDto TimeSpan { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime EndDate { get; set; } = DateTime.Now;
+
+        public string Status { get; set; }
+        public string Reason { get; set; }
+        //public List<PortDto> Ports { get; set; }
+        
+        public string Host { get; set; }
+        /*public List<CredentialDto> Credentials { get; set; }
+        public AccountDto.Index Account { get; set; }
+        public CustomerDto.Index Requester { get; set; }
+        public CustomerDto.Index User { get; set; }*/
+        public string Account { get; set; }
+        public string Requester { get; set; }
+        public string User { get; set; }
+        [Required]
+        public string Processors { get; set; }
+        [Required]
+        public string Memory { get; set; }
+        [Required]
+        public string Storage { get; set; }
     }
 }

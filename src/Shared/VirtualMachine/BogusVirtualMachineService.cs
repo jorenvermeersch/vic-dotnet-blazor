@@ -117,6 +117,8 @@ public class BogusVirtualMachineService : IVirtualMachineService
     public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM)
     {
         newVM.Id = _virtualMachines.Count + 1;
+        Console.WriteLine(newVM.ApplicationDate);
+        Console.WriteLine(newVM.Specification.Processors);
         _virtualMachines.Add(newVM);
         return Task.FromResult(newVM);
     }

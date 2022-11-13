@@ -82,7 +82,7 @@
 
         _defaultInformation.Add("Naam", virtualMachine.Name);
         _defaultInformation.Add("FQDN", virtualMachine.FQDN);
-        _defaultInformation.Add("Hostnaam", virtualMachine.Host.Name);
+        _defaultInformation.Add("Hostnaam", virtualMachine?.Host?.Name);
 
         _config.Add("Mode", virtualMachine.Mode);
         _config.Add("Template", virtualMachine.Template);
@@ -92,21 +92,24 @@
         _specs.Add("Geheugen", virtualMachine.Specification.Memory.ToString());
         _specs.Add("Opslag", virtualMachine.Specification.Storage.ToString());
 
-        _available.Add("Beschikbaarheid", string.Join(", ",virtualMachine.Availabilities));
+        //if (virtualMachine.Availabilities.Count>1){
+        //    _available.Add("Beschikbaarheid", string.Join(", ", virtualMachine.Availabilities));
+        //}
+           
         _available.Add("Backups", virtualMachine.BackupFrequenty);
 
         _backups.Add("Aangevraagd op", virtualMachine.ApplicationDate.ToShortDateString());
         _backups.Add("Start", virtualMachine.TimeSpan.StartDate.ToShortDateString());
         _backups.Add("Einde", virtualMachine.TimeSpan.EndDate.ToShortDateString());
 
-        _personincharge.Add("Opgezet door", virtualMachine.Account.Name);
-        _personincharge.Add("Ondersteuning", virtualMachine.Account.Name);
+        _personincharge.Add("Opgezet door", virtualMachine.Account?.Name);
+        _personincharge.Add("Ondersteuning", virtualMachine.Account?.Name);
 
-        _user.Add("Naam", virtualMachine.User.Name);
-        _user.Add("Email", virtualMachine.User.Email);
+        _user.Add("Naam", virtualMachine.User?.Name);
+        _user.Add("Email", virtualMachine.User?.Email);
 
-        _requester.Add("Naam", virtualMachine.Requester.Name);
-        _requester.Add("Email", virtualMachine.Requester.Email);
+        _requester.Add("Naam", virtualMachine.Requester?.Name);
+        _requester.Add("Email", virtualMachine.Requester?.Email);
 
         _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Number)));
 
