@@ -1,12 +1,28 @@
 ﻿
 <div class="search-container">
     <i class="fa-solid fa-magnifying-glass"></i>
-    <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" @bind-onchange=Text />
+    <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" @bind-value="_value" />
 </div>
 
 
 @code {
     [Parameter] public string PlaceHolder { get; set; } = "";
     [Parameter] public string customCss { get; set; } = "";
-    [Parameter] public string Text { get; set; }
+
+    private string _value;
+    [Parameter]
+    public string BindingValue
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            BindingValueChanged.InvokeAsync(value);
+        }
+    }
+    [Parameter]
+    public EventCallback<string> BindingValueChanged { get; set; }
+
+    [Parameter] public EventCallback<string> OnClick { get; set; } = new();
 }
