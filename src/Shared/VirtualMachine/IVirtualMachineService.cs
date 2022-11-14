@@ -12,10 +12,12 @@ public interface IVirtualMachineService
 
     Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync(int offset, int amount);
     Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId);
-    Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId);
+    Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId, int offset);
+    Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(long hostId, int offset);
     Task<int> GetCount();
 
     Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM);
 
     Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset);
+
 }

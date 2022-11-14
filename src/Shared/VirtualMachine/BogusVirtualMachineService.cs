@@ -104,9 +104,9 @@ public class BogusVirtualMachineService : IVirtualMachineService
         })) ;
     }
 
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId)
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId, int offset)
     {
-        return Task.FromResult(_virtualMachines.Where(vm=>vm.User.Id==userId).Select(x => new VirtualMachineDto.Index
+        return Task.FromResult(_virtualMachines.Where(vm=>vm.User.Id==userId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
             FQDN = x.FQDN,
@@ -126,6 +126,16 @@ public class BogusVirtualMachineService : IVirtualMachineService
     public Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset)
     {
         return Task.FromResult(_virtualMachines.Where(vm => vm.Status=="In verwerking" || vm.Status == "Aanvraag" ).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
+        {
+            Id = x.Id,
+            FQDN = x.FQDN,
+            Status = x.Status,
+        }));
+    }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(long hostId, int offset)
+    {
+        return Task.FromResult(_virtualMachines.Where(vm => vm.Host.Id == hostId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
             FQDN = x.FQDN,

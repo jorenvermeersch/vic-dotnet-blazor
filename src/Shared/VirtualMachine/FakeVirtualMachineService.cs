@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shared.VirtualMachine;
 
-public class FakeVirtualMachineService:IVirtualMachineService
+public class FakeVirtualMachineService
 {
     private readonly List<VirtualMachineDto.Details> _virtualMachines = new();
 
@@ -189,6 +189,11 @@ public class FakeVirtualMachineService:IVirtualMachineService
             FQDN = x.FQDN,
             //IsActive = x.EndDate<=DateTime.Now && x.StartDate>=DateTime.Now, //Werkt niet
         }));
+    }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(long hostId)
+    {
+        throw new NotImplementedException();
     }
 
     public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId)
