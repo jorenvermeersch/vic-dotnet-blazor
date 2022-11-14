@@ -73,17 +73,16 @@
 
         _username.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
 
-        if(customer.Type==null){
+        _general.Add("Type klant", customer.CustomerType);
+        if(customer.CustomerType=="Intern"){
             _general.Add("Departement", customer.Department);
             _general.Add("Opleiding", customer.Education);
             _general.Add("Instituut", customer.Institution);
-            _general.Add("Type klant", "Intern");
         }else{
             _general.Add("Naam", customer.Name);
             _general.Add("Type", customer.Type);
-            _general.Add("Type klant", "Extern");
-
         }
+        
 
         _contactInformation.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
         _contactInformation.Add("E-mailadres", customer.ContactPerson.Email);

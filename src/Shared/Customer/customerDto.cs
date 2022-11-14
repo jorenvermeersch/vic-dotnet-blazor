@@ -27,8 +27,8 @@ public static class CustomerDto
         public string CustomerType { get; set; }
         //Name from external customer company
         public string Name { get; set; }
-        public ContactPersonDto ContactPerson { get; set; }
-        public ContactPersonDto BackupContactPerson { get; set; }
+        public ContactPersonDto ContactPerson { get; set; } = new ContactPersonDto();
+        public ContactPersonDto BackupContactPerson { get; set; } = new ContactPersonDto();
         public List<VirtualMachineDto.Index> VirtualMachines { get; set; }
     }
 }

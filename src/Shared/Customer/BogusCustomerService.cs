@@ -33,7 +33,8 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.Department, f => f.PickRandom(departments))
             .RuleFor(x => x.Education, f => f.PickRandom(educations))
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
-            .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts));
+            .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts))
+            .RuleFor(x => x.CustomerType, f => "Intern");
 
 
 
@@ -45,7 +46,8 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.Name, f => f.Company.CompanyName())
             .RuleFor(x => x.Type, f => f.PickRandom(types))
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
-            .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts));
+            .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts))
+            .RuleFor(x => x.CustomerType, f => "Extern");
 
         customers = internalcustomerFaker.Generate(40);
         customers.AddRange(externalcustomerFaker.Generate(25));

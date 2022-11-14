@@ -70,7 +70,7 @@
             <div>
                 <div class="input-container">
                     <label>Einddatum: <sup class="requiredinput">*</sup></label>
-                    <InputDate @bind-Value="VirtualMachineModel.EndDate"></InputDate>
+                    <InputDate class="input" @bind-Value="VirtualMachineModel.EndDate"></InputDate>
                 </div>
              <ValidationMessage For="@(()=>VirtualMachineModel.EndDate)"></ValidationMessage>
             </div>
