@@ -134,7 +134,7 @@
         Hosts = hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
         IEnumerable<CustomerDto.Index> customers = await customerService.GetIndexAsync(0);
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
-        IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync();
+        IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync(0);
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
     }
 

@@ -31,27 +31,42 @@
     <DataCard Entries="@_contactInformation" />
         <DataCard Entries="@_backupContactInformation" />
     </div>
-<div class="one-third">
+<div class="two-thirds">
 
     <div style="display: flex; align-items: flex-end; height: 50px;">
         <span style="flex: 1">
             <Button Text="Actief" />
         </span>
-        <span>
-            <Button Text="Beheren" />
-        </span>
+        
     </div>
 
     <Title Text="Virtuele machines" />
-    @if(virtualMachine.Any()){
-        @foreach(var vm in virtualMachine){
-            <EntityCard Value=@vm.FQDN Active=@(vm.Status == "aanvraag" ? true : false) Href=@string.Concat("virtual-machine/", vm.Id)/>
-        }
-    <PageSelector NumberOfPages="5"/>
-    }
-    else{
-        <NoVmMsg Type="@customer.CustomerType"/>
-    }
+       
+            @if (virtualMachines.Any())
+            {
+            <div class="two-columns-container">
+                <div>
+                @foreach (var vm in virtualMachines.Take(5))
+                {
+                    <EntityCard Value=@vm.FQDN Active=@(vm.Status == "aanvraag") Href=@string.Concat("virtual-machine/", vm.Id) />
+                }
+                </div>
+                <div>
+                    @foreach (var vm in virtualMachines.Skip(5).Take(5))
+                    {
+                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == "aanvraag") Href=@string.Concat("virtual-machine/", vm.Id) />
+                    }
+                </div>
+            </div>
+            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+            }
+            else
+            {
+                <NoVmMsg Type="@customer.CustomerType" />
+            }
+
+        
+    
     </div>
 </div>
 
@@ -61,7 +76,11 @@
 
 @code {
     private CustomerDto.Details? customer;
-    private IEnumerable<VirtualMachineDto.Index>? virtualMachine;
+    private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
+    int offset = 0;
+    int totalVirtualMachines = 0;
+    int totalPages = 0;
+    int selectedPage = 1;
 
     [Parameter] public long Id { get; set; }
 
@@ -73,7 +92,9 @@
     protected override async Task OnInitializedAsync()
     {
         customer = await customerService.GetDetailAsync(Id);
-        virtualMachine = await virtualMachineService.GetVirtualMachinesByUserId(Id);
+        virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(Id, offset);
+        totalVirtualMachines = virtualMachines.Count();
+        totalPages = (totalVirtualMachines / 10) + 1;
 
         _username.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
 
@@ -102,5 +123,12 @@
     private void NavigateBack()
     {
         Navigation.NavigateTo("customer/list");
+    }
+
+    async Task ClickHandler(int pageNr)
+    {
+        offset = (pageNr - 1) * 10;
+        virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(customer.Id, offset);
+        selectedPage = pageNr;
     }
 }
