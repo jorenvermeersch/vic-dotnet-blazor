@@ -1,8 +1,9 @@
 ﻿@page "/host/add"
+@namespace Shared
 @using System.ComponentModel.DataAnnotations
 @layout NoGlobalSearchLayout
-@namespace Shared
 @using Host
+@using Client.Validation
 @using Specification
 @inject IHostService hostService
 @inject NavigationManager Navigation
@@ -11,39 +12,50 @@
 
 <PageTitle>Host Toevoegen</PageTitle>
 
-<EditForm @ref="Editform" Model="@Host">
+<EditForm Model="@Host" OnValidSubmit="@HandleValidSubmit">
+    <FluentValidationValidator TValidator="HostValidation" />
     <div class="context-menu">
         <span class="context-menu-label">Host Toevoegen</span>
-        <Button Text="Toevoegen" OnClick="@HandleValidSubmit" />
+        @*<Button type="submit" Text="Toevoegen"/>*@
+        <button type="submit">Toevoegen</button>
     </div>
-    <DataAnnotationsValidator />
+    @*<DataAnnotationsValidator />*@
+
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
 
             <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Host.Name" For="@(()=>Host.Name)" />
 
-            <CustomInputNumber label="vcpu" required="@true" @bind-Value="Host.Specifications.Processors" For="@(()=>Host.Specifications.Processors)" />
-            <CustomInputNumber label="opslag" required="@true" @bind-Value="Host.Specifications.Storage" For="@(()=>Host.Specifications.Storage)" />
-            <CustomInputNumber label="geheugen"  required="@true" @bind-Value="Host.Specifications.Memory" For="@(()=>Host.Specifications.Memory)" />
+            <CustomInputNumber label="vcpu" required="@true" @bind-Value="Host.Processors" For="@(()=>Host.Processors)" />
+            @*            <CustomInputNumber label="opslag" required="@true" @bind-Value="Host.Specifications.Storage" For="@(()=>Host.Specifications.Storage)" />
+            <CustomInputNumber label="geheugen"  required="@true" @bind-Value="Host.Specifications.Memory" For="@(()=>Host.Specifications.Memory)" />*@
 
         </div>
-        <div class="one-third" ></div>
-        <div class="one-third" ></div>
+        <div class="one-third"></div>
+        <div class="one-third"></div>
     </div>
 </EditForm>
 
+<label>@message</label>
+
 @code {
     private EditForm? Editform { get; set; } = new();
-    private HostDto.Details Host { get; set; } = new();
+    //private HostDto.Details Host { get; set; } = new();
+    private HostDto.Create Host { get; set; } = new();
 
-    private async void HandleValidSubmit(){
-        if (Editform.EditContext.Validate())
-        {
-            Console.WriteLine(Host.Specifications.Memory);
-            HostDto.Details newHost = await hostService.Add(Host);
-            Navigation.NavigateTo("host/" + newHost.Id);
-        }
+
+
+    private string message { get; set; } = "";
+
+    private async void HandleValidSubmit()
+    {
+        message = "Submitted succesfully";
+        //if (Editform.EditContext.Validate())
+        //{
+        //    HostDto.Details newHost = await hostService.Add(Host);
+        Navigation.NavigateTo("host/" + newHost.Id);
+        //}
     }
 }
 

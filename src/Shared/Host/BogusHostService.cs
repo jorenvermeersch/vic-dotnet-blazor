@@ -27,11 +27,16 @@ public class BogusHostService: IHostService
         hosts = hostFaker.Generate(10);
     }
 
-    public Task<HostDto.Details> Add(HostDto.Details newHost)
+    public Task<HostDto.Details> Add(HostDto.Create newHost)
     {
         newHost.Id = hosts.Count + 1;
-        hosts.Add(newHost);
-        return Task.FromResult(newHost);
+        HostDto.Details host = new()
+        {
+            Id = newHost.Id,
+            Name = newHost.Name
+        };
+        hosts.Add(host);
+        return Task.FromResult(host);
     }
 
     public Task<int> GetCount()
