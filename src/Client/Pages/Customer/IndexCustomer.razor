@@ -12,16 +12,18 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title Text="Filteropties" />
-        <div class="reset-area">
+        <div style="display: flex; justify-content: space-between;">
             <Button Text="Reset" OnClick="@ResetFilter" />
+            <Button Text="Filteren" />
+        </div>
+        <Searchbar PlaceHolder="Geef een zoekterm in" />
+        <div class="reset-area">
             <div class="filterbuttonarea">
+                <p>Type: </p>
                 <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
                 <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
             </div>
         </div>
-        
-        <Searchbar PlaceHolder="Geef een zoekterm in" />
-        <Input Type="Input.InputType.SELECT" Label="Type" PlaceHolder="Alle types"/>
     </div>
     <div class="two-thirds">
         <Title Text="Alle klanten" />

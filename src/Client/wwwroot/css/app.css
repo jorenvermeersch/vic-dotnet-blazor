@@ -111,10 +111,17 @@
     flex: 1;
 }
 
-
+.context-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    width: 487.33px;
+    justify-content: space-between;
+}
 /* Misc */
 .card {
-    color: var(--black); 
+    color: var(--black);
     background-color: var(--light-gray);
     border-radius: 2px;
     padding: 17px;
@@ -201,9 +208,13 @@ select {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    align-items: center;
 }
 
 .reset-area {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
 }
