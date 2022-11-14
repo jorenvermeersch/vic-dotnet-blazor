@@ -8,6 +8,7 @@ using Shared.VirtualMachine;
 using Shared.Customer;
 using Domain.Core;
 using Shared.Host;
+using Shared.Account;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -21,5 +22,6 @@ builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.Get
 builder.Services.AddScoped<ICustomerService, BogusCustomerService>();
 builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
 builder.Services.AddScoped<IHostService, BogusHostService>();
+builder.Services.AddScoped<IAccountService, BogusAccountService>();
 
 await builder.Build().RunAsync();

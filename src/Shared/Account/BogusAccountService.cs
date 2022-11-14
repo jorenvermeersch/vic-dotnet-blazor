@@ -46,7 +46,8 @@ public class BogusAccountService:IAccountService
             Id = x.Id,
             Firstname = x.Firstname,
             Lastname = x.Lastname,
-            Email = x.Email
+            Email = x.Email,
+            Role = x.Role
         }));
     }
 }

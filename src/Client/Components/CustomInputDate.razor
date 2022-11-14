@@ -1,0 +1,45 @@
+﻿@inherits InputBase<DateTime>
+@using System.Linq.Expressions;
+
+<div>
+    <div class="input-container">
+        <label for="">
+            @_label
+            @if (Required)
+            {
+                <sup class="requiredinput">*</sup>
+            }
+        </label>
+
+        <input type="date" @bind="@CurrentValue" class="input" style="@customCss" placeholder="@PlaceHolder" required="@Required" />
+
+    </div>
+    <ValidationMessage For=@For />
+
+</div>
+@code {
+    [Parameter, EditorRequired] public Expression<Func<DateTime>> For { get; set; } = default!;
+    [Parameter]
+    public string customCss { get; set; } = "";
+    [Parameter]
+    public bool Required { get; set; } = false;
+    [Parameter]
+    public int OptionalId { get; set; } = -1;
+    [Parameter]
+    public string PlaceHolder { get; set; } = "";
+    private string _label = "Label: ";
+    [Parameter]
+    public string Label
+    {
+        get => _label;
+
+        set => _label = $"{value}: ";
+    }
+
+    protected override bool TryParseValueFromString(string? value, out DateTime result, out string validationErrorMessage)
+    {
+        result = Convert.ToDateTime(value);
+        validationErrorMessage = null;
+        return true;
+    }
+}
