@@ -1,11 +1,12 @@
 ﻿
 <div class="search-container">
     <i class="fa-solid fa-magnifying-glass"></i>
-    <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" />
+    <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" @bind-onchange=Text />
 </div>
 
 
 @code {
     [Parameter] public string PlaceHolder { get; set; } = "";
     [Parameter] public string customCss { get; set; } = "";
+    [Parameter] public string Text { get; set; }
 }

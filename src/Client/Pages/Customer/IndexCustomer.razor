@@ -16,7 +16,7 @@
             <Button Text="Reset" OnClick="@ResetFilter" />
             <Button Text="Filteren" />
         </div>
-        <Searchbar PlaceHolder="Geef een zoekterm in" />
+        <Searchbar PlaceHolder="Geef een zoekterm in" Text=@SearchValue/>
         <div class="reset-area">
             <div class="filterbuttonarea">
                 <p>Type: </p>
@@ -49,6 +49,7 @@
 
 @code {
 
+    public string SearchValue { get; set; }
     private IEnumerable<CustomerDto.Index>? customers;
     int offset = 0;
     int totalCustomers = 0;
@@ -69,6 +70,8 @@
     private void ResetFilter(){
         toggleIntern = false;
         toggleExtern = false;
+        Console.WriteLine(SearchValue);
+        SearchValue = "";
     }
 
     protected override async Task OnInitializedAsync()
