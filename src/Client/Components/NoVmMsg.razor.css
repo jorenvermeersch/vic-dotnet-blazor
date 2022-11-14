@@ -5,11 +5,10 @@
     align-items: center;
     flex-wrap: nowrap;
     align-content: center;
-    height: 128px;
     color: var(--black);
     background-color: var(--light-gray);
     border-radius: 2px;
     padding: 17px;
     gap: 24px;
-    font-size:larger
+    font-size: 0.875rem
 }
