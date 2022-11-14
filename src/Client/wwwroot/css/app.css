@@ -203,5 +203,7 @@ select {
     gap: 10px;
 }
 
-/* No VM*/
-
+.reset-area {
+    display: flex;
+    justify-content: space-between;
+}

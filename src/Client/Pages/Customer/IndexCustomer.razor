@@ -12,11 +12,14 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title Text="Filteropties" />
-        <div class="filterbuttonarea">
-            <Button Text="Reset" OnClick="@ResetFilter"/>
-            <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern/>
-            <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
+        <div class="reset-area">
+            <Button Text="Reset" OnClick="@ResetFilter" />
+            <div class="filterbuttonarea">
+                <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
+                <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
+            </div>
         </div>
+        
         <Searchbar PlaceHolder="Geef een zoekterm in" />
         <Input Type="Input.InputType.SELECT" Label="Type" PlaceHolder="Alle types"/>
     </div>
