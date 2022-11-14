@@ -12,11 +12,11 @@
         </label>
         @if (Type == InputType.TEXT)
         {
-            <input @bind="@CurrentValue" class="input" style="@customCss" placeholder="@PlaceHolder" required="@Required" />
+            <input @bind="@CurrentValue" class="input" style="@customCss" placeholder="@PlaceHolder" />
         }
         @if (Type == InputType.SELECT)
         {
-            <select @bind="@CurrentValue" class="input" style="@customCss" type="text" placeholder="@PlaceHolder" required="@Required">
+            <select @bind="@CurrentValue" class="input" style="@customCss" type="text" placeholder="@PlaceHolder">
                 <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)
                 {
