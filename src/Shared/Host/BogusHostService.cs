@@ -33,7 +33,12 @@ public class BogusHostService: IHostService
         HostDto.Details host = new()
         {
             Id = newHost.Id,
-            Name = newHost.Name
+            Name = newHost.Name,
+            Specifications = new SpecificationDto() { 
+                Memory = newHost.Memory,
+                Processors = newHost.Processors,
+                Storage = newHost.Storage
+            }
         };
         hosts.Add(host);
         return Task.FromResult(host);
