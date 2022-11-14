@@ -19,8 +19,8 @@ namespace Client.Components
             var messages = new ValidationMessageStore(EditContext);
 
             /* Re-validate when any field changes or when the entire form   requests validation.*/
-            EditContext.OnFieldChanged += (sender, eventArgs)
-                => ValidateModel((EditContext)sender, messages);
+            //EditContext.OnFieldChanged += (sender, eventArgs)
+            //    => ValidateModel((EditContext)sender, messages);
 
             EditContext.OnValidationRequested += (sender, eventArgs)
                 => ValidateModel((EditContext)sender, messages);

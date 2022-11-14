@@ -23,11 +23,11 @@
         <div class="one-third">
             <Title Text="Algemene informatie" />
 
-            <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Host.Name" For="@(()=>Host.Name)" />
+            <AddInput Type="@Input.InputType.TEXT" Label="Naam" @bind-Value="Host.Name" For="@(()=>Host.Name)" />
 
-            <CustomInputNumber label="vcpu" required="@true" @bind-Value="Host.Processors" For="@(()=>Host.Processors)" />
-            <CustomInputNumber label="opslag" required="@true" @bind-Value="Host.Storage" For="@(()=>Host.Storage)" />
-            <CustomInputNumber label="geheugen"  required="@true" @bind-Value="Host.Memory" For="@(()=>Host.Memory)" />
+            <CustomInputNumber label="Vcpu" @bind-Value="Host.Processors" For="@(()=>Host.Processors)" />
+            <CustomInputNumber label="Opslag" @bind-Value="Host.Storage" For="@(()=>Host.Storage)" />
+            <CustomInputNumber label="Geheugen" @bind-Value="Host.Memory" For="@(()=>Host.Memory)" />
 
         </div>
         <div class="one-third"></div>

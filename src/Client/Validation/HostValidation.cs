@@ -10,7 +10,7 @@ public class HostValidation : AbstractValidator<HostDto.Create>
     public HostValidation()
     {
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Geef de host een naam")
+            .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Name")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
         RuleFor(x => x.Processors)
             .NotEmpty().WithMessage("Geef een waarde in")

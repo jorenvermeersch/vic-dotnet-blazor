@@ -44,5 +44,26 @@ public static class VirtualMachineDto
         public CustomerDto.Index Requester { get; set; } = new CustomerDto.Index(); 
         public CustomerDto.Index User { get; set; } = new CustomerDto.Index(); 
     }
+
+    public class Create : Index
+    {
+        public string Name { get; set; }
+        public string Mode { get; set; }
+        public string Template { get; set; }
+        public string Reason { get; set; }
+        public string Status { get; set; }
+        public int hostId { get; set; }
+        public int Processors { get; set; }
+        public int Memory { get; set; }
+        public int Storage { get; set; }
+        public string Requester { get; set; }
+        public string User { get; set; }
+        public string Account { get; set; }
+        public DateTime ApplicationDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string BackupFrequenty { get; set; }
+
+    }
     
 }
