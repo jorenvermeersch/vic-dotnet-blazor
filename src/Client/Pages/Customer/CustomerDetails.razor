@@ -25,7 +25,7 @@
     <Title Text="Contactgegevens" />
     <DataCard Entries="@_contactInformation" />
         <DataCard Entries="@_backupContactInformation" />
-</div>
+    </div>
 <div class="one-third">
 
     <div style="display: flex; align-items: flex-end; height: 50px;">
@@ -45,10 +45,9 @@
     <PageSelector NumberOfPages="5"/>
     }
     else{
-        <p>Geen virtual machine beschikbaar</p>
+        <NoVmMsg />
     }
-    
-</div>
+    </div>
 </div>
 
 
@@ -73,7 +72,7 @@
 
         _username.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
 
-        _general.Add("Type klant", customer.CustomerType);
+        _general.Add("Klant type", customer.CustomerType);
         if(customer.CustomerType=="Intern"){
             _general.Add("Departement", customer.Department);
             _general.Add("Opleiding", customer.Education);
