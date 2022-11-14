@@ -13,6 +13,7 @@
     <div class="one-third">
         <Title Text="Filteropties" />
         <div class="filterbuttonarea">
+            <Button Text="Reset" OnClick="@ResetFilter"/>
             <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern/>
             <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
         </div>
@@ -58,6 +59,11 @@
 
     private void FilterExtern() {
         toggleExtern = toggleExtern ? false : true;
+    }
+
+    private void ResetFilter(){
+        toggleIntern = false;
+        toggleExtern = false;
     }
 
     protected override async Task OnInitializedAsync()
