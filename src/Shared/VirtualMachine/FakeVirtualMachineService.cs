@@ -166,6 +166,11 @@ public class FakeVirtualMachineService:IVirtualMachineService
         throw new NotImplementedException();
     }
 
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<int> GetCount()
     {
         return Task.FromResult(_virtualMachines.Count);
@@ -176,7 +181,7 @@ public class FakeVirtualMachineService:IVirtualMachineService
         return Task.FromResult(_virtualMachines.Single(x => x.Id == virtualMachineId));
     }
 
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync(int offset)
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync(int offset, int amount)
     {
         return Task.FromResult(_virtualMachines.Skip(offset).Take(20).Select(x => new VirtualMachineDto.Index
         {

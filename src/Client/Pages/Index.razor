@@ -1,5 +1,8 @@
 ﻿@page "/"
 @attribute [Authorize]
+@namespace Shared
+@using VirtualMachine
+@inject IVirtualMachineService VirtualMachineService
 
 
 <div class="context-menu">
@@ -12,12 +15,12 @@
     <div class="one-third">
         <Title Text="Onafgewerkte virtuele machines" />
         
-        @for (var i = 0; i < 8; i++)
-       {
-            <EntityCard Value="devops-proj1.vichogent.be"/>
+        @foreach (var vm in virtualMachines)
+        {
+            <EntityCard Value="@vm.FQDN" Active=@false Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
         }
 
-        <PageSelector NumberOfPages=6 />
+        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
     </div>
     <div class="two-thirds">
         <Title Text="Verbruik deze week" />
@@ -32,13 +35,29 @@
             </div>
             
         </div>
-        
-       
-       
-
     </div>
 </div>
 
 @code {
    string _startLabel = "24/10", _endLabel = "30/10";    
+
+    private IEnumerable<VirtualMachineDto.Index> virtualMachines;
+    int offset = 0;
+    int totalVirtualMachines = 0;
+    int totalPages;
+    int selectedPage = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
+        totalVirtualMachines = virtualMachines.Count();
+        totalPages = (totalVirtualMachines / 10) + 1;
+    }
+
+    async Task ClickHandler(int pageNr)
+    {
+        offset = (pageNr - 1) * 10;
+        virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
+        selectedPage = pageNr;
+    }
 }

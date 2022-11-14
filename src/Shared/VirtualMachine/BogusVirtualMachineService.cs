@@ -68,7 +68,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.BackupFrequenty, f => f.PickRandom(new[] { "Dagelijks", "Wekelijks", "Maandelijks" }))
             .RuleFor(x => x.Availabilities, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(new[] { "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag" })).ToList())
-            .RuleFor(x => x.Status, f => f.PickRandom(new[] { "aanvraag", "in verwerking", "afgehandeld" }))
+            .RuleFor(x => x.Status, f => f.PickRandom(new[] { "Aanvraag", "In verwerking", "Afgehandeld" }))
             .RuleFor(x => x.Reason, f => f.PickRandom(new[] { "Bachelor proef", "AI trainen", "Database draaien" }))
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.ApplicationDate, f => f.Date.Past())
@@ -94,9 +94,9 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return Task.FromResult(_virtualMachines.Single(x => x.Id == virtualMachineId));
     }
 
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync(int offset)
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetIndexAsync(int offset, int amount)
     {
-        return Task.FromResult(_virtualMachines.Skip(offset).Take(20).Select(x => new VirtualMachineDto.Index
+        return Task.FromResult(_virtualMachines.Skip(offset).Take(amount).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
             FQDN = x.FQDN,
@@ -121,5 +121,15 @@ public class BogusVirtualMachineService : IVirtualMachineService
         Console.WriteLine(newVM.Specification.Processors);
         _virtualMachines.Add(newVM);
         return Task.FromResult(newVM);
+    }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset)
+    {
+        return Task.FromResult(_virtualMachines.Where(vm => vm.Status=="In verwerking" || vm.Status == "Aanvraag" ).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
+        {
+            Id = x.Id,
+            FQDN = x.FQDN,
+            Status = x.Status,
+        }));
     }
 }

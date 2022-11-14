@@ -24,13 +24,13 @@
             <div>
                 @foreach (var vm in virtualMachines.Take(10))
                 {
-                        <EntityCard Value="@vm.FQDN" Active=@(vm.Status == "aanvraag" ? true : false) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+                    <EntityCard Value="@vm.FQDN" Active=@(!(vm.Status == "In verwerking" || vm.Status == "Aanvraag")) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                 }
             </div>
             <div>
                 @foreach (var vm in virtualMachines.Skip(10).Take(10))
                 {
-                    <EntityCard Value="@vm.FQDN" Active=@(vm.Status == "aanvraag" ? true : false) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+                    <EntityCard Value="@vm.FQDN" Active=@(vm.Status == "In verwerking" || vm.Status == "Aanvraag") Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                 }
             </div>
 
@@ -52,7 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        virtualMachines = await VirtualMachineService.GetIndexAsync(offset);
+        virtualMachines = await VirtualMachineService.GetIndexAsync(offset, 20);
         totalVirtualMachines = await VirtualMachineService.GetCount();
         totalPages = (totalVirtualMachines / 20) + 1;
     }
@@ -60,7 +60,7 @@
     async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 20;
-        virtualMachines = await VirtualMachineService.GetIndexAsync(offset);
+        virtualMachines = await VirtualMachineService.GetIndexAsync(offset, 20);
         selectedPage = pageNr;
     }
 

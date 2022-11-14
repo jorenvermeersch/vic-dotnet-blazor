@@ -15,16 +15,4 @@
     [Parameter] public EventCallback<int> OnClick { get; set; }
 
     [Parameter] public int SelectedPage { get; set; } = 1;
-
-     /*@for (int i = 1; i <= NumberOfPages; i++)
-        {
-            if (i == 1) 
-            {
-                <button class="selected" @onclick="@(() => OnClick.InvokeAsync(i))">@i</button>
-            }
-            else
-            {
-                <button @onclick="@(() => OnClick.InvokeAsync(i))">@i</button>
-            //}
-        }*/
 }
