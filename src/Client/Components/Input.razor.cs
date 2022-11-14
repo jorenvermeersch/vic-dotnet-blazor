@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 
 namespace Client.Components;
 
+
 public partial class Input
 {
     private string _label = "Label: ";
