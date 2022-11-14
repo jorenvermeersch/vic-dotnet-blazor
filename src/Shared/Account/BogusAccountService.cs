@@ -39,9 +39,9 @@ public class BogusAccountService:IAccountService
         return Task.FromResult(accounts.Single(x => x.Id == accountId));
     }
 
-    public Task<IEnumerable<AccountDto.Index>> GetIndexAsync()
+    public Task<IEnumerable<AccountDto.Index>> GetIndexAsync(int offset)
     {
-        return Task.FromResult(accounts.Select(x => new AccountDto.Index
+        return Task.FromResult(accounts.Skip(offset).Take(20).Select(x => new AccountDto.Index
         {
             Id = x.Id,
             Firstname = x.Firstname,

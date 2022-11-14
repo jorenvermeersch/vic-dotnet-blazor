@@ -22,6 +22,9 @@
             </li>
             <AuthorizeView Roles="Master, Observer, Administrator">
             <li>
+                <a href="/account/list">Accounts</a>
+            </li>
+            <li>
                 <a href="/customer/list">Klanten</a>
             </li>
             <li>
@@ -33,6 +36,7 @@
             <li>
                 <a href=".">Verbruik</a>
             </li>
+            
         </AuthorizeView>
         @if (@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value=="Anonymous"){
             <li></li>
