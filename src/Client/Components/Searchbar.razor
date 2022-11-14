@@ -11,18 +11,18 @@
 
     private string _value;
     [Parameter]
-    public string BindingValue
+    public string Text
     {
         get => _value;
         set
         {
             if (_value == value) return;
             _value = value;
-            BindingValueChanged.InvokeAsync(value);
+            TextChanged.InvokeAsync(value);
         }
     }
     [Parameter]
-    public EventCallback<string> BindingValueChanged { get; set; }
+    public EventCallback<string> TextChanged { get; set; }
 
     [Parameter] public EventCallback<string> OnClick { get; set; } = new();
 }

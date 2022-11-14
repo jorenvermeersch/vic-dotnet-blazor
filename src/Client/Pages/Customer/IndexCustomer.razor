@@ -11,23 +11,21 @@
 </div>
 <div class="three-column-layout">
     <div class="one-third">
-  
-            <Title Text="Filteropties" />
-            <div style="display: flex; justify-content: space-between;">
-                <Button Text="Reset" OnClick="() => UpdateSearchValue()" />
-                <Button Text="Filteren" />
-            </div>
-            
-            <Searchbar PlaceHolder="Geef een zoekterm in" @bind-BindingValue=SearchValue />
+        <Title Text="Filteropties" />
+        <div style="display: flex; justify-content: space-between;">
+            <Button Text="Reset" OnClick="() => UpdateSearchValue()" />
+            <Button Text="Filteren" />
+        </div>
 
-            <div class="reset-area">
-                <div class="filterbuttonarea">
-                    <p>Type: </p>
-                    <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
-                    <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
-                </div>
-            </div>
+        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Text=SearchValue />
 
+        <div class="reset-area">
+            <div class="filterbuttonarea">
+                <p>Type: </p>
+                <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
+                <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
+            </div>
+        </div>
     </div>
     <div class="two-thirds">
         <Title Text="Alle klanten" />
