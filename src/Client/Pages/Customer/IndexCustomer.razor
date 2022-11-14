@@ -13,7 +13,8 @@
     <div class="one-third">
         <Title Text="Filteropties" />
         <div class="filterbuttonarea">
-            <Button Text="Filteren" />
+            <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern/>
+            <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
         </div>
         <Searchbar PlaceHolder="Geef een zoekterm in" />
         <Input Type="Input.InputType.SELECT" Label="Type" PlaceHolder="Alle types"/>
@@ -47,6 +48,18 @@
     int totalCustomers = 0;
     int totalPages = 0;
     int selectedPage = 1;
+    string CustomerType = "";
+    bool toggleIntern = false;
+    bool toggleExtern = false;
+
+    private void FilterIntern() {
+        toggleIntern = toggleIntern? false: true;
+    }
+
+    private void FilterExtern() {
+        toggleExtern = toggleExtern ? false : true;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         customers = await customerService.GetIndexAsync(offset);

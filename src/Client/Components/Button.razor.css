@@ -24,3 +24,14 @@
     color: var(--white); 
     border: var(--border-size) solid var(--white);
 }
+
+.toggle-on {
+    color: var(--white);
+    background-color: var(--blue);
+    border-color: var(--blue);
+}
+
+.toggle-off {
+    color: var(--dark-blue);
+    border: var(--border-size) solid var(--dark-blue);
+}

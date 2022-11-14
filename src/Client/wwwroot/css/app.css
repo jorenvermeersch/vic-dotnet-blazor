@@ -200,6 +200,7 @@ select {
 .filterbuttonarea {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
 }
 
 /* No VM*/
