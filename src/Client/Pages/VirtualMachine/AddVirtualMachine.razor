@@ -17,6 +17,7 @@
 @attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
+<TitlePage Type="Virtuele Machine" Mutation="Toevoegen" />
 
 <EditForm OnValidSubmit="@HandleValidSubmit" Model="@VirtualMachine">
     <FluentValidationValidator TValidator="VirtualMachineValidation" />

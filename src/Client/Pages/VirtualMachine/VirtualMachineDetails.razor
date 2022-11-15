@@ -13,6 +13,7 @@
         <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i>
             <span>Terug</span>
         </span>
+        <Status State=@virtualMachine.Status />
         <span>
             <Button Text="Beheren" />
         </span>
@@ -33,13 +34,6 @@
 
 </div>
 <div class="one-third">
-
-    <div style="display: flex; align-items: flex-end; height: 50px;">
-        <span style="flex: 1">
-            <Button Text="Actief" />
-        </span>
-    </div>
-
     <Title Text="Logingegevens" />
     @foreach(var data in _logindata){
             <DataCard Entries="@data" />

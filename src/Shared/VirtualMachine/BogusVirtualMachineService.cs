@@ -68,7 +68,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.BackupFrequenty, f => f.PickRandom(new[] { "Dagelijks", "Wekelijks", "Maandelijks" }))
             .RuleFor(x => x.Availabilities, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(new[] { "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag" })).ToList())
-            .RuleFor(x => x.Status, f => f.PickRandom(new[] { "Aanvraag", "In verwerking", "Afgehandeld" }))
+            .RuleFor(x => x.Status, f => f.PickRandom(new[] { "Aanvraag", "InVerwerking", "Afgehandeld" }))
             .RuleFor(x => x.Reason, f => f.PickRandom(new[] { "Bachelor proef", "AI trainen", "Database draaien" }))
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.ApplicationDate, f => f.Date.Past())

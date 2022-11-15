@@ -1,0 +1,10 @@
+﻿.title-container {
+    display: flex;
+    background-color: #3c6999;
+    width: 33%;
+    justify-content: center;
+    border-radius: 0px 0pc 50% 50%;
+    color: white;
+    min-width: 195px;
+    min-height: 37px;
+}
