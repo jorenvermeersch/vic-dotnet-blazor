@@ -31,7 +31,7 @@ public class BogusAccountService:IAccountService
             .RuleFor(x => x.Department, f => f.PickRandom(departments))
             .RuleFor(x => x.Education, f => f.PickRandom(educations));
 
-        accounts = accountFaker.Generate(5);
+        accounts = accountFaker.Generate(10);
     }
 
     public Task<AccountDto.Details> GetDetailAsync(long accountId)
@@ -47,7 +47,8 @@ public class BogusAccountService:IAccountService
             Firstname = x.Firstname,
             Lastname = x.Lastname,
             Email = x.Email,
-            Role = x.Role
+            Role = x.Role,
+            IsActive = x.IsActive
         }));
     }
 }

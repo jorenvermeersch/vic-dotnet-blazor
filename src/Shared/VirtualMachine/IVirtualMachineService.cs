@@ -14,6 +14,7 @@ public interface IVirtualMachineService
     Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId);
     Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId, int offset);
     Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(long hostId, int offset);
+    Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByAccountId(long accountId, int offset);
     Task<int> GetCount();
 
     Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM);

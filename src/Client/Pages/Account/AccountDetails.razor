@@ -1,0 +1,114 @@
+﻿@page "/account/{id:long}"
+@layout MainLayout
+@namespace Shared
+@using Account
+@using VirtualMachine
+@inject IAccountService accountService
+@inject IVirtualMachineService virtualMachineService
+@attribute [Authorize]
+@inject NavigationManager Navigation
+
+<PageTitle>Account Details</PageTitle>
+
+<div class="context-menu">
+    <div class="context-items" style="display: flex">
+        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Terug</span>
+        </span>
+        <span>
+            <Button Text="Beheren" />
+        </span>
+    </div>
+</div>
+<div class="three-column-layout">
+    <div class="one-third">
+        <DataCard Entries="@_username" />
+
+        <Title Text="Algemeen" />
+        <DataCard Entries="@_general" />
+
+        <Title Text="Contactgegevens" />
+        <DataCard Entries="@_contactInformation" />
+    </div>
+    <div class="two-thirds"> 
+        <div style="display: flex; align-items: flex-end; height: 50px;">
+            <span style="flex: 1">
+                <Button Text="Actief" />
+            </span>
+
+        </div>
+
+        <Title Text="Virtuele machines" />
+
+        @if (virtualMachines.Any())
+        {
+            <div class="two-columns-container">
+                <div>
+                    @foreach (var vm in virtualMachines.Take(5))
+                    {
+                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == "aanvraag") Href=@string.Concat("virtual-machine/", vm.Id) />
+                    }
+                </div>
+                <div>
+                    @foreach (var vm in virtualMachines.Skip(5).Take(5))
+                    {
+                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == "aanvraag") Href=@string.Concat("virtual-machine/", vm.Id) />
+                    }
+                </div>
+            </div>
+            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+        }
+        else
+        {
+            <NoVmMsg Type="Account" />
+        }
+    </div>
+</div>
+
+
+
+
+
+@code {
+    private AccountDto.Details? account;
+    [Parameter] public long Id { get; set; }
+
+    private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
+    int offset = 0;
+    int totalVirtualMachines = 0;
+    int totalPages = 0;
+    int selectedPage = 1;
+
+    private Dictionary<string, string> _username = new();
+    private Dictionary<string, string> _general = new();
+    private Dictionary<string, string> _contactInformation = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        account = await accountService.GetDetailAsync(Id);
+
+        _username.Add("Naam", string.Concat(account.Firstname, " ", account.Lastname));
+        _general.Add("Role", account.Role);
+        _general.Add("Departement", account.Department);
+        _general.Add("Opleiding", account.Education);
+        _contactInformation.Add("E-mailadres", account.Email);
+
+        virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
+        totalVirtualMachines = virtualMachines.Count();
+        totalPages = (totalVirtualMachines / 10) + 1;
+
+    }
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("account/list");
+    }
+    async Task ClickHandler(int pageNr)
+    {
+        offset = (pageNr - 1) * 10;
+        virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
+        selectedPage = pageNr;
+    }
+}
+

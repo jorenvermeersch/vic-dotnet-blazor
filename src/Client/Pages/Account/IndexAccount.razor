@@ -36,13 +36,13 @@
             <div>
                 @foreach (var account in accounts.Take(10))
                 {
-                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@true" Href=@string.Concat("account/", account.Id)></EntityCard>
+                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
                 }
             </div>
             <div>
                 @foreach (var account in accounts.Skip(10).Take(10))
                 {
-                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@true" Href=@string.Concat("account/", account.Id)></EntityCard>
+                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
                 }
             </div>
 

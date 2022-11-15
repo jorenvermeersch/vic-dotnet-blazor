@@ -142,4 +142,14 @@ public class BogusVirtualMachineService : IVirtualMachineService
             Status = x.Status,
         }));
     }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByAccountId(long accountId, int offset)
+    {
+        return Task.FromResult(_virtualMachines.Where(vm => vm.Account.Id == accountId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
+        {
+            Id = x.Id,
+            FQDN = x.FQDN,
+            Status = x.Status,
+        }));
+    }
 }
