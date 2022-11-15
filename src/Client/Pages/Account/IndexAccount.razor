@@ -15,7 +15,7 @@
     <div class="one-third">
         <Title Text="Filteropties" />
         <div style="display: flex; justify-content: space-between;">
-            @*<Button Text="Reset" OnClick="() => UpdateSearchValue()" />*@
+            <Button Text="Reset" OnClick="() => UpdateSearchValue()" />
             <Button Text="Filteren" />
         </div>
 
@@ -23,10 +23,10 @@
 
         <div class="reset-area">
             <div class="filterbuttonarea">
-                @*<p>Rol: </p>
-                <Button Text="Master" OnClick="@FilterIntern" Toggle=@toggleIntern />
-                <Button Text="Admin" OnClick="@FilterIntern" Toggle=@toggleIntern />
-                <Button Text="Waarnemer" OnClick="@FilterExtern" Toggle=@toggleExtern />*@
+                <p>Rol: </p>
+                <Button Text="Master" OnClick="@FilterMaster" Toggle=@toggleMaster />
+                <Button Text="Admin" OnClick="@FilterAdmin" Toggle=@toggleAdmin/>
+                <Button Text="Waarnemer" OnClick="@FilterObserver" Toggle=@toggleObserver />
             </div>
         </div>
     </div>
@@ -36,13 +36,13 @@
             <div>
                 @foreach (var account in accounts.Take(10))
                 {
-                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@true" Href=@string.Concat("account/", account.Id)></EntityCard>
+                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
                 }
             </div>
             <div>
                 @foreach (var account in accounts.Skip(10).Take(10))
                 {
-                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@true" Href=@string.Concat("account/", account.Id)></EntityCard>
+                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
                 }
             </div>
 
@@ -60,7 +60,9 @@
     int totalaccounts = 0;
     int totalPages = 0;
     int selectedPage = 1;
-
+    bool toggleAdmin;
+    bool toggleObserver;
+    bool toggleMaster;
 
     protected override async Task OnInitializedAsync()
     {
@@ -74,5 +76,23 @@
         offset = (pageNr - 1) * 20;
         accounts = await accountService.GetIndexAsync(offset);
         selectedPage = pageNr;
+    }
+    private void FilterAdmin()
+    {
+        toggleAdmin = !toggleAdmin;
+    }
+
+    private void FilterObserver()
+    {
+        toggleObserver = !toggleObserver;
+    }
+    private void FilterMaster()
+    {
+        toggleMaster = !toggleMaster;
+    }
+    private void UpdateSearchValue()
+    {
+        SearchValue = "";
+        StateHasChanged();
     }
 }

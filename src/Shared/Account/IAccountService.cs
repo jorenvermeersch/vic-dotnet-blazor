@@ -11,4 +11,5 @@ public interface IAccountService
 {
     Task<IEnumerable<AccountDto.Index>> GetIndexAsync(int offset);
     Task<AccountDto.Details> GetDetailAsync(long AccountId);
+    Task<AccountDto.Details> Add(AccountDto.Create newAccount);
 }
