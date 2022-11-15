@@ -34,6 +34,24 @@ public class BogusAccountService:IAccountService
         accounts = accountFaker.Generate(10);
     }
 
+    public Task<AccountDto.Details> Add(AccountDto.Create newAccount)
+    {
+        AccountDto.Details account = new()
+        {
+            Id = accounts.Count+1,
+            Firstname = newAccount.Firstname,
+            Lastname = newAccount.Lastname,
+            Email = newAccount.Email,
+            Role = newAccount.Role,
+            IsActive = newAccount.IsActive,
+            Department = newAccount.Department,
+            Education = newAccount.Education,
+            PasswordHash = newAccount.Password
+        };
+        accounts.Add(account);
+        return Task.FromResult(account);
+    }
+
     public Task<AccountDto.Details> GetDetailAsync(long accountId)
     {
         return Task.FromResult(accounts.Single(x => x.Id == accountId));

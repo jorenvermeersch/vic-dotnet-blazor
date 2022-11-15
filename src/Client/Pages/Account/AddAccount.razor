@@ -2,31 +2,50 @@
 @layout NoGlobalSearchLayout
 @namespace Shared
 @using Account
+@using Client.Validation
 @inject IAccountService accountService
+@inject NavigationManager Navigation
 @attribute [Authorize(Roles = "Master")]
 
 <PageTitle>Account Toevoegen</PageTitle>
 
-<EditForm Model="@Account">
+<EditForm Model="@Account" OnValidSubmit="@HandleValidSubmit">
+    <FluentValidationValidator TValidator="AccountValidation"/>
+    <div class="context-menu">
+        <span class="context-menu-label">Account Toevoegen</span>
+        <button type="submit">Toevoegen</button>
+    </div>
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
             <AddInput Type="@Input.InputType.SELECT" Label="Rol" Required="@true" Items="@roles" @bind-Value="Account.Role" For="@(()=>Account.Role)"/>
             <AddInput Type="@Input.InputType.TEXT" Label="Departement" Required="@true" @bind-Value="Account.Department" For="@(() => Account.Department)" />
             <AddInput Type="@Input.InputType.TEXT" Label="Opleiding" Required="@false" @bind-Value="Account.Education" For="@(() => Account.Education)" />
+                <div class="input-container">
+                    <label>
+                    Actief:
+                    <InputCheckbox @bind-Value="Account.IsActive"/>
+                </label>
+                </div>
         </div>
         <div class="one-third">
             <Title Text="Accountgegevens" />
             <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@true" @bind-Value="Account.Firstname" For="@(() => Account.Firstname)" />
             <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Account.Lastname" For="@(() => Account.Lastname)" />
             <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@true" @bind-Value="Account.Email" For="@(() => Account.Email)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Initiële wachtwoord" @bind-Value="Account.PasswordHash" For="@(() => Account.PasswordHash)" />
+            <AddInput Type="@Input.InputType.TEXT" Label="Wachtwoord" Required="@true" @bind-Value="Account.Password" For="@(() => Account.Password)" />
         </div>
-        <div class="one-third"></div>
+        <div class="one-third">
+        </div>
     </div>
 </EditForm>
 
 @code {
-    private AccountDto.Details Account { get; set; } = new();
+    private AccountDto.Create Account { get; set; } = new();
     private List<string> roles = new() { "Admin", "Waarnemer" };
+    private async void HandleValidSubmit()
+    {
+        AccountDto.Details newAccount = await accountService.Add(Account);
+        Navigation.NavigateTo("host/" + newAccount.Id);
+    }
 }

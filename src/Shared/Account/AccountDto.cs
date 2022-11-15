@@ -18,4 +18,15 @@ public static class AccountDto
         public string Department { get; set; }
         public string Education { get; set; }
     }
+    public class Create
+    {
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Email { get; set; }
+        public string Role { get; set; }
+        public bool IsActive { get; set; }
+        public string Password { get; set; }
+        public string Department { get; set; }
+        public string Education { get; set; }
+    }
 }

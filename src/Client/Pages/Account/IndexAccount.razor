@@ -15,7 +15,7 @@
     <div class="one-third">
         <Title Text="Filteropties" />
         <div style="display: flex; justify-content: space-between;">
-            @*<Button Text="Reset" OnClick="() => UpdateSearchValue()" />*@
+            <Button Text="Reset" OnClick="() => UpdateSearchValue()" />
             <Button Text="Filteren" />
         </div>
 
@@ -89,5 +89,10 @@
     private void FilterMaster()
     {
         toggleMaster = !toggleMaster;
+    }
+    private void UpdateSearchValue()
+    {
+        SearchValue = "";
+        StateHasChanged();
     }
 }
