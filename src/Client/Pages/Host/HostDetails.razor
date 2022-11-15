@@ -27,6 +27,8 @@
 
         <Title Text="Specificaties" />
         <DataCard Entries="@_server.GetValueOrDefault("resources")" />
+        <Title Text="Overblevende specificaties" />
+        <DataCard Entries="@_server.GetValueOrDefault("remainingResources")" />
     </div>
     <div class="two-thirds">
 
@@ -75,6 +77,7 @@
         host = await hostService.GetDetailAsync(Id);
         _server.Add("name", new() { { "Naam", host.Name } });
         _server.Add("resources", new() { { "vCPU", host.Specifications.Processors.ToString() }, { "Geheugen", host.Specifications.Memory.ToString() }, { "Opslag", host.Specifications.Storage.ToString() } });
+        _server.Add("remainingResources", new() { { "vCPU", host.RemainingResources.Processors.ToString() }, { "Geheugen", host.RemainingResources.Memory.ToString() }, { "Opslag", host.RemainingResources.Storage.ToString() } });
         virtualMachines = await virtualMachineService.GetVirtualMachinesByHostId(host.Id,offset);
         totalVirtualMachines = virtualMachines.Count();
         totalPages = (totalVirtualMachines / 10) + 1;

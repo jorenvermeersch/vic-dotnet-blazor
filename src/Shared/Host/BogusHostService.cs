@@ -21,10 +21,11 @@ public class BogusHostService: IHostService
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => hostId++)
             .RuleFor(x => x.Name, f => f.Internet.DomainWord())
-            .RuleFor(x => x.Specifications, f => f.PickRandom(specificationService.specifications))
-            .RuleFor(x=>x.RemainingResources, f=>f.PickRandom(specificationService.specifications));
+            .RuleFor(x => x.Specifications, f => f.PickRandom(specificationService.specifications.Take(50)))
+            .RuleFor(x => x.RemainingResources, (f, u) => f.PickRandom(specificationService.specifications.Where(x => x.Storage < u.Specifications.Storage && x.Memory < u.Specifications.Memory && x.Processors< u.Specifications.Processors)));
 
         hosts = hostFaker.Generate(10);
+        
     }
 
     public Task<HostDto.Details> Add(HostDto.Create newHost)
