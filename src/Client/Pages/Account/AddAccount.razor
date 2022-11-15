@@ -46,6 +46,6 @@
     private async void HandleValidSubmit()
     {
         AccountDto.Details newAccount = await accountService.Add(Account);
-        Navigation.NavigateTo("host/" + newAccount.Id);
+        Navigation.NavigateTo("account/" + newAccount.Id);
     }
 }

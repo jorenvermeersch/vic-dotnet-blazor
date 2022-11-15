@@ -16,6 +16,7 @@
             <i class="fa-solid fa-arrow-left"></i>
             <span>Terug</span>
         </span>
+        <Status State=@(account.IsActive?"Active":"Inactive")></Status>
         <span>
             <Button Text="Beheren" />
         </span>
@@ -32,12 +33,6 @@
         <DataCard Entries="@_contactInformation" />
     </div>
     <div class="two-thirds"> 
-        <div style="display: flex; align-items: flex-end; height: 50px;">
-            <span style="flex: 1">
-                <Button Text="Actief" />
-            </span>
-
-        </div>
 
         <Title Text="Virtuele machines" />
 

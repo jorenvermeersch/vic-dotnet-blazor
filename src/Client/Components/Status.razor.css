@@ -32,3 +32,17 @@
     .Afgehandeld i {
         color: white
     }
+
+.Active {
+    background-color: #70b77e
+}
+.Active i {
+        color: white
+}
+.Inactive {
+    background-color: #777da7
+}
+
+    .Inactive i {
+        color: white
+    }
