@@ -5,7 +5,6 @@ using static Shared.Host.HostDto;
 
 namespace Client.Validation;
 
-[Obsolete]
 public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Create>
 {
     private readonly int _nameLenght = 2;
@@ -38,9 +37,9 @@ public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Crea
         RuleFor(x => x.Status)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Status"));
-        RuleFor(x => x.hostId)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Host"));
+        //RuleFor(x => x.hostId)
+        //    .Cascade(CascadeMode.StopOnFirstFailure)
+        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Host"));
         RuleFor(x => x.Processors)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("vCPU"))

@@ -52,7 +52,7 @@ public static class VirtualMachineDto
         public string Template { get; set; }
         public string Reason { get; set; }
         public string Status { get; set; }
-        public int hostId { get; set; }
+        //public int hostId { get; set; } = 0;
         public int Processors { get; set; }
         public int Memory { get; set; }
         public int Storage { get; set; }
@@ -63,6 +63,8 @@ public static class VirtualMachineDto
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string BackupFrequenty { get; set; }
+
+        public List<CredentialDto> Credentials { get; set; }
 
     }
     
