@@ -9,11 +9,13 @@
   <ItemGroup>
     <None Remove="Components\EntityCard.razor.css" />
     <None Remove="Components\Searchbar.razor.css" />
+    <None Remove="Components\Status.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Components\EntityCard.razor.css" />
     <Content Include="Components\Searchbar.razor.css" />
+    <Content Include="Components\Status.razor.css" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,16 @@
+﻿<div class="status-container @State">
+    <i class=@Icon() ></i>
+    <p>@State</p>
+</div>
+
+@code {
+    [Parameter]public string State { get; set; }
+    private string Icon(){
+        switch(State) {
+            case "Aanvraag": return "fa-regular fa-envelope";
+            case "InVerwerking": return "fa-solid fa-list-check";
+            case "Afgehandeld": return "fa-solid fa-check";
+            default: return "";
+        }
+    }
+}

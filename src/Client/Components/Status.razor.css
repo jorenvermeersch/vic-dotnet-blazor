@@ -1,0 +1,34 @@
+﻿
+.status-container{
+    display: flex;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--padding-sm) calc(2 * var(--padding-sm));
+    border-radius: calc(4 * var(--padding-sm));
+    text-decoration: none;
+    user-select: none;
+    width: fit-content;
+    height: 30px;
+    color: white;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.Aanvraag {
+    background-color: #777da7
+}.Aanvraag i{
+    color: white
+}
+.InVerwerking {
+    background-color: #f4b942
+}
+    .InVerwerking i {
+        color: white
+    }
+.Afgehandeld {
+    background-color: #70b77e
+}
+    .Afgehandeld i {
+        color: white
+    }
