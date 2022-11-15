@@ -5,6 +5,7 @@ using static Shared.Host.HostDto;
 
 namespace Client.Validation;
 
+[Obsolete]
 public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Create>
 {
     private readonly int _nameLenght = 2;

@@ -24,7 +24,7 @@
         <span class="context-menu-label"></span>
         <button type="submit">Toevoegen</button>
         @*<Button Text="Machine toevoegen" OnClick="@HandleOnValidSubmit" />*@
-         @*<Button Text="Machine toevoegen"/>*@
+        @*<Button Text="Machine toevoegen"/>*@
     </div>
     <div class="three-column-layout">
         <div class="one-third">
@@ -79,23 +79,24 @@
             <Title Text="Verantwoordelijke"></Title>
             <RequiredInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Accounts" @bind-Value="@VirtualMachine.Account" For="@(()=>VirtualMachine.Account)" />
 
-            <!--
-            <Title Text="Logingegevens" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Gebruikersnaam"/>
-            <AddInput Type="@Input.InputType.TEXT" Label="Rol" />
-            <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-                <Button Text="Toevoegen" />
-            </div>
 
-            @foreach(KeyValuePair<int, Dictionary<string, string>> entry in _entries) {
-                <DataCard OnClick="() => ClickHandler(entry.Key)" Entries="@entry.Value" customCss="@_customcss" />
-            }
-            -->
+
         </div>
 
 
     </div>
 </EditForm>
+            <Title Text="Logingegevens" />
+            <input placeholder="UserName" @bind="newCredential.Username" />
+            <input placeholder="Role" @bind="newCredential.Role" />
+            <input placeholder="PasswordHash" @bind="newCredential.PasswordHash" />
+            <button @onclick="AddCredential">Toevoegen</button>
+
+            @foreach (CredentialDto c in credentialList)
+            {
+                Dictionary<string, string> entry = new() { { "Username", c.Username }, { "Role", c.Role }, { "Passwordhash", c.PasswordHash } };
+                <DataCard Entries="@entry" customCss="@_customcss" />
+            }
 
 
 
@@ -103,6 +104,17 @@
 @code {
     private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Create VirtualMachine { get; set; } = new();
+
+
+    // Credentials
+    private List<CredentialDto> credentialList = new();
+    private CredentialDto? newCredential = new();
+
+    private void AddCredential()
+    {
+        credentialList.Add(newCredential);
+        newCredential = new();
+    }
 
     private string _customcss = "background-color: white";
 
@@ -157,6 +169,7 @@
     public async void HandleValidSubmit()
     {
         Console.WriteLine("Successful");
+        //VirtualMachine.Credentials = credentialList;
         //if (Editform.EditContext.Validate())
         //{
         //    var selecteduser = await customerService.GetDetailAsync(long.Parse(User.Split('-')[0].Trim()));
