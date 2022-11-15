@@ -8,12 +8,13 @@
         <i class="fa-solid fa-circle-xmark fa-xl"></i>
         <p>Deze klant heeft nog geen virtuele machines</p>
     </div>
-}else if(Type=="Host"){
+}else{
     <div class="no-vm" style="height:102px">
         <i class="fa-solid fa-circle-xmark fa-xl"></i>
-        <p>Deze host heeft nog geen virtuele machines</p>
+        <p>Deze @Type heeft nog geen virtuele machines</p>
     </div>
 }
+
 
 @code{
     [Parameter] public string Type { get; set; }

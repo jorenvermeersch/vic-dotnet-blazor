@@ -23,10 +23,10 @@
 
         <div class="reset-area">
             <div class="filterbuttonarea">
-                @*<p>Rol: </p>
-                <Button Text="Master" OnClick="@FilterIntern" Toggle=@toggleIntern />
-                <Button Text="Admin" OnClick="@FilterIntern" Toggle=@toggleIntern />
-                <Button Text="Waarnemer" OnClick="@FilterExtern" Toggle=@toggleExtern />*@
+                <p>Rol: </p>
+                <Button Text="Master" OnClick="@FilterMaster" Toggle=@toggleMaster />
+                <Button Text="Admin" OnClick="@FilterAdmin" Toggle=@toggleAdmin/>
+                <Button Text="Waarnemer" OnClick="@FilterObserver" Toggle=@toggleObserver />
             </div>
         </div>
     </div>
@@ -60,7 +60,9 @@
     int totalaccounts = 0;
     int totalPages = 0;
     int selectedPage = 1;
-
+    bool toggleAdmin;
+    bool toggleObserver;
+    bool toggleMaster;
 
     protected override async Task OnInitializedAsync()
     {
@@ -74,5 +76,18 @@
         offset = (pageNr - 1) * 20;
         accounts = await accountService.GetIndexAsync(offset);
         selectedPage = pageNr;
+    }
+    private void FilterAdmin()
+    {
+        toggleAdmin = !toggleAdmin;
+    }
+
+    private void FilterObserver()
+    {
+        toggleObserver = !toggleObserver;
+    }
+    private void FilterMaster()
+    {
+        toggleMaster = !toggleMaster;
     }
 }

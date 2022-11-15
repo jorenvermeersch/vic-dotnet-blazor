@@ -7,9 +7,15 @@
 
 <div class="context-menu">
     <Label Text="Toevoegen" />
-    <Button Text="Klant" Href="/customer/add"/>
-    <Button Href="/virtual-machine/add" Text="Virtuele machine" />
-    <Button Href="/host/add" Text="Host" />
+    <AuthorizeView Roles="Master">
+        <Button Text="Account" Href="/account/add" />
+    </AuthorizeView>
+    <AuthorizeView Roles="Master, Administrator">
+        <Button Text="Klant" Href="/customer/add" />
+        <Button Href="/virtual-machine/add" Text="Virtuele machine" />
+        <Button Href="/host/add" Text="Host" />
+    </AuthorizeView>
+    
 </div>
 <div class="three-column-layout">
     <div class="one-third">
