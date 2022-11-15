@@ -1,5 +1,5 @@
 ﻿<div class="titlepage">
-    <i class="fa-solid fa-desktop"></i>
+    <i class="fa-solid fa-@IconString"></i>
     <div class="title-container">
         <h1>@Type</h1>
         <h4>@Mutation</h4>
@@ -7,6 +7,7 @@
 </div>
 
 @code {
+    [Parameter] public string IconString { get; set; }
     [Parameter] public String Type { get; set; }
     [Parameter] public String Mutation { get; set; }
 }

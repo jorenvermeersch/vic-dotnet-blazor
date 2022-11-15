@@ -8,6 +8,7 @@
 @attribute [Authorize(Roles = "Master")]
 
 <PageTitle>Account Toevoegen</PageTitle>
+<TitlePage IconString="user" Type="Account" Mutation="Toevoegen" />
 
 <EditForm Model="@Account" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator TValidator="AccountValidation"/>

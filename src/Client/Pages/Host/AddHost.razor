@@ -11,6 +11,7 @@
 @attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Host Toevoegen</PageTitle>
+<TitlePage IconString="desktop" Type="Host" Mutation="Toevoegen" />
 
 <EditForm Model="@Host" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator TValidator="HostValidation" />
