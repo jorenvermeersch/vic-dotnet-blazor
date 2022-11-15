@@ -49,15 +49,15 @@
 
             <Title Text="Specificaties" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
-            <CustomInputNumber Label="vCPUs" @bind-Value="VirtualMachine.Processors" For="@(()=>VirtualMachine.Processors)" />
-            <CustomInputNumber Label="Geheugen" @bind-Value="VirtualMachine.Memory" For="@(()=>VirtualMachine.Memory)" />
-            <CustomInputNumber Label="Opslag" @bind-Value="VirtualMachine.Storage" For="@(()=>VirtualMachine.Storage)" />
+            <CustomInputNumber Label="vCPUs" @bind-Value="VirtualMachine.Processors" For="@(()=>VirtualMachine.Processors)" Required=true />
+            <CustomInputNumber Label="Geheugen" @bind-Value="VirtualMachine.Memory" For="@(()=>VirtualMachine.Memory)" Required=true />
+            <CustomInputNumber Label="Opslag" @bind-Value="VirtualMachine.Storage" For="@(()=>VirtualMachine.Storage)" Required=true />
         </div>
         <div class="one-third">
             <Title Text="Beschikbaarheid" />
-            <CustomInputDate Label="Datum van aanvraag" @bind-Value="@VirtualMachine.ApplicationDate" For="@(()=>VirtualMachine.ApplicationDate)" />
-            <CustomInputDate Label="Startdatum" @bind-Value="@VirtualMachine.StartDate" For="@(()=>VirtualMachine.StartDate)" />
-            <CustomInputDate Label="Einddatum" @bind-Value="@VirtualMachine.EndDate" For="@(()=>VirtualMachine.EndDate)" />
+            <CustomInputDate Label="Datum van aanvraag" @bind-Value="@VirtualMachine.ApplicationDate" For="@(()=>VirtualMachine.ApplicationDate)" Required=true />
+            <CustomInputDate Label="Startdatum" @bind-Value="@VirtualMachine.StartDate" For="@(()=>VirtualMachine.StartDate)" Required=true />
+            <CustomInputDate Label="Einddatum" @bind-Value="@VirtualMachine.EndDate" For="@(()=>VirtualMachine.EndDate)" Required=true />
             <!--
             <AvailabilityOptionSelect customCss="@_customcss" />
             <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
