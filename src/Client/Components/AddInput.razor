@@ -5,9 +5,11 @@
 }
 
 @code {
+    [Parameter] public bool Margin { get; set; } = false;
+
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        customCss = "background-color: white";
+        customCss = "background-color: white;" + ((Margin) ? "margin-bottom: 15px;" : "");
     }
 }

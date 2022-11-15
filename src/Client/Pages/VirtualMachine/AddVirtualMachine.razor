@@ -80,10 +80,14 @@
             <RequiredInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Accounts" @bind-Value="@VirtualMachine.Account" For="@(()=>VirtualMachine.Account)" />
 
             <Title Text="Logingegevens" />
-            <AddInput Type="Input.InputType.TEXT" Label="Username" @bind-Value="newCredential.Username"/>
-            <AddInput Type="Input.InputType.TEXT" Label="Role" @bind-Value="newCredential.Role"/>
-            <AddInput Type="Input.InputType.TEXT" Label="PasswordHash" @bind-Value="newCredential.PasswordHash"/>
-            <button @onclick="AddCredential">Toevoegen</button>
+            <EditForm Context="CredentialContext" OnValidSubmit="@AddCredential" Model="@newCredential">
+                <FluentValidationValidator TValidator="CredentialValidation" />
+                <AddInput Type="Input.InputType.TEXT" Label="Username" @bind-Value="newCredential.Username" For="@(()=> newCredential.Username)" Margin="true" />
+                <AddInput Type="Input.InputType.TEXT" Label="Role" @bind-Value="newCredential.Role" For="@(()=> newCredential.Role)" Margin="true" />
+                <AddInput Type="Input.InputType.TEXT" Label="PasswordHash" @bind-Value="newCredential.PasswordHash" For="@(()=> newCredential.PasswordHash)" Margin="true" />
+                <button type="submit">Toevoegen</button>
+            </EditForm>
+
 
             @foreach (CredentialDto c in credentialList)
             {
