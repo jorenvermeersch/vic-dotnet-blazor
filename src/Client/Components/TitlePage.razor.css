@@ -1,10 +1,23 @@
-﻿.title-container {
+﻿.titlepage{
     display: flex;
-    background-color: #3c6999;
-    width: 33%;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--blue);
     justify-content: center;
-    border-radius: 0px 0pc 50% 50%;
-    color: white;
-    min-width: 195px;
-    min-height: 37px;
 }
+
+.titlepage i {
+    color: var(--dark-blue);
+    font-size: 3rem
+}
+
+.title-container {
+    left: 0;
+    color: var(--dark-blue);
+    font-size:.85rem;
+    padding: 10px;
+    z-index:-5;
+    margin: 10px 0px;
+    text-align: left;
+}
+
