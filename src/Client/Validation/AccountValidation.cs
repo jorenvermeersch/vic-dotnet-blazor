@@ -10,7 +10,7 @@ public class AccountValidation: AbstractValidator<AccountDto.Create>
 	{
 		RuleFor(x=>x.Firstname)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Voornaam")))
-            .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
+            .MinimumLength(_nameLength).WithMessage($"Voornaam heeft minstens {_nameLength} characters");
         RuleFor(x=>x.Lastname)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Naam")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
