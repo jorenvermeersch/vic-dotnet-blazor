@@ -14,8 +14,6 @@ public class AccountValidation: AbstractValidator<AccountDto.Create>
         RuleFor(x=>x.Lastname)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Naam")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
-        RuleFor(x => x.IsActive)
-            .NotEmpty();
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Email")));
         RuleFor(x => x.Password)

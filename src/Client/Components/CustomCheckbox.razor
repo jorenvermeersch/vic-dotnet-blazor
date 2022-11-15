@@ -1,0 +1,25 @@
+﻿<div class="input-container">
+    <label>
+        @Label:
+    </label>
+    <InputCheckbox @bind-value="Value" style="width: 18px; height: 18px; position: relative; left: -318px;" />
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; }
+    private bool _value;
+    [Parameter]
+    public bool Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+}
