@@ -59,9 +59,9 @@ public static class VirtualMachineDto
         public string Requester { get; set; }
         public string User { get; set; }
         public string Account { get; set; }
-        public DateTime ApplicationDate { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime ApplicationDate { get; set; } = DateTime.Now;
+        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime EndDate { get; set; } = DateTime.Now;
         public string BackupFrequenty { get; set; }
 
         public List<CredentialDto> Credentials { get; set; }

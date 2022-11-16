@@ -10,6 +10,6 @@ public static class FormMessages
     public static string SMALLERTHANENDDATE() => string.Format("De startdatum moet voor de einddatum vallen.");
     public static string GREATERTHANDATE() => string.Format("De einddatum moet na de startdatum vallen.");
     public static string INVALIDEMAIL() => string.Format("Dit is geen geldige email.");
-    public static string INVALIDPASSWORD() => string.Format("Wachtwoord moet minstens 8 karakters bevatten, met minstens 1 speciale teken en 1 cijfer");
+    public static string INVALIDPASSWORD() => string.Format("Wachtwoord moet minstens 8 karakters bevatten, met minstens 1 speciale teken, 1 cijfer en 1 hoofdletter.");
     public static string INVALIDNAME(string field) => string.Format("\"{0}\" mag geen cijfers of speciale tekens bevatten.", field);
 }
