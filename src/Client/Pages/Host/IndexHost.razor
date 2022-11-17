@@ -13,10 +13,12 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title Text="Filteropties" />
-        <div class="filterbuttonarea">
+
+        <div style="display: flex; justify-content: space-between;">
+            <Button Text="Reset" OnClick="() => ResetFilter()" />
             <Button Text="Filteren" />
         </div>
-        <Searchbar PlaceHolder="Geef een zoekterm in" />
+        <Searchbar @bind-Text="@SearchValue" PlaceHolder="Geef een zoekterm in" />
     </div>
     <div class="two-thirds">
         <Title Text="Alle Hosts" />
@@ -41,6 +43,7 @@
 
 
 @code {
+    public string SearchValue { get; set; }
     private IEnumerable<HostDto.Index>? hosts;
     int offset = 0;
     int totalHosts = 0;
@@ -59,4 +62,6 @@
         hosts = await hostService.GetIndexAsync(offset);
         selectedPage = pageNr;
     }
+
+    private void ResetFilter() => SearchValue = "";
 }

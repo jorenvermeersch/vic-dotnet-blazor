@@ -13,11 +13,10 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title Text="Filteropties" />
-            @*<Button Text="Filteren" />*@
-            <div style="display: flex; justify-content: space-between;">
-                <Button Text="Reset" OnClick="() => ResetFilter()" />
-                <Button Text="Filteren" />
-            </div>
+        <div style="display: flex; justify-content: space-between;">
+            <Button Text="Reset" OnClick="() => ResetFilter()" />
+            <Button Text="Filteren" />
+        </div>
         <Searchbar @bind-Text="@SearchValue" PlaceHolder="Geef een zoekterm in" />
     </div>
     <div class="two-thirds">
@@ -37,7 +36,7 @@
             </div>
 
         </div>
-        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage"/>
+        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
 
 
 
