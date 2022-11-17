@@ -28,8 +28,8 @@
             }
             else if (Customer.CustomerType == "Extern")
             {
-                <AddInput PlaceHolder="" Type="@Input.InputType.TEXT" Label="Type extern" Required="@true" @bind-Value="Customer.Type" For="@(() => Customer.Type)" />
-                <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Customer.Name" For="@(() => Customer.Name)" />
+                <AddInput PlaceHolder="" Type="@Input.InputType.TEXT" Label="Type extern" Required="@true" @bind-Value="Customer.CompanyType" For="@(() => Customer.CompanyType)" />
+                <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Customer.CompanyName" For="@(() => Customer.CompanyName)" />
             }
         </div>
       <div class="one-third">

@@ -8,8 +8,8 @@ public class FakeCustomerService : ICustomerService
         _customers.Add(new()
         {
             Id = 1,
-            Name = "VOKA",
-            Type = "Voka",
+            CompanyName = "VOKA",
+            CompanyType = "Voka",
             ContactPerson = new ContactPersonDto()
             {
                 Id = 1,

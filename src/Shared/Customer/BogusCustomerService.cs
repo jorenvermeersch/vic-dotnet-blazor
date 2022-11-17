@@ -43,8 +43,8 @@ public class BogusCustomerService : ICustomerService
         var externalcustomerFaker = new Faker<CustomerDto.Details>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => customerId++)
-            .RuleFor(x => x.Name, f => f.Company.CompanyName())
-            .RuleFor(x => x.Type, f => f.PickRandom(types))
+            .RuleFor(x => x.CompanyName, f => f.Company.CompanyName())
+            .RuleFor(x => x.CompanyType, f => f.PickRandom(types))
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
             .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts))
             .RuleFor(x => x.CustomerType, f => "Extern");
