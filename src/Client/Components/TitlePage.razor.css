@@ -3,12 +3,12 @@
     align-items: center;
     gap: 16px;
     /*border-bottom: 1px solid var(--blue);*/
-    justify-content: center;
+    justify-content: left;
 }
 
 .titlepage i {
     color: var(--dark-blue);
-    font-size: 3rem
+    font-size: 1rem
 }
 
 .title-container {

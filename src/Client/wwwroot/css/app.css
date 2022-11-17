@@ -105,6 +105,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--padding-md);
+    align-items: center;
 }
 
 .context-menu-label {

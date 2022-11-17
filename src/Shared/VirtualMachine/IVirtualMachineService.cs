@@ -17,7 +17,7 @@ public interface IVirtualMachineService
     Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByAccountId(long accountId, int offset);
     Task<int> GetCount();
 
-    Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM);
+    Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create newVM);
 
     Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset);
 

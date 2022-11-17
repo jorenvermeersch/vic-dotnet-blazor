@@ -8,10 +8,12 @@
 @inject NavigationManager Navigation
 
 <PageTitle>Klant Toevoegen</PageTitle>
-<TitlePage IconString="user" Type="Klant" Mutation="Toevoegen"/>
 
  <EditForm @ref="Editform" Model="@Customer">
     <div class="context-menu">
+        <span class="context-menu-label">
+            <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />
+        </span>
         <button type="submit">Toevoegen</button>
     </div>
     <DataAnnotationsValidator/>

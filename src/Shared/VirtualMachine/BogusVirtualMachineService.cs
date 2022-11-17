@@ -116,13 +116,32 @@ public class BogusVirtualMachineService : IVirtualMachineService
         }));
     }
 
-    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Details newVM)
+    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create newVM)
     {
         newVM.Id = _virtualMachines.Count + 1;
-        Console.WriteLine(newVM.ApplicationDate);
-        Console.WriteLine(newVM.Specification.Processors);
-        _virtualMachines.Add(newVM);
-        return Task.FromResult(newVM);
+        //Console.WriteLine(newVM.ApplicationDate);
+        //Console.WriteLine(newVM.Specification.Processors);
+        //_virtualMachines.Add(newVM);
+        VirtualMachineDto.Details vm = new VirtualMachineDto.Details()
+        {
+            Id = newVM.Id,
+            FQDN = newVM.FQDN,
+            Status = Status.Requested,
+            Name = newVM.Name,
+            Template = newVM.Template,
+            Mode = newVM.Mode,
+            BackupFrequenty = newVM.BackupFrequenty,
+            ApplicationDate = newVM.ApplicationDate,
+            Reason = newVM.Reason,
+            // add ports
+            Specification = newVM.Specifications,
+            // add host
+            Credentials = newVM.Credentials,
+            // add accounts
+        };
+
+        _virtualMachines.Add(vm);
+        return Task.FromResult(vm);
     }
 
     public Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset)

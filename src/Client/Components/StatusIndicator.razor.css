@@ -45,21 +45,22 @@
 }
 
     .Deployed i {
-        position: absolute;
-        left: -30px;
-        color: royalblue;
+/*        position: absolute;
+        left: -30px;*/
+        color: white;
+        margin-right: 7px;
         animation: zoof 2s ease-in-out infinite;
     }
 
 @keyframes zoof {
     0%{
-        transform: scale(1.2);
+        transform: scale(1);
     }
     50% {
-        transform: scale(1.5);
+        transform: scale(1.2);
     }
     100% {
-        transform: scale(1.2);
+        transform: scale(1);
     }
 }
 

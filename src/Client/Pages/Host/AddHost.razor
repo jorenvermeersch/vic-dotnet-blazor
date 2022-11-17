@@ -14,11 +14,12 @@
 
 <EditForm Model="@Host" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator TValidator="HostValidation" />
+
     <div class="context-menu">
-        <i class="fa-solid fa-desktop context-menu-icon"></i>
-        <span class="context-menu-label">Host Toevoegen</span>
+        <span class="context-menu-label">
+            <TitlePage IconString="desktop" Type="Host" Mutation="Toevoegen" />
+        </span>
         <button type="submit">Toevoegen</button>
-        @*<Button Text="Toevoegen" OnClick="@HandleValidSubmit" />*@
     </div>
 
     <div class="three-column-layout">

@@ -8,12 +8,13 @@
 @attribute [Authorize(Roles = "Master")]
 
 <PageTitle>Account Toevoegen</PageTitle>
-<TitlePage IconString="user" Type="Account" Mutation="Toevoegen" />
 
 <EditForm Model="@Account" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator TValidator="AccountValidation"/>
     <div class="context-menu">
-        <span class="context-menu-label">Account Toevoegen</span>
+        <span class="context-menu-label">
+            <TitlePage IconString="user" Type="Account" Mutation="Toevoegen" />
+        </span>
         <button type="submit">Toevoegen</button>
     </div>
     <div class="three-column-layout">
