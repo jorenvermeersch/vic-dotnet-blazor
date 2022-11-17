@@ -80,6 +80,14 @@
             <Title Text="Verantwoordelijke"></Title>
             <RequiredInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Accounts" @bind-Value="@VirtualMachine.Account" For="@(()=>VirtualMachine.Account)" />
 
+
+@*            <ChildContent  Context="" />
+            <GenericSelect Items="@Account">
+
+                @context
+                
+            </GenericSelect>
+*@
             <Title Text="Logingegevens" />
             <EditForm Context="CredentialContext" OnValidSubmit="@AddCredential" Model="@newCredential">
                 <FluentValidationValidator TValidator="CredentialValidation" />
