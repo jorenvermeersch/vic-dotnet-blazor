@@ -50,9 +50,9 @@
 
             <Title Text="Specificaties" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
-            <CustomInputNumber Label="vCPUs" @bind-Value="VirtualMachine.Processors" For="@(()=>VirtualMachine.Processors)" Required=true />
-            <CustomInputNumber Label="Geheugen" @bind-Value="VirtualMachine.Memory" For="@(()=>VirtualMachine.Memory)" Required=true />
-            <CustomInputNumber Label="Opslag" @bind-Value="VirtualMachine.Storage" For="@(()=>VirtualMachine.Storage)" Required=true />
+            <CustomInputNumber Label="vCPUs" @bind-Value="@VirtualMachine.Specifications.Processors" For="@(()=>VirtualMachine.Specifications.Processors)" Required=true />
+            <CustomInputNumber Label="Geheugen" @bind-Value="@VirtualMachine.Specifications.Memory" For="@(()=>VirtualMachine.Specifications.Memory)" Required=true />
+            <CustomInputNumber Label="Opslag" @bind-Value="@VirtualMachine.Specifications.Storage" For="@(()=>VirtualMachine.Specifications.Storage)" Required=true />
         </div>
         <div class="one-third">
             <Title Text="Beschikbaarheid" />
@@ -109,6 +109,8 @@
 @code {
     private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Create VirtualMachine { get; set; } = new();
+    private SpecificationDto Specifications;
+
 
     // Credentials
     private List<CredentialDto> credentialList = new();
@@ -149,6 +151,8 @@
 
     protected override void OnInitialized()
     {
+        Specifications = VirtualMachine.Specifications;
+
         _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Rol", "Admin" } });
         _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Rol", "User" } });
     }

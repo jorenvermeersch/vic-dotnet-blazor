@@ -53,9 +53,11 @@ public static class VirtualMachineDto
         public string Reason { get; set; }
         public string Status { get; set; }
         //public int hostId { get; set; } = 0;
-        public int Processors { get; set; }
-        public int Memory { get; set; }
-        public int Storage { get; set; }
+        //public int Processors { get; set; }
+        //public int Memory { get; set; }
+        //public int Storage { get; set; }
+
+        public SpecificationDto Specifications { get; set; } = new();
         public string Requester { get; set; }
         public string User { get; set; }
         public string Account { get; set; }

@@ -5,6 +5,7 @@ using static Shared.Host.HostDto;
 
 namespace Client.Validation;
 
+[Obsolete]
 public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Create>
 {
     private readonly int _nameLenght = 2;
@@ -41,18 +42,6 @@ public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Crea
         //RuleFor(x => x.hostId)
         //    .Cascade(CascadeMode.StopOnFirstFailure)
         //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Host"));
-        RuleFor(x => x.Processors)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("vCPU"))
-            .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minProcessorCount));
-        RuleFor(x => x.Memory)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Geheugen"))
-            .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minMemoryCount));
-        RuleFor(x => x.Storage)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Opslag"))
-            .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minStorageCount));
         RuleFor(x => x.ApplicationDate)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Datum van aanvraag"));
@@ -76,6 +65,6 @@ public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Crea
         RuleFor(x => x.Account)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
-
+        RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());
     }
 }

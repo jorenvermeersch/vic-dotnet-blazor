@@ -36,9 +36,9 @@ public class BogusHostService: IHostService
             Id = newHost.Id,
             Name = newHost.Name,
             Specifications = new SpecificationDto() { 
-                Memory = newHost.Memory,
-                Processors = newHost.Processors,
-                Storage = newHost.Storage
+                Memory = newHost.Specifications.Memory,
+                Processors = newHost.Specifications.Processors,
+                Storage = newHost.Specifications.Storage
             }
         };
         hosts.Add(host);
