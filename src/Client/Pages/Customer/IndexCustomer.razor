@@ -13,7 +13,7 @@
     <div class="one-third">
         <Title Text="Filteropties" />
         <div style="display: flex; justify-content: space-between;">
-            <Button Text="Reset" OnClick="() => UpdateSearchValue()" />
+            <Button Text="Reset" OnClick="() => ResetFilter()" />
             <Button Text="Filteren" />
         </div>
 
@@ -71,19 +71,12 @@
         toggleExtern = !toggleExtern;
     }
 
-    private void UpdateSearchValue()
-    {
-        Console.WriteLine("UPDATED UPDATED");
-        SearchValue = "";
-        StateHasChanged();
-    }
-
     private void ResetFilter()
     {
         toggleIntern = false;
         toggleExtern = false;
-        Console.WriteLine(SearchValue);
         SearchValue = "";
+        StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
