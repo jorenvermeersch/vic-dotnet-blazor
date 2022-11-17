@@ -13,10 +13,12 @@
 <div class="three-column-layout">
     <div class="one-third">
         <Title Text="Filteropties" />
-        <div class="filterbuttonarea">
-            <Button Text="Filteren" />
-        </div>
-        <Searchbar PlaceHolder="Geef een zoekterm in" />
+            @*<Button Text="Filteren" />*@
+            <div style="display: flex; justify-content: space-between;">
+                <Button Text="Reset" OnClick="() => ResetFilter()" />
+                <Button Text="Filteren" />
+            </div>
+        <Searchbar @bind-Text="@SearchValue" PlaceHolder="Geef een zoekterm in" />
     </div>
     <div class="two-thirds">
         <Title Text="Alle virtuele machines" />
@@ -44,6 +46,8 @@
 </div>
 
 @code {
+    public string SearchValue { get; set; }
+
     private IEnumerable<VirtualMachineDto.Index> virtualMachines;
     int offset = 0;
     int totalVirtualMachines = 0;
@@ -62,6 +66,12 @@
         offset = (pageNr - 1) * 20;
         virtualMachines = await VirtualMachineService.GetIndexAsync(offset, 20);
         selectedPage = pageNr;
+    }
+
+    private void ResetFilter()
+    {
+        SearchValue = "";
+        StateHasChanged();
     }
 
 }
