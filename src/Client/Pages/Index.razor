@@ -3,6 +3,7 @@
 @namespace Shared
 @using VirtualMachine
 @inject IVirtualMachineService VirtualMachineService
+@inject IStringLocalizer<Resource> localizer
 
 
 <div class="context-menu">
@@ -17,8 +18,10 @@
     </AuthorizeView>
     
 </div>
+
 <div class="three-column-layout">
     <div class="one-third">
+
         <Title Text="Onafgewerkte virtuele machines" />
         
         @foreach (var vm in virtualMachines)

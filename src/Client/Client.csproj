@@ -15,7 +15,6 @@
   <ItemGroup>
     <Content Include="Components\EntityCard.razor.css" />
     <Content Include="Components\Searchbar.razor.css" />
-    <Content Include="Components\Status.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +26,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.10" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +36,21 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\assets\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Shared\Resources\Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Shared\Resources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

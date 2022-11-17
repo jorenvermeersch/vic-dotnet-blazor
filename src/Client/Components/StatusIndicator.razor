@@ -1,0 +1,24 @@
+﻿@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<Client.Shared.Resources.Resource> localizer
+
+<div class="status-container @State">
+    <i class=@Icon() ></i>
+    <p>@localizer[State]</p>
+</div>
+
+@code {
+    [Parameter]public string State { get; set; }
+    private string Icon(){
+        switch(State) {
+            case "Requested": return "fa-regular fa-envelope";
+            case "InProgress": return "fa-solid fa-list-check";
+            case "ReadyToDeploy": return "fa-solid fa-check";
+            case "Deployed": return "fa-solid fa-rocket";
+            case "Active":
+                return "fa-solid fa-check";
+            case "Inactive":
+                return "fa-solid fa-xmark";
+            default: return "";
+        }
+    }
+}

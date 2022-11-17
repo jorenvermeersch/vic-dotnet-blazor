@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="6.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
 </Project>

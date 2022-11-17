@@ -1,4 +1,5 @@
-﻿using Shared.Account;
+﻿using Domain.Constants;
+using Shared.Account;
 using Shared.customer;
 using Shared.Host;
 using Shared.Shared;
@@ -20,7 +21,7 @@ public static class VirtualMachineDto
         [Required]
         public string FQDN { get; set; }
         [Required]
-        public string Status { get; set; }
+        public Status Status { get; set; }
     }
 
     public class Details : Index

@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Domain.Constants;
 using Shared.Account;
 using Shared.customer;
 using Shared.Customer;
@@ -68,7 +69,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.BackupFrequenty, f => f.PickRandom(new[] { "Dagelijks", "Wekelijks", "Maandelijks" }))
             .RuleFor(x => x.Availabilities, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(new[] { "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag" })).ToList())
-            .RuleFor(x => x.Status, f => f.PickRandom(new[] { "Aanvraag", "InVerwerking", "Afgehandeld" }))
+            .RuleFor(x => x.Status, f => f.PickRandom(Enum.GetValues(typeof(Status)).Cast<Status>().ToList()))
             .RuleFor(x => x.Reason, f => f.PickRandom(new[] { "Bachelor proef", "AI trainen", "Database draaien" }))
             .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.ApplicationDate, f => f.Date.Past())
@@ -80,6 +81,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x=> x.Ports, f=> Enumerable.Range(1, f.Random.Int(1, 2)).Select(x => f.PickRandom(portFaker.Generate(5))).ToList())
             .RuleFor(x => x.Credentials, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(credentialFaker.Generate(25))).ToList())
             .RuleFor(x=>x.Host, f=>f.PickRandom(hosts));
+
 
         _virtualMachines = virtualMachineFaker.Generate(25);
 
@@ -125,7 +127,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
 
     public Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset)
     {
-        return Task.FromResult(_virtualMachines.Where(vm => vm.Status=="In verwerking" || vm.Status == "Aanvraag" ).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
+        return Task.FromResult(_virtualMachines.Where(vm => vm.Status== Status.InProgress || vm.Status == Status.Requested).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
             FQDN = x.FQDN,

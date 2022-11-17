@@ -24,4 +24,6 @@ builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>()
 builder.Services.AddScoped<IHostService, BogusHostService>();
 builder.Services.AddScoped<IAccountService, BogusAccountService>();
 
+builder.Services.AddLocalization();
+
 await builder.Build().RunAsync();
