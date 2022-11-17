@@ -1,9 +1,8 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Client.Components
+namespace Client.Validation
 {
     public class FluentValidationValidator<TValidator> : ComponentBase where TValidator : IValidator, new()
     {
