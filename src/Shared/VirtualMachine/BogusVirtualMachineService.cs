@@ -133,10 +133,19 @@ public class BogusVirtualMachineService : IVirtualMachineService
             BackupFrequenty = newVM.BackupFrequenty,
             ApplicationDate = newVM.ApplicationDate,
             Reason = newVM.Reason,
-            // add ports
             Specification = newVM.Specifications,
-            // add host
             Credentials = newVM.Credentials,
+            Ports = new(),
+            Host=new(),
+            Account=new(),
+            Requester=new(),
+            TimeSpan = new()
+            {
+                StartDate=newVM.StartDate,
+                EndDate=newVM.EndDate
+            }
+            
+
             // add accounts
         };
 

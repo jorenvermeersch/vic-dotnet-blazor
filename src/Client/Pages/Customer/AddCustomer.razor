@@ -9,7 +9,7 @@
 
 <PageTitle>Klant Toevoegen</PageTitle>
 
- <EditForm @ref="Editform" Model="@Customer">
+ <EditForm @ref="Editform" Model="@Customer" OnValidSubmit="@HandleValidSubmit">
     <div class="context-menu">
         <span class="context-menu-label">
             <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />
@@ -76,16 +76,10 @@
             _backuprequired = _values.All(e => (e == "" || e == null)) ? false : true;
     }
 
-        private async void HandleValidSubmit()
-        {
-            if (Editform.EditContext.Validate())
-            {
-                CustomerDto.Details newCustomer = await customerService.Add(Customer);
-                Navigation.NavigateTo("/customer/" + newCustomer.Id);
-
-
-            }
-
-        }
+    private async void HandleValidSubmit()
+    {
+        CustomerDto.Details newCustomer = await customerService.Add(Customer);
+        Navigation.NavigateTo("/customer/" + newCustomer.Id);
+    }
 }
 

@@ -14,6 +14,7 @@
 @inject ICustomerService customerService
 @inject IAccountService accountService
 @inject NavigationManager Navigation
+@inject IStringLocalizer<Client.Shared.Resources.Resource> localizer
 @attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
@@ -26,8 +27,6 @@
             <TitlePage IconString="desktop" Type="Virtuele Machine" Mutation="Toevoegen" />
         </span>
         <button type="submit">Toevoegen</button>
-        @*<Button Text="Machine toevoegen" OnClick="@HandleOnValidSubmit" />*@
-        @*<Button Text="Machine toevoegen"/>*@
     </div>
     <div class="three-column-layout">
         <div class="one-third">
@@ -61,15 +60,21 @@
             <CustomInputDate Label="Datum van aanvraag" @bind-Value="@VirtualMachine.ApplicationDate" For="@(()=>VirtualMachine.ApplicationDate)" Required=true />
             <CustomInputDate Label="Startdatum" @bind-Value="@VirtualMachine.StartDate" For="@(()=>VirtualMachine.StartDate)" Required=true />
             <CustomInputDate Label="Einddatum" @bind-Value="@VirtualMachine.EndDate" For="@(()=>VirtualMachine.EndDate)" Required=true />
-            <!--
-            <AvailabilityOptionSelect customCss="@_customcss" />
-            <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-                <Button Text="Toevoegen" />
-            </div>
-            <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-            <AvailabilityOption DayOfWeek="Availability.Thursday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-            <AvailabilityOption DayOfWeek="Availability.Friday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-            -->
+
+
+            @*<EditForm Context="AvailabilityContext" OnValidSubmit="@AddAvailability" Model="@selectedAvailability">
+                <AvailabilityOptionSelect customCss="@_customcss" />
+                <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+                    <button type="submit">Toevoegen</button>
+                </div>
+                
+          
+           </EditForm>
+           @foreach(var availability in Availabilities){
+                <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
+           }*@
+            
+
             <Title Text="Back-ups" />
             <RequiredInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" @bind-Value="@VirtualMachine.BackupFrequenty" For="@(()=>VirtualMachine.BackupFrequenty)" />
         </div>
@@ -126,22 +131,8 @@
     private List<CredentialDto> credentialList = new();
     private CredentialDto? newCredential = new();
 
-    private async void HandleValidSubmit()
-    {
-        VirtualMachine.Credentials = credentialList;
-        Console.WriteLine("Successful");
-        Console.WriteLine(VirtualMachine.Credentials[0].Username);
-
-        VirtualMachineDto.Details newVirtualMachine = await virtualMachineService.Add(VirtualMachine);
-        Navigation.NavigateTo("virtual-machine/" + newVirtualMachine.Id);
-    }
-
-
-    private void AddCredential()
-    {
-        credentialList.Add(newCredential);
-        newCredential = new();
-    }
+    private List<string> Availabilities = new();
+    private string selectedAvailability;
 
     private string _customcss = "background-color: white";
 
@@ -150,7 +141,7 @@
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
     public List<string> Modes { get; set; } = new() { "SAAS", "PAAS", "IAAS" };
     public List<string> Templates { get; set; } = new() { "Geen Template", "AI" };
-    public List<string> Statuses { get; set; } = new() { "Aanvraag", "In verwerking", "Afgehandeld" };
+    public List<string> Statuses { get; set; } = Enum.GetNames(typeof(Status)).ToList();
     private List<string>? Hosts { get; set; }
     private List<string>? Customers { get; set; }
     private List<string>? Accounts { get; set; } = new();
@@ -168,6 +159,11 @@
 
         _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Rol", "Admin" } });
         _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Rol", "User" } });
+        for(int i=0; i<Statuses.Count; i++){
+            Statuses[i] = localizer[Statuses[i]];
+        }
+
+        //editContext = new(selectedAvailability);
     }
     protected override async Task OnInitializedAsync()
     {
@@ -193,5 +189,26 @@
     public void RemovePortFromList(string value)
     {
         _ports.Remove(value);
+    }
+
+    private void AddAvailability(){
+        Availabilities.Add(selectedAvailability);
+    }
+    private async void HandleValidSubmit()
+    {
+        VirtualMachine.Credentials = credentialList;
+        //Console.WriteLine("Successful");
+        Console.WriteLine(VirtualMachine.Credentials[0].Username);
+
+        VirtualMachineDto.Details newVirtualMachine = await virtualMachineService.Add(VirtualMachine);
+        Navigation.NavigateTo("virtual-machine/" + newVirtualMachine.Id);
+    }
+
+
+    private void AddCredential()
+    {
+        credentialList.Add(newCredential!);
+        Console.WriteLine(newCredential.Role);
+        newCredential = new();
     }
 }

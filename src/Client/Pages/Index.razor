@@ -7,7 +7,10 @@
 
 
 <div class="context-menu">
-    <Label Text="Toevoegen" />
+
+    <AuthorizeView Roles="Master, Administrator">
+        <Label Text="Toevoegen" />
+    </AuthorizeView>
     <AuthorizeView Roles="Master">
         <Button Text="Account" Href="/account/add" />
     </AuthorizeView>

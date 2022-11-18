@@ -110,9 +110,13 @@
         _requester.Add("Naam", virtualMachine.Requester?.Name);
         _requester.Add("Email", virtualMachine.Requester?.Email);
 
-        _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Number)));
+        @if (virtualMachine.Ports.Any()){
+            _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p => p.Number)));
 
+        }
+        
         foreach(var credential in virtualMachine.Credentials){
+            Console.WriteLine(credential.Username);
             _logindata.Add(new Dictionary<string, string>(){
                 {"Gebruikersnaam", credential.Username},
                 {"Rol", credential.Role}
