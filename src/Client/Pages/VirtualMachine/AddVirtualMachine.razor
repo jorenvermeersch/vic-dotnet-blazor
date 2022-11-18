@@ -40,15 +40,32 @@
 
             <RequiredInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachine.Reason" For="@(()=>VirtualMachine.Reason)" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Status" Items="@Statuses" @bind-Value="VirtualMachine.Status" For="@(()=>VirtualMachine.Status)" />
-            <!--
-            <Title Text="Poorten" />
-            <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" Action="(value) => AddPortToList(value)" />
+            
+            <EditForm Model="@Port" Context="PortContext" OnValidSubmit="@AddPortToList">
+                <Title Text="Poorten" />
+                <div class="input-container">
+                     <select @bind="SelectedPort" class="input" style="@_customcss" type="text" placeholder="geef een poort in">
+                        <option value="" disabled selected hidden>geef een poort in </option>
+                        @foreach (var item in Options)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit"> Poort toevoegen</button>
+            </EditForm>
+
             <div class="buttonList">
                 @foreach(var item in _ports){
                     <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
                 }
+            </div>
 
-            </div>-->
+            <CustomCheckbox Label="VPN"></CustomCheckbox>
+
+            
+
+       
 
             <Title Text="Specificaties" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
@@ -119,7 +136,10 @@
 @code {
     private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Create VirtualMachine { get; set; } = new();
+    private PortDto Port { get; set; } = new();
     private SpecificationDto Specifications;
+    private string SelectedPort{ get; set; }
+    private IEnumerable<string> SelectedPorts { get; set; } = new HashSet<string>(){"HTTPS"};
 
 
     // Credentials
@@ -185,9 +205,9 @@
         _entries.Remove(id);
     }
 
-    public void AddPortToList(string value)
+    public void AddPortToList()
     {
-        _ports.Add(value);
+        _ports.Add(SelectedPort);
     }
 
     public void RemovePortFromList(string value)
