@@ -5,6 +5,7 @@
 @using Shared
 @using Specification
 @using customer
+@using Port
 @using Account
 @using System.ComponentModel.DataAnnotations
 @using VirtualMachine
@@ -12,7 +13,9 @@
 @inject IVirtualMachineService virtualMachineService
 @inject IHostService hostService
 @inject ICustomerService customerService
+@inject IPortService portService 
 @inject IAccountService accountService
+
 @inject NavigationManager Navigation
 @attribute [Authorize(Roles = "Master, Administrator")]
 
@@ -44,15 +47,16 @@
             <EditForm Model="@Port" Context="PortContext" OnValidSubmit="@AddPortToList">
                 <Title Text="Poorten" />
                 <div class="input-container">
-                     <select @bind="SelectedPort" class="input" style="@_customcss" type="text" placeholder="geef een poort in">
-                        <option value="" disabled selected hidden>geef een poort in </option>
-                        @foreach (var item in Options)
+                    <select @bind="SelectedPort" class="input" style="@_customcss" type="text" placeholder="geef een poort in">
+                        <option value="" disabled selected hidden>Geef een poort in </option>
+                        @foreach (var item in PortOptions)
                         {
                             <option value="@item">@item</option>
                         }
                     </select>
+                    <button type="submit"> Poort toevoegen</button>
                 </div>
-                <button type="submit"> Poort toevoegen</button>
+                
             </EditForm>
 
             <div class="buttonList">
@@ -139,7 +143,6 @@
     private PortDto Port { get; set; } = new();
     private SpecificationDto Specifications;
     private string SelectedPort{ get; set; }
-    private IEnumerable<string> SelectedPorts { get; set; } = new HashSet<string>(){"HTTPS"};
 
 
     // Credentials
@@ -149,6 +152,7 @@
     private async void HandleValidSubmit()
     {
         VirtualMachine.Credentials = credentialList;
+        //VirtualMachine.Ports = _ports.Select(x => ports.Where(x =>));
         Console.WriteLine("Successful");
         Console.WriteLine(VirtualMachine.Credentials[0].Username);
 
@@ -166,7 +170,7 @@
     private string _customcss = "background-color: white";
 
     private HashSet<string> _ports = new();
-    public List<string> Options { get; set; } = new() { "HTTP", "HTTPS", "SSH" };
+    public List<string> PortOptions { get; set; } = new() { "HTTP", "HTTPS", "SSH" };
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
     public List<string> Modes { get; set; } = new() { "SAAS", "PAAS", "IAAS" };
     public List<string> Templates { get; set; } = new() { "Geen Template", "AI" };
@@ -175,6 +179,7 @@
     private List<string>? Customers { get; set; }
     private List<string>? Accounts { get; set; } = new();
     private Dictionary<int, Dictionary<string, string>> _entries = new();
+    IEnumerable<PortDto> ports;
 
     private string Requester { get; set; }
     private string User { get; set; }
@@ -197,6 +202,8 @@
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
         IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync(0);
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
+        ports = await portService.GetIndexAsync();
+        PortOptions = ports.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }
 
 

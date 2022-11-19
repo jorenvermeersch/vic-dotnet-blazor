@@ -1,4 +1,4 @@
-﻿namespace Shared.VirtualMachine;
+﻿namespace Shared.Port;
 
 public class PortDto
 {

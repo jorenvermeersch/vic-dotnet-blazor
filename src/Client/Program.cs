@@ -9,6 +9,7 @@ using Shared.Customer;
 using Domain.Core;
 using Shared.Host;
 using Shared.Account;
+using Shared.Port;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -23,6 +24,7 @@ builder.Services.AddScoped<ICustomerService, BogusCustomerService>();
 builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
 builder.Services.AddScoped<IHostService, BogusHostService>();
 builder.Services.AddScoped<IAccountService, BogusAccountService>();
+builder.Services.AddScoped<IPortService, PortService>();
 
 builder.Services.AddLocalization();
 

@@ -17,4 +17,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Port\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Port\" />
+  </ItemGroup>
 </Project>

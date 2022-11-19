@@ -2,6 +2,7 @@
 using Shared.Account;
 using Shared.customer;
 using Shared.Host;
+using Shared.Port;
 using Shared.Shared;
 using Shared.Specification;
 using System;
@@ -65,6 +66,7 @@ public static class VirtualMachineDto
         public string BackupFrequenty { get; set; }
 
         public List<CredentialDto> Credentials { get; set; }
+        public List<PortDto> Ports { get; set; }
 
     }
     
