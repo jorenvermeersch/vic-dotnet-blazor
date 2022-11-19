@@ -5,6 +5,7 @@
 @using Shared
 @using Specification
 @using customer
+@using Port
 @using Account
 @using System.ComponentModel.DataAnnotations
 @using VirtualMachine
@@ -12,7 +13,9 @@
 @inject IVirtualMachineService virtualMachineService
 @inject IHostService hostService
 @inject ICustomerService customerService
+@inject IPortService portService 
 @inject IAccountService accountService
+
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Client.Shared.Resources.Resource> localizer
 @attribute [Authorize(Roles = "Master, Administrator")]
@@ -39,15 +42,34 @@
 
             <RequiredInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachine.Reason" For="@(()=>VirtualMachine.Reason)" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Status" Items="@Statuses" @bind-Value="VirtualMachine.Status" For="@(()=>VirtualMachine.Status)" />
-            <!--
-            <Title Text="Poorten" />
-            <AddInput PlaceHolder="Geef een poort in" Items="@Options" Type="@Input.InputType.SELECT" Label="Poort" Action="(value) => AddPortToList(value)" />
+            
+            <EditForm Model="@Port" Context="PortContext" OnValidSubmit="@AddPortToList">
+                <Title Text="Poorten" />
+                <div>
+                    <div class="input-container" style="margin-top: 10px">
+                        <select @bind="SelectedPort" class="input" style="@_customcss" type="text" placeholder="geef een poort in">
+                            <option value="" disabled selected hidden>Geef een poort in </option>
+                            @foreach (var item in PortOptions)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                        <button type="submit" style="margin-left:10px;"> + </button>
+                    </div>
+                </div>
+            </EditForm>
+
             <div class="buttonList">
                 @foreach(var item in _ports){
                     <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
                 }
+            </div>
 
-            </div>-->
+            <CustomCheckbox Label="VPN" @bind-Value="VirtualMachine.hasVpnConnection"></CustomCheckbox>
+
+            
+
+       
 
             <Title Text="Specificaties" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
@@ -124,7 +146,9 @@
 @code {
     private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Create VirtualMachine { get; set; } = new();
+    private PortDto Port { get; set; } = new();
     private SpecificationDto Specifications;
+    private string SelectedPort { get; set; } = "";
 
 
     // Credentials
@@ -134,10 +158,12 @@
     private List<string> Availabilities = new();
     private string selectedAvailability;
 
+
+
     private string _customcss = "background-color: white";
 
     private HashSet<string> _ports = new();
-    public List<string> Options { get; set; } = new() { "HTTP", "HTTPS", "SSH" };
+    public List<string> PortOptions { get; set; }
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
     public List<string> Modes { get; set; } = new() { "SAAS", "PAAS", "IAAS" };
     public List<string> Templates { get; set; } = new() { "Geen Template", "AI" };
@@ -146,6 +172,7 @@
     private List<string>? Customers { get; set; }
     private List<string>? Accounts { get; set; } = new();
     private Dictionary<int, Dictionary<string, string>> _entries = new();
+    IEnumerable<PortDto> availablePorts;
 
     private string Requester { get; set; }
     private string User { get; set; }
@@ -173,6 +200,8 @@
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
         IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync(0);
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
+        availablePorts = await portService.GetIndexAsync();
+        PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }
 
 
@@ -181,9 +210,13 @@
         _entries.Remove(id);
     }
 
-    public void AddPortToList(string value)
+    public void AddPortToList()
     {
-        _ports.Add(value);
+        if (SelectedPort != "")
+        {
+            _ports.Add(SelectedPort);
+        }
+
     }
 
     public void RemovePortFromList(string value)
@@ -194,21 +227,28 @@
     private void AddAvailability(){
         Availabilities.Add(selectedAvailability);
     }
+
+    private void AddCredential()
+    {
+        credentialList.Add(newCredential!);
+        newCredential = new();
+    }
+
     private async void HandleValidSubmit()
     {
+        List<PortDto> chosenPorts = new List<PortDto>();
         VirtualMachine.Credentials = credentialList;
-        //Console.WriteLine("Successful");
-        Console.WriteLine(VirtualMachine.Credentials[0].Username);
+
+        foreach (var port in _ports)
+        {
+            chosenPorts.Add(availablePorts.Where(p => p.Number.ToString() == port.Split(" ")[0]).First());
+        }
+
+        VirtualMachine.Ports = chosenPorts;
 
         VirtualMachineDto.Details newVirtualMachine = await virtualMachineService.Add(VirtualMachine);
         Navigation.NavigateTo("virtual-machine/" + newVirtualMachine.Id);
     }
 
-
-    private void AddCredential()
-    {
-        credentialList.Add(newCredential!);
-        Console.WriteLine(newCredential.Role);
-        newCredential = new();
-    }
 }
+    
