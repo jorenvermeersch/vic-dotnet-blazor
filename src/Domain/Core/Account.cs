@@ -19,6 +19,8 @@ public class Account : Entity
     #endregion
 
     #region Constructors
+    public Account() { }
+
     public Account(
         string firstname,
         string lastname,
