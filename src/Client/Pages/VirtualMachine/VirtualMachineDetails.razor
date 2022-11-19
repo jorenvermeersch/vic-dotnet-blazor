@@ -22,17 +22,18 @@
 
 <div class="three-column-layout">
     <div class="one-third">
-    <DataCard Entries="@_defaultInformation" />
+        <DataCard Entries="@_defaultInformation" />
 
-    <Title Text="Specificaties en configuratie" />
-    <DataCard Entries="@_specs" />
-    <DataCard Entries="@_config" />
+        <Title Text="Specificaties en configuratie" />
+        <DataCard Entries="@_specs" />
+        <DataCard Entries="@_config" />
+        <DataCard Entries="@_ports" />
 
-    <Title Text="Beschikbaarheid en back-ups" />
-    <DataCard Entries="@_available" />
-    <DataCard Entries="@_backups" />
+        <Title Text="Beschikbaarheid en back-ups" />
+        <DataCard Entries="@_available" />
+        <DataCard Entries="@_backups" />
 
-</div>
+    </div>
 <div class="one-third">
     <Title Text="Logingegevens" />
     @foreach(var data in _logindata){
@@ -63,6 +64,7 @@
     private Dictionary<string, string> _defaultInformation = new();
     private Dictionary<string, string> _specs = new();
     private Dictionary<string, string> _config = new();
+    private Dictionary<string, string> _ports = new();
     private Dictionary<string, string> _available = new();
     private Dictionary<string, string> _backups = new();
     //private Dictionary<string, string> _logindata = new();
@@ -94,7 +96,7 @@
         //if (virtualMachine.Availabilities.Count>1){
         //    _available.Add("Beschikbaarheid", string.Join(", ", virtualMachine.Availabilities));
         //}
-           
+
         _available.Add("Backups", virtualMachine.BackupFrequenty);
 
         _backups.Add("Aangevraagd op", virtualMachine.ApplicationDate.ToShortDateString());
@@ -110,9 +112,10 @@
         _requester.Add("Naam", virtualMachine.Requester?.Name);
         _requester.Add("Email", virtualMachine.Requester?.Email);
 
-        _config.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Number)));
+        _ports.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p=>p.Service)));
+        _ports.Add("VPN", virtualMachine.hasVpnConnection.ToString());
 
-        foreach(var credential in virtualMachine.Credentials){
+        foreach (var credential in virtualMachine.Credentials){
             _logindata.Add(new Dictionary<string, string>(){
                 {"Gebruikersnaam", credential.Username},
                 {"Rol", credential.Role}

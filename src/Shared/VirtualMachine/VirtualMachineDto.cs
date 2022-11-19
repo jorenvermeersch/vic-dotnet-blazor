@@ -44,7 +44,8 @@ public static class VirtualMachineDto
         public List<CredentialDto> Credentials { get; set; }
         public AccountDto.Index Account { get; set; } = new AccountDto.Index();
         public CustomerDto.Index Requester { get; set; } = new CustomerDto.Index(); 
-        public CustomerDto.Index User { get; set; } = new CustomerDto.Index(); 
+        public CustomerDto.Index User { get; set; } = new CustomerDto.Index();
+        public bool hasVpnConnection { get; set; }
     }
 
     public class Create : Index
@@ -67,6 +68,7 @@ public static class VirtualMachineDto
 
         public List<CredentialDto> Credentials { get; set; }
         public List<PortDto> Ports { get; set; }
+        public bool hasVpnConnection { get; set; }
 
     }
     

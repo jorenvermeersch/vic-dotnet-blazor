@@ -132,6 +132,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             Specification = newVM.Specifications,
             // add host
             Credentials = newVM.Credentials,
+            hasVpnConnection = newVM.hasVpnConnection
             // add accounts
         };
 
