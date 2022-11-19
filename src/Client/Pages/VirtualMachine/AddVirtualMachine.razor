@@ -151,8 +151,16 @@
 
     private async void HandleValidSubmit()
     {
+        List<PortDto> chosenPorts = new List<PortDto>();
         VirtualMachine.Credentials = credentialList;
-        //VirtualMachine.Ports = _ports.Select(x => ports.Where(x =>));
+
+        foreach (var port in _ports)
+        {
+            chosenPorts.Add(availablePorts.Where(p=>p.Number.ToString()== port.Split(" ")[0]).First());
+        }
+
+        Console.WriteLine(_ports.First().Split(" ")[0]);
+        VirtualMachine.Ports = chosenPorts;
         Console.WriteLine("Successful");
         Console.WriteLine(VirtualMachine.Credentials[0].Username);
 
@@ -170,7 +178,7 @@
     private string _customcss = "background-color: white";
 
     private HashSet<string> _ports = new();
-    public List<string> PortOptions { get; set; } = new() { "HTTP", "HTTPS", "SSH" };
+    public List<string> PortOptions { get; set; }
     public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
     public List<string> Modes { get; set; } = new() { "SAAS", "PAAS", "IAAS" };
     public List<string> Templates { get; set; } = new() { "Geen Template", "AI" };
@@ -179,7 +187,7 @@
     private List<string>? Customers { get; set; }
     private List<string>? Accounts { get; set; } = new();
     private Dictionary<int, Dictionary<string, string>> _entries = new();
-    IEnumerable<PortDto> ports;
+    IEnumerable<PortDto> availablePorts;
 
     private string Requester { get; set; }
     private string User { get; set; }
@@ -202,8 +210,8 @@
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
         IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync(0);
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
-        ports = await portService.GetIndexAsync();
-        PortOptions = ports.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
+        availablePorts = await portService.GetIndexAsync();
+        PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }
 
 
@@ -221,4 +229,4 @@
     {
         _ports.Remove(value);
     }
-}
+    }
