@@ -27,7 +27,7 @@ namespace Client.Pages.Account
         {
             var queryParameters = request.GetQueryString();
             var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetIndex>($"{endpoint}/");
-            return response!;
+            return response;
         }
     }
 }

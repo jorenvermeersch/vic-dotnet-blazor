@@ -8,7 +8,6 @@ namespace Client.Pages.VirtualMachine
     public class VirtualMachineService : IVirtualMachineService
     {
         private readonly HttpClient authenticatedClient;
-        private const string endpoint = "api/virtual-machines";
         public VirtualMachineService(HttpClient authenticatedClient)
         {
             this.authenticatedClient = authenticatedClient;
@@ -27,8 +26,8 @@ namespace Client.Pages.VirtualMachine
         public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
         {
             var queryParameters = request.GetQueryString();
-            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"{endpoint}");
-            return response!;
+            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+            return response;
         }
 
         Task<VirtualMachineDto.Details> IVirtualMachineService.GetDetailAsync(long virtualMachineId)
@@ -64,8 +63,8 @@ namespace Client.Pages.VirtualMachine
         public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
         {
             var queryParameters = request.GetQueryString();
-            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"{endpoint}");
-            return response!;
+            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines");
+            return response;
         }
     }
 }

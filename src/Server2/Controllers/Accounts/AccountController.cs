@@ -7,7 +7,7 @@ namespace Server.Controllers.Accounts;
 
 [ApiController]
 [Route("/api/accounts")]
-public class AccountController : Controller
+public class AccountController
 {
     private readonly IAccountService accountService;
 

@@ -32,6 +32,7 @@ namespace BlazorApp1.Server
 
             services.AddSwaggerGen(c =>
             {
+                c.CustomSchemaIds(x => $"{x.FullName}.{x.Name}");
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Virtual IT Company API", Version = "v1" });
             });
 

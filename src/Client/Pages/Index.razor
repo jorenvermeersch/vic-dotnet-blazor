@@ -63,7 +63,7 @@
     {
         VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
         virtualMachines.AddRange(response.VirtualMachines);
-        
+        Console.WriteLine(response.VirtualMachines.ToString());
         totalVirtualMachines = response.TotalAmount;
         totalPages = (totalVirtualMachines / 10) + 1;
     }
