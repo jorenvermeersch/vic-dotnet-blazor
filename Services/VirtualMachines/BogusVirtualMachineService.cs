@@ -9,6 +9,7 @@ using Shared.Host;
 using Shared.Port;
 using Shared.Shared;
 using Shared.Specification;
+using Shared.VirtualMachine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.VirtualMachine;
+namespace Server.VirtualMachines;
 
 public class BogusVirtualMachineService : IVirtualMachineService
 {

@@ -1,7 +1,7 @@
 ﻿namespace Domain.Core;
 
 [ToString]
-public class Specifications
+public class Specifications : Entity
 {
     #region Properties
     public int Processors { get; set; }

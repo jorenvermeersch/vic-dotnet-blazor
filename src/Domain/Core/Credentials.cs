@@ -1,7 +1,7 @@
 ﻿namespace Domain.Core;
 
 [ToString]
-public class Credentials
+public class Credentials : Entity
 {
     #region Properties
     public string Username { get; set; }

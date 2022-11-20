@@ -41,6 +41,7 @@ namespace Client
             builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
             builder.Services.AddScoped<IHostService, BogusHostService>();
             builder.Services.AddScoped<IAccountService, Client.Pages.Account.AccountService>();
+            //builder.Services.AddScoped<IAccountService, Services.Accounts.AccountService>();
             builder.Services.AddScoped<IPortService, PortService>();
 
             builder.Services.AddLocalization();

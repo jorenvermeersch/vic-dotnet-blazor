@@ -1,7 +1,7 @@
 ﻿namespace Domain.Core;
 
 [ToString]
-public class TimeSpan
+public class TimeSpan : Entity
 {
     #region Properties
     public DateTime StartDate { get; set; }

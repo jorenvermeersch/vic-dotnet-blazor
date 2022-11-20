@@ -34,7 +34,7 @@ namespace BlazorApp1.Server
             });
 
             services.AddRazorPages();
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountService, FakeAccountService>();
             //services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<FakeSeeder>();
         }
