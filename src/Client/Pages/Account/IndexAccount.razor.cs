@@ -47,13 +47,15 @@ namespace Shared
             accounts = response.Accounts;
             totalaccounts = response.TotalAmount;
             totalPages = (totalaccounts / 20) + 1;
+
+            Console.WriteLine(response.Accounts[0].Firstname);
         }
 
         async Task ClickHandler(int pageNr)
         {
             offset = (pageNr - 1) * 20;
-            AccountResponse.GetIndex response = await accountService.GetIndexAsync(new AccountRequest.GetIndex());
-            accounts = response.Accounts;
+            //AccountResponse.GetIndex response = await accountService.GetIndexAsync(new AccountRequest.GetIndex());
+            //accounts = response.Accounts;
             selectedPage = pageNr;
         }
 

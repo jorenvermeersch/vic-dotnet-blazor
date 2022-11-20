@@ -26,7 +26,8 @@ namespace Client.Pages.Account
         public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
         {
             var queryParameters = request.GetQueryString();
-            var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetIndex>($"{endpoint}?{queryParameters}");
+            var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetIndex>($"{endpoint}/");
+            Console.WriteLine(response);
             return response;
         }
     }

@@ -4,14 +4,17 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Shared.Account;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Services.Accounts;
 
 public class AccountService : IAccountService
 {
-    public AccountService(VicDBContext _dbContext)
+
+    //private readonly System.Data.Entity.Infrastructure.IDbContextFactory dbContext;
+    public AccountService(VicDBContext dbContext)
     {
-        _dbContext = _dbContext;
+        this._dbContext = dbContext;
         _accounts = _dbContext.Accounts;
     }
 

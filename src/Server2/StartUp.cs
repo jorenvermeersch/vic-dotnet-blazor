@@ -20,9 +20,13 @@ namespace BlazorApp1.Server
         {
             services.AddMvc();
             var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("VirtualItCompany"));
-            services.AddDbContext<VicDBContext>(options =>
+            //services.AddDbContext<VicDBContext>(options =>
+            //    options.UseSqlServer(builder.ConnectionString, opt => opt.EnableRetryOnFailure()).EnableSensitiveDataLogging(Configuration.GetValue<bool>("Logging:EnableSqlParameterLogging"))
+            //        );
+
+            services.AddDbContextFactory<VicDBContext>(options =>
                 options.UseSqlServer(builder.ConnectionString, opt => opt.EnableRetryOnFailure()).EnableSensitiveDataLogging(Configuration.GetValue<bool>("Logging:EnableSqlParameterLogging"))
-                    );
+            );
 
             services.AddSwaggerGen(c =>
             {
