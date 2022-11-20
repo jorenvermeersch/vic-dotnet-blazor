@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Constants;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Core;
 
@@ -12,6 +13,7 @@ public class VirtualMachine : Machine
 
 
     #region Properties
+    [NotMapped]
     public new Specifications Specifications
     {
         get => base.Specifications;
@@ -31,16 +33,36 @@ public class VirtualMachine : Machine
         }
     }
 
+    [NotMapped]
     public Template Template { get; set; }
+
+    [NotMapped]
     public Mode Mode { get; set; }
+
     public string Fqdn { get; set; }
+
+    [NotMapped]
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
+
+    [NotMapped]
     public BackupFrequency BackupFrequency { get; set; }
+
+    [NotMapped]
     public DateTime ApplicationDate { get; set; }
+
+    [NotMapped]
     public TimeSpan TimeSpan { get; set; }
+
+    [NotMapped]
     public Status Status { get; set; }
+
+    [NotMapped]
     public string Reason { get; set; }
+
+    [NotMapped]
     public IList<Port> Ports { get; set; } = new List<Port>();
+
+    [NotMapped]
     public Host<VirtualMachine> Host
     {
         get => _host;
@@ -56,13 +78,24 @@ public class VirtualMachine : Machine
             }
         }
     }
+
+    [NotMapped]
     public IList<Credentials> Credentials { get; set; } = new List<Credentials>();
+
+    [NotMapped]
     public Account Account { get; set; }
+
+    [NotMapped]
     public Customer Requester { get; set; }
+
+    [NotMapped]
     public Customer User { get; set; }
     #endregion
 
     #region Constructors
+
+    public VirtualMachine() { }
+
     public VirtualMachine(VirtualMachineArgs args) : base(args.Name, args.Specifications)
     {
         Template = args.Template;
@@ -81,7 +114,7 @@ public class VirtualMachine : Machine
         Requester = args.Requester;
         User = args.User;
 
-        _host.Add(this); // Remaining resources host are automatically updated.
+        //_host.Add(this); // Remaining resources host are automatically updated.
     }
     #endregion
 

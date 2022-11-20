@@ -17,6 +17,7 @@ public class VicDBContext : DbContext
     }
 
     public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //{

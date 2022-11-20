@@ -9,8 +9,9 @@ using Persistence;
 using Microsoft.EntityFrameworkCore;
 using Fakers.Accounts;
 using Domain.Constants;
+using Shared.Account;
 
-namespace Shared.Account;
+namespace Service.Account;
 
 public class FakeAccountService : IAccountService
 {

@@ -11,7 +11,7 @@ using Shared.Host;
 using Shared.Account;
 using Shared.Port;
 using Services.Accounts;
-
+using Server.VirtualMachines;
 
 namespace Client
 {
@@ -38,9 +38,12 @@ namespace Client
             builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<FakeAuthenticationProvider>());
 
             builder.Services.AddScoped<ICustomerService, BogusCustomerService>();
-            builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
             builder.Services.AddScoped<IHostService, BogusHostService>();
+            //builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
+
+            builder.Services.AddScoped<IVirtualMachineService, Client.Pages.VirtualMachine.VirtualMachineService>();
             builder.Services.AddScoped<IAccountService, Client.Pages.Account.AccountService>();
+
             //builder.Services.AddScoped<IAccountService, Services.Accounts.AccountService>();
             builder.Services.AddScoped<IPortService, PortService>();
 

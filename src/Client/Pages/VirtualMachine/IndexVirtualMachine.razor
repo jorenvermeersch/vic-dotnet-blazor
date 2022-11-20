@@ -55,15 +55,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        virtualMachines = await VirtualMachineService.GetIndexAsync(offset, 20);
-        totalVirtualMachines = await VirtualMachineService.GetCount();
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetIndexAsync(new VirtualMachineRequest.GetIndex());
+        virtualMachines = response.VirtualMachines;
+        totalVirtualMachines = response.TotalAmount;
         totalPages = (totalVirtualMachines / 20) + 1;
     }
 
     async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 20;
-        virtualMachines = await VirtualMachineService.GetIndexAsync(offset, 20);
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetIndexAsync(new VirtualMachineRequest.GetIndex());
+        virtualMachines = response.VirtualMachines;
+        //virtualMachines = await VirtualMachineService.GetIndexAsync(offset, 20);
         selectedPage = pageNr;
     }
 

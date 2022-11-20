@@ -10,6 +10,8 @@ public class Credentials : Entity
     #endregion
 
     #region Constructor
+    public Credentials() { }
+
     public Credentials(string username, string password, string role)
     {
         Username = username;

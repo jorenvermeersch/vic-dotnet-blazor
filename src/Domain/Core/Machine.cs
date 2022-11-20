@@ -1,13 +1,20 @@
-﻿namespace Domain.Core;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Core;
 
 public abstract class Machine : Entity
 {
     #region Properties
     public string Name { get; set; }
+
+    [NotMapped]
     public Specifications Specifications { get; set; }
     #endregion
 
     #region Constructors
+
+    public Machine() { }
+
     public Machine(string name, Specifications specifications)
     {
         Name = name;

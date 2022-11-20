@@ -207,6 +207,16 @@ public class BogusVirtualMachineService : IVirtualMachineService
             Status = x.Status,
         }));
     }
+
+    public Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    {
+        throw new NotImplementedException();
+    }
     //public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create newVM)
     //{
     //    throw new NotImplementedException();

@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
-using Services.Accounts;
+using Service.Account;
+using Service.VirtualMachines;
 using Shared.Account;
+using Shared.VirtualMachine;
 
 namespace BlazorApp1.Server
 {
@@ -35,6 +37,7 @@ namespace BlazorApp1.Server
 
             services.AddRazorPages();
             services.AddScoped<IAccountService, FakeAccountService>();
+            services.AddScoped<IVirtualMachineService, FakeVirtualMachineService>();
             //services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<FakeSeeder>();
         }

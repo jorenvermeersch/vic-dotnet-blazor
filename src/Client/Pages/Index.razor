@@ -51,7 +51,7 @@
 </div>
 
 @code {
-   string _startLabel = "24/10", _endLabel = "30/10";    
+    string _startLabel = "24/10", _endLabel = "30/10";    
 
     private IEnumerable<VirtualMachineDto.Index> virtualMachines;
     int offset = 0;
@@ -61,15 +61,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
-        totalVirtualMachines = virtualMachines.Count();
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
+        virtualMachines = response.VirtualMachines;
+        totalVirtualMachines = response.TotalAmount;
         totalPages = (totalVirtualMachines / 10) + 1;
     }
 
     async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 10;
-        virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
+        //virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
+        virtualMachines = response.VirtualMachines;
         selectedPage = pageNr;
     }
 }

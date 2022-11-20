@@ -1,5 +1,6 @@
 ﻿namespace Services;
 using Microsoft.Extensions.DependencyInjection;
+using Service.Account;
 using Shared.Account;
 
 public static class ServiceCollectionExtensions
