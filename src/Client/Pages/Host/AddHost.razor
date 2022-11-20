@@ -2,8 +2,9 @@
 @namespace Shared
 @using System.ComponentModel.DataAnnotations
 @layout NoGlobalSearchLayout
-@using Host
 @using Client.Validation
+@using Host
+@using Validation
 @using Specification
 @inject IHostService hostService
 @inject NavigationManager Navigation
@@ -14,7 +15,6 @@
 
 <EditForm Model="@Host" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator TValidator="HostValidation" />
-
     <div class="context-menu">
         <span class="context-menu-label">
             <TitlePage IconString="desktop" Type="Host" Mutation="Toevoegen" />

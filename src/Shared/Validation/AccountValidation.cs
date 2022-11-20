@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Shared.Account;
 
-namespace Client.Validation;
+namespace Shared.Validation;
 
 public class AccountValidation: AbstractValidator<AccountDto.Create>
 {
@@ -10,11 +10,11 @@ public class AccountValidation: AbstractValidator<AccountDto.Create>
 	{
         RuleFor(x => x.Firstname)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Voornaam")))
-            .Matches("^[a-zA-Z]{2}[- a-zA-Zéèçàùëüöï]*$").WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")))
+            .Matches(Validation.Name).WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")))
             .MinimumLength(_nameLength).WithMessage($"Voornaam heeft minstens {_nameLength} characters");
         RuleFor(x=>x.Lastname)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Naam")))
-            .Matches("^[a-zA-Z]{2}[- a-zA-Zéèçàùëüöï]*$").WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")))
+            .Matches(Validation.Name).WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
         
         RuleFor(x => x.Email)
@@ -22,7 +22,7 @@ public class AccountValidation: AbstractValidator<AccountDto.Create>
             .EmailAddress().WithMessage(string.Format(FormMessages.INVALIDEMAIL()));
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Wachtwoord")))
-            .Matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$").WithMessage(string.Format(FormMessages.INVALIDPASSWORD()));
+            .Matches(Validation.Password).WithMessage(string.Format(FormMessages.INVALIDPASSWORD()));
         RuleFor(x=>x.Role)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Rol")));
         RuleFor(x=>x.Department)

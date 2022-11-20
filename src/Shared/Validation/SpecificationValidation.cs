@@ -4,7 +4,7 @@ using Shared.Specification;
 using Shared.VirtualMachine;
 using static Shared.Host.HostDto;
 
-namespace Client.Validation;
+namespace Shared.Validation;
 
 [Obsolete]
 public class SpecificationValidation : AbstractValidator<SpecificationDto>

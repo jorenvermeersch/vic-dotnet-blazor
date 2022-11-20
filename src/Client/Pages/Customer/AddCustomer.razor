@@ -1,4 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations;
+@using Client.Validation
+@using Validation
 @namespace Shared
 @using customer
 @page "/customer/add"
@@ -16,7 +18,7 @@
         </span>
         <button type="submit">Toevoegen</button>
     </div>
-    <DataAnnotationsValidator/>
+    <FluentValidationValidator TValidator="CustomerValidation" />
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
@@ -32,6 +34,9 @@
             {
                 <AddInput PlaceHolder="" Type="@Input.InputType.TEXT" Label="Type extern" Required="@true" @bind-Value="Customer.CompanyType" For="@(() => Customer.CompanyType)" />
                 <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Customer.CompanyName" For="@(() => Customer.CompanyName)" />
+            }
+            else{
+                <div></div>
             }
         </div>
       <div class="one-third">

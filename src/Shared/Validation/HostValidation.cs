@@ -2,7 +2,7 @@
 using Shared.Host;
 using static Shared.Host.HostDto;
 
-namespace Client.Validation;
+namespace Shared.Validation;
 
 public class HostValidation : AbstractValidator<HostDto.Create>
 {
