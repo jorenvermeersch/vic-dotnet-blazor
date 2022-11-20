@@ -19,22 +19,17 @@ public static class VirtualMachineDto
     public class Index
     {
         public long Id { get; set; }
-        [Required]
         public string FQDN { get; set; }
-        [Required]
         public Status Status { get; set; }
     }
 
     public class Details : Index
     {
-        [Required]
         public string Name { get; set; }
-        public string Template { get; set; }
-        [Required]
-        public string Mode { get; set; }
+        public Template Template { get; set; }
+        public Mode Mode { get; set; }
         public List<string> Availabilities { get; set; }
-        [Required]
-        public string BackupFrequenty { get; set; }
+        public BackupFrequency BackupFrequenty { get; set; }
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
         public TimeSpanDto TimeSpan { get; set; } = new TimeSpanDto();
         public string Reason { get; set; }

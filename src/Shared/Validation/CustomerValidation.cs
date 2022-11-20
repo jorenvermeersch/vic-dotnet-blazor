@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domain.Constants;
+using FluentValidation;
 using Shared.customer;
 using Shared.VirtualMachine;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Validation;
 
-public class CustomerValidation : AbstractValidator<CustomerDto.Details>
+public class CustomerValidation : AbstractValidator<CustomerDto.Create>
 {
 	public CustomerValidation()
 	{

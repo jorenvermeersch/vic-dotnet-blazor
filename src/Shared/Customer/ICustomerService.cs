@@ -8,5 +8,5 @@ public interface ICustomerService
     Task<CustomerDto.Details> GetDetailAsync(long customerId);
     Task<int> GetCount();
 
-    Task<CustomerDto.Details> Add(CustomerDto.Details newCustomer);
+    Task<int> Add(CustomerDto.Create newCustomer);
 }

@@ -166,9 +166,9 @@
 
     private HashSet<string> _ports = new();
     public List<string> PortOptions { get; set; }
-    public List<string> Backups { get; set; } = new() { "Dagelijks", "Wekelijks", "Maandelijks", "Jaarlijks" };
-    public List<string> Modes { get; set; } = new() { "SAAS", "PAAS", "IAAS" };
-    public List<string> Templates { get; set; } = new() { "Geen Template", "AI" };
+    public List<string> Backups { get; set; } = Enum.GetNames(typeof(BackupFrequency)).ToList();
+    public List<string> Modes { get; set; } = Enum.GetNames(typeof(Mode)).ToList();
+    public List<string> Templates { get; set; } = Enum.GetNames(typeof(Template)).ToList();
     public List<string> Statuses { get; set; } = Enum.GetNames(typeof(Status)).ToList();
     private List<string>? Hosts { get; set; }
     private List<string>? Customers { get; set; }
@@ -190,6 +190,14 @@
         _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Rol", "User" } });
         for(int i=0; i<Statuses.Count; i++){
             Statuses[i] = localizer[Statuses[i]];
+        }
+        for (int i = 0; i < Backups.Count; i++)
+        {
+            Backups[i] = localizer[Backups[i]];
+        }
+        for (int i = 0; i < Templates.Count; i++)
+        {
+            Templates[i] = localizer[Templates[i]];
         }
 
         //editContext = new(selectedAvailability);

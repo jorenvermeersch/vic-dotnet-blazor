@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
+using Domain.Constants;
 
 namespace Shared.Account;
 
@@ -28,7 +29,7 @@ public class BogusAccountService : IAccountService
             .RuleFor(x => x.Firstname, f => f.Name.FirstName())
             .RuleFor(x => x.Lastname, f => f.Name.LastName())
             .RuleFor(x => x.Email, f => f.Internet.Email())
-            .RuleFor(x => x.Role, f => f.PickRandom(new[] { "Master", "Admin", "Waarnemer" }))
+            .RuleFor(x => x.Role, f => f.PickRandom(Enum.GetValues(typeof(Role)).Cast<Role>().ToArray()))
             .RuleFor(x => x.PasswordHash, f => f.Internet.Password())
             .RuleFor(x => x.IsActive, f => f.Random.Bool())
             .RuleFor(x => x.Department, f => f.PickRandom(departments))
@@ -49,7 +50,7 @@ public class BogusAccountService : IAccountService
             Firstname = newAccount.Firstname,
             Lastname = newAccount.Lastname,
             Email = newAccount.Email,
-            Role = newAccount.Role,
+            Role = TranslateEnums.TranslateRole(newAccount.Role),
             IsActive = newAccount.IsActive,
             Department = newAccount.Department,
             Education = newAccount.Education,
@@ -73,11 +74,11 @@ public class BogusAccountService : IAccountService
         IEnumerable<AccountDto.Index> items = await query.Select(x => new AccountDto.Index
         {
             Id = (int)x.Id,
-            Email= x.Email,
-            Firstname= x.Firstname,
-            Lastname= x.Lastname,
-            IsActive= x.IsActive,
-            Role = x.Role.ToString()
+            Email = x.Email,
+            Firstname = x.Firstname,
+            Lastname = x.Lastname,
+            IsActive = x.IsActive,
+            Role = x.Role
         }).ToListAsync();
 
         return items;

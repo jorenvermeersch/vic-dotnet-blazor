@@ -61,10 +61,10 @@
 @code {
 
 
-    private CustomerDto.Details Customer { get; set; } = new();
+    private CustomerDto.Create Customer { get; set; } = new();
     private EditForm? Editform { get; set; } = new();
-    private List<string> _typesClient = new() { "Extern", "Intern" };
-    private List<string> _institution = new() {"Hogent", "EhB"};
+    private List<string> _typesClient = Enum.GetNames(typeof(CustomerType)).ToList();
+    private List<string> _institution = Enum.GetNames(typeof(Institution)).ToList();
 
     private string _customcss = "background-color: white";
 
@@ -83,8 +83,8 @@
 
     private async void HandleValidSubmit()
     {
-        CustomerDto.Details newCustomer = await customerService.Add(Customer);
-        Navigation.NavigateTo("/customer/" + newCustomer.Id);
+        int newID = await customerService.Add(Customer);
+        Navigation.NavigateTo("/customer/" + newID);
     }
 }
 

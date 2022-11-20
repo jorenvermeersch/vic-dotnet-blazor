@@ -60,13 +60,12 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Id, _ => vmId++)
             .RuleFor(x => x.FQDN, f => f.Internet.DomainName())
             .RuleFor(x => x.Name, f => f.Internet.DomainWord())
-            .RuleFor(x => x.Template, f => f.PickRandom(new[] { "", "AI" }))
-            .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
-            .RuleFor(x => x.BackupFrequenty, f => f.PickRandom(new[] { "Dagelijks", "Wekelijks", "Maandelijks" }))
+            .RuleFor(x => x.Template, f => f.PickRandom(Enum.GetValues(typeof(Template)).Cast<Template>().ToList()))
+            .RuleFor(x => x.Mode, f => f.PickRandom(Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList()))
+            .RuleFor(x => x.BackupFrequenty, f => f.PickRandom(Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToList()))
             .RuleFor(x => x.Availabilities, f => Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(new[] { "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag" })).ToList())
             .RuleFor(x => x.Status, f => f.PickRandom(Enum.GetValues(typeof(Status)).Cast<Status>().ToList()))
             .RuleFor(x => x.Reason, f => f.PickRandom(new[] { "Bachelor proef", "AI trainen", "Database draaien" }))
-            .RuleFor(x => x.Mode, f => f.PickRandom(new[] { "SAAS", "PAAS", "IAAS" }))
             .RuleFor(x => x.ApplicationDate, f => f.Date.Past())
             .RuleFor(x=>x.Specification, f=>f.PickRandom(SpecificationService.specifications))
             .RuleFor(x=>x.TimeSpan, f=>f.PickRandom(TimeSapnService.timespan))
@@ -121,11 +120,11 @@ public class BogusVirtualMachineService : IVirtualMachineService
         {
             Id = newVM.Id,
             FQDN = newVM.FQDN,
-            Status = Status.Requested,
+            Status = TranslateEnums.TranslateStatus(newVM.Status),
             Name = newVM.Name,
-            Template = newVM.Template,
-            Mode = newVM.Mode,
-            BackupFrequenty = newVM.BackupFrequenty,
+            Template = TranslateEnums.TranslateTemplate(newVM.Template),
+            Mode = (Mode) Enum.Parse(typeof(Mode), newVM.Mode, true),
+            BackupFrequenty = TranslateEnums.TranslateBackupFrequency(newVM.BackupFrequenty),
             ApplicationDate = newVM.ApplicationDate,
             Reason = newVM.Reason,
             Ports = newVM.Ports,

@@ -1,4 +1,6 @@
 ﻿using Bogus;
+using Bogus.Bson;
+using Domain.Constants;
 using Shared.customer;
 using System;
 using System.Collections.Generic;
@@ -29,12 +31,12 @@ public class BogusCustomerService : ICustomerService
         var internalcustomerFaker = new Faker<CustomerDto.Details>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => customerId++)
-            .RuleFor(x => x.Institution, f => "Hogent")
+            .RuleFor(x => x.Institution, f => f.PickRandom(Enum.GetValues(typeof(Institution)).Cast<Institution>().ToArray()))
             .RuleFor(x => x.Department, f => f.PickRandom(departments))
             .RuleFor(x => x.Education, f => f.PickRandom(educations))
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
             .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts))
-            .RuleFor(x => x.CustomerType, f => "Intern");
+            .RuleFor(x => x.CustomerType, f => CustomerType.Intern);
 
 
 
@@ -47,7 +49,7 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.CompanyType, f => f.PickRandom(types))
             .RuleFor(x => x.ContactPerson, f => f.PickRandom(_contacts))
             .RuleFor(x => x.BackupContactPerson, f => f.PickRandom(_contacts))
-            .RuleFor(x => x.CustomerType, f => "Extern");
+            .RuleFor(x => x.CustomerType, CustomerType.Extern);
 
         customers = internalcustomerFaker.Generate(40);
         customers.AddRange(externalcustomerFaker.Generate(25));
@@ -75,10 +77,22 @@ public class BogusCustomerService : ICustomerService
         return Task.FromResult(customers.Count());
     }
 
-    public Task<CustomerDto.Details> Add(CustomerDto.Details newCustomer)
+    public Task<int> Add(CustomerDto.Create newCustomer)
     {
-        newCustomer.Id = customers.Count + 1;
-        customers.Add(newCustomer);
-        return Task.FromResult(newCustomer);
+        int id = customers.Count + 1;
+        Institution institution;
+        customers.Add(new CustomerDto.Details()
+        {
+            Id = id,
+            CompanyName = newCustomer.CompanyName,
+            CustomerType = (CustomerType) Enum.Parse(typeof(CustomerType), newCustomer.CustomerType, true),
+            CompanyType = newCustomer.CompanyType,
+            ContactPerson = newCustomer.ContactPerson,
+            BackupContactPerson = newCustomer.BackupContactPerson,
+            Institution = string.IsNullOrEmpty(newCustomer.Institution)? null : (Institution) Enum.Parse(typeof(Institution), newCustomer.Institution, true),
+            Department = newCustomer.Department,
+            Education = newCustomer.Education
+        });
+        return Task.FromResult(id);
     }
 }
