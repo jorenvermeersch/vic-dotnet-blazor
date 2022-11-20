@@ -53,7 +53,7 @@
 @code {
     string _startLabel = "24/10", _endLabel = "30/10";    
 
-    private IEnumerable<VirtualMachineDto.Index> virtualMachines;
+    private List<VirtualMachineDto.Index> virtualMachines = new();
     int offset = 0;
     int totalVirtualMachines = 0;
     int totalPages;
@@ -62,7 +62,8 @@
     protected override async Task OnInitializedAsync()
     {
         VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
-        virtualMachines = response.VirtualMachines;
+        virtualMachines.AddRange(response.VirtualMachines);
+        
         totalVirtualMachines = response.TotalAmount;
         totalPages = (totalVirtualMachines / 10) + 1;
     }
@@ -72,7 +73,7 @@
         offset = (pageNr - 1) * 10;
         //virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
         VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
-        virtualMachines = response.VirtualMachines;
+        virtualMachines.AddRange(response.VirtualMachines);
         selectedPage = pageNr;
     }
 }

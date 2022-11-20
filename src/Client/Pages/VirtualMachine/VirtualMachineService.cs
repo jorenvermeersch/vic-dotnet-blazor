@@ -27,7 +27,7 @@ namespace Client.Pages.VirtualMachine
         public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
         {
             var queryParameters = request.GetQueryString();
-            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"{endpoint}/");
+            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"{endpoint}");
             return response!;
         }
 
@@ -61,9 +61,11 @@ namespace Client.Pages.VirtualMachine
             throw new NotImplementedException();
         }
 
-        public Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+        public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
         {
-            throw new NotImplementedException();
+            var queryParameters = request.GetQueryString();
+            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"{endpoint}");
+            return response!;
         }
     }
 }

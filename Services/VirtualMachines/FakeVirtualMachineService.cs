@@ -141,8 +141,20 @@ public class FakeVirtualMachineService : IVirtualMachineService
         //}));
     }
 
-    public Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
     {
-        throw new NotImplementedException();
+        VirtualMachineResponse.GetIndex response = new();
+        var query = machines.AsQueryable();
+
+        response.TotalAmount = query.Count();
+
+        response.VirtualMachines = query.Select(x => new VirtualMachineDto.Index
+        {
+            Id = x.Id,
+            FQDN = x.Fqdn,
+            Status = x.Status,
+        }).ToList();
+
+        return response;
     }
 }
