@@ -20,10 +20,11 @@ namespace Server.Controllers.Accounts
 
         [SwaggerOperation("Returns a list of accounts")]
         [HttpGet]
-        public async Task<List<AccountDto.Index>> GetIndex()
+        public async Task<AccountResponse.GetIndex> GetIndex()
         {
-            IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync(50);
-            return accounts.ToList();
+            AccountRequest.GetIndex request = new() { Offset = 50 };
+            AccountResponse.GetIndex accountResponse = await accountService.GetIndexAsync(request);
+            return accountResponse;
         }
 
     }

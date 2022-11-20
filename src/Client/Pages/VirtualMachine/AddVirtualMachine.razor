@@ -13,7 +13,7 @@
 @inject IVirtualMachineService virtualMachineService
 @inject IHostService hostService
 @inject ICustomerService customerService
-@inject IPortService portService 
+@inject IPortService portService
 @inject IAccountService accountService
 
 @inject NavigationManager Navigation
@@ -42,7 +42,7 @@
 
             <RequiredInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachine.Reason" For="@(()=>VirtualMachine.Reason)" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Status" Items="@Statuses" @bind-Value="VirtualMachine.Status" For="@(()=>VirtualMachine.Status)" />
-            
+
             <EditForm Model="@Port" Context="PortContext" OnValidSubmit="@AddPortToList">
                 <Title Text="Poorten" />
                 <div>
@@ -60,16 +60,17 @@
             </EditForm>
 
             <div class="buttonList">
-                @foreach(var item in _ports){
+                @foreach (var item in _ports)
+                {
                     <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
                 }
             </div>
 
             <CustomCheckbox Label="VPN" @bind-Value="VirtualMachine.hasVpnConnection"></CustomCheckbox>
 
-            
 
-       
+
+
 
             <Title Text="Specificaties" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
@@ -85,17 +86,17 @@
 
 
             @*<EditForm Context="AvailabilityContext" OnValidSubmit="@AddAvailability" Model="@selectedAvailability">
-                <AvailabilityOptionSelect customCss="@_customcss" />
-                <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
-                    <button type="submit">Toevoegen</button>
-                </div>
-                
-          
-           </EditForm>
-           @foreach(var availability in Availabilities){
-                <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
-           }*@
-            
+            <AvailabilityOptionSelect customCss="@_customcss" />
+            <div style="display:flex; width: 100%; justify-content: end; margin: var(--padding-sm) 0px">
+            <button type="submit">Toevoegen</button>
+            </div>
+
+
+            </EditForm>
+            @foreach(var availability in Availabilities){
+            <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
+            }*@
+
 
             <Title Text="Back-ups" />
             <RequiredInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" @bind-Value="@VirtualMachine.BackupFrequenty" For="@(()=>VirtualMachine.BackupFrequenty)" />
@@ -186,7 +187,8 @@
 
         _entries.Add(0, new() { { "Gebruikernaam", "admin" }, { "Rol", "Admin" } });
         _entries.Add(1, new() { { "Gebruikernaam", "admin" }, { "Rol", "User" } });
-        for(int i=0; i<Statuses.Count; i++){
+        for (int i = 0; i < Statuses.Count; i++)
+        {
             Statuses[i] = localizer[Statuses[i]];
         }
 
@@ -198,7 +200,9 @@
         Hosts = hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
         IEnumerable<CustomerDto.Index> customers = await customerService.GetIndexAsync(0);
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
-        IEnumerable<AccountDto.Index> accounts = await accountService.GetIndexAsync(0);
+
+        AccountResponse.GetIndex accountResponse = await accountService.GetIndexAsync(new AccountRequest.GetIndex());
+        IEnumerable<AccountDto.Index> accounts = accountResponse.Accounts;
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
         availablePorts = await portService.GetIndexAsync();
         PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
@@ -224,7 +228,8 @@
         _ports.Remove(value);
     }
 
-    private void AddAvailability(){
+    private void AddAvailability()
+    {
         Availabilities.Add(selectedAvailability);
     }
 
@@ -251,4 +256,4 @@
     }
 
 }
-    
+

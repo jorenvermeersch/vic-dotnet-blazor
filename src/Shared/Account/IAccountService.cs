@@ -9,7 +9,9 @@ namespace Shared.Account;
 
 public interface IAccountService
 {
-    Task<IEnumerable<AccountDto.Index>> GetIndexAsync(int offset);
+    //Task<IEnumerable<AccountDto.Index>> GetIndexAsync(int offset);
+    //Task<AccountResponse.GetIndex> GetIndexAsync(int offset);
+    Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request);
     Task<AccountDto.Details> GetDetailAsync(long AccountId);
     Task<AccountDto.Details> Add(AccountDto.Create newAccount);
 }

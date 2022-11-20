@@ -11,20 +11,24 @@ namespace Persistence;
 
 public class VicDBContext : DbContext
 {
+    public VicDBContext(DbContextOptions<VicDBContext> options)
+            : base(options)
+    {
+    }
 
     public DbSet<Account> Accounts => Set<Account>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.EnableDetailedErrors();
-        optionsBuilder.EnableSensitiveDataLogging();
-        optionsBuilder.UseInMemoryDatabase(databaseName: "VicDb");
-        //optionsBuilder.UseTriggers(options =>
-        //{
-        //    options.AddTrigger<EntityBeforeSaveTrigger>();
-        //});
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    base.OnConfiguring(optionsBuilder);
+    //    optionsBuilder.EnableDetailedErrors();
+    //    optionsBuilder.EnableSensitiveDataLogging();
+    //    optionsBuilder.UseInMemoryDatabase(databaseName: "VicDb");
+    //    //optionsBuilder.UseTriggers(options =>
+    //    //{
+    //    //    options.AddTrigger<EntityBeforeSaveTrigger>();
+    //    //});
+    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

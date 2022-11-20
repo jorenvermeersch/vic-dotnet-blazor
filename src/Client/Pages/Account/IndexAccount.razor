@@ -4,7 +4,12 @@
 @using Account
 @inject IAccountService accountService
 @attribute [Authorize]
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@inject HttpClient Http
 
+@totalaccounts
 <div class="context-menu">
     <AuthorizeView Roles="Master">
         <Label Text="Toevoegen" />
@@ -52,50 +57,4 @@
     </div>
 </div>
 
-@code {
 
-    public string SearchValue { get; set; }
-    private IEnumerable<AccountDto.Index>? accounts;
-    int offset = 0;
-    int totalaccounts = 0;
-    int totalPages = 0;
-    int selectedPage = 1;
-    bool toggleAdmin;
-    bool toggleObserver;
-    bool toggleMaster;
-
-    protected override async Task OnInitializedAsync()
-    {
-        accounts = await accountService.GetIndexAsync(offset);
-        totalaccounts = accounts.Count();
-        totalPages = (totalaccounts / 20) + 1;
-    }
-
-    async Task ClickHandler(int pageNr)
-    {
-        offset = (pageNr - 1) * 20;
-        accounts = await accountService.GetIndexAsync(offset);
-        selectedPage = pageNr;
-    }
-    private void FilterAdmin()
-    {
-        toggleAdmin = !toggleAdmin;
-    }
-
-    private void FilterObserver()
-    {
-        toggleObserver = !toggleObserver;
-    }
-    private void FilterMaster()
-    {
-        toggleMaster = !toggleMaster;
-    }
-    private void ResetFilter()
-    {
-        SearchValue = "";
-        toggleAdmin = false;
-        toggleMaster = false;
-        toggleObserver = false;
-        StateHasChanged();
-    }
-}
