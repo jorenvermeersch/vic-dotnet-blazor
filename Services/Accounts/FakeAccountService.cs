@@ -21,7 +21,7 @@ public class FakeAccountService : IAccountService
     public FakeAccountService()
     {
         var accountsFaker = new AccountFaker();
-        accounts = accountsFaker.Generate(100);
+        accounts = accountsFaker.UseSeed(1337).Generate(100);
     }
 
     public Task<AccountDto.Details> Add(AccountDto.Create newAccount)

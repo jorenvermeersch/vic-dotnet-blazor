@@ -27,7 +27,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public FakeVirtualMachineService()
     {
         VirtualMachineFaker virtualMachineFaker = new VirtualMachineFaker(); 
-        machines = virtualMachineFaker.Generate(10);
+        machines = virtualMachineFaker.UseSeed(1337).Generate(10);
     }
 
     public Task<int> GetCount()
@@ -48,7 +48,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             Id = x.Id,
             FQDN = x.Fqdn,
             Status = x.Status,
-        }).ToList();
+        }).OrderBy(x => x.FQDN).ToList();
 
         return response;
     }
