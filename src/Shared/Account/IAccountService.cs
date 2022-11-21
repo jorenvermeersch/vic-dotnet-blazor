@@ -10,6 +10,6 @@ namespace Shared.Account;
 public interface IAccountService
 {
     Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request);
-    Task<AccountDto.Details> GetDetailAsync(long AccountId);
+    Task<AccountResponse.GetDetail> GetDetailAsync(/*long AccountId*/ AccountRequest.GetDetail request);
     Task<AccountDto.Details> Add(AccountDto.Create newAccount);
 }

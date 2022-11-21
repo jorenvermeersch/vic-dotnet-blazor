@@ -27,10 +27,6 @@ public class AccountService : IAccountService
         throw new NotImplementedException();
     }
 
-    public Task<AccountDto.Details> GetDetailAsync(long AccountId)
-    {
-        throw new NotImplementedException();
-    }
 
     //public async Task<AccountResponse.GetIndex> GetIndexAsync(int offset)
     public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
@@ -51,5 +47,10 @@ public class AccountService : IAccountService
         }).ToListAsync();
 
         return response;
+    }
+
+    public Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
+    {
+        throw new NotImplementedException();
     }
 }

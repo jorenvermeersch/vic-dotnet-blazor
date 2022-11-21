@@ -10,7 +10,7 @@ public static class AccountRequest
 {
     public class GetIndex
     {
-        public string SearchTerm { get; set; }
+        public string SearchTerm { get; set; } = string.Empty;
         public bool OnlyActiveProducts { get; set; }
         public decimal? MinimumPrice { get; set; }
         public decimal? MaximumPrice { get; set; }
@@ -21,6 +21,7 @@ public static class AccountRequest
 
     public class GetDetail
     {
+        public int AccountId { get; set; }
     }
 
     public class Delete

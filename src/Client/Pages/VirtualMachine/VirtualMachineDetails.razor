@@ -80,7 +80,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        virtualMachine = await VirtualMachineService.GetDetailAsync(Id);
+        //virtualMachine = await VirtualMachineService.GetDetailAsync(Id);
 
         _defaultInformation.Add("Naam", virtualMachine.Name);
         _defaultInformation.Add("FQDN", virtualMachine.FQDN);

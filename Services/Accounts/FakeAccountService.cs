@@ -29,9 +29,25 @@ public class FakeAccountService : IAccountService
         throw new NotImplementedException();
     }
 
-    public Task<AccountDto.Details> GetDetailAsync(long AccountId)
+    public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
     {
-        throw new NotImplementedException();
+        AccountResponse.GetDetail response = new();
+        var query = accounts.AsQueryable();
+
+        response.Account = query.Select(x => new AccountDto.Details
+        {
+            Id = (int)x.Id,
+            Firstname = x.Firstname,
+            Lastname = x.Lastname,
+            Email = x.Email,
+            Role = x.Role,
+            IsActive = x.IsActive,
+            PasswordHash = x.PasswordHash,
+            Department = x.Department,
+            Education = x.Education
+        }).SingleOrDefault(x => x.Id == request.AccountId)!;
+
+        return response;
     }
 
     //public async Task<AccountResponse.GetIndex> GetIndexAsync(int offset)

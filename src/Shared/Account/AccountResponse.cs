@@ -16,7 +16,7 @@ public static class AccountResponse
 
     public class GetDetail
     {
-        
+        public AccountDto.Details Account { get; set; }
     }
 
     public class Delete

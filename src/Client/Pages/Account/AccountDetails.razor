@@ -37,6 +37,8 @@
 
         <Title Text="Virtuele machines" />
 
+
+        @*//TODO: machines have not been fetched yet*@
         @if (virtualMachines.Any())
         {
             <div class="two-columns-container">
@@ -82,7 +84,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //account = await accountService.GetDetailAsync(Id);
+        AccountRequest.GetDetail request = new AccountRequest.GetDetail { AccountId = (int)Id };
+        AccountResponse.GetDetail response = await accountService.GetDetailAsync(request);
+        account = response.Account;
+
 
         _username.Add("Naam", string.Concat(account.Firstname, " ", account.Lastname));
         _general.Add("Role",localizer[account.Role.ToString()]);
@@ -90,8 +95,10 @@
         _general.Add("Opleiding", account.Education);
         _contactInformation.Add("E-mailadres", account.Email);
 
-        virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
-        totalVirtualMachines = virtualMachines.Count();
+
+        VirtualMachineResponse.GetIndex vmresponse = await virtualMachineService.GetVirtualMachinesByAccountId(new VirtualMachineRequest.GetByObjectId { ObjectId = account.Id });
+        virtualMachines = vmresponse.VirtualMachines;
+        totalVirtualMachines = vmresponse.TotalAmount;
         totalPages = (totalVirtualMachines / 10) + 1;
 
     }
@@ -102,9 +109,9 @@
     }
     async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 10;
-        virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
-        selectedPage = pageNr;
+        //offset = (pageNr - 1) * 10;
+        //virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
+        //selectedPage = pageNr;
     }
 }
 

@@ -18,15 +18,17 @@ namespace Client.Pages.Account
             throw new NotImplementedException();
         }
 
-        public Task<AccountDto.Details> GetDetailAsync(long AccountId)
+        public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
         {
-            throw new NotImplementedException();
+            var queryParameters = request.GetQueryString();
+            var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetDetail>($"api/accounts/{request.AccountId}");
+            return response;
         }
 
         public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
         {
             var queryParameters = request.GetQueryString();
-            var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetIndex>($"{endpoint}/");
+            var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetIndex>("api/accounts");
             return response;
         }
     }

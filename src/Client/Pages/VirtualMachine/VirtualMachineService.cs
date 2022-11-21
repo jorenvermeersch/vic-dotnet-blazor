@@ -30,26 +30,6 @@ namespace Client.Pages.VirtualMachine
             return response;
         }
 
-        Task<VirtualMachineDto.Details> IVirtualMachineService.GetDetailAsync(long virtualMachineId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(long userId, int offset)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(long hostId, int offset)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByAccountId(long accountId, int offset)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<int> GetCount()
         {
             throw new NotImplementedException();
@@ -65,6 +45,28 @@ namespace Client.Pages.VirtualMachine
             var queryParameters = request.GetQueryString();
             var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines");
             return response;
+        }
+
+        public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+        {
+            var queryParameters = request.GetQueryString();
+            var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines/account/{request.ObjectId}");
+            return response;
+        }
+
+        public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(VirtualMachineRequest.GetByObjectId request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(VirtualMachineRequest.GetByObjectId request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

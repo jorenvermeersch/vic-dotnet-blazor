@@ -84,7 +84,7 @@
     protected override async Task OnInitializedAsync()
     {
         customer = await customerService.GetDetailAsync(Id);
-        virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(Id, offset);
+        //virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(Id, offset);
         totalVirtualMachines = virtualMachines.Count();
         totalPages = (totalVirtualMachines / 10) + 1;
 
@@ -121,7 +121,7 @@
     async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 10;
-        virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(customer.Id, offset);
+        //virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(customer.Id, offset);
         selectedPage = pageNr;
     }
 }

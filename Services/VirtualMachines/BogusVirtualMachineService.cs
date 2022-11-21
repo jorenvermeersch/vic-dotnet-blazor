@@ -17,6 +17,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static Shared.VirtualMachine.VirtualMachineRequest;
 
 namespace Server.VirtualMachines;
 
@@ -198,14 +199,16 @@ public class BogusVirtualMachineService : IVirtualMachineService
         }));
     }
 
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByAccountId(long accountId, int offset)
+    public Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     {
-        return Task.FromResult(_virtualMachines.Where(vm => vm.Account.Id == accountId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
-        {
-            Id = x.Id,
-            FQDN = x.FQDN,
-            Status = x.Status,
-        }));
+        //return Task.FromResult(_virtualMachines.Where(vm => vm.Account.Id == accountId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
+        //{
+        //    Id = x.Id,
+        //    FQDN = x.FQDN,
+        //    Status = x.Status,
+        //}));
+
+        return null;
     }
 
     public Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
@@ -214,6 +217,21 @@ public class BogusVirtualMachineService : IVirtualMachineService
     }
 
     public Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(GetDetail request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(GetByObjectId request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(GetByObjectId request)
     {
         throw new NotImplementedException();
     }

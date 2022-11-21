@@ -32,7 +32,7 @@ namespace Shared
         public string SearchValue { get; set; }
 
 
-        private IEnumerable<AccountDto.Index>? accounts;
+        private List<AccountDto.Index> accounts;
         int offset = 0;
         int totalaccounts = 0;
         int totalPages = 0;
