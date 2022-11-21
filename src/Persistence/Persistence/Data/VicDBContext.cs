@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Core;
 using System.Reflection;
 
-namespace Persistence;
+namespace Persistence.Data;
 
 public class VicDBContext : DbContext
 {
@@ -18,18 +18,6 @@ public class VicDBContext : DbContext
 
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
-
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    base.OnConfiguring(optionsBuilder);
-    //    optionsBuilder.EnableDetailedErrors();
-    //    optionsBuilder.EnableSensitiveDataLogging();
-    //    optionsBuilder.UseInMemoryDatabase(databaseName: "VicDb");
-    //    //optionsBuilder.UseTriggers(options =>
-    //    //{
-    //    //    options.AddTrigger<EntityBeforeSaveTrigger>();
-    //    //});
-    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

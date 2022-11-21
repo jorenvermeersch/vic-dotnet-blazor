@@ -1,6 +1,10 @@
-﻿public abstract class Entity
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+public abstract class Entity
 {
-    public virtual long Id { get; protected set; }
+    [Key]
+    public virtual long Id { get; init; }
 
     protected Entity() { }
 

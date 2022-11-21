@@ -2,9 +2,9 @@
 using Domain.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
 using Shared.Account;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Data;
 
 namespace Services.Accounts;
 

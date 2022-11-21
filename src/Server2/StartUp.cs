@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Persistence;
+using Persistence.Data;
 using Service.Account;
 using Service.VirtualMachines;
 using Shared.Account;
