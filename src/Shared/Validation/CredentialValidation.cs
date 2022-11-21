@@ -2,7 +2,7 @@
 using Shared.Validation;
 using Shared.VirtualMachine;
 
-namespace Client.Validation;
+namespace Shared.Validation;
 
 public class CredentialValidation : AbstractValidator<CredentialDto>
 {
@@ -13,7 +13,7 @@ public class CredentialValidation : AbstractValidator<CredentialDto>
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Username")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
         RuleFor(x => x.PasswordHash)
-            .Matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$").WithMessage(string.Format(FormMessages.INVALIDPASSWORD()))
+            .Matches(Validation.Password).WithMessage(string.Format(FormMessages.INVALIDPASSWORD()))
             .NotEmpty().WithMessage("Geef een waarde in");
         RuleFor(x => x.Role)
            .NotEmpty().WithMessage("Geef een waarde in");

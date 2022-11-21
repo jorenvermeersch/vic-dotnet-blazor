@@ -1,4 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations;
+@using Client.Validation
+@using Validation
 @namespace Shared
 @using customer
 @page "/customer/add"
@@ -16,7 +18,7 @@
         </span>
         <button type="submit">Toevoegen</button>
     </div>
-    <DataAnnotationsValidator/>
+    <FluentValidationValidator TValidator="CustomerValidation" />
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
@@ -32,6 +34,9 @@
             {
                 <AddInput PlaceHolder="" Type="@Input.InputType.TEXT" Label="Type extern" Required="@true" @bind-Value="Customer.CompanyType" For="@(() => Customer.CompanyType)" />
                 <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Customer.CompanyName" For="@(() => Customer.CompanyName)" />
+            }
+            else{
+                <div></div>
             }
         </div>
       <div class="one-third">
@@ -56,10 +61,10 @@
 @code {
 
 
-    private CustomerDto.Details Customer { get; set; } = new();
+    private CustomerDto.Create Customer { get; set; } = new();
     private EditForm? Editform { get; set; } = new();
-    private List<string> _typesClient = new() { "Extern", "Intern" };
-    private List<string> _institution = new() {"Hogent", "EhB"};
+    private List<string> _typesClient = Enum.GetNames(typeof(CustomerType)).ToList();
+    private List<string> _institution = Enum.GetNames(typeof(Institution)).ToList();
 
     private string _customcss = "background-color: white";
 
@@ -78,8 +83,8 @@
 
     private async void HandleValidSubmit()
     {
-        CustomerDto.Details newCustomer = await customerService.Add(Customer);
-        Navigation.NavigateTo("/customer/" + newCustomer.Id);
+        int newID = await customerService.Add(Customer);
+        Navigation.NavigateTo("/customer/" + newID);
     }
 }
 

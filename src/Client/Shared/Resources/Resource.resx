@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Admin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="AI" xml:space="preserve">
+    <value>Artificiële intelligentie</value>
+  </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Dagelijks</value>
+  </data>
   <data name="Deployed" xml:space="preserve">
     <value>In gebruik</value>
   </data>
@@ -129,8 +138,23 @@
   <data name="InProgress" xml:space="preserve">
     <value>In verwerking</value>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
   <data name="Monday" xml:space="preserve">
     <value>Maandag</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Maandelijks</value>
+  </data>
+  <data name="NoBackup" xml:space="preserve">
+    <value>Geen backup</value>
+  </data>
+  <data name="NoTemplate" xml:space="preserve">
+    <value>Geen template</value>
+  </data>
+  <data name="Observer" xml:space="preserve">
+    <value>Waarnemer</value>
   </data>
   <data name="ReadyToDeploy" xml:space="preserve">
     <value>Geconfigureerd</value>
@@ -150,7 +174,13 @@
   <data name="Tuesday" xml:space="preserve">
     <value>Dinsdag</value>
   </data>
+  <data name="WebServer" xml:space="preserve">
+    <value>Web Server</value>
+  </data>
   <data name="Wednesday" xml:space="preserve">
     <value>Woensdag</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Wekelijks</value>
   </data>
 </root>

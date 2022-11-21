@@ -1,4 +1,6 @@
-﻿namespace Shared.Validation;
+﻿using System.Numerics;
+
+namespace Shared.Validation;
 
 public static class FormMessages
 {

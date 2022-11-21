@@ -2,9 +2,10 @@
 @layout NoGlobalSearchLayout
 @namespace Shared
 @using Account
-@using Client.Validation
+@using Validation
 @inject IAccountService accountService
 @inject NavigationManager Navigation
+@inject IStringLocalizer<Client.Shared.Resources.Resource> localizer
 @attribute [Authorize(Roles = "Master")]
 
 <PageTitle>Account Toevoegen</PageTitle>
@@ -45,7 +46,15 @@
 
 @code {
     private AccountDto.Create Account { get; set; } = new();
-    private List<string> roles = new() { "Admin", "Waarnemer" };
+    private List<string> roles = Enum.GetNames(typeof(Role)).ToList();
+
+    protected override void OnInitialized()
+    {
+        for(int i=0; i<roles.Count; i++){
+            roles[i] = localizer[roles[i]];
+        }
+    }
+
     private async void HandleValidSubmit()
     {
         Console.WriteLine(Account.IsActive);

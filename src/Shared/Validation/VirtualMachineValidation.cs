@@ -2,7 +2,7 @@
 using Shared.Validation;
 using Shared.VirtualMachine;
 
-namespace Client.Validation;
+namespace Shared.Validation;
 
 [Obsolete]
 public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Create>

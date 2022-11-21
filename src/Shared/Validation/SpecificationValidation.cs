@@ -2,7 +2,7 @@
 using Shared.Specification;
 using Shared.Validation;
 
-namespace Client.Validation;
+namespace Shared.Validation;
 
 [Obsolete]
 public class SpecificationValidation : AbstractValidator<SpecificationDto>
