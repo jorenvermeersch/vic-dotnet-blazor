@@ -49,7 +49,7 @@ public class FakeAccountService : IAccountService
             Firstname = x.Firstname,
             Lastname = x.Lastname,
             IsActive = x.IsActive,
-            Role = x.Role.ToString()
+            Role = x.Role
         }).ToList();
 
         return response;
