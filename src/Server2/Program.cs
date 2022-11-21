@@ -42,12 +42,6 @@
 
 //app.Run();
 
-
-using Domain.Constants;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System;
-
 namespace BlazorApp1.Server;
 
 public class Program

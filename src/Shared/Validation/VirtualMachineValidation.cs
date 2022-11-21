@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using Shared.Host;
+using Shared.Validation;
 using Shared.VirtualMachine;
-using static Shared.Host.HostDto;
 
 namespace Client.Validation;
 
