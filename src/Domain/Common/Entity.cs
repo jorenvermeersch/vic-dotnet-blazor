@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 public abstract class Entity
 {
     [Key]
-    public virtual long Id { get; init; }
+    public virtual long Id
+    {
+        get; init;
+    }
 
     protected Entity() { }
 

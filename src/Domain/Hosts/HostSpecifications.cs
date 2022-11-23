@@ -5,7 +5,7 @@ namespace Domain.Common;
 public class HostSpecifications : Specifications
 {
     #region Properties
-    public Dictionary<Processor, int> VirtualisationFactors { get; set; } = new(); // Key : Value => Processor : virtualisation factor.
+    public Dictionary<Processor, int> VirtualisationFactors { get; set; } = new(); // Key : Value => Processor : Virtualisation factor.
     public new int Processors =>
         VirtualisationFactors.Select(pair => pair.Key.Cores * pair.Value).Sum(); // Sum of: Cores * virtualisation factor.
     #endregion
@@ -17,6 +17,18 @@ public class HostSpecifications : Specifications
         VirtualisationFactors = processors;
         Storage = storage;
         Memory = memory;
+    }
+    #endregion
+
+    #region Methods
+    public void AddProccessor(Processor processor, int virtualisationFactor)
+    {
+        VirtualisationFactors.Add(processor, virtualisationFactor);
+    }
+
+    public void RemoveProcessor(Processor processor)
+    {
+        VirtualisationFactors.Remove(processor);
     }
     #endregion
 }
