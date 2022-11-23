@@ -1,6 +1,7 @@
 ﻿using Domain.Constants;
+using Domain.VirtualMachines;
 
-namespace Domain.Core;
+namespace Domain.Customers;
 
 [ToString]
 public class InternalCustomer : Customer

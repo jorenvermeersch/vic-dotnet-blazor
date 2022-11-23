@@ -1,6 +1,9 @@
 ﻿using BogusStore.Fakers.Common;
+using Domain.Administrators;
+using Domain.Common;
 using Domain.Constants;
-using Domain.Core;
+using Domain.Customers;
+using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.Credentials;
 using Fakers.Specification;
@@ -37,7 +40,7 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
         );
         
         TimeSpanFaker timeSpanFaker = new TimeSpanFaker();
-        List<Domain.Core.TimeSpan> timespans = timeSpanFaker.Generate(5);
+        List<Domain.VirtualMachines.TimeSpan> timespans = timeSpanFaker.Generate(5);
 
         SpecificationFaker specificationFaker = new SpecificationFaker();
         List<Specifications> specifications = specificationFaker.Generate(10);

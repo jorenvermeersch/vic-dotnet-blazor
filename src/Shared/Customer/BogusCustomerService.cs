@@ -1,10 +1,6 @@
 ﻿using Bogus;
-using Bogus.Bson;
 using Domain.Constants;
 using Shared.customer;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Shared.Customer;
 
@@ -66,11 +62,12 @@ public class BogusCustomerService : ICustomerService
 
     Task<IEnumerable<CustomerDto.Index>> ICustomerService.GetIndexAsync(int offset)
     {
-        return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index {
+        return Task.FromResult(customers.Skip(offset).Take(20).Select(x => new CustomerDto.Index
+        {
             Id = x.Id,
             Name = x.ContactPerson.Firstname + " " + x.ContactPerson.Lastname,
             Email = x.ContactPerson.Email
-        })) ;
+        }));
     }
     Task<int> ICustomerService.GetCount()
     {
@@ -85,11 +82,11 @@ public class BogusCustomerService : ICustomerService
         {
             Id = id,
             CompanyName = newCustomer.CompanyName,
-            CustomerType = (CustomerType) Enum.Parse(typeof(CustomerType), newCustomer.CustomerType, true),
+            CustomerType = (CustomerType)Enum.Parse(typeof(CustomerType), newCustomer.CustomerType, true),
             CompanyType = newCustomer.CompanyType,
             ContactPerson = newCustomer.ContactPerson,
             BackupContactPerson = newCustomer.BackupContactPerson,
-            Institution = string.IsNullOrEmpty(newCustomer.Institution)? null : (Institution) Enum.Parse(typeof(Institution), newCustomer.Institution, true),
+            Institution = string.IsNullOrEmpty(newCustomer.Institution) ? null : (Institution)Enum.Parse(typeof(Institution), newCustomer.Institution, true),
             Department = newCustomer.Department,
             Education = newCustomer.Education
         });

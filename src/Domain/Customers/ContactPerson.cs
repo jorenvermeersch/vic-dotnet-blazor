@@ -1,6 +1,5 @@
-﻿namespace Domain.Core;
+﻿namespace Domain.Customers;
 
-//[ToString]
 public class ContactPerson : Entity
 {
     #region Properties

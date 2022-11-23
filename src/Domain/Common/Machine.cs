@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Core;
+namespace Domain.Common;
 
 public abstract class Machine : Entity
 {

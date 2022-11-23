@@ -1,16 +1,18 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.Administrators;
+using Domain.Common;
 using Domain.Constants;
+using Domain.Customers;
+using Domain.Hosts;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Core;
+namespace Domain.VirtualMachines;
 
-//[ToString]
 public class VirtualMachine : Machine
 {
     #region Fields
     private Host<VirtualMachine> _host;
     #endregion
-
 
     #region Properties
     [NotMapped]

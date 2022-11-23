@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using BogusStore.Fakers.Common;
+using Domain.Administrators;
 using Domain.Constants;
-using Domain.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Domain.Core;
 
 namespace BogusStore.Fakers.Common;
 

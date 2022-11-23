@@ -1,17 +1,13 @@
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Client;
 using Client.Shared;
-using Shared.customer;
-using Shared.VirtualMachine;
-using Shared.Customer;
-using Domain.Core;
-using Shared.Host;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Shared.Account;
+using Shared.customer;
+using Shared.Customer;
+using Shared.Host;
 using Shared.Port;
-using Services.Accounts;
-using Server.VirtualMachines;
+using Shared.VirtualMachine;
 
 namespace Client
 {
@@ -30,7 +26,7 @@ namespace Client
                 //BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
             });
 
-           
+
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             builder.Services.AddAuthorizationCore();

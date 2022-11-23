@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.VirtualMachines;
 
-namespace Domain.Core;
+namespace Domain.Customers;
 
 public abstract class Customer : Entity
 {
@@ -47,12 +48,11 @@ public abstract class Customer : Entity
     }
     #endregion
 
-    //TODO: Validate contact uncomment
     private void ValidateContacts(ContactPerson contactPerson, ContactPerson? backupContact)
     {
         if (contactPerson.HasTheSameContactInformation(backupContact))
         {
-            //throw new ArgumentException("Contact person and backup contact should be different");
+            throw new ArgumentException("Contact person and backup contact should be different");
         }
     }
 }

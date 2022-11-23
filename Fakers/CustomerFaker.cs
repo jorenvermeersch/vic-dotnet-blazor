@@ -1,6 +1,6 @@
 ﻿using BogusStore.Fakers.Common;
 using Domain.Constants;
-using Domain.Core;
+using Domain.Customers;
 using Fakers.ContactPersons;
 using System;
 using System.Collections.Generic;

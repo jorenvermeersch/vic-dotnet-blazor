@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Domain.Core;
+namespace Domain.Administrators;
 
 [ToString]
 public class Account : Entity

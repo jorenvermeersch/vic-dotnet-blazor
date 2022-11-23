@@ -19,7 +19,7 @@ public static class VirtualMachineWithoutSpecifications
             Fqdn = $"devops-hogent-{_count}",
             Availabilities = new[] { Availability.Wednesday },
             ApplicationDate = DateTime.Now,
-            TimeSpan = new Domain.Core.TimeSpan(DateTime.Now, DateTime.Now),
+            TimeSpan = new Domain.VirtualMachines.TimeSpan(DateTime.Now, DateTime.Now),
             Status = Status.Deployed,
             Host = server,
             Reason = "reason",

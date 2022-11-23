@@ -1,22 +1,12 @@
-﻿using Bogus;
-using Shared.customer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Persistence;
-using Microsoft.EntityFrameworkCore;
-using Fakers.Accounts;
-using Domain.Constants;
+﻿using Fakers.Accounts;
 using Shared.Account;
 
 namespace Service.Account;
 
 public class FakeAccountService : IAccountService
 {
-    public readonly List<Domain.Core.Account> accounts = new();
-    
+    public readonly List<Domain.Administrators.Account> accounts = new();
+
 
     public FakeAccountService()
     {

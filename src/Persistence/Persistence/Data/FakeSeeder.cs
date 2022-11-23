@@ -1,7 +1,7 @@
-﻿using Domain.Core;
+﻿using Domain.Administrators;
+using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.VirtualMachines;
-using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Data;
 

@@ -1,6 +1,5 @@
-﻿namespace Domain.Core;
+﻿namespace Domain.Common;
 
-[ToString]
 public class Specifications : Entity
 {
     #region Properties
@@ -11,6 +10,12 @@ public class Specifications : Entity
     #endregion
 
     #region Constructors
+    public Specifications(int memory, int storage)
+    {
+        Memory = memory;
+        Storage = storage;
+    }
+
     public Specifications(int processors, int memory, int storage)
     {
         Processors = processors;
@@ -20,11 +25,9 @@ public class Specifications : Entity
     #endregion
 
     #region Methods
-    public bool HasResourcesFor(Specifications specs)
+    public virtual bool HasResourcesFor(Specifications specs)
     {
-        return (Processors >= specs.Processors)
-            && (Memory >= specs.Memory)
-            && (Storage >= specs.Storage);
+        return Processors >= specs.Processors && Memory >= specs.Memory && Storage >= specs.Storage;
     }
 
     public override bool Equals(object? obj)
@@ -38,9 +41,7 @@ public class Specifications : Entity
         if (ReferenceEquals(this, other))
             return true;
 
-        return (other.Processors == Processors)
-            && (other.Memory == Memory)
-            && (other.Storage == Storage);
+        return other.Processors == Processors && other.Memory == Memory && other.Storage == Storage;
     }
 
     public override int GetHashCode()

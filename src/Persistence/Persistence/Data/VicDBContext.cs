@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Domain.Core;
 using System.Reflection;
+using Domain.Administrators;
+using Domain.VirtualMachines;
 
 namespace Persistence.Data;
 

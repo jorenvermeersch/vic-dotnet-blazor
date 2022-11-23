@@ -1,6 +1,10 @@
-﻿using Domain.Constants;
+﻿using Domain.Administrators;
+using Domain.Common;
+using Domain.Constants;
+using Domain.Customers;
+using Domain.Hosts;
 
-namespace Domain.Core;
+namespace Domain.VirtualMachines;
 
 public class VirtualMachineArgs
 {

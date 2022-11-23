@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
+using Domain.Common;
 
-namespace Domain.Core;
+namespace Domain.Hosts;
 
 public abstract class Host<T> : Machine where T : Machine
 {

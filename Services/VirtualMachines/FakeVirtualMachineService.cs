@@ -1,32 +1,16 @@
-﻿using Bogus;
-using Domain.Constants;
-using Domain.Core;
+﻿using Domain.Constants;
+using Domain.VirtualMachines;
 using Fakers.VirtualMachines;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-using Shared.Account;
-using Shared.customer;
-using Shared.Customer;
-using Shared.Host;
-using Shared.Port;
-using Shared.Shared;
-using Shared.Specification;
 using Shared.VirtualMachine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.VirtualMachines;
 
 public class FakeVirtualMachineService : IVirtualMachineService
 {
-    public readonly List<Domain.Core.VirtualMachine> machines = new();
+    public readonly List<VirtualMachine> machines = new();
     public FakeVirtualMachineService()
     {
-        VirtualMachineFaker virtualMachineFaker = new VirtualMachineFaker(); 
+        VirtualMachineFaker virtualMachineFaker = new();
         machines = virtualMachineFaker.UseSeed(1337).Generate(10);
     }
 
@@ -89,7 +73,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             Id = x.Id,
             FQDN = x.Fqdn,
             Status = x.Status,
-            Account = new () { Id = (int)x.Account.Id }
+            Account = new() { Id = (int)x.Account.Id }
         }).Where(x => x.Account.Id == request.ObjectId).ToList()).Select(x => new VirtualMachineDto.Index { Id = x.Id, FQDN = x.FQDN, Status = x.Status }).ToList();
 
         response.TotalAmount = response.VirtualMachines.Count();

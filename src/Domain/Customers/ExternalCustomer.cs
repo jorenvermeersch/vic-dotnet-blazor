@@ -1,4 +1,6 @@
-﻿namespace Domain.Core;
+﻿using Domain.VirtualMachines;
+
+namespace Domain.Customers;
 
 [ToString]
 public class ExternalCustomer : Customer
@@ -8,7 +10,7 @@ public class ExternalCustomer : Customer
     public string Type { get; set; }
     #endregion
 
-    #region Construcors
+    #region Constructors
     public ExternalCustomer(
         string name,
         string type,
