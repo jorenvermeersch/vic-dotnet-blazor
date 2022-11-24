@@ -7,23 +7,25 @@
     display: inline-block;
 }
 
-    .page-selector button {
-        font-family: Graphik, sans-serif;
-        height: 36px;
-        padding: 0px 10px;
-        cursor: pointer;
-        background-color: transparent;
-        border: none;
-        margin: 0px var(--padding-sm);
-    }
+.page-selector button {
+    font-family: var(--font-stack);
+    font-weight: normal;
+    color: var(--black);
+    height: 36px;
+    padding: 0px 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    margin: 0px var(--padding-sm);
+}
 
+.page-selector button.selected,
 .page-selector button:hover {
-    background-color: #f2f7fb;
+    background-color: var(--light-blue);
+    border-radius: var(--border-radius);
 }
 
 .page-selector button.selected {
-    color: #3c6999;
-    background-color: #f2f7fb;
-    border-radius: 2px;
+    color: var(--dark-blue);
     font-weight: 600;
 }
