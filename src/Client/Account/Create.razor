@@ -1,11 +1,5 @@
 ﻿@page "/account/add"
 @layout NoGlobalSearchLayout
-@namespace Shared
-@using Account
-@using Validation
-@inject IAccountService accountService
-@inject NavigationManager Navigation
-@inject IStringLocalizer<Client.Shared.Resources.Resource> localizer
 @attribute [Authorize(Roles = "Master")]
 
 <PageTitle>Account Toevoegen</PageTitle>
@@ -44,21 +38,4 @@
     </div>
 </EditForm>
 
-@code {
-    private AccountDto.Create Account { get; set; } = new();
-    private List<string> roles = Enum.GetNames(typeof(Role)).ToList();
 
-    protected override void OnInitialized()
-    {
-        for(int i=0; i<roles.Count; i++){
-            roles[i] = localizer[roles[i]];
-        }
-    }
-
-    private async void HandleValidSubmit()
-    {
-        Console.WriteLine(Account.IsActive);
-        AccountDto.Details newAccount = await accountService.Add(Account);
-        Navigation.NavigateTo("account/" + newAccount.Id);
-    }
-}

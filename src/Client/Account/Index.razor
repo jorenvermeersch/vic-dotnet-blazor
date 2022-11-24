@@ -1,13 +1,4 @@
 ﻿@page "/account/list"
-@layout MainLayout
-@namespace Shared
-@using Account
-@inject IAccountService accountService
-@attribute [Authorize]
-@using System.Net.Http
-@using System.Net.Http.Json
-@using System.Threading.Tasks
-@inject HttpClient Http
 
 <div class="context-menu">
     <AuthorizeView Roles="Master">
