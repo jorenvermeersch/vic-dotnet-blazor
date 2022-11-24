@@ -118,16 +118,27 @@ public abstract class Host<T> : Machine where T : Machine
         UpdateRemainingResources();
     }
 
-
     public void AddProcessor(Processor processor, int virtualisationFactor)
     {
+        // Check for negative or zero virtualisation factor happens in HostSpecifications.
         _specifications.AddProccessor(processor, virtualisationFactor);
         UpdateRemainingResources();
     }
 
     public void RemoveProcessor(Processor processor)
     {
-        // TODO: Implement. 
+        // Throws if specifications does not contain processor.
+        int virtualisationFactor = Specifications.GetVirtualisationFactor(processor);
+
+        if (RemainingResources.Processors < processor.Cores * virtualisationFactor)
+        {
+            throw new ArgumentException(
+                $"{GetType().Name} {Name} does not have enough processors to support all machines"
+            );
+        }
+
+        _specifications.RemoveProcessor(processor);
+        UpdateRemainingResources();
     }
     #endregion
 }

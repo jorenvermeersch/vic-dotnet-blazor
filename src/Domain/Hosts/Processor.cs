@@ -16,4 +16,21 @@ public class Processor : Entity
         Threads = threads;
     }
     #endregion
+
+    #region Methods
+    public override bool Equals(object? obj)
+    {
+        bool baseEquals = base.Equals(obj);
+
+        if (obj is not Processor other)
+            return false;
+
+        return baseEquals && Name.Equals(other.Name);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+    #endregion
 }

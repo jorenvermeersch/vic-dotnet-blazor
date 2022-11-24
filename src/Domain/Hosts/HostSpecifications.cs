@@ -22,6 +22,13 @@ public class HostSpecifications : Specifications
     #endregion
 
     #region Methods
+    public int GetVirtualisationFactor(Processor processor)
+    {
+        if (!VirtualisationFactors.ContainsKey(processor)) { }
+
+        return VirtualisationFactors[processor];
+    }
+
     public void AddProccessor(Processor processor, int virtualisationFactor)
     {
         Guard.Against.NegativeOrZero(virtualisationFactor, nameof(virtualisationFactor));

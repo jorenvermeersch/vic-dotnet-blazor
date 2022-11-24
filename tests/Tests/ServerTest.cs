@@ -27,7 +27,7 @@ public class ServerTest
         VirtualMachine m2 = VirtualMachineWithoutSpecifications.Create(_server);
         m2.Specifications = new Specifications(3, 1, 3);
 
-        _server.RemainingResources.ShouldBeEquivalentTo(new Specifications(4, 6, 3));
+        _server.RemainingResources.Equals(new Specifications(4, 6, 3));
         new List<VirtualMachine> { m1, m2 }.ForEach(machine => _server.Machines.ShouldContain(machine));
     }
 
@@ -91,6 +91,46 @@ public class ServerTest
         _server.Specifications = new HostSpecifications(processors, 1, 1);
 
         _server.Specifications.Processors.ShouldBe(43);
+    }
 
+    [Fact]
+    public void Adding_processor_to_server_updates_specifications_and_remaining_resources()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { 2 }, 2, 2);
+
+        Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
+        _server.AddProcessor(processor, 2);
+
+        _server.Specifications.Equals(new Specifications(6, 2, 2));
+        _server.RemainingResources.Equals(new Specifications(6, 2, 2));
+    }
+
+    [Fact]
+    public void Removing_processor_to_server_updates_specifications_and_remaining_resources()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { 2 }, 2, 2);
+
+        Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
+        _server.AddProcessor(processor, 2);
+        _server.Specifications.Equals(new Specifications(6, 2, 2));
+
+        _server.RemoveProcessor(processor);
+        _server.Specifications.Equals(new Specifications(2, 2, 2));
+    }
+
+    [Fact]
+    public void Server_cannot_remove_processor_if_new_specifications_cannot_accommodate_assigned_machines()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { }, 2, 2);
+        Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
+        _server.AddProcessor(processor, 2);
+
+        VirtualMachine machine = VirtualMachineWithoutSpecifications.Create(_server);
+        machine.Specifications = new(2, 2, 2);
+
+        Should.Throw<ArgumentException>(() => _server.RemoveProcessor(processor));
     }
 }
