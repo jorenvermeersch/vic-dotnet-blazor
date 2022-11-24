@@ -6,14 +6,18 @@ namespace Domain.Common;
 public class HostSpecifications : Specifications
 {
     #region Properties
-    public Dictionary<Processor, int> VirtualisationFactors { get; set; } = new(); // Key : Value => Processor : Virtualisation factor.
+    public IList<KeyValuePair<Processor, int>> VirtualisationFactors { get; set; } =
+        new List<KeyValuePair<Processor, int>>(); // Key : Value => Processor : Virtualisation factor.
     public new int Processors =>
         VirtualisationFactors.Select(pair => pair.Key.Cores * pair.Value).Sum(); // Sum of: Cores * virtualisation factor.
     #endregion
 
     #region Constructors
-    public HostSpecifications(Dictionary<Processor, int> processors, int storage, int memory)
-        : base(memory, storage)
+    public HostSpecifications(
+        IList<KeyValuePair<Processor, int>> processors,
+        int storage,
+        int memory
+    ) : base(memory, storage)
     {
         VirtualisationFactors = processors;
         Storage = storage;
@@ -22,22 +26,22 @@ public class HostSpecifications : Specifications
     #endregion
 
     #region Methods
-    public int GetVirtualisationFactor(Processor processor)
-    {
-        if (!VirtualisationFactors.ContainsKey(processor)) { }
-
-        return VirtualisationFactors[processor];
-    }
 
     public void AddProccessor(Processor processor, int virtualisationFactor)
     {
         Guard.Against.NegativeOrZero(virtualisationFactor, nameof(virtualisationFactor));
-        VirtualisationFactors.Add(processor, virtualisationFactor);
+        VirtualisationFactors.Add(
+            new KeyValuePair<Processor, int>(processor, virtualisationFactor)
+        );
     }
 
-    public void RemoveProcessor(Processor processor)
+    public void RemoveProcessor(Processor processor, int virtualisationFactor)
     {
-        VirtualisationFactors.Remove(processor);
+        Guard.Against.NegativeOrZero(virtualisationFactor, nameof(virtualisationFactor));
+        KeyValuePair<Processor, int> item = VirtualisationFactors
+            .Where(item => item.Key.Id == processor.Id && item.Value == virtualisationFactor)
+            .FirstOrDefault();
+        VirtualisationFactors.Remove(item);
     }
     #endregion
 }

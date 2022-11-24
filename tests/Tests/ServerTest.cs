@@ -76,7 +76,7 @@ public class ServerTest
     [Fact]
     public void Server_virtual_processors_are_equal_to_sum_of_core_count_multiplied_by_virtualisation_factor()
     {
-        Dictionary<Processor, int> processors = new();
+        List<KeyValuePair<Processor, int>> processors = new();
 
         // Key : Value => Cores : VirtualisationFactor.
         Dictionary<int, int> values = new() { { 1, 1 }, { 4, 2 }, { 16, 2 }, { 2, 1 } };
@@ -84,7 +84,7 @@ public class ServerTest
         foreach (var entry in values)
         {
             Processor processor = HostSpecificationsFactory.CreateProcessor(entry.Key, 1);
-            processors.Add(processor, entry.Value);
+            processors.Add(new KeyValuePair<Processor, int>(processor, entry.Value));
         }
 
         _server = ServerWithoutSpecifications.Create();
@@ -112,11 +112,13 @@ public class ServerTest
         _server = ServerWithoutSpecifications.Create();
         _server.Specifications = HostSpecificationsFactory.Create(new List<int> { 2 }, 2, 2);
 
+        int virtualisationFactor = 2;
+
         Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
-        _server.AddProcessor(processor, 2);
+        _server.AddProcessor(processor, virtualisationFactor);
         _server.Specifications.Equals(new Specifications(6, 2, 2));
 
-        _server.RemoveProcessor(processor);
+        _server.RemoveProcessor(processor, virtualisationFactor);
         _server.Specifications.Equals(new Specifications(2, 2, 2));
     }
 
@@ -126,11 +128,13 @@ public class ServerTest
         _server = ServerWithoutSpecifications.Create();
         _server.Specifications = HostSpecificationsFactory.Create(new List<int> { }, 2, 2);
         Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
-        _server.AddProcessor(processor, 2);
+
+        int virtualisationFactor = 2;
+        _server.AddProcessor(processor, virtualisationFactor);
 
         VirtualMachine machine = VirtualMachineWithoutSpecifications.Create(_server);
         machine.Specifications = new(2, 2, 2);
 
-        Should.Throw<ArgumentException>(() => _server.RemoveProcessor(processor));
+        Should.Throw<ArgumentException>(() => _server.RemoveProcessor(processor, virtualisationFactor));
     }
 }

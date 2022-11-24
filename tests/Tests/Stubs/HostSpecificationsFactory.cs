@@ -4,10 +4,10 @@ public static class HostSpecificationsFactory
 {
     public static HostSpecifications Create(List<int> virtualisationFactors, int memory, int storage)
     {
-        Dictionary<Processor, int> processors = new();
+        List<KeyValuePair<Processor, int>> processors = new();
         virtualisationFactors.ForEach(vf =>
         {
-            processors.Add(CreateProcessor(1, 1), vf);
+            processors.Add(new KeyValuePair<Processor, int>(CreateProcessor(1, 1), vf));
         });
 
         return new HostSpecifications(processors, memory, storage);

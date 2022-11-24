@@ -125,11 +125,8 @@ public abstract class Host<T> : Machine where T : Machine
         UpdateRemainingResources();
     }
 
-    public void RemoveProcessor(Processor processor)
+    public void RemoveProcessor(Processor processor, int virtualisationFactor)
     {
-        // Throws if specifications does not contain processor.
-        int virtualisationFactor = Specifications.GetVirtualisationFactor(processor);
-
         if (RemainingResources.Processors < processor.Cores * virtualisationFactor)
         {
             throw new ArgumentException(
@@ -137,7 +134,7 @@ public abstract class Host<T> : Machine where T : Machine
             );
         }
 
-        _specifications.RemoveProcessor(processor);
+        _specifications.RemoveProcessor(processor, virtualisationFactor);
         UpdateRemainingResources();
     }
     #endregion
