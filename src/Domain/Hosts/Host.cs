@@ -5,19 +5,24 @@ namespace Domain.Hosts;
 
 public abstract class Host<T> : Machine where T : Machine
 {
+    #region Fields
+    private HostSpecifications _specifications;
+    #endregion
+
+
     #region Properties
-    public new Specifications Specifications
+    public new HostSpecifications Specifications
     {
-        get => base.Specifications;
+        get => _specifications;
         set
         {
-            Specifications current = base.Specifications;
-            base.Specifications = value;
+            HostSpecifications current = _specifications;
+            _specifications = value;
 
             // Check if new specifications are able to run existing machines.
             if (CalculateRemainingResources().Values.Any(amount => amount < 0))
             {
-                base.Specifications = current;
+                _specifications = current;
                 throw new ArgumentException(
                     "New specifications are insufficient for running existing machines"
                 );
@@ -30,9 +35,10 @@ public abstract class Host<T> : Machine where T : Machine
     #endregion
 
     #region Constructors
-    public Host(string name, Specifications specifications, ISet<T>? machines)
+    public Host(string name, HostSpecifications specifications, ISet<T>? machines)
         : base(name, specifications)
     {
+        _specifications = specifications;
         Machines = machines ?? new HashSet<T>();
 
         // Check if host has enough resources to run all machines.
@@ -83,7 +89,7 @@ public abstract class Host<T> : Machine where T : Machine
         RemainingResources = CalculateRemainingResources();
     }
 
-    public void Add(T machine)
+    public void AddMachine(T machine)
     {
         Guard.Against.Null(machine, nameof(machine));
 
@@ -105,12 +111,23 @@ public abstract class Host<T> : Machine where T : Machine
         UpdateRemainingResources();
     }
 
-    public void Remove(T machine)
+    public void RemoveMachine(T machine)
     {
         Guard.Against.Null(machine, nameof(machine));
         Machines.Remove(machine);
         UpdateRemainingResources();
     }
 
+
+    public void AddProcessor(Processor processor, int virtualisationFactor)
+    {
+        _specifications.AddProccessor(processor, virtualisationFactor);
+        UpdateRemainingResources();
+    }
+
+    public void RemoveProcessor(Processor processor)
+    {
+        // TODO: Implement. 
+    }
     #endregion
 }

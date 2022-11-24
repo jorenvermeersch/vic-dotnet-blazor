@@ -1,4 +1,5 @@
-﻿using Domain.Hosts;
+﻿using Ardalis.GuardClauses;
+using Domain.Hosts;
 
 namespace Domain.Common;
 
@@ -23,6 +24,7 @@ public class HostSpecifications : Specifications
     #region Methods
     public void AddProccessor(Processor processor, int virtualisationFactor)
     {
+        Guard.Against.NegativeOrZero(virtualisationFactor, nameof(virtualisationFactor));
         VirtualisationFactors.Add(processor, virtualisationFactor);
     }
 

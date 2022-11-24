@@ -8,7 +8,7 @@ public static class VirtualMachineWithoutSpecifications
     private static Customer _customer = new InternalCustomer(Institution.HoGent, "DIT", "Toegepaste Informatica", _contact, null, new List<VirtualMachine>());
     private static Account _account = new("Joren", "Vermeersch", "joren.vermeersch@student.hogent.be", Role.Admin, "Fsdt1@t", "DIT", "Toegepaste Informatica");
 
-    public static VirtualMachine Get(Host<VirtualMachine>? server)
+    public static VirtualMachine Create(Host<VirtualMachine>? server)
     {
         _count++;
         VirtualMachineArgs args = new()

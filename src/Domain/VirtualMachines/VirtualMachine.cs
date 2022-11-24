@@ -74,8 +74,8 @@ public class VirtualMachine : Machine
 
             if (!_host.Equals(value))
             {
-                value.Add(this); // Throws if new host does not have enough remaining resources.
-                _host.Remove(this); // Remove from old host.
+                value.AddMachine(this); // Throws if new host does not have enough remaining resources.
+                _host.RemoveMachine(this); // Remove from old host.
                 _host = value;
             }
         }
@@ -116,7 +116,7 @@ public class VirtualMachine : Machine
         Requester = args.Requester;
         User = args.User;
 
-        _host.Add(this); // Remaining resources host are automatically updated.
+        _host.AddMachine(this); // Remaining resources host are automatically updated.
     }
     #endregion
 

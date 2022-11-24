@@ -3,9 +3,9 @@
 public class ServerWithoutSpecifications
 {
     private static int count = 0;
-    public static Server Get()
+    public static Server Create()
     {
         count++;
-        return new Server($"test-server-{count}", new Specifications(0, 0, 0), new HashSet<VirtualMachine>());
+        return new Server($"test-server-{count}", HostSpecificationsFactory.Create(new List<int> { }, 0, 0), new HashSet<VirtualMachine>());
     }
 }
