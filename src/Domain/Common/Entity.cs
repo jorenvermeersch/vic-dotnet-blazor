@@ -3,10 +3,7 @@
 public abstract class Entity
 {
     [Key]
-    public virtual long Id
-    {
-        get; init;
-    }
+    public virtual long Id { get; init; }
 
     protected Entity() { }
 
