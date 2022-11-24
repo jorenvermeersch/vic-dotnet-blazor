@@ -1,8 +1,4 @@
 ﻿@page "/customer/list"
-@layout MainLayout
-@namespace Shared
-@using customer
-@inject ICustomerService customerService
 @attribute [Authorize]
 
 <div class="context-menu">
@@ -49,47 +45,4 @@
     </div>
 </div>
 
-@code {
 
-    public string SearchValue { get; set; }
-    private IEnumerable<CustomerDto.Index>? customers;
-    int offset = 0;
-    int totalCustomers = 0;
-    int totalPages = 0;
-    int selectedPage = 1;
-    string CustomerType = "";
-    bool toggleIntern = false;
-    bool toggleExtern = false;
-
-    private void FilterIntern()
-    {
-        toggleIntern = !toggleIntern;
-    }
-
-    private void FilterExtern()
-    {
-        toggleExtern = !toggleExtern;
-    }
-
-    private void ResetFilter()
-    {
-        toggleIntern = false;
-        toggleExtern = false;
-        SearchValue = "";
-        StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        customers = await customerService.GetIndexAsync(offset);
-        totalCustomers = await customerService.GetCount();
-        totalPages = (totalCustomers / 20) + 1;
-    }
-
-    async Task ClickHandler(int pageNr)
-    {
-        offset = (pageNr - 1) * 20;
-        customers = await customerService.GetIndexAsync(offset);
-        selectedPage = pageNr;
-    }
-}

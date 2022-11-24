@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Shared;
 using Shared.Account;
-using Shared.customer;
 using Shared.Customer;
 using Shared.Host;
 using Shared.Port;

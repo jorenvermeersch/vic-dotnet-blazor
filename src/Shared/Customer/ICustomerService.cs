@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Shared.customer;
+namespace Shared.Customer;
 
 public interface ICustomerService
 {

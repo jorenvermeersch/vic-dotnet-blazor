@@ -1,4 +1,4 @@
-﻿using Shared.customer;
+﻿using Shared.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,11 +1,4 @@
 ﻿@page "/host/{id:long}"
-@layout MainLayout
-@namespace Shared
-@using Host
-@using VirtualMachine
-@inject IHostService hostService
-@inject IVirtualMachineService virtualMachineService
-@inject NavigationManager Navigation
 @attribute [Authorize]
 
 <PageTitle>Host [host name] Details</PageTitle>
@@ -33,7 +26,8 @@
     <div class="two-thirds">
 
         <Title Text="Virtuele machines" />
-        @if (virtualMachines.Any())
+        @*TODO: vms ophalen voor host*@
+@*        @if (virtualMachines.Any())
         {
             <div class="two-columns-container">
                 <div>
@@ -55,43 +49,10 @@
             <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
         }
         else
-        {
+        {*@
             <NoVmMsg Type="host"/>
-        }
+        @*}*@
     </div>
 </div>
 
 
-@code {
-    private Dictionary<string, Dictionary<string, string>> _server = new();
-    [Parameter] public long Id { get; set; }
-    private HostDto.Details? host;
-    private IEnumerable<VirtualMachineDto.Index> virtualMachines;
-    int offset = 0;
-    int totalVirtualMachines = 0;
-    int totalPages = 0;
-    int selectedPage = 1;
-
-    protected override async Task OnInitializedAsync()
-    {
-        host = await hostService.GetDetailAsync(Id);
-        _server.Add("name", new() { { "Naam", host.Name } });
-        _server.Add("resources", new() { { "vCPU", host.Specifications.Processors.ToString() }, { "Geheugen", host.Specifications.Memory.ToString() }, { "Opslag", host.Specifications.Storage.ToString() } });
-        _server.Add("remainingResources", new() { { "vCPU", host.RemainingResources.Processors.ToString() }, { "Geheugen", host.RemainingResources.Memory.ToString() }, { "Opslag", host.RemainingResources.Storage.ToString() } });
-        //virtualMachines = await virtualMachineService.GetVirtualMachinesByHostId(host.Id,offset);
-        totalVirtualMachines = virtualMachines.Count();
-        totalPages = (totalVirtualMachines / 10) + 1;
-    }
-
-    private void NavigateBack()
-    {
-        Navigation.NavigateTo("host/list");
-    }
-
-    async Task ClickHandler(int pageNr)
-    {
-        offset = (pageNr - 1) * 10;
-        //virtualMachines = await virtualMachineService.GetVirtualMachinesByHostId(host.Id, offset);
-        selectedPage = pageNr;
-    }
-}

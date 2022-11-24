@@ -1,7 +1,7 @@
 ﻿
 using Bogus;
 using Bogus.DataSets;
-using Shared.customer;
+using Shared.Customer;
 using Shared.Specification;
 using Shared.VirtualMachine;
 

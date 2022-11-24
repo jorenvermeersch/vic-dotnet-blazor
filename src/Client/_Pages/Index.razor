@@ -1,9 +1,6 @@
 ﻿@page "/"
 @attribute [Authorize]
-@namespace Shared
-@using VirtualMachine
-@inject IVirtualMachineService VirtualMachineService
-@inject IStringLocalizer<Resource> localizer
+
 
 
 <div class="context-menu">
@@ -50,30 +47,4 @@
     </div>
 </div>
 
-@code {
-    string _startLabel = "24/10", _endLabel = "30/10";    
 
-    private List<VirtualMachineDto.Index> virtualMachines = new();
-    int offset = 0;
-    int totalVirtualMachines = 0;
-    int totalPages;
-    int selectedPage = 1;
-
-    protected override async Task OnInitializedAsync()
-    {
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
-        virtualMachines.AddRange(response.VirtualMachines);
-        Console.WriteLine(response.VirtualMachines.ToString());
-        totalVirtualMachines = response.TotalAmount;
-        totalPages = (totalVirtualMachines / 10) + 1;
-    }
-
-    async Task ClickHandler(int pageNr)
-    {
-        offset = (pageNr - 1) * 10;
-        //virtualMachines = await VirtualMachineService.GetAllUnfinishedVirtualMachines(offset);
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
-        virtualMachines.AddRange(response.VirtualMachines);
-        selectedPage = pageNr;
-    }
-}

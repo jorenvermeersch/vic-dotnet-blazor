@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using Domain.Constants;
-using Shared.customer;
 
 namespace Shared.Customer;
 

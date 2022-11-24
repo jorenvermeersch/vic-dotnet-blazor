@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.customer;
+namespace Shared.Customer;
 
 public static class CustomerDto
 {

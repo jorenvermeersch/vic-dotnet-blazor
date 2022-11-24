@@ -1,8 +1,4 @@
 ﻿@page "/host/list"
-@namespace Shared
-@using Host
-@inject IHostService hostService
-@layout MainLayout
 @attribute [Authorize]
 
 <div class="context-menu">
@@ -42,26 +38,4 @@
 </div>
 
 
-@code {
-    public string SearchValue { get; set; }
-    private IEnumerable<HostDto.Index>? hosts;
-    int offset = 0;
-    int totalHosts = 0;
-    int totalPages = 0;
-    int selectedPage = 1;
-    protected override async Task OnInitializedAsync()
-    {
-        hosts = await hostService.GetIndexAsync(offset);
-        totalHosts = await hostService.GetCount();
-        totalPages = (totalHosts / 20) + 1;
-    }
 
-    async Task ClickHandler(int pageNr)
-    {
-        offset = (pageNr - 1) * 20;
-        hosts = await hostService.GetIndexAsync(offset);
-        selectedPage = pageNr;
-    }
-
-    private void ResetFilter() => SearchValue = "";
-}

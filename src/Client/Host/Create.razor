@@ -1,14 +1,5 @@
 ﻿@page "/host/add"
-@namespace Shared
-@using System.ComponentModel.DataAnnotations
 @layout NoGlobalSearchLayout
-@using Client.Validation
-@using Host
-@using Validation
-@using Specification
-@inject IHostService hostService
-@inject NavigationManager Navigation
-
 @attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Host Toevoegen</PageTitle>
@@ -38,13 +29,4 @@
     </div>
 </EditForm>
 
-@code {
-    private EditForm? Editform { get; set; } = new();
-    private HostDto.Create Host { get; set; } = new();
 
-    private async void HandleValidSubmit()
-    {
-        HostDto.Details newHost = await hostService.Add(Host);
-        Navigation.NavigateTo("host/" + newHost.Id);
-    }
-}

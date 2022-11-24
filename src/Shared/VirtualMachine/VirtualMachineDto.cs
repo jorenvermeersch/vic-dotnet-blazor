@@ -1,6 +1,6 @@
 ﻿using Domain.Constants;
 using Shared.Account;
-using Shared.customer;
+using Shared.Customer;
 using Shared.Host;
 using Shared.Port;
 using Shared.Shared;

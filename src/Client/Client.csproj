@@ -7,17 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Components\EntityCard.razor.css" />
-    <None Remove="Components\Searchbar.razor.css" />
-    <None Remove="Components\Status.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Components\EntityCard.razor.css" />
-    <Content Include="Components\Searchbar.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\css\variables.css" />
   </ItemGroup>

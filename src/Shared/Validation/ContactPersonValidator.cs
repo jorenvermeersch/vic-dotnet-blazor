@@ -1,11 +1,5 @@
 ﻿using FluentValidation;
-using Shared.Account;
-using Shared.customer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shared.Customer;
 
 namespace Shared.Validation;
 

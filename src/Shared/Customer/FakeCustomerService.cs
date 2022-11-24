@@ -1,4 +1,4 @@
-﻿namespace Shared.customer;
+﻿namespace Shared.Customer;
 
 public class FakeCustomerService
 {

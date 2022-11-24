@@ -1,12 +1,13 @@
 using Bogus.Bson;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 
 namespace Client.Components;
 
 
-public partial class Input
+public partial class Input : InputBase<string>
 {
     private string _label = "Label: ";
     private bool _required = false;
@@ -55,6 +56,7 @@ public partial class Input
     private string _selectedOption = "";
     [Parameter, EditorRequired] public Expression<Func<string>> For { get; set; } = default!;
     [Parameter] public string? Id { get; set; }
+    
     protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
     {
         result = value;
