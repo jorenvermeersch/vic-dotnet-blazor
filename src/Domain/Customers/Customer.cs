@@ -52,7 +52,7 @@ public abstract class Customer : Entity
     {
         if (contactPerson.HasTheSameContactInformation(backupContact))
         {
-            throw new ArgumentException("Contact person and backup contact should be different");
+            //throw new ArgumentException("Contact person and backup contact should be different");
         }
     }
 }

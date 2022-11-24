@@ -116,7 +116,7 @@ public class VirtualMachine : Machine
         Requester = args.Requester;
         User = args.User;
 
-        _host.AddMachine(this); // Remaining resources host are automatically updated.
+        //_host.AddMachine(this); // Remaining resources host are automatically updated.
     }
     #endregion
 
