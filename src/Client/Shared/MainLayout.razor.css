@@ -7,3 +7,7 @@
     top: 0;
     z-index: -5;
 }
+
+main {
+    padding-bottom: var(--padding-xlg);
+}

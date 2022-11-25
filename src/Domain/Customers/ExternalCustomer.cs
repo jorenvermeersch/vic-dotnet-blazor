@@ -6,7 +6,7 @@ namespace Domain.Customers;
 public class ExternalCustomer : Customer
 {
     #region Properties
-    public string Name { get; set; }
+    public string CompanyName { get; set; }
     public string Type { get; set; }
     #endregion
 
@@ -19,7 +19,7 @@ public class ExternalCustomer : Customer
         IList<VirtualMachine>? virtualMachines = null
     ) : base(contactPerson, backupContact, virtualMachines)
     {
-        Name = name;
+        CompanyName = name;
         Type = type;
     }
     #endregion
