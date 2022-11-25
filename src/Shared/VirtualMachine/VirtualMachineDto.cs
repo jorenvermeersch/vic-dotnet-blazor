@@ -5,12 +5,6 @@ using Shared.Host;
 using Shared.Port;
 using Shared.Shared;
 using Shared.Specification;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shared.VirtualMachine;
 
@@ -19,52 +13,51 @@ public static class VirtualMachineDto
     public class Index
     {
         public long Id { get; set; }
-        public string FQDN { get; set; }
+        public string Fqdn { get; set; } = default!;
         public Status Status { get; set; }
     }
 
     public class Details : Index
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
         public Template Template { get; set; }
         public Mode Mode { get; set; }
-        public List<string> Availabilities { get; set; }
+        public List<string> Availabilities { get; set; } = default!;
         public BackupFrequency BackupFrequenty { get; set; }
-        public DateTime ApplicationDate { get; set; } = DateTime.Now;
-        public TimeSpanDto TimeSpan { get; set; } = new TimeSpanDto();
-        public string Reason { get; set; }
-        public List<PortDto> Ports { get; set; }
-        public SpecificationDto Specification { get; set; } = new SpecificationDto();
-        public HostDto.Index Host { get; set; } = new HostDto.Index();
-        public List<CredentialDto> Credentials { get; set; }
-        public AccountDto.Index Account { get; set; } = new AccountDto.Index();
-        public CustomerDto.Index Requester { get; set; } = new CustomerDto.Index(); 
-        public CustomerDto.Index User { get; set; } = new CustomerDto.Index();
+        public DateTime ApplicationDate { get; set; } = default!;
+        public TimeSpanDto TimeSpan { get; set; } = default!;
+        public string Reason { get; set; } = default!;
+        public List<PortDto> Ports { get; set; } = default!;
+        public SpecificationDto Specification { get; set; } = default!;
+        public HostDto.Index Host { get; set; } = default!;
+        public List<CredentialDto> Credentials { get; set; } = default!;
+        public AccountDto.Index Account { get; set; } = default!;
+        public CustomerDto.Index Requester { get; set; } = default!;
+        public CustomerDto.Index User { get; set; } = default!;
         public bool hasVpnConnection { get; set; }
     }
 
-    public class Create : Index
+    public class Create
     {
-        public string Name { get; set; }
-        public string Mode { get; set; }
-        public string Template { get; set; }
-        public string Reason { get; set; }
-        public string Status { get; set; }
-        //public int hostId { get; set; } = 0;
-
+        public string Fqdn { get; set; } = default!;
+        public string Name { get; set; } = default!;
+        public string Mode { get; set; } = default!;
+        public string Template { get; set; } = default!;
+        public string Reason { get; set; } = default!;
+        public string Status { get; set; } = default!;
+        public long hostId { get; set; }
         public SpecificationDto Specifications { get; set; } = new();
-        public string Requester { get; set; }
-        public string User { get; set; }
-        public string Account { get; set; }
+        public long RequesterId { get; set; }
+        public long UserId { get; set; }
+        public long AdministratorId { get; set; }
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
-        public string BackupFrequenty { get; set; }
-
-        public List<CredentialDto> Credentials { get; set; }
-        public List<PortDto> Ports { get; set; }
-        public bool hasVpnConnection { get; set; }
+        public string BackupFrequenty { get; set; } = default!;
+        public List<CredentialDto> Credentials { get; set; } = default!;
+        public List<int> Ports { get; set; } = default!;
+        public bool hasVpnConnection { get; set; } = true;
 
     }
-    
+
 }

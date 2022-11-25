@@ -76,7 +76,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         var virtualMachineFaker = new Faker<VirtualMachineDto.Details>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => vmId++)
-            .RuleFor(x => x.FQDN, f => f.Internet.DomainName())
+            .RuleFor(x => x.Fqdn, f => f.Internet.DomainName())
             .RuleFor(x => x.Name, f => f.Internet.DomainWord())
             .RuleFor(x => x.Template, f => f.PickRandom(Enum.GetValues(typeof(Template)).Cast<Template>().ToList()))
             .RuleFor(x => x.Mode, f => f.PickRandom(Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList()))
@@ -127,7 +127,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return Task.FromResult(_virtualMachines.Skip(offset).Take(amount).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.FQDN,
+            Fqdn = x.Fqdn,
             Status = x.Status,
         }));
     }
@@ -137,7 +137,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return Task.FromResult(_virtualMachines.Where(vm => vm.User.Id == userId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.FQDN,
+            Fqdn = x.Fqdn,
             Status = x.Status,
         }));
     }
@@ -151,7 +151,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         VirtualMachineDto.Details vm = new VirtualMachineDto.Details()
         {
             Id = newVM.Id,
-            FQDN = newVM.FQDN,
+            Fqdn = newVM.Fqdn,
             Status = TranslateEnums.TranslateStatus(newVM.Status),
             Name = newVM.Name,
             Template = TranslateEnums.TranslateTemplate(newVM.Template),
@@ -183,7 +183,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return Task.FromResult(_virtualMachines.Where(vm => vm.Status == Status.InProgress || vm.Status == Status.Requested).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.FQDN,
+            Fqdn = x.Fqdn,
             Status = x.Status,
         }));
     }
@@ -193,7 +193,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return Task.FromResult(_virtualMachines.Where(vm => vm.Host.Id == hostId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.FQDN,
+            Fqdn = x.Fqdn,
             Status = x.Status,
         }));
     }

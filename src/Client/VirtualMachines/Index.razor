@@ -28,13 +28,13 @@ else
                 <div>
                     @foreach (var vm in virtualMachines.Take(10))
                     {
-                        <EntityCard Value="@vm.FQDN" Active=@(!(vm.Status == Status.InProgress || vm.Status == Status.Requested)) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+                        <EntityCard Value="@vm.Fqdn" Active=@(!(vm.Status == Status.InProgress || vm.Status == Status.Requested)) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                     }
                 </div>
                 <div>
                     @foreach (var vm in virtualMachines.Skip(10).Take(10))
                     {
-                        <EntityCard Value="@vm.FQDN" Active=@(vm.Status == Status.InProgress || vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+                        <EntityCard Value="@vm.Fqdn" Active=@(vm.Status == Status.InProgress || vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                     }
                 </div>
 

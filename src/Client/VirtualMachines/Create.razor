@@ -17,7 +17,7 @@
         <div class="one-third">
             <Title Text="Configuratie" />
             <RequiredInput Type="@Input.InputType.TEXT" Label="Naam" @bind-Value="VirtualMachine.Name" For="@(()=>VirtualMachine.Name)" />
-            <RequiredInput Type="@Input.InputType.TEXT" Label="FQDN" @bind-Value="VirtualMachine.FQDN" For="@(()=>VirtualMachine.FQDN)" />
+            <RequiredInput Type="@Input.InputType.TEXT" Label="FQDN" @bind-Value="VirtualMachine.Fqdn" For="@(()=>VirtualMachine.Fqdn)" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Mode" Items="@Modes" @bind-Value="VirtualMachine.Mode" For="@(()=>VirtualMachine.Mode)" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Template" Items="@Templates" @bind-Value="VirtualMachine.Template" For="@(()=>VirtualMachine.Template)" />
 

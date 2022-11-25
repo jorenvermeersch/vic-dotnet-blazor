@@ -33,12 +33,12 @@ public partial class Details
     {
         //virtualMachine = await VirtualMachineService.GetDetailAsync(Id);
         _defaultInformation.Add("Naam", virtualMachine!.Name);
-        _defaultInformation.Add("FQDN", virtualMachine!.FQDN);
+        _defaultInformation.Add("FQDN", virtualMachine!.Fqdn);
         _defaultInformation.Add("Hostnaam", virtualMachine!.Host.Name);
         _config.Add("Mode", virtualMachine.Mode.ToString());
         _config.Add("Template", localizer![virtualMachine.Template.ToString()]);
         _config.Add("Reden", virtualMachine.Reason);
-        _specs.Add("vCPUs", virtualMachine.Specification.Processors.ToString());
+        _specs.Add("vCPUs", virtualMachine.Specification.VirtualProcessors.ToString());
         _specs.Add("Geheugen", virtualMachine.Specification.Memory.ToString());
         _specs.Add("Opslag", virtualMachine.Specification.Storage.ToString());
         //if (virtualMachine.Availabilities.Count>1){

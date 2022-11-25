@@ -26,7 +26,7 @@
         
         @foreach (var vm in virtualMachines)
         {
-            <EntityCard Value="@vm.FQDN" Active=@false Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+            <EntityCard Value="@vm.Fqdn" Active=@false Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
         }
 
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />

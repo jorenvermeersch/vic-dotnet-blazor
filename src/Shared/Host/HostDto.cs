@@ -1,8 +1,5 @@
 ﻿using Shared.Specification;
 using Shared.VirtualMachine;
-using System.ComponentModel.DataAnnotations;
-
-using FluentValidation;
 
 namespace Shared.Host;
 
@@ -10,16 +7,16 @@ public static class HostDto
 {
     public class Index
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public long Id { get; set; }
+        public string Name { get; set; } = default!;
     }
     public class Details
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
-        public SpecificationDto Specifications { get; set; } = new SpecificationDto();
-        public SpecificationDto RemainingResources { get; set; } = new SpecificationDto();
-        public List<VirtualMachineDto.Index> Machines { get; set; }
+        public HostSpecificationsDto Specifications { get; set; } = new();
+        public SpecificationDto RemainingResources { get; set; } = new();
+        public List<VirtualMachineDto.Index> Machines { get; set; } = new();
     }
 
     public class Create

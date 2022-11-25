@@ -30,9 +30,9 @@ public class FakeVirtualMachineService : IVirtualMachineService
         response.VirtualMachines = query.Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.Fqdn,
+            Fqdn = x.Fqdn,
             Status = x.Status,
-        }).OrderBy(x => x.FQDN).ToList();
+        }).OrderBy(x => x.Fqdn).ToList();
 
         return response;
     }
@@ -71,10 +71,10 @@ public class FakeVirtualMachineService : IVirtualMachineService
         response.VirtualMachines = (query.Select(x => new VirtualMachineDto.Details
         {
             Id = x.Id,
-            FQDN = x.Fqdn,
+            Fqdn = x.Fqdn,
             Status = x.Status,
             Account = new() { Id = (int)x.Account.Id }
-        }).Where(x => x.Account.Id == request.ObjectId).ToList()).Select(x => new VirtualMachineDto.Index { Id = x.Id, FQDN = x.FQDN, Status = x.Status }).ToList();
+        }).Where(x => x.Account.Id == request.ObjectId).ToList()).Select(x => new VirtualMachineDto.Index { Id = x.Id, Fqdn = x.Fqdn, Status = x.Status }).ToList();
 
         response.TotalAmount = response.VirtualMachines.Count();
 
@@ -123,7 +123,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         return Task.FromResult(machines.Where(vm => vm.Status == Status.InProgress || vm.Status == Status.Requested).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.Fqdn,
+            Fqdn = x.Fqdn,
             Status = x.Status,
         }));
     }
@@ -139,7 +139,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         response.VirtualMachines = query.Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,
-            FQDN = x.Fqdn,
+            Fqdn = x.Fqdn,
             Status = x.Status,
         }).ToList();
 

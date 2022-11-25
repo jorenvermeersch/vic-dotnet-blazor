@@ -9,7 +9,6 @@ public abstract class Host<T> : Machine where T : Machine
     private HostSpecifications _specifications;
     #endregion
 
-
     #region Properties
     public new HostSpecifications Specifications
     {

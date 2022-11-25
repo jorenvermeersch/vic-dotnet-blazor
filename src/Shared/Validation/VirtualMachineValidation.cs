@@ -19,7 +19,7 @@ public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Crea
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Naam"))
             .MinimumLength(_nameLenght).WithMessage(FormMessages.MINLENGTH(_nameLenght));
-        RuleFor(x => x.FQDN)
+        RuleFor(x => x.Fqdn)
             .Cascade(CascadeMode.StopOnFirstFailure)
             //.Matches("\"^(?!:\\\\/\\\\/)(?=.{1,255}$)((.{1,63}\\\\.){1,127}(?![0-9]*$)[a-z0-9-]+\\\\.?)$\"").WithMessage(string.Format("Dit is geen geldige FQDN."))
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("FQDN"))

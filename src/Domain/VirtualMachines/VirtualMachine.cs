@@ -92,6 +92,9 @@ public class VirtualMachine : Machine
 
     [NotMapped]
     public Customer User { get; set; }
+
+    // TODO: Add to VirtualMachineArgs and constructor. 
+    public bool HasVpnConnection { get; set; }
     #endregion
 
     #region Constructors
