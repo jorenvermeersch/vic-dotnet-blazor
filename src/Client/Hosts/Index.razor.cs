@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Shared.Host;
-using System;
 
-namespace Client.Host;
+namespace Client.Hosts;
 
 public partial class Index
 {
@@ -27,5 +26,8 @@ public partial class Index
         selectedPage = pageNr;
     }
 
-    private void ResetFilter() => SearchValue = "";
+    private void ResetFilter()
+    {
+        SearchValue = "";
+    }
 }

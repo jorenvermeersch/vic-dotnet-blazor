@@ -1,16 +1,15 @@
-using Microsoft.AspNetCore.Components.Forms;
 using Domain.Constants;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
 using Shared.Account;
 using Shared.Customer;
-using Shared.Port;
-using Shared.VirtualMachine;
-using Microsoft.AspNetCore.Components;
 using Shared.Host;
+using Shared.Port;
 using Shared.Specification;
-using Shared.Validation;
+using Shared.VirtualMachine;
 
-namespace Client.VirtualMachine;
+namespace Client.VirtualMachines;
 
 public partial class Create
 {
@@ -47,7 +46,7 @@ public partial class Create
 
     private List<string>? Accounts { get; set; } = new();
     private Dictionary<int, Dictionary<string, string>> _entries = new();
-    IEnumerable<PortDto> availablePorts;
+    private IEnumerable<PortDto> availablePorts;
     private string Requester { get; set; }
 
     private string User { get; set; }
@@ -93,7 +92,7 @@ public partial class Create
         PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }
 
-    void ClickHandler(int id)
+    private void ClickHandler(int id)
     {
         _entries.Remove(id);
     }
@@ -121,7 +120,7 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        List<PortDto> chosenPorts = new List<PortDto>();
+        List<PortDto> chosenPorts = new();
         VirtualMachine.Credentials = credentialList;
         foreach (var port in _ports)
         {

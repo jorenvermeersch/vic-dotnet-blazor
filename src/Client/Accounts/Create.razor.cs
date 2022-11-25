@@ -2,10 +2,9 @@ using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.Account;
-using Client.Components;
 
 
-namespace Client.Account;
+namespace Client.Accounts;
 
 public partial class Create
 {
@@ -18,7 +17,7 @@ public partial class Create
 
 
     private List<string> roles = Enum.GetNames(typeof(Role)).ToList();
-    protected override void OnInitialized() 
+    protected override void OnInitialized()
     {
         for (int i = 0; i < roles.Count; i++) roles[i] = localizer![roles[i]];
     }

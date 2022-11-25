@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Components;
 using Domain.Constants;
+using Microsoft.AspNetCore.Components;
 using Shared.Customer;
 using Shared.VirtualMachine;
 
-namespace Client.Customer;
+namespace Client.Customers;
+
 
 public partial class Details
 {
@@ -16,8 +17,8 @@ public partial class Details
 
 
     private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
-    int offset = 0, totalVirtualMachines, totalPages = 0;
-    int selectedPage = 1;
+    private int offset = 0, totalVirtualMachines, totalPages = 0;
+    private int selectedPage = 1;
 
 
     private Dictionary<string, string> _username = new();
@@ -62,5 +63,8 @@ public partial class Details
         //virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(customer.Id, offset);
         selectedPage = pageNr;
     }
-    private void NavigateBack() => Navigation!.NavigateTo("customer/list");
+    private void NavigateBack()
+    {
+        Navigation!.NavigateTo("customer/list");
+    }
 }

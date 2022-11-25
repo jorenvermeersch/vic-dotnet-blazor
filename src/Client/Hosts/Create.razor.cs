@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Shared.Host;
 
-namespace Client.Host;
+namespace Client.Hosts;
 
 public partial class Create
 {

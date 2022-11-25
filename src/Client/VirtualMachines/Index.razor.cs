@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Shared.VirtualMachine;
-using System;
 
-namespace Client.VirtualMachine;
+namespace Client.VirtualMachines;
 
 public partial class Index
 {
@@ -11,10 +10,10 @@ public partial class Index
     public string? SearchValue { get; set; }
 
     private List<VirtualMachineDto.Index>? virtualMachines;
-    int offset = 0;
-    int totalVirtualMachines = 0;
-    int totalPages;
-    int selectedPage = 1;
+    private int offset = 0;
+    private int totalVirtualMachines = 0;
+    private int totalPages;
+    private int selectedPage = 1;
     protected override async Task OnInitializedAsync()
     {
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex());
@@ -23,7 +22,7 @@ public partial class Index
         totalPages = (totalVirtualMachines / 20) + 1;
     }
 
-    async Task ClickHandler(int pageNr)
+    private async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 20;
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex());

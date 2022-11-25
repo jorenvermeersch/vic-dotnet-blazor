@@ -1,9 +1,9 @@
-using Shared.Customer;
 using Domain.Constants;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Shared.Customer;
 
-namespace Client.Customer;
+namespace Client.Customers;
 
 public partial class Create
 {
@@ -19,7 +19,7 @@ public partial class Create
     private List<string> _institution = Enum.GetNames(typeof(Institution)).ToList();
     private string _customcss = "background-color: white";
     private bool _backuprequired = false;
-    private string[] _values = new string[3]{"", "", ""};
+    private string[] _values = new string[3] { "", "", "" };
 
     public void Makerequired(string value)
     {

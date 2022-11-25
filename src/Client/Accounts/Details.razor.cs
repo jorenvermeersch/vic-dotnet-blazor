@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.Account;
 using Shared.VirtualMachine;
-using System;
 
-namespace Client.Account;
+namespace Client.Accounts;
 
 public partial class Details
 {
@@ -29,7 +28,7 @@ public partial class Details
 
     protected override async Task OnInitializedAsync()
     {
-        AccountRequest.GetDetail request = new AccountRequest.GetDetail { AccountId = (int)Id };
+        AccountRequest.GetDetail request = new() { AccountId = (int)Id };
         AccountResponse.GetDetail response = await AccountService!.GetDetailAsync(request);
         account = response.Account;
         _general?.Add("Role", localizer![account!.Role.ToString()]);

@@ -1,17 +1,15 @@
-
-using Client.Pages.VirtualMachine;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.VirtualMachine;
 
 
-namespace Client.VirtualMachine;
+namespace Client.VirtualMachines;
 
 public partial class Details
 {
-    [Inject] IVirtualMachineService? VirtualMachineService { get; set; }
-    [Inject] NavigationManager? Navigation { get; set; }
-    [Inject] IStringLocalizer<Shared.Resources.Resource>? localizer { get; set; }
+    [Inject] private IVirtualMachineService? VirtualMachineService { get; set; }
+    [Inject] private NavigationManager? Navigation { get; set; }
+    [Inject] private IStringLocalizer<Shared.Resources.Resource>? localizer { get; set; }
     [Parameter] public long Id { get; set; }
 
     //Model
@@ -58,7 +56,7 @@ public partial class Details
         _requester.Add("Email", virtualMachine!.Requester.Email);
         _ports.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p => p.Service)));
         _ports.Add("VPN", virtualMachine.hasVpnConnection.ToString());
-        foreach (var credential in virtualMachine.Credentials) _logindata.Add(new Dictionary<string, string>() {{"Gebruikersnaam", credential.Username}, {"Rol", credential.Role}});
+        foreach (var credential in virtualMachine.Credentials) _logindata.Add(new Dictionary<string, string>() { { "Gebruikersnaam", credential.Username }, { "Rol", credential.Role } });
         _host.Add("Naam", virtualMachine.Host.Name);
     }
 
