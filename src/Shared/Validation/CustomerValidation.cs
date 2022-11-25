@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Validation;
 
-public class CustomerValidation : AbstractValidator<CustomerDto.Create>
+public class CustomerValidation : AbstractValidator<CustomerDto.Mutate>
 {
 	public CustomerValidation()
 	{

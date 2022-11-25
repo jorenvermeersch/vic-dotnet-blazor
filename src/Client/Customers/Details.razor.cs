@@ -13,7 +13,7 @@ public partial class Details
     [Inject] public NavigationManager? Navigation { get; set; }
 
     //Model
-    private CustomerDto.Details? Customer;
+    private CustomerDto.Detail? Customer;
 
 
     private IEnumerable<VirtualMachineDto.Index>? virtualMachines;

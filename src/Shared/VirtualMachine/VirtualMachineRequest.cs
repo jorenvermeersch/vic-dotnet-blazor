@@ -1,19 +1,15 @@
-﻿using Shared.Account;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Shared.VirtualMachine;
 
 public static class VirtualMachineRequest
 {
-    public class GetIndex
+    public class Index
     {
-        public string SearchTerm { get; set; } = string.Empty;
-        public int Offset { get; set; }
+        public string? SearchTerm { get; set; }
+        public int Page { get; set; }
+        public int Amount { get; set; } = 25;
+        public int Offset { get; set; } = 0;
     }
 
     public class GetByObjectId
@@ -21,24 +17,5 @@ public static class VirtualMachineRequest
         public int ObjectId { get; set; }
         [DefaultValue(0)]
         public int Offset { get; set; }
-    }
-
-    public class GetDetail
-    {
-
-    }
-
-    public class Delete
-    {
-    }
-
-    public class Create
-    {
-
-    }
-
-    public class Edit
-    {
-
     }
 }

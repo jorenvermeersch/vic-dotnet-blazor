@@ -10,19 +10,18 @@ public static class HostDto
         public long Id { get; set; }
         public string Name { get; set; } = default!;
     }
-    public class Details
+    public class Detail
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public HostSpecificationsDto Specifications { get; set; } = new();
-        public SpecificationDto RemainingResources { get; set; } = new();
-        public List<VirtualMachineDto.Index> Machines { get; set; } = new();
+        public string Name { get; set; } = default!;
+        public HostSpecificationsDto Specifications { get; set; } = default!;
+        public SpecificationDto RemainingResources { get; set; } = default!;
+        public List<VirtualMachineDto.Index>? Machines { get; set; }
     }
 
-    public class Create
+    public class Mutate
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public SpecificationDto Specifications { get; set; } = new();
+        public string Name { get; set; } = default!;
+        public HostSpecificationsDto Specifications { get; set; } = default!;
     }
 }

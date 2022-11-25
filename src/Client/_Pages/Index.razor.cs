@@ -18,7 +18,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
+        VirtualMachineResult.GetIndex response = await VirtualMachineService!.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.Index());
         virtualMachines.AddRange(response.VirtualMachines);
         totalVirtualMachines = response.TotalAmount;
         totalPages = (totalVirtualMachines / 10) + 1;
@@ -27,7 +27,7 @@ public partial class Index
     async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 10;
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
+        VirtualMachineResult.GetIndex response = await VirtualMachineService!.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.Index());
         virtualMachines.AddRange(response.VirtualMachines);
         selectedPage = pageNr;
     }

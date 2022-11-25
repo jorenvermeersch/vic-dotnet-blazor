@@ -1,10 +1,10 @@
-﻿
-namespace Shared.Host;
+﻿namespace Shared.Host;
 
 public interface IHostService
 {
-    Task<IEnumerable<HostDto.Index>> GetIndexAsync(int offset);
-    Task<HostDto.Details> GetDetailAsync(long hostId);
-    Task<int> GetCount();
-    Task<HostDto.Details> Add(HostDto.Create newHost);
+    Task<HostResult.Index> GetIndexAsync(HostRequest.Index request);
+    Task<HostDto.Detail> GetDetailAsync(long hostId);
+    Task<long> CreateAsync(HostDto.Mutate model);
+    Task EditAsync(long hostId, HostDto.Mutate model);
+    Task DeleteAsync(long hostId);
 }

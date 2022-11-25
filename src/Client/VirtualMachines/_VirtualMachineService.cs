@@ -13,7 +13,7 @@ public class VirtualMachineService : IVirtualMachineService
         this.authenticatedClient = authenticatedClient;
     }
 
-    public Task<AccountDto.Details> Add(AccountDto.Create newAccount)
+    public Task<AccountDto.Details> Add(AccountDto.Mutate newAccount)
     {
         throw new NotImplementedException();
     }
@@ -23,10 +23,10 @@ public class VirtualMachineService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
-    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
+    public async Task<VirtualMachineResult.GetIndex> GetIndexAsync(VirtualMachineRequest.Index request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResult.GetIndex>("api/virtual-machines");
         return response;
     }
 
@@ -40,22 +40,22 @@ public class VirtualMachineService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
-    public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    public async Task<VirtualMachineResult.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.Index request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines");
+        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResult.GetIndex>($"api/virtual-machines");
         return response;
     }
 
-    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
+    public Task<VirtualMachineResult.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+    public async Task<VirtualMachineResult.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines/account/{request.ObjectId}");
+        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResult.GetIndex>($"api/virtual-machines/account/{request.ObjectId}");
         return response;
     }
 

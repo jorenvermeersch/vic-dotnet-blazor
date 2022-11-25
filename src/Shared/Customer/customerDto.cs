@@ -13,7 +13,7 @@ public static class CustomerDto
         public string Email { get; set; } = default!;
     }
 
-    public class Details
+    public class Detail
     {
         public long Id { get; set; }
         public Institution? Institution { get; set; }
@@ -26,7 +26,7 @@ public static class CustomerDto
         public ContactPersonDto? BackupContactPerson { get; set; }
         public List<VirtualMachineDto.Index> VirtualMachines { get; set; } = new();
     }
-    public class Create
+    public class Mutate
     {
         public string CustomerType { get; set; } = default!;
         public string? Institution { get; set; }

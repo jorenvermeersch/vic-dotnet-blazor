@@ -4,7 +4,7 @@ using Shared.Validation;
 
 namespace Shared.Validation;
 
-public class AccountValidation : AbstractValidator<AccountDto.Create>
+public class AccountValidation : AbstractValidator<AccountDto.Mutate>
 {
     private readonly int _nameLength = 2;
     public AccountValidation()

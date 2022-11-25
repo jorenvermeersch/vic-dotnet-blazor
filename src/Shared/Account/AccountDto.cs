@@ -19,7 +19,7 @@ public static class AccountDto
         public string Department { get; set; } = default!;
         public string Education { get; set; } = default!;
     }
-    public class Create
+    public class Mutate
     {
         public string Firstname { get; set; } = default!;
         public string Lastname { get; set; } = default!;

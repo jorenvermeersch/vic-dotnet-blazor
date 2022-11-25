@@ -9,7 +9,7 @@ namespace Shared.Host;
 
 public class BogusHostService: IHostService
 {
-    public readonly List<HostDto.Details> hosts = new();
+    public readonly List<HostDto.Detail> hosts = new();
     private SpecificationService specificationService = new();
 
 	public BogusHostService()
@@ -17,7 +17,7 @@ public class BogusHostService: IHostService
         
         var hostId = 0;
 
-        var hostFaker = new Faker<HostDto.Details>("nl")
+        var hostFaker = new Faker<HostDto.Detail>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => hostId++)
             .RuleFor(x => x.Name, f => f.Internet.DomainWord())
@@ -28,10 +28,10 @@ public class BogusHostService: IHostService
         
     }
 
-    public Task<HostDto.Details> Add(HostDto.Create newHost)
+    public Task<HostDto.Detail> Add(HostDto.Mutate newHost)
     {
         newHost.Id = hosts.Count + 1;
-        HostDto.Details host = new()
+        HostDto.Detail host = new()
         {
             Id = newHost.Id,
             Name = newHost.Name,
@@ -57,7 +57,7 @@ public class BogusHostService: IHostService
         return Task.FromResult(hosts.Count());
     }
 
-    public Task<HostDto.Details> GetDetailAsync(long hostId)
+    public Task<HostDto.Detail> GetDetailAsync(long hostId)
     {
         return Task.FromResult(hosts.Single(x => x.Id == hostId));
     }

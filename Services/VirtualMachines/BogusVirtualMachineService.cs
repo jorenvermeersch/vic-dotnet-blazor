@@ -1,45 +1,34 @@
 ﻿using Bogus;
 using Domain.Constants;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 using Shared;
 using Shared.Account;
 using Shared.Customer;
 using Shared.Host;
 using Shared.Port;
-using Shared.Shared;
 using Shared.Specification;
 using Shared.VirtualMachine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using static Shared.VirtualMachine.VirtualMachineRequest;
 
 namespace Server.VirtualMachines;
 
 public class BogusVirtualMachineService : IVirtualMachineService
 {
-    BogusCustomerService BogusCustomerService { get; set; } = new BogusCustomerService();
+    private BogusCustomerService BogusCustomerService { get; set; } = new BogusCustomerService();
     //FakeAccountService BogusAccountService { get; set; } = new FakeAccountService();
     private readonly IAccountService BogusAccountService;
 
-    BogusHostService BogusHostService { get; set; } = new BogusHostService();
-    SpecificationService SpecificationService { get; set; } = new SpecificationService();
-    PortService PortService { get; set; } = new PortService();
-    TimeSpanService TimeSapnService { get; set; } = new TimeSpanService();
+    private BogusHostService BogusHostService { get; set; } = new BogusHostService();
+    private SpecificationService SpecificationService { get; set; } = new SpecificationService();
+    private PortService PortService { get; set; } = new PortService();
     private readonly List<VirtualMachineDto.Details> _virtualMachines = new();
-
-    List<AccountDto.Index> accounts = new();
+    private List<AccountDto.Index> accounts = new();
     //private readonly VicDBContext _dbContext;
     private readonly IAccountService accountService;
 
     public BogusVirtualMachineService(IAccountService accountService)
     {
         this.accountService = accountService;
-        
+
         var vmId = 0;
 
 
@@ -50,7 +39,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             Email = x.ContactPerson.Email
         }).ToArray();
 
-       
+
 
 
         //var accounts = BogusAccountService.accounts.Select(x => new AccountDto.Index
@@ -101,7 +90,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
 
     public async void fetchAccounts()
     {
-        AccountResponse.GetIndex accountsidx = await accountService.GetIndexAsync(new AccountRequest.GetIndex());
+        AccountResult.Index accountsidx = await accountService.GetIndexAsync(new AccountRequest.Index());
 
         var accounts = accountsidx.Accounts.Select(x => new AccountDto.Index
         {
@@ -142,40 +131,36 @@ public class BogusVirtualMachineService : IVirtualMachineService
         }));
     }
 
-    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create newVM)
+    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create machine)
     {
-        newVM.Id = _virtualMachines.Count + 1;
-        //Console.WriteLine(newVM.ApplicationDate);
-        //Console.WriteLine(newVM.Specification.Processors);
-        //_virtualMachines.Add(newVM);
-        VirtualMachineDto.Details vm = new VirtualMachineDto.Details()
+        VirtualMachineDto.Details virtualMachine = new()
         {
-            Id = newVM.Id,
-            Fqdn = newVM.Fqdn,
-            Status = TranslateEnums.TranslateStatus(newVM.Status),
-            Name = newVM.Name,
-            Template = TranslateEnums.TranslateTemplate(newVM.Template),
-            Mode = (Mode) Enum.Parse(typeof(Mode), newVM.Mode, true),
-            BackupFrequenty = TranslateEnums.TranslateBackupFrequency(newVM.BackupFrequenty),
-            ApplicationDate = newVM.ApplicationDate,
-            Reason = newVM.Reason,
-            Ports = newVM.Ports,
-            Specification = newVM.Specifications,
-            Credentials = newVM.Credentials,
+            Id = _virtualMachines.Count + 1,
+            Fqdn = machine.Fqdn,
+            Status = TranslateEnums.TranslateStatus(machine.Status),
+            Name = machine.Name,
+            Template = TranslateEnums.TranslateTemplate(machine.Template),
+            Mode = (Mode)Enum.Parse(typeof(Mode), machine.Mode, true),
+            BackupFrequenty = TranslateEnums.TranslateBackupFrequency(machine.BackupFrequenty),
+            ApplicationDate = machine.ApplicationDate,
+            Reason = machine.Reason,
+            Ports = new(), // TODO: Fetch from PortService.
+            Specification = machine.Specifications,
+            Credentials = machine.Credentials,
             Host = new(),
             Account = new(),
             Requester = new(),
             TimeSpan = new()
             {
-                StartDate = newVM.StartDate,
-                EndDate = newVM.EndDate
+                StartDate = machine.StartDate,
+                EndDate = machine.EndDate
             },
-            hasVpnConnection = newVM.hasVpnConnection
+            hasVpnConnection = machine.hasVpnConnection
             // add accounts
         };
 
-        _virtualMachines.Add(vm);
-        return Task.FromResult(vm);
+        _virtualMachines.Add(virtualMachine);
+        return Task.FromResult(virtualMachine);
     }
 
     public Task<IEnumerable<VirtualMachineDto.Index>> GetAllUnfinishedVirtualMachines(int offset)
@@ -198,7 +183,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         }));
     }
 
-    public Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+    public Task<VirtualMachineResult.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     {
         //return Task.FromResult(_virtualMachines.Where(vm => vm.Account.Id == accountId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         //{
@@ -210,17 +195,17 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return null;
     }
 
-    public Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
+    public Task<VirtualMachineResult.GetIndex> GetIndexAsync(VirtualMachineRequest.Index request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    public Task<VirtualMachineResult.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.Index request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(GetDetail request)
+    public Task<VirtualMachineResult.GetDetail> GetDetailAsync(GetDetail request)
     {
         throw new NotImplementedException();
     }

@@ -21,7 +21,7 @@ public class AccountController
     /// <returns></returns>
     [SwaggerOperation("Returns a list of accounts")]
     [HttpGet]
-    public async Task<AccountResponse.GetIndex> GetIndexAsync([FromQuery] AccountRequest.GetIndex request)
+    public async Task<AccountResult.Index> GetIndexAsync([FromQuery] AccountRequest.Index request)
     {
         return await accountService.GetIndexAsync(request);
     }
@@ -33,7 +33,7 @@ public class AccountController
     /// <returns></returns>
     [SwaggerOperation("Returns a specific account")]
     [HttpGet("{AccountId}")]
-    public async Task<AccountResponse.GetDetail> GetDetailAsync([FromRoute] AccountRequest.GetDetail request)
+    public async Task<AccountResult.GetDetail> GetDetailAsync([FromRoute] AccountRequest.GetDetail request)
     {
         return await accountService.GetDetailAsync(request);
     }

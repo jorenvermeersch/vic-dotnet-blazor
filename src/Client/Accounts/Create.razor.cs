@@ -9,7 +9,7 @@ namespace Client.Accounts;
 public partial class Create
 {
     //Model
-    private AccountDto.Create Account { get; set; } = new();
+    private AccountDto.Mutate Account { get; set; } = new();
 
     [Inject] public IAccountService? AccountService { get; set; }
     [Inject] public NavigationManager? Navigation { get; set; }

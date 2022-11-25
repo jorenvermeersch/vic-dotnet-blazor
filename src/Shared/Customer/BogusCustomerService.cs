@@ -5,7 +5,7 @@ namespace Shared.Customer;
 
 public class BogusCustomerService : ICustomerService
 {
-    public readonly List<CustomerDto.Details> customers = new();
+    public readonly List<CustomerDto.Detail> customers = new();
     private readonly List<ContactPersonDto> _contacts = new();
     public BogusCustomerService()
     {
@@ -23,7 +23,7 @@ public class BogusCustomerService : ICustomerService
         var departments = new[] { "DIT", "DBO", "DBT" };
         var educations = new[] { "", "Toegepaste Informatica", "Bedrijfsmanagement", "Elektro-mechanica" };
 
-        var internalcustomerFaker = new Faker<CustomerDto.Details>("nl")
+        var internalcustomerFaker = new Faker<CustomerDto.Detail>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => customerId++)
             .RuleFor(x => x.Institution, f => f.PickRandom(Enum.GetValues(typeof(Institution)).Cast<Institution>().ToArray()))
@@ -37,7 +37,7 @@ public class BogusCustomerService : ICustomerService
 
         var types = new[] { "Voka", "Unizo" };
 
-        var externalcustomerFaker = new Faker<CustomerDto.Details>("nl")
+        var externalcustomerFaker = new Faker<CustomerDto.Detail>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => customerId++)
             .RuleFor(x => x.CompanyName, f => f.Company.CompanyName())
@@ -54,7 +54,7 @@ public class BogusCustomerService : ICustomerService
 
     }
 
-    Task<CustomerDto.Details> ICustomerService.GetDetailAsync(long customerId)
+    Task<CustomerDto.Detail> ICustomerService.GetDetailAsync(long customerId)
     {
         return Task.FromResult(customers.Single(x => x.Id == customerId));
     }
@@ -73,11 +73,11 @@ public class BogusCustomerService : ICustomerService
         return Task.FromResult(customers.Count());
     }
 
-    public Task<int> Add(CustomerDto.Create newCustomer)
+    public Task<int> Add(CustomerDto.Mutate newCustomer)
     {
         int id = customers.Count + 1;
         Institution institution;
-        customers.Add(new CustomerDto.Details()
+        customers.Add(new CustomerDto.Detail()
         {
             Id = id,
             CompanyName = newCustomer.CompanyName,

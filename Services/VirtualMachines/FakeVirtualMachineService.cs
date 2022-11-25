@@ -20,9 +20,9 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
     //TODO: FAKE VM SERVICE INDEX
-    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(/*int offset, int amount*/ VirtualMachineRequest.GetIndex request)
+    public async Task<VirtualMachineResult.GetIndex> GetIndexAsync(/*int offset, int amount*/ VirtualMachineRequest.Index request)
     {
-        VirtualMachineResponse.GetIndex response = new();
+        VirtualMachineResult.GetIndex response = new();
         var query = machines.AsQueryable();
 
         response.TotalAmount = query.Count();
@@ -45,9 +45,9 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
     //TODO: FAKE VM SERVICE USER ID MACHINES
-    public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+    public async Task<VirtualMachineResult.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     {
-        VirtualMachineResponse.GetIndex response = new();
+        VirtualMachineResult.GetIndex response = new();
         var query = machines.AsQueryable();
 
         //List<VirtualMachineDto.Details> details = query.Select(x => new VirtualMachineDto.Details
@@ -129,9 +129,9 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
 
-    public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    public async Task<VirtualMachineResult.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.Index request)
     {
-        VirtualMachineResponse.GetIndex response = new();
+        VirtualMachineResult.GetIndex response = new();
         var query = machines.AsQueryable();
 
         response.TotalAmount = query.Count();
@@ -146,7 +146,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         return response;
     }
 
-    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
+    public Task<VirtualMachineResult.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         throw new NotImplementedException();
     }

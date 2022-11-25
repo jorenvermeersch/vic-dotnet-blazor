@@ -19,16 +19,16 @@ public class AccountService : IAccountService
     private readonly DbSet<Account> _accounts;
 
 
-    public Task<AccountDto.Details> Add(AccountDto.Create newAccount)
+    public Task<AccountDto.Details> Add(AccountDto.Mutate newAccount)
     {
         throw new NotImplementedException();
     }
 
 
     //public async Task<AccountResponse.GetIndex> GetIndexAsync(int offset)
-    public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
+    public async Task<AccountResult.Index> GetIndexAsync(AccountRequest.Index request)
     {
-        AccountResponse.GetIndex response = new();
+        AccountResult.Index response = new();
         var query = _accounts.AsQueryable().AsNoTracking();
 
         response.TotalAmount = query.Count();
@@ -46,7 +46,7 @@ public class AccountService : IAccountService
         return response;
     }
 
-    public Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
+    public Task<AccountResult.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
     {
         throw new NotImplementedException();
     }

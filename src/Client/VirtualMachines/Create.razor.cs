@@ -85,7 +85,7 @@ public partial class Create
         Hosts = hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
         IEnumerable<CustomerDto.Index> customers = await CustomerService!.GetIndexAsync(0);
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
-        AccountResponse.GetIndex accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
+        AccountResult.Index accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.Index());
         IEnumerable<AccountDto.Index> accounts = accountResponse.Accounts;
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
         availablePorts = await PortService!.GetIndexAsync();

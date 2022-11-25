@@ -15,7 +15,7 @@ public partial class Details
     public long Id { get; set; }
 
     //Model
-    private HostDto.Details? host;
+    private HostDto.Detail? host;
 
     private Dictionary<string, Dictionary<string, string>> _server = new();
     private IEnumerable<VirtualMachineDto.Index> virtualMachines;

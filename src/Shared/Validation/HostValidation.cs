@@ -4,7 +4,7 @@ using Shared.Validation;
 
 namespace Shared.Validation;
 
-public class HostValidation : AbstractValidator<HostDto.Create>
+public class HostValidation : AbstractValidator<HostDto.Mutate>
 {
     private readonly int _nameLength = 2;
     public HostValidation()

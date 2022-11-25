@@ -2,7 +2,7 @@
 
 public class FakeCustomerService
 {
-    private readonly List<CustomerDto.Details> _customers = new();
+    private readonly List<CustomerDto.Detail> _customers = new();
     public FakeCustomerService()
     {
         _customers.Add(new()
@@ -68,7 +68,7 @@ public class FakeCustomerService
         });
     }
 
-    public Task<CustomerDto.Details> Add(CustomerDto.Details newCustomer)
+    public Task<CustomerDto.Detail> Add(CustomerDto.Detail newCustomer)
     {
         throw new NotImplementedException();
     }
@@ -78,7 +78,7 @@ public class FakeCustomerService
         return Task.FromResult(_customers.Count());
     }
 
-    Task<CustomerDto.Details> GetDetailAsync(long customerId)
+    Task<CustomerDto.Detail> GetDetailAsync(long customerId)
     {
         return Task.FromResult(_customers.Single(x => x.Id == customerId));
     }

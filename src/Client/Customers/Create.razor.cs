@@ -8,7 +8,7 @@ namespace Client.Customers;
 public partial class Create
 {
     //Model
-    private CustomerDto.Create Customer { get; set; } = new();
+    private CustomerDto.Mutate Customer { get; set; } = new();
 
     [Inject] public ICustomerService? CustomerService { get; set; }
     [Inject] public NavigationManager? Navigation { get; set; }

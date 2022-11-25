@@ -11,10 +11,10 @@ public partial class Create
 
 
     private EditForm? Editform { get; set; } = new();
-    private HostDto.Create Host { get; set; } = new();
+    private HostDto.Mutate Host { get; set; } = new();
     private async void HandleValidSubmit()
     {
-        HostDto.Details newHost = await HostService!.Add(Host);
+        HostDto.Detail newHost = await HostService!.Add(Host);
         Navigation!.NavigateTo("host/" + newHost.Id);
     }
 }
