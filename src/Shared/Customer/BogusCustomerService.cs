@@ -16,7 +16,7 @@ public class BogusCustomerService : ICustomerService
             .RuleFor(x => x.Firstname, f => f.Name.FirstName())
             .RuleFor(x => x.Lastname, f => f.Name.LastName())
             .RuleFor(x => x.Email, f => f.Internet.Email())
-            .RuleFor(x => x.Phonenumber, f => f.Phone.PhoneNumber();
+            .RuleFor(x => x.Phonenumber, f => f.Phone.PhoneNumber());
 
         _contacts = contactPersonFaker.Generate(60);
 
