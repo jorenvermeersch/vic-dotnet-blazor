@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.VirtualMachines;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Customers;
 
@@ -22,6 +23,7 @@ public abstract class Customer : Entity
             _contactPerson = value;
         }
     }
+
     public ContactPerson? BackupContactPerson
     {
         get => _backupContactPerson;
@@ -31,6 +33,8 @@ public abstract class Customer : Entity
             _backupContactPerson = value;
         }
     }
+
+    [NotMapped]
     public IList<VirtualMachine> VirtualMachines { get; set; }
     #endregion
 
@@ -46,13 +50,15 @@ public abstract class Customer : Entity
         _backupContactPerson = backupContact;
         VirtualMachines = virtualMachines ?? new List<VirtualMachine>();
     }
+
+    public Customer() { }
     #endregion
 
     private void ValidateContacts(ContactPerson contactPerson, ContactPerson? backupContact)
     {
-        if (contactPerson.HasTheSameContactInformation(backupContact))
-        {
-            //throw new ArgumentException("Contact person and backup contact should be different");
-        }
+        //if (contactPerson.HasTheSameContactInformation(backupContact))
+        //{
+        //    //throw new ArgumentException("Contact person and backup contact should be different");
+        //}
     }
 }

@@ -22,5 +22,7 @@ public class ExternalCustomer : Customer
         CompanyName = name;
         Type = type;
     }
+
+    public ExternalCustomer() { }
     #endregion
 }

@@ -2,18 +2,13 @@
 using Domain.Constants;
 using Domain.Customers;
 using Fakers.ContactPersons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fakers;
 
 public static class CustomerFaker
 {
 
-    public class ExternalCustomerFaker : EntityFaker<Customer>
+    public class ExternalCustomerFaker : EntityFaker<ExternalCustomer>
     {
         public ExternalCustomerFaker(string locale = "nl")
         {
@@ -33,7 +28,7 @@ public static class CustomerFaker
     }
 
 
-    public class InternalCustomerFaker : EntityFaker<Customer>
+    public class InternalCustomerFaker : EntityFaker<InternalCustomer>
     {
         public InternalCustomerFaker(string locale = "nl")
         {

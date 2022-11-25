@@ -26,5 +26,7 @@ public class InternalCustomer : Customer
         Department = department;
         Education = education;
     }
+
+    public InternalCustomer() { }
     #endregion
 }
