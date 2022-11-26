@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using Shared.Customer;
+using Shared.Customers;
 
 namespace Client.Customers;
 

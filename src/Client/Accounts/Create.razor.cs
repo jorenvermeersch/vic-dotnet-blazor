@@ -1,7 +1,7 @@
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using Shared.Account;
+using Shared.Accounts;
 
 
 namespace Client.Accounts;

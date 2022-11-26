@@ -1,6 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Components;
-using Shared.VirtualMachine;
+using Shared.VirtualMachines;
 using Microsoft.Extensions.Localization;
 
 namespace Client._Pages;

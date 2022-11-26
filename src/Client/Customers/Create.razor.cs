@@ -1,7 +1,7 @@
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Shared.Customer;
+using Shared.Customers;
 
 namespace Client.Customers;
 

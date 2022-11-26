@@ -2,11 +2,11 @@ using Client.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Shared.Account;
-using Shared.Customer;
-using Shared.Host;
-using Shared.Port;
-using Shared.VirtualMachine;
+using Shared.Accounts;
+using Shared.Customers;
+using Shared.Hosts;
+using Shared.Ports;
+using Shared.VirtualMachines;
 
 namespace Client
 {

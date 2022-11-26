@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Shared.VirtualMachine;
+using Shared.VirtualMachines;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Controllers.VirtualMachines;

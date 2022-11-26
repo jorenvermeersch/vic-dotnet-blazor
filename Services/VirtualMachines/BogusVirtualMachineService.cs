@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using Domain.Constants;
 using Shared;
-using Shared.Account;
-using Shared.Customer;
-using Shared.Host;
-using Shared.Port;
-using Shared.VirtualMachine;
-using static Shared.VirtualMachine.VirtualMachineRequest;
+using Shared.Accounts;
+using Shared.Customers;
+using Shared.Hosts;
+using Shared.Ports;
+using Shared.VirtualMachines;
+using static Shared.VirtualMachines.VirtualMachineRequest;
 
 namespace Server.VirtualMachines;
 
@@ -54,7 +54,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             Id = x.Id,
             Name = x.Name
         });
-        var credentialFaker = new Faker<CredentialDto>("nl")
+        var credentialFaker = new Faker<CredentialsDto>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Username, f => f.Internet.UserName())
             .RuleFor(x => x.Role, f => f.PickRandom(new[] { "Admin", "User", "Observer" }))

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
-using Shared.Host;
-using Shared.VirtualMachine;
+using Shared.Hosts;
+using Shared.VirtualMachines;
 
 
 namespace Client.Hosts;

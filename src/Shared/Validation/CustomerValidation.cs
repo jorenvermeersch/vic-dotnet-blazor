@@ -1,7 +1,7 @@
 ﻿using Domain.Constants;
 using FluentValidation;
-using Shared.Customer;
-using Shared.VirtualMachine;
+using Shared.Customers;
+using Shared.VirtualMachines;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using Shared.VirtualMachine;
+using Shared.VirtualMachines;
 
 
 namespace Client.VirtualMachines;

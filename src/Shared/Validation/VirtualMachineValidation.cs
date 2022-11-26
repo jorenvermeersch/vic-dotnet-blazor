@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Shared.VirtualMachine;
+using Shared.VirtualMachines;
 
 namespace Shared.Validation;
 

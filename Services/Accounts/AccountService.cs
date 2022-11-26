@@ -1,4 +1,4 @@
-﻿using Shared.Account;
+﻿using Shared.Accounts;
 
 namespace Services.Accounts;
 

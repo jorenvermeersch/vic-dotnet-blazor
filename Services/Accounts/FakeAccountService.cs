@@ -1,5 +1,5 @@
 ﻿using Fakers.Accounts;
-using Shared.Account;
+using Shared.Accounts;
 
 namespace Service.Account;
 

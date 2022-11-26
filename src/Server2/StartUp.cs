@@ -4,8 +4,8 @@ using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Service.Account;
 using Service.VirtualMachines;
-using Shared.Account;
-using Shared.VirtualMachine;
+using Shared.Accounts;
+using Shared.VirtualMachines;
 
 namespace BlazorApp1.Server
 {

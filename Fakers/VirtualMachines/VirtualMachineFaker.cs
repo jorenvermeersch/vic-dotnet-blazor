@@ -6,8 +6,8 @@ using Domain.Customers;
 using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.Credentials;
-using Fakers.Specification;
-using Fakers.TimeSpansFaker;
+using Fakers.Specifications;
+using Fakers.TimeSpan;
 
 namespace Fakers.VirtualMachines;
 
@@ -42,8 +42,8 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
         TimeSpanFaker timeSpanFaker = new TimeSpanFaker();
         List<Domain.VirtualMachines.TimeSpan> timespans = timeSpanFaker.Generate(5);
 
-        SpecificationFaker specificationFaker = new SpecificationFaker();
-        List<Specifications> specifications = specificationFaker.Generate(10);
+        SpecificationsFaker specificationFaker = new SpecificationsFaker();
+        List<Domain.Common.Specifications> specifications = specificationFaker.Generate(10);
 
         CustomInstantiator(f => new VirtualMachine(new VirtualMachineArgs
         {

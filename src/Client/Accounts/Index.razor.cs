@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using Shared.Account;
+using Shared.Accounts;
 
 namespace Client.Accounts;
 

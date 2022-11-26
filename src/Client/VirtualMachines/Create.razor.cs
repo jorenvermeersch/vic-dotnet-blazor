@@ -2,12 +2,12 @@ using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
-using Shared.Account;
-using Shared.Customer;
-using Shared.Host;
-using Shared.Port;
-using Shared.Specification;
-using Shared.VirtualMachine;
+using Shared.Accounts;
+using Shared.Customers;
+using Shared.Hosts;
+using Shared.Ports;
+using Shared.Specifications;
+using Shared.VirtualMachines;
 
 namespace Client.VirtualMachines;
 
@@ -25,11 +25,11 @@ public partial class Create
     private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Mutate VirtualMachine { get; set; } = new();
     private PortDto Port { get; set; } = new();
-    private SpecificationDto Specifications;
+    private SpecificationsDto Specifications;
     private string SelectedPort { get; set; } = "";
     // Credentials
-    private List<CredentialDto> credentialList = new();
-    private CredentialDto? newCredential = new();
+    private List<CredentialsDto> credentialList = new();
+    private CredentialsDto? newCredential = new();
     private List<string> Availabilities = new();
     private string selectedAvailability;
     private string _customcss = "background-color: white";

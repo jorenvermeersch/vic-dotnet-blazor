@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Shared.Customer;
+using Shared.Customers;
 
 namespace Shared.Validation;
 

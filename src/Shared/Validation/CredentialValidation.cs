@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using Shared.Validation;
-using Shared.VirtualMachine;
+using Shared.VirtualMachines;
 
 namespace Shared.Validation;
 
-public class CredentialValidation : AbstractValidator<CredentialDto>
+public class CredentialValidation : AbstractValidator<CredentialsDto>
 {
     private readonly int _nameLength = 2;
     public CredentialValidation()

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using Shared.Host;
+using Shared.Hosts;
 
 namespace Client.Hosts;
 

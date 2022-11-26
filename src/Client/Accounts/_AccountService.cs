@@ -1,5 +1,5 @@
 ﻿using Client.Extensions;
-using Shared.Account;
+using Shared.Accounts;
 using System.Net.Http.Json;
 
 namespace Client.Accounts;

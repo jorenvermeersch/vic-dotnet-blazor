@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Shared.Host;
+using Shared.Hosts;
 
 namespace Client.Hosts;
 

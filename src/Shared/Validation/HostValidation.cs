@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Shared.Host;
+using Shared.Hosts;
 using Shared.Validation;
 
 namespace Shared.Validation;

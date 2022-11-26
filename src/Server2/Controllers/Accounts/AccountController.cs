@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Shared.Account;
+using Shared.Accounts;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Controllers.Accounts;

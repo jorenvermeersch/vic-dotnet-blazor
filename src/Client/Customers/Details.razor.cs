@@ -1,7 +1,7 @@
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
-using Shared.Customer;
-using Shared.VirtualMachine;
+using Shared.Customers;
+using Shared.VirtualMachines;
 
 namespace Client.Customers;
 

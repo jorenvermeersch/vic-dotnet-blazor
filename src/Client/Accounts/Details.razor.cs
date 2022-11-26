@@ -1,8 +1,8 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using Shared.Account;
-using Shared.VirtualMachine;
+using Shared.Accounts;
+using Shared.VirtualMachines;
 
 namespace Client.Accounts;
 

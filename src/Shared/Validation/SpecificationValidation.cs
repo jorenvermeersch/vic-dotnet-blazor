@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Shared.Specification;
+using Shared.Specifications;
 using Shared.Validation;
 
 namespace Shared.Validation;
 
 [Obsolete]
-public class SpecificationValidation : AbstractValidator<SpecificationDto>
+public class SpecificationValidation : AbstractValidator<SpecificationsDto>
 {
     private readonly int _minProcessorCount = 0;
     private readonly int _minMemoryCount = 0;

@@ -1,7 +1,7 @@
 ﻿using Domain.Constants;
 using Domain.VirtualMachines;
 using Fakers.VirtualMachines;
-using Shared.VirtualMachine;
+using Shared.VirtualMachines;
 
 namespace Service.VirtualMachines;
 

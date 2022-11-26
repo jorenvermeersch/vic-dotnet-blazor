@@ -1,6 +1,6 @@
 ﻿using Client.Extensions;
-using Shared.Account;
-using Shared.VirtualMachine;
+using Shared.Accounts;
+using Shared.VirtualMachines;
 using System.Net.Http.Json;
 
 namespace Client.VirtualMachines;
