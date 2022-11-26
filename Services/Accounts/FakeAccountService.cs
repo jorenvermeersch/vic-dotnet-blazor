@@ -1,4 +1,5 @@
 ﻿using Domain.Accounts;
+using Domain.Constants;
 using Fakers.Accounts;
 using Shared.Accounts;
 
@@ -36,11 +37,11 @@ public class FakeAccountService : IAccountService {
             Firstname = x.Firstname,
             Lastname = x.Lastname,
             IsActive = x.IsActive,
-            Role = x.Role
+            Role = x.Role.ToString()
         }).SingleOrDefault(x => x.Id == request.AccountId) ?? new AccountDto.Detail();
         return response;
     }
-
+       
     public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request) {
         AccountResponse.GetIndex response = new();
         var query = accounts.AsQueryable();
@@ -57,7 +58,7 @@ public class FakeAccountService : IAccountService {
             Firstname = x.Firstname,
             IsActive = x.IsActive,
             Lastname = x.Lastname,
-            Role = x.Role
+            Role = x.Role.ToString()
         }).ToList();
         return response;
     }
