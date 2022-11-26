@@ -1,52 +1,36 @@
-﻿using Domain.Administrators;
-using Microsoft.EntityFrameworkCore;
-using Persistence.Data;
-using Shared.Account;
+﻿using Shared.Account;
 
 namespace Services.Accounts;
 
 public class AccountService : IAccountService
 {
 
-    //private readonly System.Data.Entity.Infrastructure.IDbContextFactory dbContext;
-    public AccountService(VicDBContext dbContext)
+    public AccountService()
     {
-        this._dbContext = dbContext;
-        _accounts = _dbContext.Accounts;
+
     }
 
-    private readonly VicDBContext _dbContext;
-    private readonly DbSet<Account> _accounts;
-
-
-    public Task<AccountDto.Details> Add(AccountDto.Mutate newAccount)
+    public Task<long> CreateAsync(AccountDto.Mutate model)
     {
         throw new NotImplementedException();
     }
 
-
-    //public async Task<AccountResponse.GetIndex> GetIndexAsync(int offset)
-    public async Task<AccountResult.Index> GetIndexAsync(AccountRequest.Index request)
+    public Task DeleteAsync(long accountId)
     {
-        AccountResult.Index response = new();
-        var query = _accounts.AsQueryable().AsNoTracking();
-
-        response.TotalAmount = query.Count();
-
-        response.Accounts = await _dbContext.Accounts.Select(x => new AccountDto.Index
-        {
-            Id = (int)x.Id,
-            Email = x.Email,
-            Firstname = x.Firstname,
-            Lastname = x.Lastname,
-            IsActive = x.IsActive,
-            Role = x.Role
-        }).ToListAsync();
-
-        return response;
+        throw new NotImplementedException();
     }
 
-    public Task<AccountResult.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
+    public Task EditAsync(long accountId, AccountDto.Mutate model)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<AccountDto.Detail> GetDetailAsync(long accountId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
     {
         throw new NotImplementedException();
     }

@@ -1,12 +1,8 @@
-﻿using System;
-using Shared.Port;
+﻿namespace Shared.Port;
 
-namespace Shared.Port
+public interface IPortService
 {
-	public interface IPortService
-	{
-        Task<IEnumerable<PortDto>> GetIndexAsync();
+    Task<IEnumerable<PortDto>> GetAllAsync();
 
-    }
 }
 

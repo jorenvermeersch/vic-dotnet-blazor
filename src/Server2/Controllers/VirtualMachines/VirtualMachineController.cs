@@ -21,19 +21,19 @@ public class VirtualMachineController
     /// <returns></returns>
     [SwaggerOperation("Returns a list of virtual machines")]
     [HttpGet]
-    public async Task<VirtualMachineResult.GetIndex> GetIndex()
+    public async Task<VirtualMachineResponse.GetIndex> GetIndex()
     {
-        VirtualMachineRequest.Index request = new() { Offset = 50 };
-        VirtualMachineResult.GetIndex virtualMachineResponse = await virtualMachineService.GetIndexAsync(request);
+        VirtualMachineRequest.GetIndex request = new() { Offset = 50 };
+        VirtualMachineResponse.GetIndex virtualMachineResponse = await virtualMachineService.GetIndexAsync(request);
         return virtualMachineResponse;
     }
 
 
     [SwaggerOperation("Returns a list of virtual machines that belongs to a specific account [ObjectId is the Id of the account]")]
     [HttpGet("account/{ObjectId}")]
-    public async Task<VirtualMachineResult.GetIndex> GetVirtualMachinesByAccountId([FromRoute] VirtualMachineRequest.GetByObjectId request)
+    public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId([FromRoute] VirtualMachineRequest.GetByObjectId request)
     {
-        VirtualMachineResult.GetIndex virtualMachineResponse = await virtualMachineService.GetVirtualMachinesByAccountId(request);
+        VirtualMachineResponse.GetIndex virtualMachineResponse = await virtualMachineService.GetVirtualMachinesByAccountId(request);
         return virtualMachineResponse;
     }
 }

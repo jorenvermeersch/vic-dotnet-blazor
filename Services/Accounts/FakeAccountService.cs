@@ -14,17 +14,17 @@ public class FakeAccountService : IAccountService
         accounts = accountsFaker.UseSeed(1337).Generate(100);
     }
 
-    public Task<AccountDto.Details> Add(AccountDto.Mutate newAccount)
+    public Task<AccountDto.Detail> Add(AccountDto.Mutate newAccount)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<AccountResult.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
+    public async Task<AccountDto.Detail> GetDetailAsync(long accountId)
     {
-        AccountResult.GetDetail response = new();
+        AccountResponse.GetDetail response = new();
         var query = accounts.AsQueryable();
 
-        response.Account = query.Select(x => new AccountDto.Details
+        response.Account = query.Select(x => new AccountDto.Detail
         {
             Id = (int)x.Id,
             Firstname = x.Firstname,
@@ -41,9 +41,9 @@ public class FakeAccountService : IAccountService
     }
 
     //public async Task<AccountResponse.GetIndex> GetIndexAsync(int offset)
-    public async Task<AccountResult.Index> GetIndexAsync(AccountRequest.Index request)
+    public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
     {
-        AccountResult.Index response = new();
+        AccountResponse.GetIndex response = new();
         var query = accounts.AsQueryable();
 
         response.TotalAmount = query.Count();

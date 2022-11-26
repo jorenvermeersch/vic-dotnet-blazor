@@ -24,7 +24,7 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        AccountDto.Details newAccount = await AccountService!.Add(Account);
+        AccountDto.Detail newAccount = await AccountService!.Add(Account);
         Navigation?.NavigateTo("account/" + newAccount.Id);
     }
 }

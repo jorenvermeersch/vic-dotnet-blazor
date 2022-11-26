@@ -2,9 +2,9 @@
 
 public interface ICustomerService
 {
-    Task<CustomerResult.Index> GetIndexAsync(CustomerRequest.Index request);
-    Task<CustomerDto.Detail> GetDetailAsync(long customerId);
-    Task<long> CreateAsync(CustomerDto.Mutate model);
-    Task EditAsync(long customerId, CustomerDto.Mutate model);
-    Task DeleteAsync(long customerId);
+    Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request);
+    Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request);
+    Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request);
+    Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request);
+    Task DeleteAsync(CustomerRequest.Delete request);
 }

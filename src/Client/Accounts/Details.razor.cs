@@ -9,7 +9,7 @@ namespace Client.Accounts;
 public partial class Details
 {
     //MODEL
-    private AccountDto.Details? account;
+    private AccountDto.Detail? account;
 
     [Inject] public IAccountService? AccountService { get; set; }
     [Inject] public NavigationManager? Navigation { get; set; }
@@ -29,7 +29,7 @@ public partial class Details
     protected override async Task OnInitializedAsync()
     {
         AccountRequest.GetDetail request = new() { AccountId = (int)Id };
-        AccountResult.GetDetail response = await AccountService!.GetDetailAsync(request);
+        AccountResponse.GetDetail response = await AccountService!.GetDetailAsync(request);
         account = response.Account;
         _general?.Add("Role", localizer![account!.Role.ToString()]);
         _username?.Add("Naam", string.Concat(account!.Firstname, " ", account!.Lastname));

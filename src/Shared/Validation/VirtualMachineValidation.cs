@@ -4,7 +4,7 @@ using Shared.VirtualMachine;
 namespace Shared.Validation;
 
 [Obsolete]
-public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Create>
+public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Mutate>
 {
     private readonly int _nameLenght = 2;
     private readonly int _fqdnLenght = 2;

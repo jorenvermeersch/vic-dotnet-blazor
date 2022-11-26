@@ -23,7 +23,7 @@ public partial class Create
 
 
     private EditForm? Editform { get; set; } = new();
-    private VirtualMachineDto.Create VirtualMachine { get; set; } = new();
+    private VirtualMachineDto.Mutate VirtualMachine { get; set; } = new();
     private PortDto Port { get; set; } = new();
     private SpecificationDto Specifications;
     private string SelectedPort { get; set; } = "";
@@ -85,7 +85,7 @@ public partial class Create
         Hosts = hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
         IEnumerable<CustomerDto.Index> customers = await CustomerService!.GetIndexAsync(0);
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
-        AccountResult.Index accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.Index());
+        AccountResponse.GetIndex accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
         IEnumerable<AccountDto.Index> accounts = accountResponse.Accounts;
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
         availablePorts = await PortService!.GetIndexAsync();
@@ -128,7 +128,7 @@ public partial class Create
         }
 
         VirtualMachine.Ports = chosenPorts;
-        VirtualMachineDto.Details newVirtualMachine = await VirtualMachineService!.Add(VirtualMachine);
+        VirtualMachineDto.Detail newVirtualMachine = await VirtualMachineService!.Add(VirtualMachine);
         Navigation!.NavigateTo("virtual-machine/" + newVirtualMachine.Id);
     }
 }

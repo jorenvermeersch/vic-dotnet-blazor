@@ -15,7 +15,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        AccountResult.Index response = await AccountService!.GetIndexAsync(new AccountRequest.Index());
+        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
         accounts = response.Accounts;
         totalaccounts = response.TotalAmount;
         totalPages = (totalaccounts / 20) + 1;
@@ -26,7 +26,7 @@ public partial class Index
     private async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 20;
-        AccountResult.Index response = await AccountService!.GetIndexAsync(new AccountRequest.Index());
+        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
         accounts = response.Accounts;
         selectedPage = pageNr;
     }

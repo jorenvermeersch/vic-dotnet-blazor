@@ -14,7 +14,7 @@ public static class AccountDto
         public bool IsActive { get; set; }
     }
 
-    public class Details : Index
+    public class Detail : Index
     {
         public string Department { get; set; } = default!;
         public string Education { get; set; } = default!;

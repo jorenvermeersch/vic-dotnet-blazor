@@ -5,7 +5,6 @@ using Shared.Account;
 using Shared.Customer;
 using Shared.Host;
 using Shared.Port;
-using Shared.Specification;
 using Shared.VirtualMachine;
 using static Shared.VirtualMachine.VirtualMachineRequest;
 
@@ -20,7 +19,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
     private BogusHostService BogusHostService { get; set; } = new BogusHostService();
     private SpecificationService SpecificationService { get; set; } = new SpecificationService();
     private PortService PortService { get; set; } = new PortService();
-    private readonly List<VirtualMachineDto.Details> _virtualMachines = new();
+    private readonly List<VirtualMachineDto.Detail> _virtualMachines = new();
     private List<AccountDto.Index> accounts = new();
     //private readonly VicDBContext _dbContext;
     private readonly IAccountService accountService;
@@ -62,7 +61,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.PasswordHash, f => f.Internet.Password());
 
 
-        var virtualMachineFaker = new Faker<VirtualMachineDto.Details>("nl")
+        var virtualMachineFaker = new Faker<VirtualMachineDto.Detail>("nl")
             .UseSeed(1337)
             .RuleFor(x => x.Id, _ => vmId++)
             .RuleFor(x => x.Fqdn, f => f.Internet.DomainName())
@@ -75,7 +74,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
             .RuleFor(x => x.Reason, f => f.PickRandom(new[] { "Bachelor proef", "AI trainen", "Database draaien" }))
             .RuleFor(x => x.ApplicationDate, f => f.Date.Past())
             .RuleFor(x => x.Specification, f => f.PickRandom(SpecificationService.specifications))
-            .RuleFor(x => x.TimeSpan, f => f.PickRandom(TimeSapnService.timespan))
+            .RuleFor(x => x.TimeSpan, f => f.PickRandom(TimeSpanService.timespan))
             .RuleFor(x => x.User, f => f.PickRandom(customers))
             .RuleFor(x => x.Requester, f => f.PickRandom(customers))
             .RuleFor(x => x.Account, f => f.PickRandom(accounts))
@@ -90,7 +89,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
 
     public async void fetchAccounts()
     {
-        AccountResult.Index accountsidx = await accountService.GetIndexAsync(new AccountRequest.Index());
+        AccountResponse.GetIndex accountsidx = await accountService.GetIndexAsync(new AccountRequest.GetIndex());
 
         var accounts = accountsidx.Accounts.Select(x => new AccountDto.Index
         {
@@ -106,7 +105,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return Task.FromResult(_virtualMachines.Count);
     }
 
-    public Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId)
+    public Task<VirtualMachineDto.Detail> GetDetailAsync(long virtualMachineId)
     {
         return Task.FromResult(_virtualMachines.Single(x => x.Id == virtualMachineId));
     }
@@ -131,9 +130,9 @@ public class BogusVirtualMachineService : IVirtualMachineService
         }));
     }
 
-    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create machine)
+    public Task<VirtualMachineDto.Detail> Add(VirtualMachineDto.Mutate machine)
     {
-        VirtualMachineDto.Details virtualMachine = new()
+        VirtualMachineDto.Detail virtualMachine = new()
         {
             Id = _virtualMachines.Count + 1,
             Fqdn = machine.Fqdn,
@@ -183,7 +182,7 @@ public class BogusVirtualMachineService : IVirtualMachineService
         }));
     }
 
-    public Task<VirtualMachineResult.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+    public Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     {
         //return Task.FromResult(_virtualMachines.Where(vm => vm.Account.Id == accountId).Skip(offset).Take(10).Select(x => new VirtualMachineDto.Index
         //{
@@ -195,17 +194,17 @@ public class BogusVirtualMachineService : IVirtualMachineService
         return null;
     }
 
-    public Task<VirtualMachineResult.GetIndex> GetIndexAsync(VirtualMachineRequest.Index request)
+    public Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<VirtualMachineResult.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.Index request)
+    public Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<VirtualMachineResult.GetDetail> GetDetailAsync(GetDetail request)
+    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(GetDetail request)
     {
         throw new NotImplementedException();
     }

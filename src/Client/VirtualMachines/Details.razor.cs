@@ -13,7 +13,7 @@ public partial class Details
     [Parameter] public long Id { get; set; }
 
     //Model
-    private VirtualMachineDto.Details? virtualMachine;
+    private VirtualMachineDto.Detail? virtualMachine;
 
     private Dictionary<string, string> _defaultInformation = new();
     private Dictionary<string, string> _specs = new();

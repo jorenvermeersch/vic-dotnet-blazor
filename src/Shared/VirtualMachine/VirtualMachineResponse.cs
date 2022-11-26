@@ -1,6 +1,6 @@
 ﻿namespace Shared.VirtualMachine;
 
-public class VirtualMachineResult
+public class VirtualMachineResponse
 {
     public class GetIndex
     {
@@ -10,7 +10,7 @@ public class VirtualMachineResult
 
     public class GetDetail
     {
-
+        public VirtualMachineDto.Detail VirtualMachine { get; set; } = default!;
     }
 
     public class Delete
@@ -19,11 +19,11 @@ public class VirtualMachineResult
 
     public class Create
     {
-
+        public long MachineId { get; set; }
     }
 
     public class Edit
     {
-
+        public long MachineId { get; set; }
     }
 }

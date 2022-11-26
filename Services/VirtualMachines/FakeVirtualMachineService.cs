@@ -20,9 +20,9 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
     //TODO: FAKE VM SERVICE INDEX
-    public async Task<VirtualMachineResult.GetIndex> GetIndexAsync(/*int offset, int amount*/ VirtualMachineRequest.Index request)
+    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(/*int offset, int amount*/ VirtualMachineRequest.GetIndex request)
     {
-        VirtualMachineResult.GetIndex response = new();
+        VirtualMachineResponse.GetIndex response = new();
         var query = machines.AsQueryable();
 
         response.TotalAmount = query.Count();
@@ -38,16 +38,16 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
     //TODO: FAKE VM SERVICE DETAILS
-    public Task<VirtualMachineDto.Details> GetDetailAsync(long virtualMachineId)
+    public Task<VirtualMachineDto.Detail> GetDetailAsync(long virtualMachineId)
     {
         return null;
         //return Task.FromResult(machines.Single(x => x.Id == virtualMachineId));
     }
 
     //TODO: FAKE VM SERVICE USER ID MACHINES
-    public async Task<VirtualMachineResult.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+    public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     {
-        VirtualMachineResult.GetIndex response = new();
+        VirtualMachineResponse.GetIndex response = new();
         var query = machines.AsQueryable();
 
         //List<VirtualMachineDto.Details> details = query.Select(x => new VirtualMachineDto.Details
@@ -68,7 +68,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         //response.TotalAmount = response.VirtualMachines.Count();
 
 
-        response.VirtualMachines = (query.Select(x => new VirtualMachineDto.Details
+        response.VirtualMachines = (query.Select(x => new VirtualMachineDto.Detail
         {
             Id = x.Id,
             Fqdn = x.Fqdn,
@@ -81,7 +81,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         return response;
     }
 
-    public Task<VirtualMachineDto.Details> Add(VirtualMachineDto.Create newVM)
+    public Task<VirtualMachineDto.Detail> Add(VirtualMachineDto.Mutate newVM)
     {
         return null;
         //newVM.Id = _virtualMachines.Count + 1;
@@ -129,9 +129,9 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
 
-    public async Task<VirtualMachineResult.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.Index request)
+    public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
     {
-        VirtualMachineResult.GetIndex response = new();
+        VirtualMachineResponse.GetIndex response = new();
         var query = machines.AsQueryable();
 
         response.TotalAmount = query.Count();
@@ -146,7 +146,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         return response;
     }
 
-    public Task<VirtualMachineResult.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
+    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         throw new NotImplementedException();
     }

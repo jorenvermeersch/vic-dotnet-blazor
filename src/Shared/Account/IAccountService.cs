@@ -2,9 +2,9 @@
 
 public interface IAccountService
 {
-    Task<AccountResult.Index> GetIndexAsync(AccountRequest.Index request);
-    Task<AccountDto.Details> GetDetailAsync(long accountId);
-    Task<long> CreateAsync(AccountDto.Mutate model);
-    Task EditAsync(long accountId, AccountDto.Mutate model);
-    Task DeleteAsync(long accountId);
+    Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request);
+    Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request);
+    Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request);
+    Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request);
+    Task DeleteAsync(AccountRequest.Delete request);
 }

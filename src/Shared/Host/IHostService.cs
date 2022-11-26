@@ -2,9 +2,9 @@
 
 public interface IHostService
 {
-    Task<HostResult.Index> GetIndexAsync(HostRequest.Index request);
-    Task<HostDto.Detail> GetDetailAsync(long hostId);
-    Task<long> CreateAsync(HostDto.Mutate model);
-    Task EditAsync(long hostId, HostDto.Mutate model);
-    Task DeleteAsync(long hostId);
+    Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request);
+    Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request);
+    Task<HostResponse.Create> CreateAsync(HostRequest.Create request);
+    Task<HostResponse.Edit> EditAsync(HostRequest.Edit request);
+    Task DeleteAsync(HostRequest.Delete request);
 }

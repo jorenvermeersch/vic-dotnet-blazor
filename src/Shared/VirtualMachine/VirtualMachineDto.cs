@@ -17,7 +17,7 @@ public static class VirtualMachineDto
         public Status Status { get; set; }
     }
 
-    public class Details : Index
+    public class Detail : Index
     {
         public string Name { get; set; } = default!;
         public Template Template { get; set; }
@@ -37,7 +37,7 @@ public static class VirtualMachineDto
         public bool hasVpnConnection { get; set; }
     }
 
-    public class Create
+    public class Mutate
     {
         public string Fqdn { get; set; } = default!;
         public string Name { get; set; } = default!;
