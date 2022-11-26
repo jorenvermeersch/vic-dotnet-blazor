@@ -85,16 +85,28 @@ public partial class Create
         {
             Offset = 0
         });
-        Hosts = hostResponse.Hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
+        IEnumerable<HostDto.Index> hostIndexes = hostResponse.Hosts ?? new List<HostDto.Index>();
+        Hosts = hostIndexes.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
 
-        CustomerResponse.GetIndex customerResponse = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex{ Offset = 0});
-        Customers = customerResponse.Customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
 
-        AccountResponse.GetIndex accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
-        IEnumerable<AccountDto.Index> accounts = accountResponse.Accounts;
 
-        Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
-        availablePorts = await PortService!.GetAllAsync();
+        CustomerResponse.GetIndex customerResponse = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
+        {
+            Offset = 0
+        });
+        IEnumerable<CustomerDto.Index> customerIndexes = customerResponse.Customers ?? new List<CustomerDto.Index>();
+        Customers = customerIndexes.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
+
+
+        AccountResponse.GetIndex accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
+        {
+            Offset = 0
+        });
+        IEnumerable<AccountDto.Index> accountIndexes = accountResponse.Accounts ?? new List<AccountDto.Index>();
+        Accounts = accountIndexes.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
+
+        PortResponse.GetAll portsResponse = await PortService.GetAllAsync();
+        availablePorts = portsResponse.Ports ?? new List<PortDto>();
         PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }
 
@@ -133,8 +145,13 @@ public partial class Create
             chosenPorts.Add(availablePorts.Where(p => p.Number.ToString() == port.Split(" ")[0]).First());
         }
 
-        VirtualMachine.Ports = chosenPorts;
-        VirtualMachineDto.Detail newVirtualMachine = await VirtualMachineService!.Add(VirtualMachine);
-        Navigation!.NavigateTo("virtual-machine/" + newVirtualMachine.Id);
+        VirtualMachine.Ports = chosenPorts.Select(p => p.Number).ToList();
+
+
+        VirtualMachineResponse.Create response = await VirtualMachineService.CreateAsync(new VirtualMachineRequest.Create
+        {
+            VirtualMachine = VirtualMachine
+        });
+        Navigation!.NavigateTo("virtual-machine/" + response.MachineId);
     }
 }

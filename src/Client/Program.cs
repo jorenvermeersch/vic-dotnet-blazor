@@ -1,4 +1,8 @@
+using Client.Accounts;
+using Client.Customers;
+using Client.Hosts;
 using Client.Shared;
+using Client.VirtualMachines;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -32,12 +36,10 @@ namespace Client
             builder.Services.AddScoped<FakeAuthenticationProvider>();
             builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<FakeAuthenticationProvider>());
 
-            builder.Services.AddScoped<ICustomerService, BogusCustomerService>();
-            builder.Services.AddScoped<IHostService, BogusHostService>();
-            //builder.Services.AddScoped<IVirtualMachineService, BogusVirtualMachineService>();
-
-            builder.Services.AddScoped<IVirtualMachineService, Client.VirtualMachines.VirtualMachineService>();
-            builder.Services.AddScoped<IAccountService, Client.Accounts.AccountService>();
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<IHostService, HostService>();
+            builder.Services.AddScoped<IVirtualMachineService, VirtualMachineService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
             //builder.Services.AddScoped<IAccountService, Services.Accounts.AccountService>();
             builder.Services.AddScoped<IPortService, PortService>();

@@ -21,7 +21,4 @@
   <ItemGroup>
     <None Remove="Port\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ports\" />
-  </ItemGroup>
 </Project>

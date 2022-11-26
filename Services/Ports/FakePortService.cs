@@ -25,7 +25,7 @@ public class FakePortService : IPortService
         });
     }
 
-    public Task<IEnumerable<PortDto>> GetAllAsync()
+    public Task<PortResponse.GetAll> GetAllAsync()
     {
         throw new NotImplementedException();
     }

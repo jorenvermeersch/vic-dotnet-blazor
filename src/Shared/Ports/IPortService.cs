@@ -2,6 +2,6 @@
 
 public interface IPortService
 {
-    Task<IEnumerable<PortDto>> GetAllAsync();
+    Task<PortResponse.GetAll> GetAllAsync();
 }
 
