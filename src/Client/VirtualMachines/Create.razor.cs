@@ -12,11 +12,11 @@ namespace Client.VirtualMachines;
 
 public partial class Create
 {
-    [Inject] public IVirtualMachineService? VirtualMachineService { get; set; }
-    [Inject] public IHostService? HostService { get; set; }
-    [Inject] public IAccountService? AccountService { get; set; }
-    [Inject] public IPortService? PortService { get; set; }
-    [Inject] public ICustomerService? CustomerService { get; set; }
+    [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
+    [Inject] public IHostService HostService { get; set; } = default!;
+    [Inject] public IAccountService AccountService { get; set; } = default!;
+    [Inject] public IPortService PortService { get; set; } = default!;
+    [Inject] public ICustomerService CustomerService { get; set; } = default!;
     [Inject] public IStringLocalizer<Shared.Resources.Resource>? localizer { get; set; }
     [Inject] public NavigationManager? Navigation { get; set; }
 
@@ -24,7 +24,8 @@ public partial class Create
     private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Mutate VirtualMachine { get; set; } = new();
     private PortDto Port { get; set; } = new();
-    private SpecificationsDto Specifications;
+
+    private SpecificationsDto? Specifications;
     private string SelectedPort { get; set; } = "";
     // Credentials
     private List<CredentialsDto> credentialList = new();
@@ -80,12 +81,18 @@ public partial class Create
 
     protected override async Task OnInitializedAsync()
     {
-        IEnumerable<HostDto.Index> hosts = await HostService!.GetIndexAsync(0);
-        Hosts = hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
+        HostResponse.GetIndex hostResponse = await HostService.GetIndexAsync(new HostRequest.GetIndex
+        {
+            Offset = 0
+        });
+        Hosts = hostResponse.Hosts.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
+
         IEnumerable<CustomerDto.Index> customers = await CustomerService!.GetIndexAsync(0);
         Customers = customers.Select(c => string.Concat(c.Id, " - ", c.Name)).ToList();
+
         AccountResponse.GetIndex accountResponse = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
         IEnumerable<AccountDto.Index> accounts = accountResponse.Accounts;
+
         Accounts = accounts.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
         availablePorts = await PortService!.GetIndexAsync();
         PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
