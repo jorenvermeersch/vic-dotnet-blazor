@@ -3,5 +3,6 @@
 public enum CustomerType
 {
     Intern,
-    Extern
+    Extern,
+    None
 }

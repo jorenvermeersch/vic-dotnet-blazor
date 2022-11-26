@@ -24,4 +24,12 @@ public class VirtualMachineController
         return virtualMachineResponse;
     }
 
+    [SwaggerOperation("Returns a list of virtual machines")]
+    [HttpGet("{MachineId}")]
+    public async Task<VirtualMachineResponse.GetDetail> GetDetail([FromRoute] VirtualMachineRequest.GetDetail request)
+    {
+        VirtualMachineResponse.GetDetail virtualMachineResponse = await virtualMachineService.GetDetailAsync(request);
+        return virtualMachineResponse;
+    }
+
 }
