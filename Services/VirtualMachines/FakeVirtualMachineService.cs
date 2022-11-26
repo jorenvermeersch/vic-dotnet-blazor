@@ -1,4 +1,5 @@
 ﻿using Domain.Constants;
+using Domain.Hosts;
 using Domain.VirtualMachines;
 using Fakers.VirtualMachines;
 using Shared.Accounts;
@@ -30,9 +31,36 @@ public class FakeVirtualMachineService : IVirtualMachineService
         return customerType;
     }
 
-    public Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
+    public async Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
     {
-        throw new NotImplementedException();
+        VirtualMachineResponse.Create response = new();
+
+        var model = request.VirtualMachine;
+
+
+        var args = new VirtualMachineArgs
+        {
+            Template = Template.WebServer,
+            Mode = Mode.IAAS,
+            Fqdn = "test.com",
+            Availabilities = new List<Availability> { Availability.Wednesday, Availability.Thursday },
+            BackupFrequency = BackupFrequency.Daily,
+            ApplicationDate = DateTime.Now,
+            TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: DateTime.Now, endDate: DateTime.Now.AddDays(5)),
+            Status = Status.Deployed,
+            Reason = "No Reason",
+            Ports = new List<Port> { new Port(44, "SSH"), new Port(45, "HTTP") },
+            Host = null,
+            Credentials = new List<Credentials> { new Credentials("dummy", "passdummy", "admin") },
+            Account = new Domain.Accounts.Account("test", "test", "test@mail.com", Role.Admin, "test321", "testdepartment", "testedu"),
+            Requester = null,
+            User = null
+        };
+
+        var machine = new VirtualMachine(args) { Id = machines.Max(x => x.Id) + 1 };
+        response.MachineId = machine.Id;
+
+        return response;
     }
 
     public Task DeleteAsync(VirtualMachineRequest.Delete request)
@@ -67,13 +95,13 @@ public class FakeVirtualMachineService : IVirtualMachineService
             Ports = x.Ports.Select(y => new PortDto { Number = y.Number, Service = y.Service }).ToList(),
             // specifications may be wrong
             Specification = new SpecificationsDto() { Memory = x.Specifications.Memory, Storage = x.Specifications.Storage, VirtualProcessors = x.Specifications.Processors },
-            Host = x.Host != null ? new HostDto.Index() { Id = x.Host.Id, Name = x.Host.Name } : null,
+            Host = (x.Host != null ? new HostDto.Index() { Id = x.Host.Id, Name = x.Host.Name } : null),
             Credentials = x.Credentials.Select(y => new CredentialsDto { Username = y.Username, Role = y.Role, PasswordHash = y.PasswordHash }).ToList(),
             Account = new AccountDto.Index() { Id = x.Account.Id, Email = x.Account.Email, Firstname = x.Account.Firstname, Lastname = x.Account.Lastname, IsActive = x.Account.IsActive, Role = x.Account.Role },
             Requester = new CustomerDto.Index() { Id = x.Requester.Id, Name = (x.Requester.ContactPerson.Firstname + " " + x.Requester.ContactPerson.Lastname), Email = x.Requester.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.Requester.GetType().ToString()) },
             User = new CustomerDto.Index() { Id = x.User.Id, Name = (x.User.ContactPerson.Firstname + " " + x.User.ContactPerson.Lastname), Email = x.User.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.User.GetType().ToString()) },
             hasVpnConnection = x.HasVpnConnection
-        }).SingleOrDefault(x => x.Id == request.MachineId) ?? null;
+        }).SingleOrDefault(x => x.Id == request.MachineId) ?? new VirtualMachineDto.Detail();
         return response;
     }
 

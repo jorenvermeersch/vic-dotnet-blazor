@@ -29,6 +29,10 @@ public class StartUp
         services.AddSwaggerGen(c =>
         {
             c.CustomSchemaIds(x => $"{x.FullName}.{x.Name}");
+            //c.CustomSchemaIds(x => $"{x.FullName}.{x.Name}");
+            //c.CustomSchemaIds(x => $"VirtualMachineDto.{x.Name}");
+            
+
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Virtual IT Company API", Version = "v1" });
             c.EnableAnnotations();
         });
@@ -46,7 +50,7 @@ public class StartUp
             app.UseDeveloperExceptionPage();
             app.UseWebAssemblyDebugging();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VIC API"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virtual IT Company API"));
         }
         else
         {

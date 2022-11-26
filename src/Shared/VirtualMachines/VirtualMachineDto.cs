@@ -54,6 +54,7 @@ public static class VirtualMachineDto
         public string BackupFrequenty { get; set; } = default!;
         public List<CredentialsDto> Credentials { get; set; } = default!;
         public List<int> Ports { get; set; } = default!;
+        public List<Availability> Availabilities = default!;
         public bool hasVpnConnection { get; set; }
     }
 }

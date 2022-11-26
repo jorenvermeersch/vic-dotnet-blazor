@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Common;
+using Domain.VirtualMachines;
 
 namespace Domain.Hosts;
 
@@ -135,6 +136,11 @@ public abstract class Host<T> : Machine where T : Machine
 
         _specifications.RemoveProcessor(processor, virtualisationFactor);
         UpdateRemainingResources();
+    }
+
+    public static implicit operator Host<T>(VirtualMachine v)
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }
