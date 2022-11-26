@@ -57,7 +57,7 @@
 
             <Title Text="Specificaties" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
-            <CustomInputNumber Label="vCPUs" @bind-Value="@VirtualMachine.Specifications.Processors" For="@(()=>VirtualMachine.Specifications.Processors)" Required=true />
+            <CustomInputNumber Label="vCPUs" @bind-Value="@VirtualMachine.Specifications.VirtualProcessors" For="@(()=>VirtualMachine.Specifications.VirtualProcessors)" Required=true />
             <CustomInputNumber Label="Geheugen" @bind-Value="@VirtualMachine.Specifications.Memory" For="@(()=>VirtualMachine.Specifications.Memory)" Required=true />
             <CustomInputNumber Label="Opslag" @bind-Value="@VirtualMachine.Specifications.Storage" For="@(()=>VirtualMachine.Specifications.Storage)" Required=true />
         </div>
@@ -87,11 +87,11 @@
 
         <div class="one-third">
             <Title Text="Gebruikers"></Title>
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Aanvrager" Items="@Customers" @bind-Value="@VirtualMachine.Requester" For="@(()=>VirtualMachine.Requester)" />
+            @*<RequiredInput Type="@Input.InputType.SELECT" Label="Aanvrager" Items="@Customers" @bind-Value="@VirtualMachine.Requester" For="@(()=>VirtualMachine.Requester)" />
             <RequiredInput Type="@Input.InputType.SELECT" Label="Gebruiker" Items="@Customers" @bind-Value="@VirtualMachine.User" For="@(()=>VirtualMachine.User)" />
 
             <Title Text="Verantwoordelijke"></Title>
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Accounts" @bind-Value="@VirtualMachine.Account" For="@(()=>VirtualMachine.Account)" />
+            <RequiredInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Accounts" @bind-Value="@VirtualMachine.Account" For="@(()=>VirtualMachine.Account)" />*@
 
 
             @*            <ChildContent  Context="" />
