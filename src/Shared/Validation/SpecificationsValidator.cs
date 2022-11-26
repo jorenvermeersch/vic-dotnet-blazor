@@ -1,19 +1,18 @@
 ﻿using FluentValidation;
-using Shared.Specifications;
-using Shared.Validation;
+using Shared.VirtualMachines;
 
 namespace Shared.Validation;
 
 [Obsolete]
-public class SpecificationValidation : AbstractValidator<SpecificationsDto>
+public class SpecificationsValidator : AbstractValidator<SpecificationsDto>
 {
     private readonly int _minProcessorCount = 0;
     private readonly int _minMemoryCount = 0;
     private readonly int _minStorageCount = 0;
 
-    public SpecificationValidation()
+    public SpecificationsValidator()
     {
-        RuleFor(x => x.Processors)
+        RuleFor(x => x.VirtualProcessors)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("vCPU"))
             .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minProcessorCount));

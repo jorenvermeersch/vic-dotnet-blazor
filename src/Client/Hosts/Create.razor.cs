@@ -6,15 +6,18 @@ namespace Client.Hosts;
 
 public partial class Create
 {
-    [Inject] public NavigationManager? Navigation { get; set; }
-    [Inject] public IHostService? HostService { get; set; }
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject] public IHostService HostService { get; set; } = default!;
 
 
     private EditForm? Editform { get; set; } = new();
     private HostDto.Mutate Host { get; set; } = new();
     private async void HandleValidSubmit()
     {
-        HostDto.Detail newHost = await HostService!.Add(Host);
-        Navigation!.NavigateTo("host/" + newHost.Id);
+        HostResponse.Create response = await HostService.CreateAsync(new HostRequest.Create
+        {
+            Host = Host
+        });
+        Navigation!.NavigateTo("host/" + response.HostId);
     }
 }

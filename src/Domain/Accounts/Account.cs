@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Domain.Accounts;
 
-[ToString]
 public class Account : Entity
 {
     #region Properties

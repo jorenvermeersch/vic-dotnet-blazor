@@ -5,9 +5,9 @@ namespace Client.Customers;
 
 public partial class Index
 {
-    [Inject] public ICustomerService CustomerService { get; set; }
+    [Inject] public ICustomerService CustomerService { get; set; } = default!;
 
-    public string SearchValue { get; set; }
+    public string SearchValue { get; set; } = "";
 
     //Alle Customers
     private IEnumerable<CustomerDto.Index>? customers;
@@ -34,15 +34,23 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        customers = await CustomerService.GetIndexAsync(offset);
-        totalCustomers = await CustomerService.GetCount();
+        CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
+        {
+            Offset = offset
+        });
+        customers = response.Customers;
+        totalCustomers = response.TotalAmount;
         totalPages = (totalCustomers / 20) + 1;
     }
 
     private async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 20;
-        customers = await CustomerService.GetIndexAsync(offset);
+        CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
+        {
+            Offset = offset
+        });
+        customers = response.Customers;
         selectedPage = pageNr;
     }
 }

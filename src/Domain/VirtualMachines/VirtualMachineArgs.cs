@@ -1,4 +1,4 @@
-﻿using Domain.Administrators;
+﻿using Domain.Accounts;
 using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;

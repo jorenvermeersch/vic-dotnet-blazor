@@ -31,7 +31,11 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        int newID = await CustomerService!.Add(Customer);
-        Navigation!.NavigateTo("/customer/" + newID);
+        CustomerResponse.Create response = await CustomerService!.CreateAsync(new CustomerRequest.Create
+        {
+            Customer = Customer
+        });
+
+        Navigation!.NavigateTo("/customer/" + response.CustomerId);
     }
 }

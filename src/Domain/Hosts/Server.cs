@@ -3,7 +3,6 @@ using Domain.VirtualMachines;
 
 namespace Domain.Hosts;
 
-[ToString]
 public class Server : Host<VirtualMachine>
 {
     #region Constructors

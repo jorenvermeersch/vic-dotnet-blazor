@@ -24,7 +24,10 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        AccountDto.Detail newAccount = await AccountService!.Add(Account);
-        Navigation?.NavigateTo("account/" + newAccount.Id);
+        AccountResponse.Create response = await AccountService!.CreateAsync(new AccountRequest.Create
+        {
+            Account = Account,
+        });
+        Navigation?.NavigateTo("account/" + response.AccountId);
     }
 }

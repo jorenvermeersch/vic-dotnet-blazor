@@ -1,4 +1,4 @@
-﻿using Domain.Administrators;
+﻿using Domain.Accounts;
 using Domain.VirtualMachines;
 using Fakers;
 using Fakers.Accounts;

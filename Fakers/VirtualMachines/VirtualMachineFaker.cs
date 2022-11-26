@@ -1,6 +1,5 @@
 ﻿using BogusStore.Fakers.Common;
-using Domain.Administrators;
-using Domain.Common;
+using Domain.Accounts;
 using Domain.Constants;
 using Domain.Customers;
 using Domain.VirtualMachines;
@@ -15,34 +14,34 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
 {
     public VirtualMachineFaker(string locale = "nl")
     {
-        CustomerFaker.ExternalCustomerFaker externalCustomerFaker = new CustomerFaker.ExternalCustomerFaker();
-        CustomerFaker.InternalCustomerFaker internalCustomerFaker = new CustomerFaker.InternalCustomerFaker();
+        CustomerFaker.ExternalCustomerFaker externalCustomerFaker = new();
+        CustomerFaker.InternalCustomerFaker internalCustomerFaker = new();
 
-        List<Customer> customers = new List<Customer>();
+        List<Customer> customers = new();
         customers.AddRange(externalCustomerFaker.Generate(20));
         customers.AddRange(internalCustomerFaker.Generate(20));
 
-        AccountFaker accountFaker = new AccountFaker();
+        AccountFaker accountFaker = new();
         List<Account> accounts = accountFaker.Generate(20);
 
-        CredentialFaker credentialFaker = new CredentialFaker();
+        CredentialFaker credentialFaker = new();
 
-        List<VirtualMachine> virtualMachines = new List<VirtualMachine>();
+        List<VirtualMachine> virtualMachines = new();
 
         List<Port> ports = new();
         ports.AddRange(
-            new List<Port> 
-            { 
-                new Port(number: 443, service: "HTTPS"), 
-                new Port(number: 80, service: "HTTP"), 
-                new Port(number: 22, "SSH") 
+            new List<Port>
+            {
+                new Port(number: 443, service: "HTTPS"),
+                new Port(number: 80, service: "HTTP"),
+                new Port(number: 22, "SSH")
             }
         );
-        
-        TimeSpanFaker timeSpanFaker = new TimeSpanFaker();
+
+        TimeSpanFaker timeSpanFaker = new();
         List<Domain.VirtualMachines.TimeSpan> timespans = timeSpanFaker.Generate(5);
 
-        SpecificationsFaker specificationFaker = new SpecificationsFaker();
+        SpecificationsFaker specificationFaker = new();
         List<Domain.Common.Specifications> specifications = specificationFaker.Generate(10);
 
         CustomInstantiator(f => new VirtualMachine(new VirtualMachineArgs

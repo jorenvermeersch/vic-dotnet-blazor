@@ -1,4 +1,4 @@
-﻿namespace Shared.Shared;
+﻿namespace Shared.VirtualMachines;
 
 public class TimeSpanDto
 {

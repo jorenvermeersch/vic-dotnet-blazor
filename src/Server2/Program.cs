@@ -42,7 +42,7 @@
 
 //app.Run();
 
-namespace BlazorApp1.Server;
+namespace Server;
 
 public class Program
 {
@@ -51,10 +51,12 @@ public class Program
         CreateHostBuilder(args).Build().Run();
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<StartUp>();
             });
+    }
 }

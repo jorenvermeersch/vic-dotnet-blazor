@@ -1,12 +1,4 @@
-﻿using Domain.Administrators;
-using Domain.Customers;
-using Domain.VirtualMachines;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.Reflection;
-
-
-namespace Persistence.Data;
+﻿namespace Persistence.Data;
 
 public class VicDBContext : DbContext
 {

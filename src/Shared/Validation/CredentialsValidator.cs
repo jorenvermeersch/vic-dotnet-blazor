@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
-using Shared.Validation;
 using Shared.VirtualMachines;
 
 namespace Shared.Validation;
 
-public class CredentialValidation : AbstractValidator<CredentialsDto>
+public class CredentialsValidator : AbstractValidator<CredentialsDto>
 {
     private readonly int _nameLength = 2;
-    public CredentialValidation()
+    public CredentialsValidator()
     {
         RuleFor(x => x.Username)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Username")))

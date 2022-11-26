@@ -1,18 +1,17 @@
 ﻿using FluentValidation;
 using Shared.Hosts;
-using Shared.Validation;
 
 namespace Shared.Validation;
 
-public class HostValidation : AbstractValidator<HostDto.Mutate>
+public class HostValidator : AbstractValidator<HostDto.Mutate>
 {
     private readonly int _nameLength = 2;
-    public HostValidation()
+    public HostValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Naam")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
-        RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());
+        RuleFor(x => x.Specifications).SetValidator(new HostSpecificationsValidator());
 
     }
 }

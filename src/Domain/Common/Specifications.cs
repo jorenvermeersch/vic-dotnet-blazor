@@ -1,6 +1,6 @@
 ﻿namespace Domain.Common;
 
-public class Specifications : Entity
+public class Specifications
 {
     #region Properties
     public int Processors { get; set; }

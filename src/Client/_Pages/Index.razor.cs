@@ -1,14 +1,13 @@
-using System;
 using Microsoft.AspNetCore.Components;
-using Shared.VirtualMachines;
 using Microsoft.Extensions.Localization;
+using Shared.VirtualMachines;
 
 namespace Client._Pages;
 
 public partial class Index
 {
-    [Inject] public IVirtualMachineService? VirtualMachineService { get; set; } 
-    [Inject] public IStringLocalizer<Client.Shared.Resources.Resource> localizer { get; set; } 
+    [Inject] public IVirtualMachineService? VirtualMachineService { get; set; }
+    [Inject] public IStringLocalizer<Client.Shared.Resources.Resource> localizer { get; set; }
 
     string _startLabel = "24/10", _endLabel = "30/10";
     private List<VirtualMachineDto.Index> virtualMachines = new();
@@ -18,7 +17,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetUnfinishedAsync(new VirtualMachineRequest.GetIndex());
         virtualMachines.AddRange(response.VirtualMachines);
         totalVirtualMachines = response.TotalAmount;
         totalPages = (totalVirtualMachines / 10) + 1;
@@ -27,7 +26,7 @@ public partial class Index
     async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 10;
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetAllUnfinishedVirtualMachines(new VirtualMachineRequest.GetIndex());
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetUnfinishedAsync(new VirtualMachineRequest.GetIndex());
         virtualMachines.AddRange(response.VirtualMachines);
         selectedPage = pageNr;
     }

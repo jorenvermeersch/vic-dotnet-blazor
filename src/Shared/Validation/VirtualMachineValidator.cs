@@ -4,7 +4,7 @@ using Shared.VirtualMachines;
 namespace Shared.Validation;
 
 [Obsolete]
-public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Mutate>
+public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutate>
 {
     private readonly int _nameLenght = 2;
     private readonly int _fqdnLenght = 2;
@@ -13,7 +13,7 @@ public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Muta
     private readonly int _minMemoryCount = 0;
     private readonly int _minStorageCount = 0;
 
-    public VirtualMachineValidation()
+    public VirtualMachineValidator()
     {
         RuleFor(x => x.Name)
             .Cascade(CascadeMode.StopOnFirstFailure)
@@ -54,15 +54,17 @@ public class VirtualMachineValidation : AbstractValidator<VirtualMachineDto.Muta
         RuleFor(x => x.BackupFrequenty)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Regelmaat"));
-        RuleFor(x => x.Requester)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Aanvrager"));
-        RuleFor(x => x.User)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
-        RuleFor(x => x.Account)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
-        RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());
+
+        // TODO: Not objects, but Id of request, user and account are given!
+        /*        RuleFor(x => x.Requester)
+                    .Cascade(CascadeMode.StopOnFirstFailure)
+                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Aanvrager"));
+                RuleFor(x => x.User)
+                    .Cascade(CascadeMode.StopOnFirstFailure)
+                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
+                RuleFor(x => x.Account)
+                    .Cascade(CascadeMode.StopOnFirstFailure)
+                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
+                RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());*/
     }
 }

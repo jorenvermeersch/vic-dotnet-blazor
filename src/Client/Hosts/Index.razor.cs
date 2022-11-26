@@ -5,24 +5,33 @@ namespace Client.Hosts;
 
 public partial class Index
 {
-    [Inject] public IHostService? HostService { get; set; }
+    [Inject] public IHostService HostService { get; set; } = default!;
     public string? SearchValue { get; set; }
 
     private IEnumerable<HostDto.Index>? hosts;
-    int offset, totalHosts, totalPages = 0;
-    int selectedPage = 1;
+
+    private int offset, totalHosts, totalPages = 0;
+    private int selectedPage = 1;
 
     protected override async Task OnInitializedAsync()
     {
-        hosts = await HostService!.GetIndexAsync(offset);
-        totalHosts = await HostService.GetCount();
+        HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
+        {
+            Offset = offset,
+        });
+        hosts = response.Hosts;
+        totalHosts = response.TotalAmount;
         totalPages = (totalHosts / 20) + 1;
     }
 
-    async Task ClickHandler(int pageNr)
+    private async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 20;
-        hosts = await HostService!.GetIndexAsync(offset);
+        HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
+        {
+            Offset = offset,
+        });
+        hosts = response.Hosts;
         selectedPage = pageNr;
     }
 

@@ -2,7 +2,6 @@
 
 namespace Domain.Customers;
 
-[ToString]
 public class ExternalCustomer : Customer
 {
     #region Properties

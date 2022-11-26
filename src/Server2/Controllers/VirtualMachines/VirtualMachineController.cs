@@ -15,10 +15,6 @@ public class VirtualMachineController
         this.virtualMachineService = virtualMachineService;
     }
 
-    /// <summary>
-    /// Returns a list of virtual machines
-    /// </summary>
-    /// <returns></returns>
     [SwaggerOperation("Returns a list of virtual machines")]
     [HttpGet]
     public async Task<VirtualMachineResponse.GetIndex> GetIndex()
@@ -28,12 +24,4 @@ public class VirtualMachineController
         return virtualMachineResponse;
     }
 
-
-    [SwaggerOperation("Returns a list of virtual machines that belongs to a specific account [ObjectId is the Id of the account]")]
-    [HttpGet("account/{ObjectId}")]
-    public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId([FromRoute] VirtualMachineRequest.GetByObjectId request)
-    {
-        VirtualMachineResponse.GetIndex virtualMachineResponse = await virtualMachineService.GetVirtualMachinesByAccountId(request);
-        return virtualMachineResponse;
-    }
 }

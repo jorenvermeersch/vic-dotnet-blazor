@@ -8,7 +8,7 @@
             <i class="fa-solid fa-arrow-left"></i>
             <span>Terug</span>
         </span>
-        <Status State=@(account.IsActive?"Active":"Inactive")></Status>
+        <StatusIndicator State=@(account.IsActive ? "Active" : "Inactive") />
         <span>
             <Button Text="Beheren" />
         </span>

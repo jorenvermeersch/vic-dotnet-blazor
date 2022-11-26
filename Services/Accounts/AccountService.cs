@@ -4,28 +4,27 @@ namespace Services.Accounts;
 
 public class AccountService : IAccountService
 {
-
     public AccountService()
     {
 
     }
 
-    public Task<long> CreateAsync(AccountDto.Mutate model)
+    public Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(long accountId)
+    public Task DeleteAsync(AccountRequest.Delete request)
     {
         throw new NotImplementedException();
     }
 
-    public Task EditAsync(long accountId, AccountDto.Mutate model)
+    public Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<AccountDto.Detail> GetDetailAsync(long accountId)
+    public Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
     {
         throw new NotImplementedException();
     }

@@ -1,5 +1,4 @@
-﻿using Shared.Specifications;
-using Shared.VirtualMachines;
+﻿using Shared.VirtualMachines;
 
 namespace Shared.Hosts;
 

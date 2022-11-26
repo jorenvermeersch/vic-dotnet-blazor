@@ -9,8 +9,8 @@ namespace Client.Customers;
 public partial class Details
 {
     [Parameter] public long Id { get; set; }
-    [Inject] public ICustomerService? CustomerService { get; set; }
-    [Inject] public NavigationManager? Navigation { get; set; }
+    [Inject] public ICustomerService CustomerService { get; set; } = default!;
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
 
     //Model
     private CustomerDto.Detail? Customer;
@@ -28,22 +28,27 @@ public partial class Details
 
     protected override async Task OnInitializedAsync()
     {
-        Customer = await CustomerService.GetDetailAsync(Id);
-        //virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(Id, offset);
+        CustomerResponse.GetDetail response = await CustomerService.GetDetailAsync(new CustomerRequest.GetDetail
+        {
+            CustomerId = Id
+        });
+        Customer = response.Customer;
+
+
         totalVirtualMachines = virtualMachines.Count();
         totalPages = (totalVirtualMachines / 10) + 1;
         _username.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
         _general.Add("Klant type", Customer.CustomerType.ToString());
         if (Customer.CustomerType == CustomerType.Intern)
         {
-            _general.Add("Instituut", Customer.Institution.ToString());
-            _general.Add("Departement", Customer.Department);
-            _general.Add("Opleiding", Customer.Education);
+            _general.Add("Instituut", Customer.Institution.ToString()!);
+            _general.Add("Departement", Customer.Department!);
+            _general.Add("Opleiding", Customer.Education!);
         }
         else
         {
-            _general.Add("Naam", Customer.CompanyName);
-            _general.Add("Type", Customer.CompanyType);
+            _general.Add("Naam", Customer.CompanyName!);
+            _general.Add("Type", Customer.CompanyType!);
         }
 
         _contactInformation.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
@@ -60,9 +65,10 @@ public partial class Details
     private async Task ClickHandler(int pageNr)
     {
         offset = (pageNr - 1) * 10;
-        //virtualMachines = await virtualMachineService.GetVirtualMachinesByUserId(customer.Id, offset);
         selectedPage = pageNr;
+        // TODO: Implement. 
     }
+
     private void NavigateBack()
     {
         Navigation!.NavigateTo("customer/list");

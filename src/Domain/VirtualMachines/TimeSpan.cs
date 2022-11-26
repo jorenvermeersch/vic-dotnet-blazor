@@ -1,6 +1,5 @@
 ﻿namespace Domain.VirtualMachines;
 
-[ToString]
 public class TimeSpan : Entity
 {
     #region Properties

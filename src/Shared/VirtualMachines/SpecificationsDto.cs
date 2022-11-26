@@ -1,4 +1,4 @@
-﻿namespace Shared.Specifications;
+﻿namespace Shared.VirtualMachines;
 
 public class SpecificationsDto
 {

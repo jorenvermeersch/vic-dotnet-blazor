@@ -3,7 +3,6 @@ using Domain.VirtualMachines;
 
 namespace Domain.Customers;
 
-[ToString]
 public class InternalCustomer : Customer
 {
     #region Properties

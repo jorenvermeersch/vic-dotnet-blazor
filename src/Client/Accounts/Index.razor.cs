@@ -20,7 +20,7 @@ public partial class Index
         totalaccounts = response.TotalAmount;
         totalPages = (totalaccounts / 20) + 1;
 
-        Console.WriteLine(response.Accounts[0].Firstname);
+        Console.WriteLine(response.Accounts?[0].Firstname);
     }
 
     private async Task ClickHandler(int pageNr)

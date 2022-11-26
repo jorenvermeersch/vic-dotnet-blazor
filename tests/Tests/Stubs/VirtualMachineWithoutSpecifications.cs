@@ -1,4 +1,6 @@
-﻿namespace Tests.Stubs;
+﻿using Domain.Accounts;
+
+namespace Tests.Stubs;
 
 public static class VirtualMachineWithoutSpecifications
 {

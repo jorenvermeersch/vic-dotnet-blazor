@@ -1,7 +1,4 @@
-﻿using Client.Extensions;
-using Shared.Accounts;
-using Shared.VirtualMachines;
-using System.Net.Http.Json;
+﻿using Shared.VirtualMachines;
 
 namespace Client.VirtualMachines;
 
@@ -13,38 +10,19 @@ public class VirtualMachineService : IVirtualMachineService
         this.authenticatedClient = authenticatedClient;
     }
 
-    public Task<AccountDto.Detail> Add(AccountDto.Mutate newAccount)
+    public Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<AccountDto.Detail> GetDetailAsync(long AccountId)
+    public Task DeleteAsync(VirtualMachineRequest.Delete request)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
-    {
-        var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
-        return response;
-    }
-
-    public Task<int> GetCount()
+    public Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request)
     {
         throw new NotImplementedException();
-    }
-
-    public Task<VirtualMachineDto.Detail> Add(VirtualMachineDto.Mutate newVM)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
-    {
-        var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines");
-        return response;
     }
 
     public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
@@ -52,20 +30,35 @@ public class VirtualMachineService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
-    public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
-    {
-        var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines/account/{request.ObjectId}");
-        return response;
-    }
-
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByUserId(VirtualMachineRequest.GetByObjectId request)
+    public Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<VirtualMachineDto.Index>> GetVirtualMachinesByHostId(VirtualMachineRequest.GetByObjectId request)
+    public Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request)
     {
         throw new NotImplementedException();
     }
+
+
+    //public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
+    //{
+    //    var queryParameters = request.GetQueryString();
+    //    var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+    //    return response;
+    //}
+
+    //public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
+    //{
+    //    var queryParameters = request.GetQueryString();
+    //    var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines");
+    //    return response;
+    //}
+
+    //public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
+    //{
+    //    var queryParameters = request.GetQueryString();
+    //    var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines/account/{request.ObjectId}");
+    //    return response;
+    //}
 }

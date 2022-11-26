@@ -3,8 +3,6 @@ using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
 using Shared.Ports;
-using Shared.Shared;
-using Shared.Specifications;
 
 namespace Shared.VirtualMachines;
 
