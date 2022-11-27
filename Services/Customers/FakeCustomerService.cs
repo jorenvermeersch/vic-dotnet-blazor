@@ -8,9 +8,9 @@ namespace Services.Customers;
 
 public class FakeCustomerService : ICustomerService
 {
-    private List<Customer> customers = new();
+    private static readonly List<Customer> customers = new();
 
-    public FakeCustomerService()
+    static FakeCustomerService()
     {
         var externalcustomerFaker = new CustomerFaker.ExternalCustomerFaker();
         var internalcustomerFaker = new CustomerFaker.InternalCustomerFaker();
@@ -61,11 +61,10 @@ public class FakeCustomerService : ICustomerService
 
         }
 
-
         customers.Add(customer);
+
         return new CustomerResponse.Create{
-            CustomerId = customer.Id,
-            Customer = customer
+            CustomerId = customer.Id
         };
     }
 
@@ -79,11 +78,11 @@ public class FakeCustomerService : ICustomerService
         Customer customer = customers.SingleOrDefault(x => x.Id == request.CustomerId);
         int index = customers.IndexOf(customer);
 
-        ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Email);
+        ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
         ContactPerson backupContactPerson = null;
         if (!string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname))
         {
-            backupContactPerson = new ContactPerson(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Email);
+            backupContactPerson = new ContactPerson(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Phonenumber);
         }
 
         if (customer is InternalCustomer)
@@ -118,9 +117,22 @@ public class FakeCustomerService : ICustomerService
 
     public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
     {
+        CustomerResponse.GetDetail response = new();
         //.Where(x => customertype.ToLower() == "extern" ? x is ExternalCustomer : x is InternalCustomer)
-        CustomerDto.Detail customer = customers.Where(x => x.Id == request.CustomerId).Select(x =>
+        response.Customer = customers.Where(x => x.Id == request.CustomerId).Select(x =>
         {
+            ContactPersonDto backup=null;
+            if (x.BackupContactPerson is not null && !string.IsNullOrEmpty( x.BackupContactPerson.Firstname))
+            {
+                backup = new ContactPersonDto
+                {
+                    Firstname = x.BackupContactPerson.Firstname,
+                    Lastname = x.BackupContactPerson.Lastname,
+                    Email = x.BackupContactPerson.Email,
+                    Phonenumber = x.BackupContactPerson.PhoneNumber
+                };
+            }
+            
             //basic customer information
             CustomerDto.Detail customer = new()
             {
@@ -132,13 +144,7 @@ public class FakeCustomerService : ICustomerService
                     Email = x.ContactPerson.Email,
                     Phonenumber = x.ContactPerson.PhoneNumber
                 },
-                BackupContactPerson = new ContactPersonDto
-                {
-                    Firstname = x.BackupContactPerson.Firstname,
-                    Lastname = x.BackupContactPerson.Lastname,
-                    Email = x.BackupContactPerson.Email,
-                    Phonenumber = x.BackupContactPerson.PhoneNumber
-                },
+                BackupContactPerson = backup,
                 VirtualMachines = x.VirtualMachines.Select(x =>new VirtualMachineDto.Index{
                    Id = x.Id,
                    Fqdn = x.Fqdn,
@@ -167,10 +173,7 @@ public class FakeCustomerService : ICustomerService
         }).First();
 
 
-        return new CustomerResponse.GetDetail()
-        {
-            Customer = customer
-        };
+        return response;
     }
 
     public async Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)

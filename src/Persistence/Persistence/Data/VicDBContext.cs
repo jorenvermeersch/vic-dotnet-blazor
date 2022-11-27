@@ -17,6 +17,7 @@ public class VicDBContext : DbContext
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<InternalCustomer> InternalCustomers => Set<InternalCustomer>();
     public DbSet<ExternalCustomer> ExternalCustomers => Set<ExternalCustomer>();
+    public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

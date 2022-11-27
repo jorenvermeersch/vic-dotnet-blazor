@@ -53,7 +53,7 @@ public partial class Create
     {
         if (Convert.ToBoolean(Id))
         {
-            CustomerRequest.Edit request = new CustomerRequest.Edit
+            CustomerRequest.Edit request = new()
             {
                 CustomerId = Id,
                 Customer = Customer
