@@ -1,16 +1,21 @@
-﻿using Shared.Customers;
+﻿using Client.Extensions;
+using Shared.Customers;
+using System.Net.Http.Json;
 
 namespace Client.Customers;
 
 public class CustomerService : ICustomerService
 {
-    public CustomerService()
+    private readonly HttpClient authenticatedClient;
+    private const string endpoint = "api/customers";
+    public CustomerService(HttpClient authenticatedClient)
     {
-
+        this.authenticatedClient = authenticatedClient;
     }
-    public Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
+    public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
     {
-        throw new NotImplementedException();
+        var response = await authenticatedClient.PostAsJsonAsync(endpoint, request);
+        return await response.Content.ReadFromJsonAsync<CustomerResponse.Create>();
     }
 
     public Task DeleteAsync(CustomerRequest.Delete request)
@@ -18,18 +23,22 @@ public class CustomerService : ICustomerService
         throw new NotImplementedException();
     }
 
-    public Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
+    public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
     {
-        throw new NotImplementedException();
+        var response = await authenticatedClient.PutAsJsonAsync(endpoint, request);
+        return await response.Content.ReadFromJsonAsync<CustomerResponse.Edit>();
     }
 
-    public Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
+    public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
     {
-        throw new NotImplementedException();
+        var response = await authenticatedClient.GetFromJsonAsync<CustomerResponse.GetDetail>($"{endpoint}/{request.CustomerId}");
+        return response;
     }
 
-    public Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)
+    public async Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)
     {
-        throw new NotImplementedException();
+        var queryParameters = request.GetQueryString();
+        var response = await authenticatedClient.GetFromJsonAsync<CustomerResponse.GetIndex>($"{endpoint}?{queryParameters}");
+        return response;
     }
 }

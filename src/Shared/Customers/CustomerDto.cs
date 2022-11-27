@@ -34,7 +34,7 @@ public static class CustomerDto
         public string? CompanyType { get; set; }
         public string? Education { get; set; }
         public string? CompanyName { get; set; }
-        public ContactPersonDto ContactPerson { get; set; } = default!;
-        public ContactPersonDto? BackupContactPerson { get; set; }
+        public ContactPersonDto ContactPerson { get; set; } = new();
+        public ContactPersonDto? BackupContactPerson { get; set; } = new();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Shared.Customers;
+﻿using Domain.Customers;
+
+namespace Shared.Customers;
 
 public class CustomerResponse
 {
@@ -20,6 +22,7 @@ public class CustomerResponse
     public class Create
     {
         public long CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 
     public class Edit

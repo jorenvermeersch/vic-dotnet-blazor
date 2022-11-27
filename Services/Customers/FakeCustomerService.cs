@@ -1,12 +1,72 @@
-﻿using Shared.Customers;
+﻿using Domain.Constants;
+using Domain.Customers;
+using Fakers.Customers;
+using Shared.Customers;
+using Shared.VirtualMachines;
 
 namespace Services.Customers;
 
 public class FakeCustomerService : ICustomerService
 {
-    public Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
+    private List<Customer> customers = new();
+
+    public FakeCustomerService()
     {
-        throw new NotImplementedException();
+        var externalcustomerFaker = new CustomerFaker.ExternalCustomerFaker();
+        var internalcustomerFaker = new CustomerFaker.InternalCustomerFaker();
+
+        customers.AddRange(externalcustomerFaker.UseSeed(1234).Generate(25));
+        customers.AddRange(internalcustomerFaker.UseSeed(1234).Generate(30));
+    }
+
+    public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
+    {
+        Customer customer;
+        CustomerDto.Mutate createdCustomer = request.Customer;
+        ContactPerson contactperson = new(createdCustomer.ContactPerson.Firstname, createdCustomer.ContactPerson.Lastname, createdCustomer.ContactPerson.Email, createdCustomer.ContactPerson.Phonenumber);
+        ContactPerson backupContactperson=null;
+        if ( !string.IsNullOrEmpty( createdCustomer.BackupContactPerson.Firstname))
+        {
+             backupContactperson = new(createdCustomer.BackupContactPerson.Firstname, createdCustomer.BackupContactPerson.Lastname, createdCustomer.BackupContactPerson.Email, createdCustomer.BackupContactPerson.Phonenumber);
+
+        }
+
+
+        if (createdCustomer.CustomerType.ToLower().Equals("intern"))
+        {
+            customer = new InternalCustomer(
+                (Institution)Enum.Parse(typeof(Institution), createdCustomer.Institution, true),
+                createdCustomer.Department,
+                createdCustomer.Education,
+                contactperson,
+                backupContactperson
+                
+                )
+            {
+                Id = customers.Max(x => x.Id) + 1
+            };
+            
+        }
+        else
+        {
+            customer = new ExternalCustomer(
+               createdCustomer.CompanyName,
+               createdCustomer.CompanyType,
+               contactperson,
+               backupContactperson
+               )
+            {
+                Id = customers.Max(x => x.Id) + 1
+            };
+
+        }
+
+
+        customers.Add(customer);
+        return new CustomerResponse.Create{
+            CustomerId = customer.Id,
+            Customer = customer
+        };
     }
 
     public Task DeleteAsync(CustomerRequest.Delete request)
@@ -14,18 +74,131 @@ public class FakeCustomerService : ICustomerService
         throw new NotImplementedException();
     }
 
-    public Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
+    public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
     {
-        throw new NotImplementedException();
+        Customer customer = customers.SingleOrDefault(x => x.Id == request.CustomerId);
+        int index = customers.IndexOf(customer);
+
+        ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Email);
+        ContactPerson backupContactPerson = null;
+        if (!string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname))
+        {
+            backupContactPerson = new ContactPerson(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Email);
+        }
+
+        if (customer is InternalCustomer)
+        {
+            InternalCustomer inCus = (InternalCustomer)customer;
+            inCus.Institution = (Institution)Enum.Parse(typeof(Institution), request.Customer.Institution, true);
+            inCus.Education = request.Customer.Education;
+            inCus.Department = request.Customer.Department;
+            inCus.ContactPerson = contactPerson;
+            inCus.BackupContactPerson = backupContactPerson;
+
+            customers[index] = inCus;
+        }
+        else if(customer is ExternalCustomer)
+        {
+            ExternalCustomer exCus = (ExternalCustomer)customer;
+            exCus.CompanyName = request.Customer.CompanyName;
+            exCus.Type = request.Customer.CompanyType;
+            exCus.ContactPerson = contactPerson;
+            exCus.BackupContactPerson = backupContactPerson;
+
+            customers[index] = exCus;
+        }
+        
+
+        return new CustomerResponse.Edit
+        {
+            CustomerId = customer.Id
+        };
+
     }
 
-    public Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
+    public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
     {
-        throw new NotImplementedException();
+        //.Where(x => customertype.ToLower() == "extern" ? x is ExternalCustomer : x is InternalCustomer)
+        CustomerDto.Detail customer = customers.Where(x => x.Id == request.CustomerId).Select(x =>
+        {
+            //basic customer information
+            CustomerDto.Detail customer = new()
+            {
+                Id = x.Id,
+                ContactPerson = new ContactPersonDto
+                {
+                    Firstname = x.ContactPerson.Firstname,
+                    Lastname = x.ContactPerson.Lastname,
+                    Email = x.ContactPerson.Email,
+                    Phonenumber = x.ContactPerson.PhoneNumber
+                },
+                BackupContactPerson = new ContactPersonDto
+                {
+                    Firstname = x.BackupContactPerson.Firstname,
+                    Lastname = x.BackupContactPerson.Lastname,
+                    Email = x.BackupContactPerson.Email,
+                    Phonenumber = x.BackupContactPerson.PhoneNumber
+                },
+                VirtualMachines = x.VirtualMachines.Select(x =>new VirtualMachineDto.Index{
+                   Id = x.Id,
+                   Fqdn = x.Fqdn,
+                   Status = x.Status
+                }).ToList(),
+            };
+
+            //add the customertype specific information
+            if (x is ExternalCustomer)
+            {
+                ExternalCustomer ex = (ExternalCustomer)x;
+                customer.CustomerType = CustomerType.Extern;
+                customer.CompanyType = ex.Type;
+                customer.CompanyName = ex.CompanyName;
+            }
+            else
+            {
+                InternalCustomer intern = (InternalCustomer)x;
+                customer.CustomerType = CustomerType.Intern;
+                customer.Department = intern.Department;
+                customer.Institution = intern.Institution;
+                customer.Education = intern.Education;
+            }
+
+            return customer;
+        }).First();
+
+
+        return new CustomerResponse.GetDetail()
+        {
+            Customer = customer
+        };
     }
 
-    public Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)
+    public async Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)
     {
-        throw new NotImplementedException();
+        CustomerResponse.GetIndex response = new();
+        var query = customers.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        {
+            query = query.Where(x => x.ContactPerson.Firstname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase)
+                                  || x.ContactPerson.Lastname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+        if (!string.IsNullOrWhiteSpace(request.CustomerType))
+        {
+            query = query.Where(x => request.CustomerType == "intern" ? x is InternalCustomer : x is ExternalCustomer);
+        }
+
+        response.TotalAmount = query.Count();
+
+        response.Customers = query.OrderBy(x => x.Id).Skip(request.Offset).Take(request.Amount).Select(x => new CustomerDto.Index
+        {
+            Id = x.Id,
+            Name = String.Format("{0} {1}", x.ContactPerson.Firstname, x.ContactPerson.Lastname),
+            Email = x.ContactPerson.Email,
+            CustomerType = x is ExternalCustomer ? CustomerType.Extern : CustomerType.Intern
+
+        }).ToList();
+
+        return response;
     }
 }

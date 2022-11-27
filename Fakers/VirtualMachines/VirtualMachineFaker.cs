@@ -5,6 +5,7 @@ using Domain.Customers;
 using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.Credentials;
+using Fakers.Customers;
 using Fakers.Specifications;
 using Fakers.TimeSpan;
 

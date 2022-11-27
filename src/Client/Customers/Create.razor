@@ -1,22 +1,30 @@
 ﻿@page "/customer/add"
+@page "/customer/{id:long}/edit"
+@using Client.Validation
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master, Administrator")]
 
-
 <PageTitle>Klant Toevoegen</PageTitle>
 
- <EditForm @ref="Editform" Model="@Customer" OnValidSubmit="@HandleValidSubmit">
+
+ <EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit">
+     @*<FluentValidationValidator TValidator="Shared.Validator.CustomerValidator"/>*@
     <div class="context-menu">
         <span class="context-menu-label">
             <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />
         </span>
-        <button type="submit">Toevoegen</button>
+        @if(Convert.ToBoolean(Id)){
+            <button type="submit">Wijzigen </button>
+        }else{
+            <button type="submit">Toevoegen </button>
+        }
+        
     </div>
-    <FluentValidationValidator TValidator="CustomerValidation" />
+    
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Type van klant" Required="@true" Items="@_typesClient" @bind-Value="@Customer.CustomerType" For="@(() => Customer.CustomerType)" />
+            <AddInput Type="@Input.InputType.SELECT" Label="Type van klant" Required="@true" Items="@_typesClient" @bind-Value="@Customer.CustomerType" For="@(() => Customer.CustomerType)" IsDisabled="@Convert.ToBoolean(Id)" />
             @if (Customer.CustomerType == "Intern")
             {
 
