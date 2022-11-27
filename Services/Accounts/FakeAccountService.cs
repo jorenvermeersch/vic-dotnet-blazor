@@ -1,20 +1,39 @@
 ﻿using Domain.Accounts;
 using Domain.Constants;
 using Fakers.Accounts;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Shared.Accounts;
 
 namespace Service.Accounts;
 
 public class FakeAccountService : IAccountService {
-    public readonly List<Account> accounts = new();
+    private static readonly List<Account> accounts = new();
 
-    public FakeAccountService() {
+    static FakeAccountService() {
         AccountFaker accountsFaker = new();
         accounts = accountsFaker.UseSeed(1337).Generate(100);
     }
 
-    public Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request) {
-        throw new NotImplementedException();
+    public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request) {
+        AccountResponse.Create response = new();
+        var query = accounts.AsQueryable();
+
+        AccountDto.Mutate model = request.Account;
+
+        Account acc = new Account() {
+            Id = accounts.Max(x => x.Id) + 1,
+            Firstname = model.Firstname,
+            Lastname = model.Lastname,
+            Email = model.Email,
+            Role = Enum.Parse<Role>(model.Role, true),
+            PasswordHash = model.Password,
+            Department = model.Department,
+            Education = model.Education,
+            IsActive = model.IsActive
+        };
+        accounts.Add(acc);
+        response.AccountId = acc.Id;
+        return response;
     }
 
     public Task DeleteAsync(AccountRequest.Delete request) {
@@ -37,7 +56,7 @@ public class FakeAccountService : IAccountService {
             Firstname = x.Firstname,
             Lastname = x.Lastname,
             IsActive = x.IsActive,
-            Role = x.Role.ToString()
+            Role = x.Role
         }).SingleOrDefault(x => x.Id == request.AccountId) ?? new AccountDto.Detail();
         return response;
     }
@@ -58,7 +77,7 @@ public class FakeAccountService : IAccountService {
             Firstname = x.Firstname,
             IsActive = x.IsActive,
             Lastname = x.Lastname,
-            Role = x.Role.ToString()
+            Role = x.Role
         }).ToList();
         return response;
     }
