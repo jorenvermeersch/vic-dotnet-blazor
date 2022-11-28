@@ -9,6 +9,7 @@ using Shared.Hosts;
 using Shared.Ports;
 using Shared.VirtualMachines;
 using Azure.Core;
+using Domain.Exceptions;
 
 namespace Service.VirtualMachines;
 
@@ -98,12 +99,19 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
 
 
-    public Task DeleteAsync(VirtualMachineRequest.Delete request)
+    public async Task DeleteAsync(VirtualMachineRequest.Delete request)
     {
-        throw new NotImplementedException();
+        //machines.RemoveAll(x => x.Id == request.MachineId);
+
+        VirtualMachine? machine = machines.SingleOrDefault(x => x.Id == request.MachineId);
+
+        if (machine is null)
+            throw new EntityNotFoundException(nameof(VirtualMachine), request.MachineId);
+
+        machines.Remove(machine);
     }
 
-    
+
     //TODO: host returns null because faker is not set properly
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {

@@ -48,4 +48,12 @@ public class VirtualMachineController : ControllerBase
         return CreatedAtAction(nameof(EditAsync), response.MachineId);
     }
 
+    [SwaggerOperation("Deletes a virtual machine")]
+    [HttpDelete("{machineId}")]
+    public async Task<IActionResult> Delete(int machineId)
+    {
+        await virtualMachineService.DeleteAsync(new VirtualMachineRequest.Delete { MachineId = machineId });
+        return NoContent();
+    }
+
 }
