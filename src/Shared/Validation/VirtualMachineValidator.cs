@@ -51,7 +51,7 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Einddatum"))
             .GreaterThan(x => x.StartDate).WithMessage(FormMessages.GREATERTHANDATE());
-        RuleFor(x => x.BackupFrequenty)
+        RuleFor(x => x.BackupFrequency)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Regelmaat"));
 

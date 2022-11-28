@@ -51,7 +51,7 @@ public static class VirtualMachineDto
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
-        public string BackupFrequenty { get; set; } = default!;
+        public string BackupFrequency { get; set; } = default!;
         public List<CredentialsDto> Credentials { get; set; } = default!;
         public List<int> Ports { get; set; } = default!;
         public List<Availability> Availabilities = default!;

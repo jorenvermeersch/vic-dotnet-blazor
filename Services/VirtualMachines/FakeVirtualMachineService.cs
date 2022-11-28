@@ -1,5 +1,6 @@
 ﻿using Domain.Constants;
 using Domain.Hosts;
+using Domain.Accounts;
 using Domain.VirtualMachines;
 using Fakers.VirtualMachines;
 using Shared.Accounts;
@@ -12,8 +13,8 @@ namespace Service.VirtualMachines;
 
 public class FakeVirtualMachineService : IVirtualMachineService
 {
-    public readonly List<VirtualMachine> machines = new();
-    public FakeVirtualMachineService()
+    private static readonly List<VirtualMachine> machines = new();
+    static FakeVirtualMachineService()
     {
         VirtualMachineFaker virtualMachineFaker = new();
         machines = virtualMachineFaker.UseSeed(1337).Generate(10);
@@ -26,7 +27,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
         switch (type)
         {
             case "InternalCustomer": customerType = CustomerType.Intern; break;
-            case "ExternalCustomer": customerType = CustomerType.Intern; break;
+            case "ExternalCustomer": customerType = CustomerType.Extern; break;
         };
         return customerType;
     }
@@ -35,29 +36,49 @@ public class FakeVirtualMachineService : IVirtualMachineService
     {
         VirtualMachineResponse.Create response = new();
 
-        var model = request.VirtualMachine;
+        var x = request.VirtualMachine;
 
+        //var args = new VirtualMachineArgs
+        //{
+        //    Template = Template.WebServer,
+        //    Mode = Mode.IAAS,
+        //    Fqdn = "test.com",
+        //    Availabilities = new List<Availability> { Availability.Wednesday, Availability.Thursday },
+        //    BackupFrequency = BackupFrequency.Daily,
+        //    ApplicationDate = DateTime.Now,
+        //    TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: DateTime.Now, endDate: DateTime.Now.AddDays(5)),
+        //    Status = Status.Deployed,
+        //    Reason = "No Reason",
+        //    Ports = new List<Port> { new Port(44, "SSH"), new Port(45, "HTTP") },
+        //    Host = null,
+        //    Credentials = new List<Credentials> { new Credentials("dummy", "passdummy", "admin") },
+        //    Account = new Domain.Accounts.Account("test", "test", "test@mail.com", Role.Admin, "test321", "testdepartment", "testedu"),
+        //    Requester = null,
+        //    User = null
+        //};
 
         var args = new VirtualMachineArgs
         {
-            Template = Template.WebServer,
-            Mode = Mode.IAAS,
-            Fqdn = "test.com",
-            Availabilities = new List<Availability> { Availability.Wednesday, Availability.Thursday },
-            BackupFrequency = BackupFrequency.Daily,
-            ApplicationDate = DateTime.Now,
-            TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: DateTime.Now, endDate: DateTime.Now.AddDays(5)),
-            Status = Status.Deployed,
-            Reason = "No Reason",
-            Ports = new List<Port> { new Port(44, "SSH"), new Port(45, "HTTP") },
+            Template = (Template)Enum.Parse(typeof(Template), x.Template),
+            Mode = (Mode)Enum.Parse(typeof(Mode), x.Mode),
+            Fqdn = x.Fqdn,
+            Availabilities = x.Availabilities,
+            BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), x.BackupFrequency),
+            ApplicationDate = x.ApplicationDate,
+            TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: x.StartDate, endDate: x.EndDate),
+            Status = (Status)Enum.Parse(typeof(Status), x.Status),
+            Reason = x.Reason,
+            Ports = x.Ports.Select(x => new Port(x, x.ToString())).ToList(),
             Host = null,
-            Credentials = new List<Credentials> { new Credentials("dummy", "passdummy", "admin") },
-            Account = new Domain.Accounts.Account("test", "test", "test@mail.com", Role.Admin, "test321", "testdepartment", "testedu"),
+            Credentials = x.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
+            Account = null,
             Requester = null,
             User = null
+            //Account = new Domain.Accounts.Account("test", "test", "test@mail.com", Role.Admin, "test321", "testdepartment", "testedu"),
         };
 
         var machine = new VirtualMachine(args) { Id = machines.Max(x => x.Id) + 1 };
+        machines.Add(machine);
         response.MachineId = machine.Id;
 
         return response;
