@@ -17,7 +17,7 @@
         }
         @if (Type == InputType.SELECT)
         {
-            <select @bind="@CurrentValue" class="input" style="@customCss" type="text" placeholder="@PlaceHolder">
+            <select @bind="@CurrentValue" class="input" style="@customCss" type="text" placeholder="@PlaceHolder" disabled="@IsDisabled">
                 <option value="" disabled selected hidden>@PlaceHolder</option>
                 @foreach (var item in Items)
                 {

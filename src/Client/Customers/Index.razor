@@ -10,10 +10,10 @@
         <Title Text="Filteropties" />
         <div style="display: flex; justify-content: space-between;">
             <Button Text="Reset" OnClick="() => ResetFilter()" />
-            <Button Text="Filteren" />
+            <Button Text="Filteren" OnClick="@HandleFilter"/>
         </div>
 
-        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Text=SearchValue />
+        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Value="@SearchValue" />
 
         <div class="reset-area">
             <div class="filterbuttonarea">

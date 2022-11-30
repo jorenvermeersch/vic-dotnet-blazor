@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Services.Customers;
 using Shared.Customers;
 
 namespace Client.Customers;
@@ -19,20 +20,59 @@ public partial class Index
     private void FilterIntern()
     {
         toggleIntern = !toggleIntern;
+        toggleExtern = false;
+
     }
 
     private void FilterExtern()
     {
         toggleExtern = !toggleExtern;
+        toggleIntern = false;
     }
 
-    private void ResetFilter()
+
+    private async void ResetFilter()
     {
-        toggleIntern = toggleExtern = false;
+        toggleIntern = false;
+        toggleExtern = false;
         SearchValue = "";
+        CustomerRequest.GetIndex request = new()
+        {
+            Offset = 0,
+            Amount = 20,
+        };
+        var response = await CustomerService.GetIndexAsync(request);
+        totalCustomers = response.TotalAmount;
+        customers = response.Customers;
+        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
+        StateHasChanged();
+    }
+    private async void HandleFilter()
+    {
+        CustomerRequest.GetIndex request = new()
+        {
+            Offset = 0,
+            Amount = 20,
+            SearchTerm = SearchValue,
+        };
+
+        if (toggleIntern)
+        {
+            request.CustomerType = "intern";
+        }
+        else if (toggleExtern)
+        {
+            request.CustomerType = "extern";
+        }
+
+        var response = await CustomerService.GetIndexAsync(request);
+        totalCustomers = response.TotalAmount;
+        customers = response.Customers;
+        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
+        StateHasChanged();
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
         {
@@ -40,7 +80,7 @@ public partial class Index
         });
         customers = response.Customers;
         totalCustomers = response.TotalAmount;
-        totalPages = (totalCustomers / 20) + 1;
+        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
     }
 
     private async Task ClickHandler(int pageNr)

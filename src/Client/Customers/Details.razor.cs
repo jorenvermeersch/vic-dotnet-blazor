@@ -12,11 +12,10 @@ public partial class Details
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
 
-    //Model
     private CustomerDto.Detail? Customer;
 
 
-    private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
+    private IEnumerable<VirtualMachineDto.Index> virtualMachines = new List<VirtualMachineDto.Index>() ;
     private int offset = 0, totalVirtualMachines, totalPages = 0;
     private int selectedPage = 1;
 
@@ -28,17 +27,21 @@ public partial class Details
 
     protected override async Task OnInitializedAsync()
     {
-        CustomerResponse.GetDetail response = await CustomerService.GetDetailAsync(new CustomerRequest.GetDetail
+        CustomerRequest.GetDetail request = new()
         {
             CustomerId = Id
-        });
+        };
+        var response = await CustomerService.GetDetailAsync(request);
         Customer = response.Customer;
+        
 
-
-        totalVirtualMachines = virtualMachines.Count();
+        virtualMachines = Customer.VirtualMachines;
+        totalVirtualMachines = Customer.VirtualMachines.Count;
         totalPages = (totalVirtualMachines / 10) + 1;
+
         _username.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
         _general.Add("Klant type", Customer.CustomerType.ToString());
+
         if (Customer.CustomerType == CustomerType.Intern)
         {
             _general.Add("Instituut", Customer.Institution.ToString()!);
@@ -54,11 +57,12 @@ public partial class Details
         _contactInformation.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
         _contactInformation.Add("E-mailadres", Customer.ContactPerson.Email);
         _contactInformation.Add("Telefoonnummer", Customer.ContactPerson.Phonenumber);
-        if (Customer.BackupContactPerson.Firstname == "")
+
+        if (!string.IsNullOrEmpty(Customer.BackupContactPerson?.Firstname))
         {
             _backupContactInformation.Add("Naam", string.Concat(Customer.BackupContactPerson.Firstname, " ", Customer.BackupContactPerson.Lastname));
             _backupContactInformation.Add("E-mailadres", Customer.BackupContactPerson.Email);
-            _backupContactInformation.Add("Telefoonnummer", Customer.BackupContactPerson.Phonenumber);
+            _backupContactInformation.Add("Telefoonnummer", Customer.BackupContactPerson?.Phonenumber);
         }
     }
 

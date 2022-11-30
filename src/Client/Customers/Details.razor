@@ -9,7 +9,7 @@
             <span>Terug</span>
         </span>
         <span>
-            <Button Text="Beheren" />
+            <Button Text="Beheren" Href=@string.Format("customer/{0}/edit", Id) />
         </span>
     </div>
 </div>
@@ -27,17 +27,16 @@
     }
     
     </div>
-<div class="two-thirds">
-    <Title Text="Virtuele machines" />
-       
-            @if (virtualMachines.Any())
-            {
+    <div class="two-thirds">
+        <Title Text="Virtuele machines" />
+        @if (virtualMachines.Any())
+        {
             <div class="two-columns-container">
                 <div>
-                @foreach (var vm in virtualMachines.Take(5))
-                {
-                    <EntityCard Value=@vm.Fqdn Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-                }
+                    @foreach (var vm in virtualMachines.Take(5))
+                    {
+                        <EntityCard Value=@vm.Fqdn Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
+                    }
                 </div>
                 <div>
                     @foreach (var vm in virtualMachines.Skip(5).Take(5))
@@ -47,16 +46,10 @@
                 </div>
             </div>
             <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-            }
-            else
-            {
+        }
+        else
+        {
             <NoVmMsg Type="@Customer.CustomerType.ToString()" />
-            }
+        }
     </div>
 </div>
-
-
-
-
-
-

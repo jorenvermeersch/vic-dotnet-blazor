@@ -11,7 +11,7 @@ public partial class Input : InputBase<string>
 {
     private string _label = "Label: ";
     private bool _required = false;
-
+    [Parameter] public bool IsDisabled { get; set; } = false;
     [Parameter]
     public string PlaceHolder { get; set; } = "";
     [Parameter]
