@@ -18,7 +18,10 @@ public class StartUp
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddMvc();
+        services.AddMvc(options =>
+        {
+            options.SuppressAsyncSuffixInActionNames = false;
+        });
         var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("VirtualItCompany"));
         services.AddServices();
 

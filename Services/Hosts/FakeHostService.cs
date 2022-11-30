@@ -5,6 +5,7 @@ using Services.FakeInitializer;
 using Shared.Hosts;
 using Shared.Ports;
 using Shared.VirtualMachines;
+using Domain.Common;
 
 namespace Services.Hosts;
 
@@ -17,9 +18,25 @@ public class FakeHostService : IHostService
         hosts = FakeInitializerService.FakeHosts ?? new List<Server>();
     }
 
-    public Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
+    public async Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
     {
-        throw new NotImplementedException();
+        HostResponse.Create response = new();
+
+        var model = request.Host;
+
+        var host = new Server(model.Name, new HostSpecifications(
+                model.Specifications.Processors.Select(x =>
+                new KeyValuePair<Processor, int>(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
+                model.Specifications.Storage, model.Specifications.Memory
+            ), new HashSet<VirtualMachine>())
+        {
+            Id = hosts.Max(x => x.Id) + 1,
+        };
+
+        response.HostId = host.Id;
+
+        hosts.Add(host);
+        return response;
     }
 
     public Task DeleteAsync(HostRequest.Delete request)
@@ -57,7 +74,8 @@ public class FakeHostService : IHostService
                 Storage = x.Specifications.Storage,
                 Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Key.Cores, Name = y.Key.Name, Threads = y.Key.Threads}, y.Value)).ToList()
             }
-        }).SingleOrDefault();
+        }).SingleOrDefault() ?? new HostDto.Detail();
+
 
         return response;
     }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Client.VirtualMachines;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Hosts;
 using Shared.Ports;
+using Shared.VirtualMachines;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Controllers.Hosts;
@@ -30,6 +32,13 @@ public class HostController : ControllerBase
     {
         HostResponse.GetDetail response = await hostService.GetDetailAsync(request);
         return response;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateAsync([FromBody] HostRequest.Create request)
+    {
+        HostResponse.Create response = await hostService.CreateAsync(request);
+        return CreatedAtAction(nameof(CreateAsync), response.HostId);
     }
 
 }
