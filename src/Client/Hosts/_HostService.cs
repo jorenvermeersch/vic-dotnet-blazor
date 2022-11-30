@@ -1,12 +1,16 @@
-﻿using Shared.Hosts;
+﻿using Client.Extensions;
+using Shared.Hosts;
+using Shared.VirtualMachines;
+using System.Net.Http.Json;
 
 namespace Client.Hosts;
 
 public class HostService : IHostService
 {
-    public HostService()
+    private readonly HttpClient client;
+    public HostService(HttpClient client)
     {
-
+        this.client = client;
     }
     public Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
     {
@@ -23,13 +27,17 @@ public class HostService : IHostService
         throw new NotImplementedException();
     }
 
-    public Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request)
+    public async Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request)
     {
-        throw new NotImplementedException();
+        var queryParameters = request.GetQueryString();
+        var response = await client.GetFromJsonAsync<HostResponse.GetDetail>($"api/hosts/{request.HostId}");
+        return response!;
     }
-
-    public Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request)
+    
+    public async Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request)
     {
-        throw new NotImplementedException();
+        var queryParameters = request.GetQueryString();
+        var response = await client.GetFromJsonAsync<HostResponse.GetIndex>("api/hosts");
+        return response!;
     }
 }

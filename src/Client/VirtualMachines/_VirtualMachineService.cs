@@ -6,10 +6,10 @@ namespace Client.VirtualMachines;
 
 public class VirtualMachineService : IVirtualMachineService
 {
-    private readonly HttpClient authenticatedClient;
-    public VirtualMachineService(HttpClient authenticatedClient)
+    private readonly HttpClient client;
+    public VirtualMachineService(HttpClient client)
     {
-        this.authenticatedClient = authenticatedClient;
+        this.client = client;
     }
 
     public Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
@@ -30,7 +30,7 @@ public class VirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetDetail>($"api/virtual-machines/{request.MachineId}");
+        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetDetail>($"api/virtual-machines/{request.MachineId}");
         return response!;
     }
 
@@ -43,7 +43,7 @@ public class VirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
         return response!;
     }
 
