@@ -68,19 +68,22 @@ public class FakeCustomerService : ICustomerService
         };
     }
 
-    public Task DeleteAsync(CustomerRequest.Delete request)
+    public async Task DeleteAsync(CustomerRequest.Delete request)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        var customer = customers.Find(x => x.Id == request.CustomerId);
+        customers.Remove(customer);
     }
 
     public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
     {
+        await Task.Delay(100);
         Customer customer = customers.SingleOrDefault(x => x.Id == request.CustomerId);
         int index = customers.IndexOf(customer);
 
         ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
         ContactPerson backupContactPerson = null;
-        if (!string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname))
+        if (request.Customer.BackupContactPerson is not null && !string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname) )
         {
             backupContactPerson = new ContactPerson(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Phonenumber);
         }

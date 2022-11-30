@@ -1,20 +1,14 @@
 ﻿using Domain.Customers;
 using Persistence.Data;
 using Shared.Customers;
-using Microsoft.EntityFrameworkCore;
 using Domain.Constants;
 using Shared.VirtualMachines;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Customers;
 
 public class CustomerService : ICustomerService
 {
-
-    public CustomerService(VicDBContext dbContext)
-    {
-        _dbContext = dbContext;
-        _customers = _dbContext.Customers;
-    }
 
     private readonly VicDBContext _dbContext;
     private readonly DbSet<Customer> _customers;
@@ -22,6 +16,14 @@ public class CustomerService : ICustomerService
     private IQueryable<Customer> GetCustomerById(long id) => _customers
                 .AsNoTracking()
                 .Where(p => p.Id == id);
+
+
+    public CustomerService(VicDBContext dbContext)
+    {
+        _dbContext = dbContext;
+        _customers = _dbContext.Customers;
+    }
+
 
     //CREATE DOESNT WORK YET
     public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
@@ -69,9 +71,11 @@ public class CustomerService : ICustomerService
         return response;
     }
 
-    public Task DeleteAsync(CustomerRequest.Delete request)
+    public async Task DeleteAsync(CustomerRequest.Delete request)
     {
-        throw new NotImplementedException();
+        Customer customer = await _customers.FindAsync(request.CustomerId);
+        _customers.Remove(customer);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
@@ -136,7 +140,7 @@ public class CustomerService : ICustomerService
             };
         }
 
-        CustomerDto.Detail model =  new()
+        CustomerDto.Detail model = new()
         {
             Id = customer.Id,
             ContactPerson = new ContactPersonDto
@@ -147,12 +151,7 @@ public class CustomerService : ICustomerService
                 Phonenumber = customer.ContactPerson.PhoneNumber
             },
             BackupContactPerson = backup,
-            VirtualMachines = customer.VirtualMachines.Count()>0? customer.VirtualMachines.Select(x => new VirtualMachineDto.Index
-            {
-                Id = x.Id,
-                Fqdn = x.Fqdn,
-                Status = x.Status
-            }).ToList(): new List<VirtualMachineDto.Index>(),
+            VirtualMachines = new List<VirtualMachineDto.Index>() { }, //TODO
         };
 
         if (customer is ExternalCustomer ex)
@@ -181,10 +180,12 @@ public class CustomerService : ICustomerService
         CustomerResponse.GetIndex response = new();
         var query = _customers.AsQueryable().AsNoTracking();
 
+
+
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
             query = query.Where(x => x.ContactPerson.Firstname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase)
-                                  || x.ContactPerson.Lastname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
+                                  );
         }
         if (!string.IsNullOrWhiteSpace(request.CustomerType))
         {

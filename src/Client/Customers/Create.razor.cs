@@ -36,7 +36,7 @@ public partial class Create
                 CompanyType = response.Customer.CompanyType,
                 CompanyName = response.Customer.CompanyName,
                 ContactPerson = response.Customer.ContactPerson,
-                BackupContactPerson = response.Customer.BackupContactPerson
+                BackupContactPerson = response.Customer.BackupContactPerson?? new ContactPersonDto()
             };
         }
     }
@@ -51,8 +51,10 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
+        Console.WriteLine(Customer.CustomerType);
         if (Convert.ToBoolean(Id))
         {
+
             CustomerRequest.Edit request = new()
             {
                 CustomerId = Id,
