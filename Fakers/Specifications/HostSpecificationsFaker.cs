@@ -15,9 +15,9 @@ public class HostSpecificationsFaker : Faker<HostSpecifications>
         processors = new ProcessorFaker().UseSeed(1337).Generate(25);
 
         CustomInstantiator(f => new HostSpecifications(
-            processors: new List<KeyValuePair<Processor, int>> { new KeyValuePair<Processor, int>(f.PickRandom(processors), f.Random.Number(1, 5)) },
-            storage: f.Random.Number(50, 250),
-            memory: f.Random.Number(50, 250)
-        )) ;
+            processors: new List<KeyValuePair<Processor, int>> { new KeyValuePair<Processor, int>(f.PickRandom(processors), f.Random.Number(1000, 5000)) },
+            storage: int.MaxValue,
+            memory: int.MaxValue
+        ));
     }
 }

@@ -17,7 +17,7 @@ public class HostFaker : EntityFaker<Server>
         CustomInstantiator(f => new Server(
             name: f.Internet.UserName(),
             resources: f.PickRandom(hostSpecifications),
-            virtualMachines: (ISet<VirtualMachine>) new VirtualMachineFaker().Generate(3).ToList()
+            virtualMachines: new VirtualMachineFaker().Generate(3).ToHashSet()
         ));
     }
 }
