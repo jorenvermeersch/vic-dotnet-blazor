@@ -1,5 +1,6 @@
 ﻿using Client.VirtualMachines;
 using Microsoft.AspNetCore.Mvc;
+using Services.VirtualMachines;
 using Shared.Hosts;
 using Shared.Ports;
 using Shared.VirtualMachines;
@@ -39,6 +40,14 @@ public class HostController : ControllerBase
     {
         HostResponse.Create response = await hostService.CreateAsync(request);
         return CreatedAtAction(nameof(CreateAsync), response.HostId);
+    }
+
+    [SwaggerOperation("Edits a virtual machine.")]
+    [HttpPut("{hostId}")]
+    public async Task<IActionResult> EditAsync([FromBody] HostDto.Mutate model, long hostId)
+    {
+        HostResponse.Edit response = await hostService.EditAsync(new HostRequest.Edit { Host = model, HostId = hostId });
+        return CreatedAtAction(nameof(EditAsync), response.HostId);
     }
 
 }

@@ -44,9 +44,21 @@ public class FakeHostService : IHostService
         throw new NotImplementedException();
     }
 
-    public Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
+    public async Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
     {
-        throw new NotImplementedException();
+        HostResponse.Edit response = new();
+        var host = hosts.SingleOrDefault(x => x.Id == request.HostId);
+
+        var model = request.Host;
+
+        host.Name = model.Name;
+        host.Specifications = new HostSpecifications(
+                model.Specifications.Processors.Select(x =>
+                new KeyValuePair<Processor, int>(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
+                model.Specifications.Storage, model.Specifications.Memory);
+
+        response.HostId = host.Id;
+        return response;
     }
 
     public async Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request)
