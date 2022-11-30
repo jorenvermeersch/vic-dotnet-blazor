@@ -35,6 +35,7 @@ public class HostController : ControllerBase
         return response;
     }
 
+    [SwaggerOperation("Creates hosts.")]
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] HostRequest.Create request)
     {
