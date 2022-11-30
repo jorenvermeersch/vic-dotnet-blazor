@@ -47,7 +47,7 @@ public class HostController : ControllerBase
     public async Task<IActionResult> EditAsync([FromBody] HostDto.Mutate model, long hostId)
     {
         HostResponse.Edit response = await hostService.EditAsync(new HostRequest.Edit { Host = model, HostId = hostId });
-        return CreatedAtAction(nameof(EditAsync), response.HostId);
+        return Accepted(nameof(EditAsync), response.HostId);
     }
 
 }

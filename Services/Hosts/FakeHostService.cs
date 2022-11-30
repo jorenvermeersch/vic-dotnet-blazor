@@ -49,6 +49,12 @@ public class FakeHostService : IHostService
         HostResponse.Edit response = new();
         var host = hosts.SingleOrDefault(x => x.Id == request.HostId);
 
+        if (host == null)
+        {
+            response.HostId = -1;
+            return response;
+        }
+
         var model = request.Host;
 
         host.Name = model.Name;

@@ -45,7 +45,7 @@ public class VirtualMachineController : ControllerBase
     public async Task<IActionResult> EditAsync([FromBody] VirtualMachineDto.Mutate model, long machineId)
     {
         VirtualMachineResponse.Edit response = await virtualMachineService.EditAsync(new VirtualMachineRequest.Edit() { MachineId = machineId, VirtualMachine = model });
-        return CreatedAtAction(nameof(EditAsync), response.MachineId);
+        return Accepted(nameof(EditAsync), response.MachineId);
     }
 
     [SwaggerOperation("Deletes a virtual machine")]
