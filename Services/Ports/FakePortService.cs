@@ -12,7 +12,6 @@ public class FakePortService : IPortService
     static FakePortService()
     {
         ports.AddRange(new List<Port> { new Port(443, "HTTPS") { Id = 1 }, new Port(80, "HTTP") { Id = 2 }, new Port(22, "SSH") { Id = 3 } });
-
     }
 
     public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
@@ -45,11 +44,6 @@ public class FakePortService : IPortService
     public async Task<PortResponse.GetDetail> GetDetailAsync(PortRequest.GetDetail request)
     {
         PortResponse.GetDetail response = new();
-
-        foreach (var item in ports)
-        {
-            Console.WriteLine(item.Id);
-        }
 
         response.Port = ports.Where(x => x.Id == request.PortId).Select(x => new PortDto
         {
