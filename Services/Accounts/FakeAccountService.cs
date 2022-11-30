@@ -1,8 +1,11 @@
 ﻿using Domain.Accounts;
+using Domain.Common;
 using Domain.Constants;
+using Domain.Hosts;
 using Fakers.Accounts;
 using Services.FakeInitializer;
 using Shared.Accounts;
+using Shared.Hosts;
 
 namespace Service.Accounts;
 
@@ -11,12 +14,8 @@ public class FakeAccountService : IAccountService
     private static readonly List<Account> accounts = new();
 
     static FakeAccountService()
-    {
-        //var accountsFaker = new AccountFaker();
-        //accounts = accountsFaker.UseSeed(1337).Generate(100);
-
+    {        
         accounts = FakeInitializerService.FakeAccounts ?? new List<Account>();
-
     }
 
     public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request) {
@@ -41,12 +40,37 @@ public class FakeAccountService : IAccountService
         return response;
     }
 
-    public Task DeleteAsync(AccountRequest.Delete request) {
-        throw new NotImplementedException();
+    public async Task DeleteAsync(AccountRequest.Delete request) {
+        var account = accounts.SingleOrDefault(x => x.Id == request.AccountId);
+        if (account != null)
+            accounts.Remove(account);
     }
 
-    public Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request) {
-        throw new NotImplementedException();
+    public async Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request) {
+
+        AccountResponse.Edit response = new();
+        var account = accounts.SingleOrDefault(x => x.Id == request.AccountId);
+
+        if (account == null)
+        {
+            response.AccountId = -1;
+            return response;
+        }
+
+        var model = request.Account;
+
+        account.Firstname = model.Firstname;
+        account.Lastname = model.Lastname;
+        account.Email = model.Email;
+        account.Role = (Role)Enum.Parse(typeof(Role), model.Role);
+        account.PasswordHash = model.Password;
+        account.Department = model.Department;
+        account.Education = model.Education;
+        account.IsActive = model.IsActive;
+
+        response.AccountId = account.Id;
+        return response;
+
     }
 
     public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request) {

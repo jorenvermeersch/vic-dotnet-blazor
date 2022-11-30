@@ -51,7 +51,7 @@ public class HostController : ControllerBase
         return Accepted(nameof(EditAsync), response.HostId);
     }
 
-    [SwaggerOperation("Deletes hosts")]
+    [SwaggerOperation("Deletes hosts.")]
     [HttpDelete("{hostId}")]
     public async Task<IActionResult> Delete(int hostId)
     {

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Shared.Accounts;
+using Shared.Hosts;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Controllers.Accounts;
@@ -30,5 +32,21 @@ public class AccountController : ControllerBase {
     [HttpPost]
     public async Task<AccountResponse.Create> CreateAsync([FromBody] AccountRequest.Create request) {
         return await accountService.CreateAsync(request);
+    }
+
+    [SwaggerOperation("Edits accounts.")]
+    [HttpPut("{accountId}")]
+    public async Task<IActionResult> EditAsync([FromBody] AccountDto.Mutate model, long accountId)
+    {
+        AccountResponse.Edit response = await accountService.EditAsync(new AccountRequest.Edit { Account = model, AccountId = accountId });
+        return Accepted(nameof(EditAsync), response.AccountId);
+    }
+
+    [SwaggerOperation("Deletes accounts.")]
+    [HttpDelete("{accountId}")]
+    public async Task<IActionResult> Delete(long accountId)
+    {
+        await accountService.DeleteAsync(new AccountRequest.Delete { AccountId = accountId });
+        return NoContent();
     }
 }
