@@ -28,7 +28,7 @@ public class StartUp
 
         services.AddSwaggerGen(c =>
         {
-            c.CustomSchemaIds(x => $"{x.FullName}.{x.Name}");
+            c.CustomSchemaIds(type => type.FullName.Replace("+", "."));
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Virtual IT Company API", Version = "v1" });
             c.EnableAnnotations();
         });
