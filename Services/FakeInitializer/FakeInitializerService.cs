@@ -8,6 +8,7 @@ using Fakers;
 using Fakers.Accounts;
 using Fakers.ContactPersons;
 using Fakers.Credentials;
+using Fakers.Customers;
 using Fakers.Hosts;
 using Fakers.Processors;
 using Fakers.Specifications;

@@ -1,7 +1,7 @@
 ﻿using Domain.Accounts;
 using Domain.VirtualMachines;
-using Fakers;
 using Fakers.Accounts;
+using Fakers.Customers;
 using Fakers.VirtualMachines;
 
 namespace Persistence.Data;

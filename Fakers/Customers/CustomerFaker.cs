@@ -3,21 +3,17 @@ using Domain.Constants;
 using Domain.Customers;
 using Fakers.ContactPersons;
 
-namespace Fakers;
+namespace Fakers.Customers;
 
 public static class CustomerFaker
 {
+    private static List<ContactPerson> contacts = new ContactPersonFaker().Generate(50);
 
     public class ExternalCustomerFaker : EntityFaker<ExternalCustomer>
     {
         public ExternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl")
         {
             var types = new[] { "Voka", "Unizo" };
-
-            //TODO: Contactperson faker
-            //ContactPersonFaker contactPersonFaker = new ContactPersonFaker();
-            //List<ContactPerson> contacts = contactPersonFaker.Generate(50);
-
             List<ContactPerson> contacts = fakeContactPersons;
 
             CustomInstantiator(f => new ExternalCustomer(
@@ -36,11 +32,6 @@ public static class CustomerFaker
         {
             var departments = new[] { "DIT", "DBO", "DBT" };
             var educations = new[] { "", "Toegepaste Informatica", "Bedrijfsmanagement", "Elektro-mechanica" };
-
-            //TODO: Contactperson faker
-            //ContactPersonFaker contactPersonFaker = new ContactPersonFaker();
-            //List<ContactPerson> contacts = contactPersonFaker.Generate(50);
-
             List<ContactPerson> contacts = fakeContactPersons;
 
 
