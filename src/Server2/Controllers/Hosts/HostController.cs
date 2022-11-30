@@ -21,9 +21,9 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Returns a list of ports")]
     [HttpGet]
-    public async Task<HostResponse.GetIndex> GetIndex()
+    public async Task<HostResponse.GetIndex> GetIndex([FromQuery] HostRequest.GetIndex request)
     {
-        HostResponse.GetIndex response = await hostService.GetIndexAsync(new HostRequest.GetIndex());
+        HostResponse.GetIndex response = await hostService.GetIndexAsync(request);
         return response;
     }
 
