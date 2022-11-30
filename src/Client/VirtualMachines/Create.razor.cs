@@ -105,7 +105,7 @@ public partial class Create
         IEnumerable<AccountDto.Index> accountIndexes = accountResponse.Accounts ?? new List<AccountDto.Index>();
         Accounts = accountIndexes.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
 
-        PortResponse.GetAll portsResponse = await PortService.GetAllAsync();
+        PortResponse.GetAll portsResponse = await PortService.GetAllAsync(new PortRequest.GetAll());
         availablePorts = portsResponse.Ports ?? new List<PortDto>();
         PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }

@@ -25,7 +25,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPortService, FakePortService>();
         services.AddScoped<IProcessorService, FakeProcessorService>();
 
-
         return services;
     }
 }

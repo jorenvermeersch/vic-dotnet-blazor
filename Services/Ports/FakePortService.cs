@@ -1,32 +1,56 @@
-﻿using Shared.Ports;
+﻿using Domain.Hosts;
+using Domain.VirtualMachines;
+using Shared.Hosts;
+using Shared.Ports;
 
 namespace Services.Ports;
 
 public class FakePortService : IPortService
 {
-    public readonly List<PortDto> ports = new();
+    private static readonly List<Port> ports = new();
 
-    public FakePortService()
+    static FakePortService()
     {
-        ports.Add(new PortDto()
-        {
-            Service = "HTTPS",
-            Number = 443
-        });
-        ports.Add(new PortDto()
-        {
-            Service = "HTTP",
-            Number = 80
-        });
-        ports.Add(new PortDto()
-        {
-            Service = "SSH",
-            Number = 22
-        });
+        ports.AddRange(new List<Port> { new Port(443, "HTTPS") { Id = 1 }, new Port(80, "HTTP") { Id = 2 }, new Port(22, "SSH") { Id = 3 } });
     }
 
-    public Task<PortResponse.GetAll> GetAllAsync()
+    public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
     {
-        throw new NotImplementedException();
+        // FILTEREN OP NUMMER
+
+        var query = ports.AsQueryable();
+
+        int totalAmount = query.Count();
+
+        var items = query
+           .Skip((request.Page - 1) * request.Amount)
+           .Take(request.Amount)
+           .OrderBy(x => x.Id)
+           .Select(x => new PortDto
+           {
+               Number = x.Number,
+               Service =x.Service
+           }).ToList();
+
+        var result = new PortResponse.GetAll
+        {
+            Ports = items,
+            TotalAmount = totalAmount
+        };
+
+        return result;
+    }
+
+    public async Task<PortResponse.GetDetail> GetDetailAsync(PortRequest.GetDetail request)
+    {
+        PortResponse.GetDetail response = new();
+
+        response.Port = ports.Where(x => x.Id == request.PortId).Select(x => new PortDto
+        {
+            Number = x.Number,
+            Service = x.Service
+        }).SingleOrDefault();
+
+        return response;
     }
 }
