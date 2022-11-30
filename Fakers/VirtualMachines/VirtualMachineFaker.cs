@@ -1,33 +1,31 @@
 ﻿using BogusStore.Fakers.Common;
 using Domain.Accounts;
+using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;
+using Domain.Hosts;
 using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.Credentials;
+using Fakers.Hosts;
 using Fakers.Specifications;
 using Fakers.TimeSpan;
+using System;
 
 namespace Fakers.VirtualMachines;
 
 public class VirtualMachineFaker : EntityFaker<VirtualMachine>
 {
+    public List<Customer>? Customers { get; set; } = new();
+    public List<Account>? Accounts { get; set; } = new();
+    public List<Domain.Common.Specifications>? Specifications { get; set; } = new();
+    public List<Domain.VirtualMachines.Credentials>? Credentials { get; set; } = new();
+    public List<Domain.VirtualMachines.TimeSpan>? TimeSpans { get; set; } = new();
+    public List<Server> Hosts { get; set; } = new();
+
+
     public VirtualMachineFaker(string locale = "nl")
     {
-        CustomerFaker.ExternalCustomerFaker externalCustomerFaker = new();
-        CustomerFaker.InternalCustomerFaker internalCustomerFaker = new();
-
-        List<Customer> customers = new();
-        customers.AddRange(externalCustomerFaker.Generate(20));
-        customers.AddRange(internalCustomerFaker.Generate(20));
-
-        AccountFaker accountFaker = new();
-        List<Account> accounts = accountFaker.Generate(20);
-
-        CredentialFaker credentialFaker = new();
-
-        List<VirtualMachine> virtualMachines = new();
-
         List<Port> ports = new();
         ports.AddRange(
             new List<Port>
@@ -37,12 +35,6 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
                 new Port(number: 22, "SSH")
             }
         );
-
-        TimeSpanFaker timeSpanFaker = new();
-        List<Domain.VirtualMachines.TimeSpan> timespans = timeSpanFaker.Generate(5);
-
-        SpecificationsFaker specificationFaker = new();
-        List<Domain.Common.Specifications> specifications = specificationFaker.Generate(10);
 
         CustomInstantiator(f => new VirtualMachine(new VirtualMachineArgs
         {
@@ -59,14 +51,15 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
             Status = f.PickRandom(Enum.GetValues(typeof(Status)).Cast<Status>().ToList()),
 
             // OTHER FAKERS
-            User = f.PickRandom(customers),
-            Requester = f.PickRandom(customers),
-            Account = f.PickRandom(accounts),
-            Credentials = Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(credentialFaker.Generate(25))).ToList(),
-            Host = null,
+            User = f.PickRandom(Customers),
+            Requester = f.PickRandom(Customers),
+            Account = f.PickRandom(Accounts),
+            Credentials = Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(Credentials)).ToList(),
+            //Host = f.PickRandom(Hosts),
+            Host = null, // host gets initialized later on.
             Ports = Enumerable.Range(1, f.Random.Int(1, 2)).Select(x => f.PickRandom(ports)).ToList(),
-            TimeSpan = f.PickRandom(timespans),
-            Specifications = f.PickRandom(specifications)
+            TimeSpan = f.PickRandom(TimeSpans),
+            Specifications = f.PickRandom(Specifications)
         }));
     }
 }

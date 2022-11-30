@@ -1,6 +1,7 @@
 ﻿using Domain.Hosts;
 using Domain.VirtualMachines;
 using Fakers.Hosts;
+using Services.FakeInitializer;
 using Shared.Hosts;
 using Shared.Ports;
 using Shared.VirtualMachines;
@@ -13,7 +14,7 @@ public class FakeHostService : IHostService
 
     static FakeHostService() 
     {
-        hosts = new HostFaker().UseSeed(1337).Generate(50);
+        hosts = FakeInitializerService.FakeHosts ?? new List<Server>();
     }
 
     public Task<HostResponse.Create> CreateAsync(HostRequest.Create request)

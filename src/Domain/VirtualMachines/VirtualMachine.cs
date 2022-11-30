@@ -72,10 +72,11 @@ public class VirtualMachine : Machine
         {
             Guard.Against.Null(value, nameof(Host));
 
-            if (!_host.Equals(value))
+            if (_host != value)
             {
                 value.AddMachine(this); // Throws if new host does not have enough remaining resources.
-                _host.RemoveMachine(this); // Remove from old host.
+                if (_host != null)
+                    _host.RemoveMachine(this); // Remove from old host.
                 _host = value;
             }
         }

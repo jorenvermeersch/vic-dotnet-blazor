@@ -1,18 +1,21 @@
 ﻿using Domain.Accounts;
 using Fakers.Accounts;
+using Services.FakeInitializer;
 using Shared.Accounts;
 
 namespace Service.Accounts;
 
 public class FakeAccountService : IAccountService
 {
-    public readonly List<Account> accounts = new();
+    private static readonly List<Account> accounts = new();
 
-
-    public FakeAccountService()
+    static FakeAccountService()
     {
-        var accountsFaker = new AccountFaker();
-        accounts = accountsFaker.UseSeed(1337).Generate(100);
+        //var accountsFaker = new AccountFaker();
+        //accounts = accountsFaker.UseSeed(1337).Generate(100);
+
+        accounts = FakeInitializerService.FakeAccounts ?? new List<Account>();
+
     }
 
     public Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)

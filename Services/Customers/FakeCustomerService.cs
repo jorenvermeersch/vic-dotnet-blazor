@@ -1,9 +1,19 @@
-﻿using Shared.Customers;
+﻿using Domain.Accounts;
+using Domain.Customers;
+using Services.FakeInitializer;
+using Shared.Customers;
 
 namespace Services.Customers;
 
 public class FakeCustomerService : ICustomerService
 {
+    private static readonly List<Customer> customers = new();
+
+    static FakeCustomerService()
+    {
+        customers = FakeInitializerService.FakeCustomers ?? new List<Customer>();
+    }
+
     public Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
     {
         throw new NotImplementedException();

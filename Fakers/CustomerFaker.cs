@@ -10,13 +10,15 @@ public static class CustomerFaker
 
     public class ExternalCustomerFaker : EntityFaker<ExternalCustomer>
     {
-        public ExternalCustomerFaker(string locale = "nl")
+        public ExternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl")
         {
             var types = new[] { "Voka", "Unizo" };
 
             //TODO: Contactperson faker
-            ContactPersonFaker contactPersonFaker = new ContactPersonFaker();
-            List<ContactPerson> contacts = contactPersonFaker.Generate(50);
+            //ContactPersonFaker contactPersonFaker = new ContactPersonFaker();
+            //List<ContactPerson> contacts = contactPersonFaker.Generate(50);
+
+            List<ContactPerson> contacts = fakeContactPersons;
 
             CustomInstantiator(f => new ExternalCustomer(
                 name: f.Company.CompanyName(),
@@ -30,14 +32,17 @@ public static class CustomerFaker
 
     public class InternalCustomerFaker : EntityFaker<InternalCustomer>
     {
-        public InternalCustomerFaker(string locale = "nl")
+        public InternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl")
         {
             var departments = new[] { "DIT", "DBO", "DBT" };
             var educations = new[] { "", "Toegepaste Informatica", "Bedrijfsmanagement", "Elektro-mechanica" };
 
             //TODO: Contactperson faker
-            ContactPersonFaker contactPersonFaker = new ContactPersonFaker();
-            List<ContactPerson> contacts = contactPersonFaker.Generate(50);
+            //ContactPersonFaker contactPersonFaker = new ContactPersonFaker();
+            //List<ContactPerson> contacts = contactPersonFaker.Generate(50);
+
+            List<ContactPerson> contacts = fakeContactPersons;
+
 
             CustomInstantiator(f => new InternalCustomer(
                 institution: f.PickRandom(Enum.GetValues(typeof(Institution)).Cast<Institution>().ToList()),

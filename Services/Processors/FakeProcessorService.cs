@@ -1,6 +1,7 @@
 ﻿using Shared.Hosts;
 using Domain.Hosts;
 using Fakers.Processors;
+using Services.FakeInitializer;
 
 namespace Services.Processors;
 
@@ -10,8 +11,7 @@ public class FakeProcessorService : IProcessorService
 
     static FakeProcessorService()
     {
-        ProcessorFaker faker = new ProcessorFaker();
-        processors = faker.UseSeed(1337).Generate(50);
+        processors = FakeInitializerService.FakeProcessors ?? new List<Processor>();
     }
 
     public async Task<ProcessorResponse.GetIndex> GetIndexAsync(ProcessorRequest.GetIndex request)

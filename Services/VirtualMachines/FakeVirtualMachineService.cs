@@ -10,6 +10,7 @@ using Shared.Ports;
 using Shared.VirtualMachines;
 using Azure.Core;
 using Domain.Exceptions;
+using Services.FakeInitializer;
 
 namespace Service.VirtualMachines;
 
@@ -18,8 +19,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     private static readonly List<VirtualMachine> machines = new();
     static FakeVirtualMachineService()
     {
-        VirtualMachineFaker virtualMachineFaker = new();
-        machines = virtualMachineFaker.UseSeed(1337).Generate(10);
+        machines = FakeInitializerService.FakeVirtualMachines ?? new List<VirtualMachine>();
     }
 
     // Helper Function

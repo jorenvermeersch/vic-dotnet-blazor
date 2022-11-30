@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Service.Accounts;
 using Service.VirtualMachines;
 using Services.Customers;
+using Services.FakeInitializer;
 using Services.Hosts;
 using Services.Ports;
 using Services.Processors;
@@ -24,6 +25,8 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IPortService, FakePortService>();
         services.AddScoped<IProcessorService, FakeProcessorService>();
+
+        services.AddScoped<IFakeInitializerService, FakeInitializerService>();
 
         return services;
     }

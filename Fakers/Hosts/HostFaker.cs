@@ -9,15 +9,12 @@ namespace Fakers.Hosts;
 
 public class HostFaker : EntityFaker<Server>
 {
-    private readonly List<HostSpecifications> hostSpecifications = new List<HostSpecifications>();
-    public HostFaker()
+    public HostFaker(List<HostSpecifications> hostSpecifications, List<VirtualMachine> virtualMachines)
     {
-        hostSpecifications = new HostSpecificationsFaker().UseSeed(1337).Generate(50);
-
         CustomInstantiator(f => new Server(
             name: f.Internet.UserName(),
             resources: f.PickRandom(hostSpecifications),
-            virtualMachines: new VirtualMachineFaker().Generate(3).ToHashSet()
-        ));
+            virtualMachines: virtualMachines.Count() == 0 ? null : Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(virtualMachines)).ToHashSet()
+        ));;
     }
 }

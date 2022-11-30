@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services;
+using Services.FakeInitializer;
 
 namespace Server;
 
@@ -39,7 +40,7 @@ public class StartUp
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDBContext dbContext, FakeSeeder dataInitializer)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDBContext dbContext, FakeSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
     {
         if (env.IsDevelopment())
         {

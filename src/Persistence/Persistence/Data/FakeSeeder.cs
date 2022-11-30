@@ -36,25 +36,27 @@ public class FakeSeeder
 
     public void SeedCustomers()
     {
-        var internalcustomers = new CustomerFaker.InternalCustomerFaker().UseSeed(1337).Generate(100);
-        var externalcustomers = new CustomerFaker.ExternalCustomerFaker().UseSeed(1337).Generate(100);
+        //TODO: Seeding database fix CUSTOMERS
 
-        dbContext.InternalCustomers.AddRange(internalcustomers.Select(x => new Domain.Customers.InternalCustomer
-        {
-            Department = x.Department,
-            ContactPerson = x.ContactPerson,
-            BackupContactPerson = x.BackupContactPerson,
-            Institution = x.Institution,
-            Education = x.Education
-        }));
+        //var internalcustomers = new CustomerFaker.InternalCustomerFaker().UseSeed(1337).Generate(100);
+        //var externalcustomers = new CustomerFaker.ExternalCustomerFaker().UseSeed(1337).Generate(100);
 
-        dbContext.ExternalCustomers.AddRange(externalcustomers.Select(x => new Domain.Customers.ExternalCustomer
-        {
-            CompanyName = x.CompanyName,
-            Type = x.Type,
-            ContactPerson = x.ContactPerson,
-            BackupContactPerson = x.BackupContactPerson,
-        }));
+        //dbContext.InternalCustomers.AddRange(internalcustomers.Select(x => new Domain.Customers.InternalCustomer
+        //{
+        //    Department = x.Department,
+        //    ContactPerson = x.ContactPerson,
+        //    BackupContactPerson = x.BackupContactPerson,
+        //    Institution = x.Institution,
+        //    Education = x.Education
+        //}));
+
+        //dbContext.ExternalCustomers.AddRange(externalcustomers.Select(x => new Domain.Customers.ExternalCustomer
+        //{
+        //    CompanyName = x.CompanyName,
+        //    Type = x.Type,
+        //    ContactPerson = x.ContactPerson,
+        //    BackupContactPerson = x.BackupContactPerson,
+        //}));
 
 
         //dbContext.InternalCustomers.AddRange((IEnumerable<Domain.Customers.InternalCustomer>)internalcustomers);
@@ -65,8 +67,10 @@ public class FakeSeeder
 
     private void SeedVirtualMachines()
     {
-        var virtualmachines = new VirtualMachineFaker().UseSeed(1337).Generate(20);
-        dbContext.VirtualMachines.AddRange(virtualmachines.Select(x => new VirtualMachine { Fqdn = x.Fqdn, Name = x.Name }));
+        //TODO: Seeding database fix VMS
+
+        //var virtualmachines = new VirtualMachineFaker().UseSeed(1337).Generate(20);
+        //dbContext.VirtualMachines.AddRange(virtualmachines.Select(x => new VirtualMachine { Fqdn = x.Fqdn, Name = x.Name }));
         dbContext.SaveChanges();
     }
 }
