@@ -42,12 +42,20 @@ public class HostController : ControllerBase
         return CreatedAtAction(nameof(CreateAsync), response.HostId);
     }
 
-    [SwaggerOperation("Edits a virtual machine.")]
+    [SwaggerOperation("Edits hosts.")]
     [HttpPut("{hostId}")]
     public async Task<IActionResult> EditAsync([FromBody] HostDto.Mutate model, long hostId)
     {
         HostResponse.Edit response = await hostService.EditAsync(new HostRequest.Edit { Host = model, HostId = hostId });
         return Accepted(nameof(EditAsync), response.HostId);
+    }
+
+    [SwaggerOperation("Deletes hosts")]
+    [HttpDelete("{hostId}")]
+    public async Task<IActionResult> Delete(int hostId)
+    {
+        await hostService.DeleteAsync(new HostRequest.Delete { HostId = hostId });
+        return NoContent();
     }
 
 }

@@ -39,9 +39,11 @@ public class FakeHostService : IHostService
         return response;
     }
 
-    public Task DeleteAsync(HostRequest.Delete request)
+    public async Task DeleteAsync(HostRequest.Delete request)
     {
-        throw new NotImplementedException();
+        var host = hosts.SingleOrDefault(x => x.Id == request.HostId);
+        if (host != null)
+            hosts.Remove(host);
     }
 
     public async Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
