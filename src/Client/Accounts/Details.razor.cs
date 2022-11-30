@@ -28,8 +28,7 @@ public partial class Details
 
     protected override async Task OnInitializedAsync()
     {
-        AccountRequest.GetDetail request = new() { AccountId = (int)Id };
-        AccountResponse.GetDetail response = await AccountService!.GetDetailAsync(request);
+        AccountResponse.GetDetail response = await AccountService.GetDetailAsync(new AccountRequest.GetDetail() { AccountId = Id }) ?? new AccountResponse.GetDetail();
         account = response.Account;
         _general?.Add("Role", localizer![account!.Role.ToString()]);
         _username?.Add("Naam", string.Concat(account!.Firstname, " ", account!.Lastname));

@@ -1,24 +1,31 @@
-﻿using Shared.Accounts;
+﻿using Client.Extensions;
+using Shared.Accounts;
+using Shared.Hosts;
+using System.Net.Http.Json;
 
 namespace Client.Accounts;
 
 public class AccountService : IAccountService
 {
-    private readonly HttpClient authenticatedClient;
+    private readonly HttpClient client;
     private const string endpoint = "api/accounts";
-    public AccountService(HttpClient authenticatedClient)
+    public AccountService(HttpClient client)
     {
-        this.authenticatedClient = authenticatedClient;
+        this.client = client;
     }
 
-    public Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
+    public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
     {
-        throw new NotImplementedException();
+        var queryParameters = request.GetQueryString();
+        var response = await client.GetFromJsonAsync<AccountResponse.GetIndex>("api/accounts");
+        return response!;
     }
 
-    public Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
+    public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
     {
-        throw new NotImplementedException();
+        var queryParameters = request.GetQueryString();
+        var response = await client.GetFromJsonAsync<AccountResponse.GetDetail>($"api/accounts/{request.AccountId}");
+        return response!;
     }
 
     public Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
