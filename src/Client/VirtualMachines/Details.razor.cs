@@ -29,9 +29,12 @@ public partial class Details
     //private Dictionary<string, string> _logindata = new();
 
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        //virtualMachine = await VirtualMachineService.GetDetailAsync(Id);
+        VirtualMachineResponse.GetDetail response = await VirtualMachineService.GetDetailAsync(new VirtualMachineRequest.GetDetail() { MachineId = Id }) ?? new VirtualMachineResponse.GetDetail();
+        virtualMachine = response.VirtualMachine;
+
+
         _defaultInformation.Add("Naam", virtualMachine!.Name);
         _defaultInformation.Add("FQDN", virtualMachine!.Fqdn);
         _defaultInformation.Add("Hostnaam", virtualMachine!.Host.Name);

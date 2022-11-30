@@ -1,4 +1,6 @@
-﻿using Shared.VirtualMachines;
+﻿using Client.Extensions;
+using Shared.VirtualMachines;
+using System.Net.Http.Json;
 
 namespace Client.VirtualMachines;
 
@@ -25,14 +27,11 @@ public class VirtualMachineService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
-    public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
+    public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
-    {
-        throw new NotImplementedException();
+        var queryParameters = request.GetQueryString();
+        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetDetail>($"api/virtual-machines/{request.MachineId}");
+        return response!;
     }
 
     public Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request)
@@ -41,12 +40,12 @@ public class VirtualMachineService : IVirtualMachineService
     }
 
 
-    //public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
-    //{
-    //    var queryParameters = request.GetQueryString();
-    //    var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
-    //    return response;
-    //}
+    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
+    {
+        var queryParameters = request.GetQueryString();
+        var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+        return response!;
+    }
 
     //public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
     //{
