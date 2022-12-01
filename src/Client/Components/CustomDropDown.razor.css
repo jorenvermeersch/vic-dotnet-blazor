@@ -15,9 +15,9 @@
     background-color: white;
     z-index: 1000;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 0px;
     overflow: hidden;
-    border: 1px solid var(--blue);
+    border: 1px solid var(--dark-gray);
     max-height: 250px;
     overflow-y:scroll;
 }
