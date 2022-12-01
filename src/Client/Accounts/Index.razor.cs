@@ -1,3 +1,5 @@
+using Azure;
+using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Shared.Accounts;
 
@@ -9,24 +11,31 @@ public partial class Index
 
     public string? SearchValue { get; set; }
     private List<AccountDto.Index>? accounts;
-    private int offset, totalaccounts, totalPages = 0;
+    private int offset, totalAccounts, totalPages = 0;
     private int selectedPage = 1;
+    private int amount = 20;
     private bool toggleAdmin, toggleObserver, toggleMaster;
+    private List<string> filterRoles;
 
     protected override async Task OnInitializedAsync()
     {
-        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
+        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
+        {
+            Page=1,
+        });
         accounts = response.Accounts;
-        totalaccounts = response.TotalAmount;
-        totalPages = (totalaccounts / 20) + 1;
-
-        Console.WriteLine(response.Accounts?[0].Firstname);
+        totalAccounts = response.TotalAmount;
+        totalPages = (int)Math.Ceiling(totalAccounts / amount * 1.0);
     }
 
     private async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 20;
-        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex());
+        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
+        {
+            Page=pageNr,
+            SearchTerm = SearchValue,
+            Roles = filterRoles
+        });
         accounts = response.Accounts;
         selectedPage = pageNr;
     }
@@ -46,9 +55,47 @@ public partial class Index
         toggleMaster = !toggleMaster;
     }
 
-    private void ResetFilter()
+    private async void ResetFilter()
     {
         SearchValue = "";
         toggleAdmin = toggleMaster = toggleObserver = false;
+        filterRoles = null;
+        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
+        {
+            Page = 1,
+            SearchTerm = SearchValue,
+            Roles = filterRoles
+        }); 
+        accounts = response.Accounts;
+        totalAccounts = response.TotalAmount;
+        totalPages = (int)Math.Ceiling(totalAccounts / amount * 1.0);
+        selectedPage = 1;
+        StateHasChanged();
+
+    }
+    private async void HandleFilter()
+    {
+        
+        if(toggleAdmin || toggleMaster || toggleObserver)
+        {
+            filterRoles = new List<string>();
+            if (toggleAdmin) filterRoles.Add(Role.Admin.ToString());
+            if (toggleMaster) filterRoles.Add(Role.Master.ToString());
+            if (toggleObserver) filterRoles.Add(Role.Observer.ToString());
+        }
+        
+
+        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
+        {
+            Page = 1,
+            SearchTerm = SearchValue,
+            Roles = filterRoles
+        });
+
+        accounts = response.Accounts;
+        totalAccounts = response.TotalAmount;
+        totalPages = (int)Math.Ceiling(totalAccounts / amount * 1.0);
+        selectedPage = 1;
+        StateHasChanged();
     }
 }

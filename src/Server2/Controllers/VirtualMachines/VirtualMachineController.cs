@@ -17,9 +17,8 @@ public class VirtualMachineController : ControllerBase
 
     [SwaggerOperation("Returns a list of virtual machines.")]
     [HttpGet]
-    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync()
+    public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync([FromQuery] VirtualMachineRequest.GetIndex request)
     {
-        VirtualMachineRequest.GetIndex request = new() { Offset = 50 };
         VirtualMachineResponse.GetIndex virtualMachineResponse = await virtualMachineService.GetIndexAsync(request);
         return virtualMachineResponse;
     }

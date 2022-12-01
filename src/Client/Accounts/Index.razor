@@ -11,10 +11,10 @@
         <Title Text="Filteropties" />
         <div style="display: flex; justify-content: space-between;">
             <Button Text="Reset" OnClick="() => ResetFilter()" />
-            <Button Text="Filteren" />
+            <Button Text="Filteren" OnClick="HandleFilter"/>
         </div>
 
-        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Text=SearchValue />
+        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Value=SearchValue />
 
         <div class="reset-area">
             <div class="filterbuttonarea">
@@ -28,18 +28,29 @@
     <div class="two-thirds">
         <Title Text="Alle accounts" />
         <div class="two-columns-container">
-            <div>
-                @foreach (var account in accounts.Take(10))
-                {
-                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
-                }
-            </div>
-            <div>
-                @foreach (var account in accounts.Skip(10).Take(10))
-                {
-                    <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
-                }
-            </div>
+            @if (accounts.Any())
+            {
+                <div>
+                    @foreach (var account in accounts.Take(10))
+                    {
+                        <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
+                    }
+                </div>
+                <div>
+                    @foreach (var account in accounts.Skip(10).Take(10))
+                    {
+                        <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <i class="fa-solid fa-circle-xmark fa-xl"></i>
+                    <p>Oei, er zijn geen beheerders met de ingegeven filters.</p>
+                </div>
+            }
+            
 
         </div>
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />

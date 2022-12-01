@@ -43,7 +43,7 @@ public class VirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines?{queryParameters}");
         return response!;
     }
 

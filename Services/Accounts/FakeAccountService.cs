@@ -93,10 +93,18 @@ public class FakeAccountService : IAccountService
     public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request) {
         AccountResponse.GetIndex response = new();
         var query = accounts.AsQueryable();
-
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        {
+            query = query.Where(x => x.Firstname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase)
+                                  || x.Lastname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+        if (request.Roles is not null)
+        {
+            query = query.Where(x => request.Roles.Contains(x.Role.ToString()));
+        }
         response.TotalAmount = query.Count();
 
-        query = query.Skip(request.Amount * request.Page);
+        query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 
         query.OrderBy(x => x.Email);

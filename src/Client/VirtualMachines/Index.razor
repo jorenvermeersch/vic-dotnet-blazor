@@ -18,9 +18,9 @@ else
             <Title Text="Filteropties" />
             <div style="display: flex; justify-content: space-between;">
                 <Button Text="Reset" OnClick="() => ResetFilter()" />
-                <Button Text="Filteren" />
+                <Button Text="Filteren" OnClick="HandleFilter"/>
             </div>
-            <Searchbar @bind-Text="@SearchValue" PlaceHolder="Geef een zoekterm in" />
+            <Searchbar @bind-Value="@SearchValue" PlaceHolder="Geef een zoekterm in" />
         </div>
         <div class="two-thirds">
             <Title Text="Alle virtuele machines" />

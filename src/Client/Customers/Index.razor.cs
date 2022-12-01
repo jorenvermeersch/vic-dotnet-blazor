@@ -38,7 +38,7 @@ public partial class Index
         SearchValue = "";
         CustomerRequest.GetIndex request = new()
         {
-            Offset = 0,
+            Page = 0,
             Amount = 20,
         };
         var response = await CustomerService.GetIndexAsync(request);
@@ -51,7 +51,7 @@ public partial class Index
     {
         CustomerRequest.GetIndex request = new()
         {
-            Offset = 0,
+            Page = 0,
             Amount = 20,
             SearchTerm = SearchValue,
         };
@@ -76,7 +76,7 @@ public partial class Index
     {
         CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
         {
-            Offset = offset
+           Page = 0
         });
         customers = response.Customers;
         totalCustomers = response.TotalAmount;
@@ -88,7 +88,8 @@ public partial class Index
         offset = (pageNr - 1) * 20;
         CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
         {
-            Offset = offset
+            Page = pageNr,
+            SearchTerm= SearchValue,
         });
         customers = response.Customers;
         selectedPage = pageNr;

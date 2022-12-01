@@ -10,18 +10,20 @@ public partial class Index
 
     private IEnumerable<HostDto.Index>? hosts;
 
-    private int offset, totalHosts, totalPages = 0;
+    private int offset, page, totalHosts, totalPages = 0;
+    private int amount = 20;
     private int selectedPage = 1;
 
     protected override async Task OnInitializedAsync()
     {
         HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
         {
-            Offset = offset,
+            Page = 1,
+            Amount = amount,
         });
         hosts = response.Hosts;
         totalHosts = response.TotalAmount;
-        totalPages = (totalHosts / 20) + 1;
+        totalPages = (int)Math.Ceiling(totalHosts / amount * 1.0);
     }
 
     private async Task ClickHandler(int pageNr)
@@ -29,14 +31,41 @@ public partial class Index
         offset = (pageNr - 1) * 20;
         HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
         {
-            Offset = offset,
+            Page = pageNr,
+            Amount = amount,
+            SearchTerm = SearchValue
         });
         hosts = response.Hosts;
         selectedPage = pageNr;
     }
 
-    private void ResetFilter()
+    private async void ResetFilter()
     {
         SearchValue = "";
+        HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
+        {
+            Page = 1,
+            Amount = amount,
+            SearchTerm = SearchValue
+        });
+        hosts = response.Hosts;
+        totalHosts = response.TotalAmount;
+        totalPages = (int)Math.Ceiling(totalHosts / amount * 1.0);
+        selectedPage = 1;
+        StateHasChanged();
+    }
+
+    private async void HandleFilter()
+    {
+        HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
+        {
+            Page=1,
+            Amount = amount,
+            SearchTerm = SearchValue
+        });
+        hosts = response.Hosts;
+        totalHosts = response.TotalAmount;
+        totalPages = (int)Math.Ceiling(totalHosts / amount*1.0); 
+        StateHasChanged();
     }
 }
