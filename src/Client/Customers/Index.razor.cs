@@ -12,10 +12,22 @@ public partial class Index
 
     //Alle Customers
     private IEnumerable<CustomerDto.Index>? customers;
-    private int offset = 0, totalCustomers = 0, totalPages = 0;
+    private int totalCustomers = 0, totalPages = 0;
     private int selectedPage = 1;
-    private string CustomerType = "";
     private bool toggleIntern, toggleExtern = false;
+    private readonly int amount = 20;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
+        {
+            Page = 1,
+            Amount= amount,
+        });
+        customers = response.Customers;
+        totalCustomers = response.TotalAmount;
+        totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
+    }
 
     private void FilterIntern()
     {
@@ -38,21 +50,22 @@ public partial class Index
         SearchValue = "";
         CustomerRequest.GetIndex request = new()
         {
-            Page = 0,
-            Amount = 20,
+            Page = 1,
+            Amount = amount,
         };
         var response = await CustomerService.GetIndexAsync(request);
         totalCustomers = response.TotalAmount;
         customers = response.Customers;
-        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
+        totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
+        selectedPage = 1;
         StateHasChanged();
     }
     private async void HandleFilter()
     {
         CustomerRequest.GetIndex request = new()
         {
-            Page = 0,
-            Amount = 20,
+            Page = 1,
+            Amount = amount,
             SearchTerm = SearchValue,
         };
 
@@ -68,27 +81,18 @@ public partial class Index
         var response = await CustomerService.GetIndexAsync(request);
         totalCustomers = response.TotalAmount;
         customers = response.Customers;
-        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
+        totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
+        selectedPage = 1;
         StateHasChanged();
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
-        {
-           Page = 0
-        });
-        customers = response.Customers;
-        totalCustomers = response.TotalAmount;
-        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
-    }
 
     private async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 20;
         CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
         {
             Page = pageNr,
+            Amount = amount,
             SearchTerm= SearchValue,
         });
         customers = response.Customers;

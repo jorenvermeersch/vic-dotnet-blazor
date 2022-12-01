@@ -152,7 +152,10 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             query = query.Where(x => x.Fqdn.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
-
+        if (request.IsUnfinished)
+        {
+            query = query.Where(x => x.Status == Status.InProgress || x.Status==Status.Requested);
+        }
         response.TotalAmount = query.Count();
 
         query = query.Skip((request.Page - 1) * request.Amount);

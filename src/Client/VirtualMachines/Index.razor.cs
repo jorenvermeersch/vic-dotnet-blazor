@@ -1,6 +1,7 @@
 using Azure;
 using Microsoft.AspNetCore.Components;
 using Shared.VirtualMachines;
+using System.Drawing.Printing;
 
 namespace Client.VirtualMachines;
 
@@ -11,11 +12,10 @@ public partial class Index
     public string? SearchValue { get; set; }
 
     private List<VirtualMachineDto.Index>? virtualMachines;
-    private int offset = 0;
     private int totalVirtualMachines = 0;
     private int totalPages;
     private int selectedPage = 1;
-    private int amount=20;
+    private readonly int amount=20;
     protected override async Task OnInitializedAsync()
     {
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
@@ -25,13 +25,12 @@ public partial class Index
         });
         virtualMachines = response.VirtualMachines;
         totalVirtualMachines = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalVirtualMachines / amount * 1.0);
+        totalPages = totalVirtualMachines / amount + (totalVirtualMachines % amount > 0 ? 1 : 0);
         selectedPage = 1;
     }
 
     private async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 20;
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
         {
             Page = pageNr,
@@ -53,7 +52,7 @@ public partial class Index
         });
         virtualMachines = response.VirtualMachines;
         totalVirtualMachines = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalVirtualMachines / amount * 1.0);
+        totalPages = totalVirtualMachines / amount + (totalVirtualMachines % amount > 0 ? 1 : 0);
         selectedPage = 1;
         StateHasChanged();
     }
@@ -68,7 +67,7 @@ public partial class Index
         });
         virtualMachines = response.VirtualMachines;
         totalVirtualMachines = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalVirtualMachines / amount * 1.0);
+        totalPages = totalVirtualMachines / amount + (totalVirtualMachines % amount > 0 ? 1 : 0);
         selectedPage = 1;
         StateHasChanged();
     }

@@ -11,23 +11,32 @@ public partial class Index
 
     string _startLabel = "24/10", _endLabel = "30/10";
     private List<VirtualMachineDto.Index> virtualMachines = new();
-    int offset = 0, totalVirtualMachines, totalPages = 0;
+    int totalVirtualMachines, totalPages = 0;
     int selectedPage = 1;
-
+    private readonly int amount = 10;
 
     protected override async Task OnInitializedAsync()
     {
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetUnfinishedAsync(new VirtualMachineRequest.GetIndex());
-        virtualMachines.AddRange(response.VirtualMachines);
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
+        {
+            Page=selectedPage,
+            IsUnfinished=true,
+            Amount=amount
+        });
+        virtualMachines =  response.VirtualMachines;
         totalVirtualMachines = response.TotalAmount;
-        totalPages = (totalVirtualMachines / 10) + 1;
+        totalPages = totalVirtualMachines / amount + (totalVirtualMachines % amount > 0 ? 1 : 0);
     }
 
     async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 10;
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetUnfinishedAsync(new VirtualMachineRequest.GetIndex());
-        virtualMachines.AddRange(response.VirtualMachines);
+        VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
+        {
+            Page=pageNr,
+            Amount = amount,
+            IsUnfinished=true
+        });
+        virtualMachines = response.VirtualMachines;
         selectedPage = pageNr;
     }
 }

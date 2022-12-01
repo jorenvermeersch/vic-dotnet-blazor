@@ -10,8 +10,8 @@ public partial class Index
 
     private IEnumerable<HostDto.Index>? hosts;
 
-    private int offset, page, totalHosts, totalPages = 0;
-    private int amount = 20;
+    private int totalHosts, totalPages = 0;
+    private readonly int amount = 20;
     private int selectedPage = 1;
 
     protected override async Task OnInitializedAsync()
@@ -23,12 +23,11 @@ public partial class Index
         });
         hosts = response.Hosts;
         totalHosts = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalHosts / amount * 1.0);
+        totalPages = totalHosts / amount + (totalHosts % amount > 0 ? 1 : 0);
     }
 
     private async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 20;
         HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
         {
             Page = pageNr,
@@ -50,7 +49,7 @@ public partial class Index
         });
         hosts = response.Hosts;
         totalHosts = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalHosts / amount * 1.0);
+        totalPages = totalHosts / amount + (totalHosts % amount > 0 ? 1 : 0);
         selectedPage = 1;
         StateHasChanged();
     }
@@ -65,7 +64,7 @@ public partial class Index
         });
         hosts = response.Hosts;
         totalHosts = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalHosts / amount*1.0); 
+        totalPages = totalHosts / amount + (totalHosts % amount > 0 ? 1 : 0);
         StateHasChanged();
     }
 }

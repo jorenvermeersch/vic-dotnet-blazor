@@ -22,10 +22,11 @@ public partial class Index
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
             Page=1,
+            Amount = amount,
         });
         accounts = response.Accounts;
         totalAccounts = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalAccounts / amount * 1.0);
+        totalPages = totalAccounts / amount + (totalAccounts % amount > 0 ? 1 : 0);
     }
 
     private async Task ClickHandler(int pageNr)
@@ -33,6 +34,7 @@ public partial class Index
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
             Page=pageNr,
+            Amount = amount,
             SearchTerm = SearchValue,
             Roles = filterRoles
         });
@@ -63,12 +65,13 @@ public partial class Index
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
             Page = 1,
+            Amount = amount,
             SearchTerm = SearchValue,
             Roles = filterRoles
         }); 
         accounts = response.Accounts;
         totalAccounts = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalAccounts / amount * 1.0);
+        totalPages = totalAccounts / amount + (totalAccounts % amount > 0 ? 1 : 0);
         selectedPage = 1;
         StateHasChanged();
 
@@ -88,13 +91,14 @@ public partial class Index
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
             Page = 1,
+            Amount= amount,
             SearchTerm = SearchValue,
             Roles = filterRoles
         });
 
         accounts = response.Accounts;
         totalAccounts = response.TotalAmount;
-        totalPages = (int)Math.Ceiling(totalAccounts / amount * 1.0);
+        totalPages = totalAccounts / amount + (totalAccounts % amount > 0 ? 1 : 0);
         selectedPage = 1;
         StateHasChanged();
     }

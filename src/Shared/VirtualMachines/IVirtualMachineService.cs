@@ -8,6 +8,5 @@ public interface IVirtualMachineService
     Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request);
     Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request);
     Task DeleteAsync(VirtualMachineRequest.Delete request);
-    Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request);
 
 }
