@@ -1,5 +1,6 @@
 ﻿using Client.Extensions;
 using Shared.Accounts;
+using Shared.Customers;
 using Shared.Hosts;
 using System.Diagnostics.Metrics;
 using System.Net.Http.Json;
@@ -39,9 +40,10 @@ public class AccountService : IAccountService
         return response!;
     }
 
-    public Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
+    public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
     {
-        throw new NotImplementedException();
+        var response = await client.PostAsJsonAsync(endpoint, request);
+        return await response.Content.ReadFromJsonAsync<AccountResponse.Create>();
     }
 
     public Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)

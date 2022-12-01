@@ -5,7 +5,6 @@
 <PageTitle>Account Toevoegen</PageTitle>
 
 <EditForm Model="@Account" OnValidSubmit="@HandleValidSubmit">
-    @*<FluentValidationValidator TValidator="AccountValidation"/>*@
     <FluentValidationValidator/>
     <div class="context-menu">
         <span class="context-menu-label">
@@ -19,12 +18,6 @@
             <AddInput Type="@Input.InputType.SELECT" Label="Rol" Required="@true" Items="@roles" @bind-Value="Account.Role" For="@(()=>Account.Role)"/>
             <AddInput Type="@Input.InputType.TEXT" Label="Departement" Required="@true" @bind-Value="Account.Department" For="@(() => Account.Department)" />
             <AddInput Type="@Input.InputType.TEXT" Label="Opleiding" Required="@false" @bind-Value="Account.Education" For="@(() => Account.Education)" />
-                @*<div class="input-container">
-                    <label>
-                    Actief:
-                    </label>
-                <InputCheckbox @bind-Value="@Account.IsActive" style="width: 18px; height: 18px; position: relative; left: -318px;" />
-                </div>*@
             <CustomCheckbox Label="Actief" @bind-Value="@Account.IsActive" />
         </div>
         <div class="one-third">

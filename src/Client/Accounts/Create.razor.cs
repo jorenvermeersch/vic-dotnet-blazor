@@ -8,7 +8,6 @@ namespace Client.Accounts;
 
 public partial class Create
 {
-    //Model
     private AccountDto.Mutate Account { get; set; } = new();
 
     [Inject] public IAccountService? AccountService { get; set; }
@@ -24,10 +23,12 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        AccountResponse.Create response = await AccountService!.CreateAsync(new AccountRequest.Create
+        Console.WriteLine(Account.Firstname);
+        AccountRequest.Create request = new()
         {
-            Account = Account,
-        });
+            Account = Account
+        };
+        AccountResponse.Create response = await AccountService!.CreateAsync(request);
         Navigation?.NavigateTo("account/" + response.AccountId);
     }
 }

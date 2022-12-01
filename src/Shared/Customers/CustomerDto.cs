@@ -53,10 +53,11 @@ public static class CustomerDto
                     .NotEmpty().When(customer => customer.CustomerType == "Intern").WithMessage(FormMessages.NOTEMPTY("Departement"));
                 RuleFor(x => x.Institution)
                     .NotEmpty().When(customer => customer.CustomerType == "Intern").WithMessage(FormMessages.NOTEMPTY("Institutie"));
+                
                 RuleFor(x => x.ContactPerson)
                     .NotEmpty().SetValidator(new ContactPersonDto.Validator());
-
-                RuleFor(x => x.BackupContactPerson).NotEmpty().SetValidator(new ContactPersonDto.Validator()).When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
+                RuleFor(x => x.BackupContactPerson)
+                    .NotEmpty().SetValidator(new ContactPersonDto.Validator()).When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
             }
         }
     }
