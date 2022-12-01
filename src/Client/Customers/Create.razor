@@ -1,6 +1,5 @@
 ﻿@page "/customer/add"
 @page "/customer/{id:long}/edit"
-@using Client.Validation
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master, Administrator")]
 
@@ -8,7 +7,7 @@
 
 
  <EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit">
-     @*<FluentValidationValidator TValidator="CustomerValidator"></FluentValidationValidator>*@
+     <FluentValidationValidator/>
     <div class="context-menu">
         <span class="context-menu-label">
             <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />

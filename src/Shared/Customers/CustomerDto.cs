@@ -1,4 +1,6 @@
 ﻿using Domain.Constants;
+using FluentValidation;
+using Shared.Validation;
 using Shared.VirtualMachines;
 
 namespace Shared.Customers;
@@ -36,5 +38,26 @@ public static class CustomerDto
         public string? CompanyName { get; set; }
         public ContactPersonDto ContactPerson { get; set; } = new();
         public ContactPersonDto? BackupContactPerson { get; set; } = new();
+
+        public class Validator : AbstractValidator<Mutate>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.CustomerType)
+                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Type klant"));
+                RuleFor(x => x.CompanyName)
+                    .NotEmpty().When(customer => customer.CustomerType == "Extern").WithMessage(FormMessages.NOTEMPTY("Naam"));
+                RuleFor(x => x.CompanyType)
+                    .NotEmpty().When(customer => customer.CustomerType == "Extern").WithMessage(FormMessages.NOTEMPTY("Type extern"));
+                RuleFor(x => x.Department)
+                    .NotEmpty().When(customer => customer.CustomerType == "Intern").WithMessage(FormMessages.NOTEMPTY("Departement"));
+                RuleFor(x => x.Institution)
+                    .NotEmpty().When(customer => customer.CustomerType == "Intern").WithMessage(FormMessages.NOTEMPTY("Institutie"));
+                RuleFor(x => x.ContactPerson)
+                    .NotEmpty().SetValidator(new ContactPersonDto.Validator());
+
+                RuleFor(x => x.BackupContactPerson).NotEmpty().SetValidator(new ContactPersonDto.Validator()).When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
+            }
+        }
     }
 }
