@@ -2,6 +2,7 @@ using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
@@ -40,7 +41,8 @@ public partial class Create
     public List<string> Modes { get; set; } = Enum.GetNames(typeof(Mode)).ToList();
     public List<string> Templates { get; set; } = Enum.GetNames(typeof(Template)).ToList();
     public List<string> Statuses { get; set; } = Enum.GetNames(typeof(Status)).ToList();
-    private List<string>? Hosts { get; set; }
+    //private List<string>? Hosts { get; set; }
+    private List<HostDto.Index>? Hosts { get; set; }
 
     private List<string>? Customers { get; set; }
 
@@ -54,6 +56,8 @@ public partial class Create
     private string Host { get; set; }
 
     private string Account { get; set; }
+
+    private Dictionary<string, string> hosts = null;
 
     protected override void OnInitialized()
     {
@@ -85,8 +89,15 @@ public partial class Create
         {
             Offset = 0
         });
-        IEnumerable<HostDto.Index> hostIndexes = hostResponse.Hosts ?? new List<HostDto.Index>();
-        Hosts = hostIndexes.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
+        Hosts = hostResponse.Hosts;
+
+        //Hosts.ForEach(x => Console.WriteLine(x.Name.ToString()));
+        //hosts = Hosts.ToDictionary(x => x.Name, x => JsonConvert.SerializeObject(x));
+
+        //Console.WriteLine(hosts);
+
+        //IEnumerable<HostDto.Index> hostIndexes = hostResponse.Hosts ?? new List<HostDto.Index>();
+        //Hosts = hostIndexes.Select(h => string.Concat(h.Id, " - ", h.Name)).ToList();
 
 
 
@@ -105,10 +116,29 @@ public partial class Create
         IEnumerable<AccountDto.Index> accountIndexes = accountResponse.Accounts ?? new List<AccountDto.Index>();
         Accounts = accountIndexes.Select(c => string.Concat(c.Id, " - ", c.Firstname, " ", c.Lastname, " - ", c.Role)).ToList();
 
-        PortResponse.GetAll portsResponse = await PortService.GetAllAsync(new PortRequest.GetAll());
-        availablePorts = portsResponse.Ports ?? new List<PortDto>();
-        PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
+        //PortResponse.GetAll portsResponse = await PortService.GetAllAsync(new PortRequest.GetAll());
+        //availablePorts = portsResponse.Ports ?? new List<PortDto>();
+        //PortOptions = availablePorts.Select(p => string.Concat(p.Number + " - " + p.Service)).ToList();
     }
+
+
+    private Dictionary<string, string> MakeStatusItems() => Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => x.ToString(), x => x.ToString());
+    private void SetStatusValue(string value) => VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), value);
+
+    private Dictionary<string, string> MakeModeItems() => Enum.GetValues(typeof(Mode)).Cast<Mode>().ToDictionary(x => x.ToString(), x => x.ToString());
+    private void SetModeValue(string value) => VirtualMachine.Mode = (Mode)Enum.Parse(typeof(Mode), value);
+
+    private Dictionary<string, string> MakeTemplateItems() => Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => x.ToString(), x => x.ToString());
+    private void SetTemplateValue(string value) => VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), value);
+    private Dictionary<string, string> MakeBackUpFrequencyItems() => Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => x.ToString(), x => x.ToString());
+    private void SetBackUpFrequencyValue(string value) => VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), value);
+    private Dictionary<string, string> MakeHostItems() => Hosts.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
+    private void SetHostValue(string value)
+    {
+        VirtualMachine.Host = JsonConvert.DeserializeObject<HostDto.Index>(value);
+    }
+
+
 
     private void ClickHandler(int id)
     {

@@ -35,15 +35,39 @@ public static class VirtualMachineDto
         public bool hasVpnConnection { get; set; }
     }
 
+    //public class Mutate
+    //{
+    //    public string Fqdn { get; set; } = default!;
+    //    public string Name { get; set; } = default!;
+    //    public string Mode { get; set; } = default!;
+    //    public string Template { get; set; } = default!;
+    //    public string Reason { get; set; } = default!;
+    //    public string Status { get; set; } = default!;
+    //    public long hostId { get; set; }
+    //    public SpecificationsDto Specifications { get; set; } = new();
+    //    public long RequesterId { get; set; }
+    //    public long UserId { get; set; }
+    //    public long AdministratorId { get; set; }
+    //    public DateTime ApplicationDate { get; set; } = DateTime.Now;
+    //    public DateTime StartDate { get; set; } = DateTime.Now;
+    //    public DateTime EndDate { get; set; } = DateTime.Now;
+    //    public string BackupFrequency { get; set; } = default!;
+    //    public List<CredentialsDto> Credentials { get; set; } = default!;
+    //    public List<int> Ports { get; set; } = default!;
+    //    public List<Availability> Availabilities = default!;
+    //    public bool hasVpnConnection { get; set; }
+    //}
+
     public class Mutate
     {
         public string Fqdn { get; set; } = default!;
         public string Name { get; set; } = default!;
-        public string Mode { get; set; } = default!;
-        public string Template { get; set; } = default!;
+        public Mode Mode { get; set; } = default!;
+        public Template Template { get; set; } = default!;
         public string Reason { get; set; } = default!;
-        public string Status { get; set; } = default!;
-        public long hostId { get; set; }
+        public Status Status { get; set; } = default!;
+        //public long hostId { get; set; }
+        public HostDto.Index Host { get; set; } = default!;
         public SpecificationsDto Specifications { get; set; } = new();
         public long RequesterId { get; set; }
         public long UserId { get; set; }
@@ -51,7 +75,7 @@ public static class VirtualMachineDto
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
-        public string BackupFrequency { get; set; } = default!;
+        public BackupFrequency BackupFrequency { get; set; } = default!;
         public List<CredentialsDto> Credentials { get; set; } = default!;
         public List<int> Ports { get; set; } = default!;
         public List<Availability> Availabilities = default!;

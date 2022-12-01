@@ -171,6 +171,16 @@ select {
         border-radius: var( --border-radius);
     }
 
+    .input-container .dropdown {
+        font-family: var(--font-stack);
+        height: var(--card-height);
+        border: none;
+        outline: none;
+        padding: 0px;
+        background-color: var(--light-gray);
+        border-radius: var( --border-radius);
+    }
+
         .input-container .input::placeholder {
             color: var(--dark-gray);
         }
@@ -193,6 +203,11 @@ select {
         }
 
         .input-container .input {
+            width: 0px;
+            flex-grow: 2;
+        }
+
+        .input-container .dropdown {
             width: 0px;
             flex-grow: 2;
         }

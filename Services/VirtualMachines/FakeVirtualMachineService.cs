@@ -38,14 +38,14 @@ public class FakeVirtualMachineService : IVirtualMachineService
     {
         var args = new VirtualMachineArgs
         {
-            Template = (Template)Enum.Parse(typeof(Template), model.Template),
-            Mode = (Mode)Enum.Parse(typeof(Mode), model.Mode),
+            Template = /*(Template)Enum.Parse(typeof(Template), model.Template)*/ model.Template,
+            Mode = /*(Mode)Enum.Parse(typeof(Mode), model.Mode)*/ model.Mode,
             Fqdn = model.Fqdn,
             Availabilities = model.Availabilities,
-            BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), model.BackupFrequency),
+            BackupFrequency = /*(BackupFrequency)Enum.Parse(typeof(BackupFrequency), model.BackupFrequency)*/ model.BackupFrequency,
             ApplicationDate = model.ApplicationDate,
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
-            Status = (Status)Enum.Parse(typeof(Status), model.Status),
+            Status = /*(Status)Enum.Parse(typeof(Status), model.Status)*/ model.Status,
             Reason = model.Reason,
             Ports = model.Ports.Select(x => new Port(x, x.ToString())).ToList(),
             Host = null,

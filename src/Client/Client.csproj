@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\CustomDropDown.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\CustomDropDown.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\css\variables.css" />
   </ItemGroup>
