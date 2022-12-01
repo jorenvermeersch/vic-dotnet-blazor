@@ -70,6 +70,15 @@ namespace Client.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        public static string Administrator {
+            get {
+                return ResourceManager.GetString("Administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Artificiële intelligentie.
         /// </summary>
         public static string AI {
@@ -228,6 +237,15 @@ namespace Client.Shared.Resources {
         public static string Tuesday {
             get {
                 return ResourceManager.GetString("Tuesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Observer.
+        /// </summary>
+        public static string Waarnemer {
+            get {
+                return ResourceManager.GetString("Waarnemer", resourceCulture);
             }
         }
         

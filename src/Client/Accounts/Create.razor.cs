@@ -23,7 +23,8 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        Console.WriteLine(Account.Firstname);
+        Console.WriteLine(Account.Role);
+        Account.Role = localizer[Account.Role];
         AccountRequest.Create request = new()
         {
             Account = Account

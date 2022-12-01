@@ -120,6 +120,9 @@
   <data name="Admin" xml:space="preserve">
     <value>Administrator</value>
   </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Admin</value>
+  </data>
   <data name="AI" xml:space="preserve">
     <value>Artificiële intelligentie</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Dinsdag</value>
+  </data>
+  <data name="Waarnemer" xml:space="preserve">
+    <value>Observer</value>
   </data>
   <data name="WebServer" xml:space="preserve">
     <value>Web Server</value>
