@@ -42,6 +42,7 @@ public partial class Index
         });
         hosts = response.Hosts;
         selectedPage = pageNr;
+
         Dictionary<string, object> parameters = new()
         {
             {nameof(Page), Page }

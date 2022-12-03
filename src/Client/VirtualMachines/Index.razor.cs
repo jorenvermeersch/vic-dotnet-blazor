@@ -33,6 +33,7 @@ public partial class Index
 
     private async Task ClickHandler(int pageNr)
     {
+        Page= pageNr;
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
         {
             Page = pageNr,
