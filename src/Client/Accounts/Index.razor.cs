@@ -9,7 +9,10 @@ public partial class Index
 {
     [Inject] public IAccountService? AccountService { get; set; }
 
-    public string? SearchValue { get; set; }
+    [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
+    [Parameter, SupplyParameterFromQuery] public int Page { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
+
     private List<AccountDto.Index>? accounts;
     private int offset, totalAccounts, totalPages = 0;
     private int selectedPage = 1;
@@ -17,12 +20,13 @@ public partial class Index
     private bool toggleAdmin, toggleObserver, toggleMaster;
     private List<string> filterRoles;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
             Page=1,
             Amount = amount,
+            SearchTerm = SearchValue,
         });
         accounts = response.Accounts;
         totalAccounts = response.TotalAmount;

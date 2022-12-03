@@ -1,7 +1,7 @@
 ﻿
 <div class="search-container">
     <i class="fa-solid fa-magnifying-glass"></i>
-    <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" @oninput="OnValueChanged" />
+    <input class="input" type="text" style="@customCss" placeholder="@PlaceHolder" @onchange="OnSearchtermChanged" value="@_searchterm"/>
 </div>
 
 
@@ -9,12 +9,18 @@
     [Parameter] public string PlaceHolder { get; set; } = "";
     [Parameter] public string customCss { get; set; } = "";
     [Parameter]
-    public EventCallback<string> ValueChanged { get; set; }
-    [Parameter]
-    public string Value { get; set; }
-    private Task OnValueChanged(ChangeEventArgs e)
+    public EventCallback<string> SearchtermChanged { get; set; }
+    [Parameter] public string Searchterm { get; set; }
+    private string _searchterm;
+
+    protected override void OnParametersSet()
     {
-        Value = e.Value.ToString();
-        return ValueChanged.InvokeAsync(Value);
+        _searchterm = Searchterm;
+    }
+    private Task OnSearchtermChanged(ChangeEventArgs args)
+    {
+        Searchterm = args.Value.ToString();
+        //StateHasChanged();
+        return SearchtermChanged.InvokeAsync(Searchterm);
     }
 }

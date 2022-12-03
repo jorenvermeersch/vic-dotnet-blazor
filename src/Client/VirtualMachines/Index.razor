@@ -20,7 +20,7 @@ else
                 <Button Text="Reset" OnClick="() => ResetFilter()" />
                 <Button Text="Filteren" OnClick="HandleFilter"/>
             </div>
-            <Searchbar @bind-Value="@SearchValue" PlaceHolder="Geef een zoekterm in" />
+            <Searchbar @bind-Searchterm="@SearchValue" PlaceHolder="Geef een zoekterm in" />
         </div>
         <div class="two-thirds">
             <Title Text="Alle virtuele machines" />

@@ -62,7 +62,7 @@ public class FakeInitializerService : IFakeInitializerService
         };
         FakeVirtualMachines = vmFaker.UseSeed(seed).Generate(30);
 
-        FakeHosts = new HostFaker(FakeHostSpecifications, FakeVirtualMachines).UseSeed(seed).Generate(20);
+        FakeHosts = new HostFaker(FakeHostSpecifications, FakeVirtualMachines).UseSeed(seed).Generate(25);
 
         FakeHostsVirtualMachines = new HostFaker(FakeHostSpecifications, new List<VirtualMachine>()).UseSeed(seed).Generate(20);
 
