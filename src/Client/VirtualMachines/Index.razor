@@ -2,29 +2,26 @@
 @attribute [Authorize]
 
 
-@if (@virtualMachines == null || @virtualMachines.Count() == 0)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <div class="context-menu">
-        <Label Text="Toevoegen" />
-        <Button Href="/virtual-machine/add" Text="Virtuele machine" />
-        <Button Href="/host/add" Text="Host" />
-    </div>
-    <div class="three-column-layout">
-        <div class="one-third">
-            <Title Text="Filteropties" />
-            <div style="display: flex; justify-content: space-between;">
-                <Button Text="Reset" OnClick="() => ResetFilter()" />
-                <Button Text="Filteren" OnClick="HandleFilter"/>
-            </div>
-            <Searchbar @bind-Searchterm="@SearchValue" PlaceHolder="Geef een zoekterm in" />
+<div class="context-menu">
+    <Label Text="Toevoegen" />
+    <Button Href="/virtual-machine/add" Text="Virtuele machine" />
+    <Button Href="/host/add" Text="Host" />
+</div>
+<div class="three-column-layout">
+    <div class="one-third">
+        <Title Text="Filteropties" />
+        <div style="display: flex; justify-content: space-between;">
+            <Button Text="Reset" OnClick="() => ResetFilter()" />
+            <Button Text="Filteren" OnClick="HandleFilter" />
         </div>
-        <div class="two-thirds">
-            <Title Text="Alle virtuele machines" />
-            <div class="two-columns-container">
+        <Searchbar @bind-Searchterm="@SearchValue" PlaceHolder="Geef een zoekterm in" />
+    </div>
+    <div class="two-thirds">
+        <Title Text="Alle virtuele machines" />
+        
+            @if (virtualMachines.Any())
+            {
+                <div class="two-columns-container">
                 <div>
                     @foreach (var vm in virtualMachines.Take(10))
                     {
@@ -37,12 +34,17 @@ else
                         <EntityCard Value="@vm.Fqdn" Active=@(vm.Status == Status.InProgress || vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
                     }
                 </div>
-
             </div>
-            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-        </div>
+            }
+            else
+            {
+                <NoResultsMsg Message="Oei, er zijn geen virtuele machines met de gegeven zoekcriteria." />
+            }
+
+        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
     </div>
-}
+</div>
+
 
 
 

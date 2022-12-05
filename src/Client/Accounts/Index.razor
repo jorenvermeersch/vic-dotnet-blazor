@@ -27,9 +27,10 @@
     </div>
     <div class="two-thirds">
         <Title Text="Alle accounts" />
-        <div class="two-columns-container">
+        
             @if (accounts.Any())
             {
+            <div class="two-columns-container">
                 <div>
                     @foreach (var account in accounts.Take(10))
                     {
@@ -42,19 +43,14 @@
                         <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
                     }
                 </div>
+            </div>
             }
             else
             {
-                <div>
-                    <i class="fa-solid fa-circle-xmark fa-xl"></i>
-                    <p>Oei, er zijn geen beheerders met de ingegeven filters.</p>
-                </div>
+                <NoResultsMsg Message="Oei, er zijn geen beheerders met de gegeven zoekcriteria."/>
             }
-            
 
-        </div>
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-
     </div>
 </div>
 
