@@ -14,13 +14,13 @@ public partial class Create
 
     [Inject] public IAccountService AccountService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
-    [Inject] public IStringLocalizer<Shared.Resources.Resource> localizer { get; set; } = default!;
+    [Inject] public IStringLocalizer<Shared.Resources.Resource> Localizer { get; set; } = default!;
 
 
     private List<string> roles = Enum.GetNames(typeof(Role)).ToList();
     protected override void OnInitialized()
     {
-        for (int i = 0; i < roles.Count; i++) roles[i] = localizer![roles[i]];
+        for (int i = 0; i < roles.Count; i++) roles[i] = Localizer[roles[i]];
     }
     protected override async Task OnParametersSetAsync()
     {
@@ -38,15 +38,14 @@ public partial class Create
                 Education = response.Account.Education,
                 Email = response.Account.Email,
                 IsActive = response.Account.IsActive,
-                Password = "******",
-                Role = localizer[response.Account.Role.ToString()]
+                Role = Localizer[response.Account.Role.ToString()]
             };
         }
     }
 
     private async void HandleValidSubmit()
     {
-        Account.Role = localizer[Account.Role];
+        Account.Role = Localizer[Account.Role];
         if (Convert.ToBoolean(Id))
         {
             AccountRequest.Edit request = new()

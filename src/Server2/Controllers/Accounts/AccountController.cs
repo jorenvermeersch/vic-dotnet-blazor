@@ -39,7 +39,7 @@ public class AccountController : ControllerBase {
     public async Task<IActionResult> EditAsync( AccountRequest.Edit request)
     {
         AccountResponse.Edit response = await accountService.EditAsync(request);
-        return Accepted(nameof(EditAsync), response.AccountId);
+        return Accepted(nameof(EditAsync), response);
     }
 
     [SwaggerOperation("Deletes accounts.")]
