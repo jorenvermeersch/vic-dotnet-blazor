@@ -104,6 +104,11 @@ public class FakeHostService : IHostService
     {
         var query = hosts.AsQueryable();
 
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        {
+            query = query.Where(x => x.Name.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+
         int totalAmount = query.Count();
 
         var items = query

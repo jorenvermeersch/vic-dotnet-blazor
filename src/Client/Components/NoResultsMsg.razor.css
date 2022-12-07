@@ -1,4 +1,4 @@
-﻿.no-vm {
+﻿.no-result {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,6 +12,6 @@
     gap: 24px;
     font-size: 0.875rem
 }
-    .no-vm i {
+    .no-result i {
         color: #3c6999;
     }

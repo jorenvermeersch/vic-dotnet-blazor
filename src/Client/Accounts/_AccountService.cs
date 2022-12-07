@@ -1,6 +1,7 @@
 ﻿using Client.Extensions;
 using Shared.Accounts;
 using Shared.Hosts;
+using System.Diagnostics.Metrics;
 using System.Net.Http.Json;
 
 namespace Client.Accounts;
@@ -16,8 +17,18 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
     {
-        var queryParameters = request.GetQueryString();
-        var response = await client.GetFromJsonAsync<AccountResponse.GetIndex>("api/accounts");
+        //var queryParameters = request.GetQueryString();
+        //objectextentions ondersteunt geen list
+        string queryParameters = string.Format("page={0}&amount={1}", request.Page, request.Amount);
+        if (!string.IsNullOrEmpty(request.SearchTerm)){
+            queryParameters += "&searchterm=" + request.SearchTerm;
+        }
+        if(request.Roles!= null)
+        {
+            queryParameters +=  "&roles=" + string.Join("&roles=", request.Roles);
+        }
+        Console.WriteLine(queryParameters);
+        var response = await client.GetFromJsonAsync<AccountResponse.GetIndex>($"api/accounts?{queryParameters}");
         return response!;
     }
 

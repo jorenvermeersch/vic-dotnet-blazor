@@ -1,4 +1,4 @@
-@if(Type == "Intern"){
+@*@if(Type == "Intern"){
     <div class="no-vm" style="height:128px">
         <i class="fa-solid fa-circle-xmark fa-xl"></i>
         <p>Deze klant heeft nog geen virtuele machines</p>
@@ -13,9 +13,15 @@
         <i class="fa-solid fa-circle-xmark fa-xl"></i>
         <p>Deze @Type heeft nog geen virtuele machines</p>
     </div>
-}
+}*@
+<div>
+    <div class="no-result" style="height:102px">
+        <i class="fa-solid fa-circle-xmark fa-xl"></i>
+        <p>@Message</p>
+    </div>
+</div>
 
 
 @code{
-    [Parameter] public string Type { get; set; }
+    [Parameter] public string Message { get; set; }
 }

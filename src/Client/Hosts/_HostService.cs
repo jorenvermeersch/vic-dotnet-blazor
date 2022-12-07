@@ -37,7 +37,7 @@ public class HostService : IHostService
     public async Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await client.GetFromJsonAsync<HostResponse.GetIndex>("api/hosts");
+        var response = await client.GetFromJsonAsync<HostResponse.GetIndex>($"api/hosts?{queryParameters}");
         return response!;
     }
 }

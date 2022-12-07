@@ -34,25 +34,13 @@ public class VirtualMachineService : IVirtualMachineService
         return response!;
     }
 
-    public Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request)
-    {
-        throw new NotImplementedException();
-    }
-
 
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         var queryParameters = request.GetQueryString();
-        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetIndex>("api/virtual-machines");
+        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines?{queryParameters}");
         return response!;
     }
-
-    //public async Task<VirtualMachineResponse.GetIndex> GetAllUnfinishedVirtualMachines(VirtualMachineRequest.GetIndex request)
-    //{
-    //    var queryParameters = request.GetQueryString();
-    //    var response = await authenticatedClient.GetFromJsonAsync<VirtualMachineResponse.GetIndex>($"api/virtual-machines");
-    //    return response;
-    //}
 
     //public async Task<VirtualMachineResponse.GetIndex> GetVirtualMachinesByAccountId(VirtualMachineRequest.GetByObjectId request)
     //{

@@ -12,26 +12,36 @@
 
         <div style="display: flex; justify-content: space-between;">
             <Button Text="Reset" OnClick="() => ResetFilter()" />
-            <Button Text="Filteren" />
+            <Button Text="Filteren" OnClick="HandleFilter" />
         </div>
-        <Searchbar @bind-Text="@SearchValue" PlaceHolder="Geef een zoekterm in" />
+        <Searchbar @bind-Searchterm="@SearchValue" PlaceHolder="Geef een zoekterm in" />
     </div>
     <div class="two-thirds">
         <Title Text="Alle Hosts" />
-        <div class="two-columns-container">
-            <div>
-            @foreach (var host in hosts.Take(10))
+        
+            @if (hosts.Any())
             {
-                <EntityCard Value="@host.Name" Active="@true" Href=@string.Concat("host/", host.Id)></EntityCard>
+            <div class="two-columns-container">
+                <div>
+                    @foreach (var host in hosts.Take(10))
+                    {
+                        <EntityCard Value="@host.Name" Active="@true" Href=@string.Concat("host/", host.Id)></EntityCard>
+                    }
+                </div>
+                <div>
+                    @foreach (var host in hosts.Skip(10).Take(10))
+                    {
+                        <EntityCard Value="@host.Name" Active="@true" Href=@string.Concat("host/", host.Id)></EntityCard>
+                    }
+                </div>
+            </div>
             }
-            </div>
-            <div>
-                @foreach (var host in hosts.Skip(10).Take(10))
-                {
-                    <EntityCard Value="@host.Name" Active="@true" Href=@string.Concat("host/", host.Id)></EntityCard>
-                }
-            </div>
-        </div>
+            else
+            {
+                <NoResultsMsg Message="Oei, er zijn geen servers met de gegevens zoekcriteria."/>
+            }
+           
+        
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
      </div>
         

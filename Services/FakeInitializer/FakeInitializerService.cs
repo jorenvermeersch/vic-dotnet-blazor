@@ -44,11 +44,11 @@ public class FakeInitializerService : IFakeInitializerService
         FakeSpecifications = new SpecificationsFaker().UseSeed(seed).Generate(20);
         FakeTimeSpans = new TimeSpanFaker().UseSeed(seed).Generate(20);
         FakeCredentials = new CredentialFaker().UseSeed(seed).Generate(20);
-        FakeContactPersons = new ContactPersonFaker().UseSeed(seed).Generate(20);
-        FakeCustomers.AddRange(new CustomerFaker.InternalCustomerFaker(FakeContactPersons).UseSeed(seed).Generate(20));
+        FakeContactPersons = new ContactPersonFaker().UseSeed(seed).Generate(60);
+        FakeCustomers.AddRange(new CustomerFaker.InternalCustomerFaker(FakeContactPersons).UseSeed(seed).Generate(25));
         FakeCustomers.AddRange(new CustomerFaker.ExternalCustomerFaker(FakeContactPersons).UseSeed(seed).Generate(20));
-        FakeAccounts = new AccountFaker().UseSeed(seed).Generate(20);
-        FakeProcessors = new ProcessorFaker().UseSeed(seed).Generate(20);
+        FakeAccounts = new AccountFaker().UseSeed(seed).Generate(25);
+        FakeProcessors = new ProcessorFaker().UseSeed(seed).Generate(25);
         FakeHostSpecifications = new HostSpecificationsFaker().UseSeed(seed).Generate(20);
 
         VirtualMachineFaker vmFaker = new VirtualMachineFaker()
@@ -60,9 +60,9 @@ public class FakeInitializerService : IFakeInitializerService
             TimeSpans = FakeTimeSpans,
             Hosts = FakeHosts,
         };
-        FakeVirtualMachines = vmFaker.UseSeed(seed).Generate(20);
+        FakeVirtualMachines = vmFaker.UseSeed(seed).Generate(30);
 
-        FakeHosts = new HostFaker(FakeHostSpecifications, FakeVirtualMachines).UseSeed(seed).Generate(20);
+        FakeHosts = new HostFaker(FakeHostSpecifications, FakeVirtualMachines).UseSeed(seed).Generate(25);
 
         FakeHostsVirtualMachines = new HostFaker(FakeHostSpecifications, new List<VirtualMachine>()).UseSeed(seed).Generate(20);
 

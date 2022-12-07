@@ -150,28 +150,15 @@ public class FakeVirtualMachineService : IVirtualMachineService
         VirtualMachineResponse.GetIndex response = new();
         var query = machines.AsQueryable();
 
-        #region Filteroptions not being used
-
-        //if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-        //    query = query.Where(x => x.Name.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
-
-        //if (!string.IsNullOrWhiteSpace(request.Category))
-        //    query = query.Where(x => x.Category.Name.Equals(request.Category, StringComparison.OrdinalIgnoreCase));
-
-        //if (request.MinimumPrice is not null)
-        //    query = query.Where(x => x.Price.Value >= request.MinimumPrice);
-
-        //if (request.MaximumPrice is not null)
-        //    query = query.Where(x => x.Price.Value <= request.MaximumPrice);
-
-        //if (request.OnlyActiveProducts)
-        //    query = query.Where(x => x.IsEnabled);
-
-        #endregion
-
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+            query = query.Where(x => x.Fqdn.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
+        if (request.IsUnfinished)
+        {
+            query = query.Where(x => x.Status == Status.InProgress || x.Status==Status.Requested);
+        }
         response.TotalAmount = query.Count();
 
-        query = query.Skip(request.Amount * request.Page);
+        query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 
         query.OrderBy(x => x.Name);

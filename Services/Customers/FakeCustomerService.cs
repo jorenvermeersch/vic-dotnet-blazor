@@ -202,7 +202,7 @@ public class FakeCustomerService : ICustomerService
 
         response.TotalAmount = query.Count();
 
-        response.Customers = query.OrderBy(x => x.Id).Skip(request.Offset).Take(request.Amount).Select(x => new CustomerDto.Index
+        response.Customers = query.OrderBy(x => x.Id).Skip((request.Page - 1) * request.Amount).Take(request.Amount).Select(x => new CustomerDto.Index
         {
             Id = x.Id,
             Name = String.Format("{0} {1}", x.ContactPerson.Firstname, x.ContactPerson.Lastname),

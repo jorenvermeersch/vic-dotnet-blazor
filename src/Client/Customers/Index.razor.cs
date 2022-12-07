@@ -7,15 +7,32 @@ namespace Client.Customers;
 public partial class Index
 {
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
+    [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
+    [Parameter, SupplyParameterFromQuery] public string? Type { get; set; }
+    [Parameter, SupplyParameterFromQuery] public int Page { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
-    public string SearchValue { get; set; } = "";
-
-    //Alle Customers
     private IEnumerable<CustomerDto.Index>? customers;
-    private int offset = 0, totalCustomers = 0, totalPages = 0;
+    private int totalCustomers = 0, totalPages = 0;
     private int selectedPage = 1;
-    private string CustomerType = "";
     private bool toggleIntern, toggleExtern = false;
+    private readonly int amount = 20;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
+        {
+            Page = 1,
+            SearchTerm = SearchValue,
+            CustomerType = Type,
+            Amount = amount,
+        });
+        customers = response.Customers;
+        totalCustomers = response.TotalAmount;
+        totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
+        selectedPage = Page > 0 ? Page : 1;
+
+    }
 
     private void FilterIntern()
     {
@@ -36,23 +53,27 @@ public partial class Index
         toggleIntern = false;
         toggleExtern = false;
         SearchValue = "";
+        Type = "";
         CustomerRequest.GetIndex request = new()
         {
-            Offset = 0,
-            Amount = 20,
+            Page = 1,
+            Amount = amount,
         };
         var response = await CustomerService.GetIndexAsync(request);
         totalCustomers = response.TotalAmount;
         customers = response.Customers;
-        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
+        totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
+        selectedPage = 1;
+        Page = selectedPage;
+        NavigationManager.NavigateTo("customer/list");
         StateHasChanged();
     }
     private async void HandleFilter()
     {
         CustomerRequest.GetIndex request = new()
         {
-            Offset = 0,
-            Amount = 20,
+            Page = 1,
+            Amount = amount,
             SearchTerm = SearchValue,
         };
 
@@ -68,29 +89,48 @@ public partial class Index
         var response = await CustomerService.GetIndexAsync(request);
         totalCustomers = response.TotalAmount;
         customers = response.Customers;
-        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
+        totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
+        selectedPage = 1;
+        Type = request.CustomerType;
+        Dictionary<string, object> parameters = new()
+        {
+            {nameof(Page), 1 },
+            {nameof(SearchValue), SearchValue },
+            {nameof(Type), Type }
+        };
+        var uri = NavigationManager.GetUriWithQueryParameters(parameters);
+        NavigationManager.NavigateTo(uri);
+
         StateHasChanged();
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
-        {
-            Offset = offset
-        });
-        customers = response.Customers;
-        totalCustomers = response.TotalAmount;
-        totalPages = Convert.ToInt16(Math.Ceiling(totalCustomers / 20.0));
-    }
 
     private async Task ClickHandler(int pageNr)
     {
-        offset = (pageNr - 1) * 20;
+        Page = pageNr;
         CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
         {
-            Offset = offset
+            Page = pageNr,
+            Amount = amount,
+            SearchTerm= SearchValue,
+            CustomerType = Type,
         });
         customers = response.Customers;
         selectedPage = pageNr;
+
+        Dictionary<string, object> parameters = new()
+        {
+            {nameof(Page), Page }
+        };
+        if (!string.IsNullOrEmpty(SearchValue))
+        {
+            parameters.Add(nameof(SearchValue), SearchValue);
+        }
+        if (!string.IsNullOrEmpty(Type))
+        {
+            parameters.Add(nameof(Type), Type);
+        }
+        var uri = NavigationManager.GetUriWithQueryParameters(parameters);
+        NavigationManager.NavigateTo(uri);
     }
 }
