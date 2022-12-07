@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Common;
-using Domain.VirtualMachines;
+using System.Collections.ObjectModel;
 
 namespace Domain.Hosts;
 
@@ -8,6 +8,7 @@ public abstract class Host<T> : Machine where T : Machine
 {
     #region Fields
     private HostSpecifications _specifications;
+    private List<History<Host<T>, T>> _history = new();
     #endregion
 
     #region Properties
@@ -32,6 +33,7 @@ public abstract class Host<T> : Machine where T : Machine
     }
     public Specifications RemainingResources { get; set; }
     public ISet<T> Machines { get; set; } = new HashSet<T>();
+    public IList<History<Host<T>, T>> History => new ReadOnlyCollection<History<Host<T>, T>>(_history);
     #endregion
 
     #region Constructors
@@ -138,9 +140,10 @@ public abstract class Host<T> : Machine where T : Machine
         UpdateRemainingResources();
     }
 
-    public static implicit operator Host<T>(VirtualMachine v)
+    public void GenerateHistory()
     {
-        throw new NotImplementedException();
+        History.Add(new History<Host<T>, T>(this));
     }
+
     #endregion
 }
