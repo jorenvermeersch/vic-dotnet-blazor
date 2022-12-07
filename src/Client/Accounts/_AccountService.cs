@@ -28,7 +28,7 @@ public class AccountService : IAccountService
         {
             queryParameters +=  "&roles=" + string.Join("&roles=", request.Roles);
         }
-        Console.WriteLine(queryParameters);
+
         var response = await client.GetFromJsonAsync<AccountResponse.GetIndex>($"api/accounts?{queryParameters}");
         return response!;
     }
@@ -46,31 +46,14 @@ public class AccountService : IAccountService
         return await response.Content.ReadFromJsonAsync<AccountResponse.Create>();
     }
 
-    public Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)
+    public async Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)
     {
-        throw new NotImplementedException();
+        var response = await client.PutAsJsonAsync(endpoint, request);
+        return await response.Content.ReadFromJsonAsync<AccountResponse.Edit>();
     }
 
     public Task DeleteAsync(AccountRequest.Delete request)
     {
         throw new NotImplementedException();
     }
-
-
-    // TODO: Implement new methods are remove this old code. 
-
-
-    //public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
-    //{
-    //    var queryParameters = request.GetQueryString();
-    //    var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetDetail>($"api/accounts/{request.AccountId}");
-    //    return response;
-    //}
-
-    //public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
-    //{
-    //    var queryParameters = request.GetQueryString();
-    //    var response = await authenticatedClient.GetFromJsonAsync<AccountResponse.GetIndex>("api/accounts");
-    //    return response;
-    //}
 }

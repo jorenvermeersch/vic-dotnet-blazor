@@ -9,9 +9,11 @@
             <span>Terug</span>
         </span>
         <StatusIndicator State="@virtualMachine.Status.ToString()" />
-        <span>
-            <Button Text="Beheren" />
-        </span>
+        <AuthorizeView Roles="Master, Administrator">
+            <span>
+                <Button Text="Beheren" />
+            </span>
+        </AuthorizeView>
     </div>
 </div>
 

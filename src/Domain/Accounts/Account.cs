@@ -27,7 +27,8 @@ public class Account : Entity
         Role role,
         string password,
         string department,
-        string education
+        string education,
+        bool isActive
     )
     {
         Firstname = firstname;
@@ -38,11 +39,12 @@ public class Account : Entity
         IsActive = true;
         Department = department;
         Education = education;
+        IsActive = isActive;
     }
     #endregion
 
     #region Methods
-    private string HashPassword(string password)
+    public string HashPassword(string password)
     {
         SHA256 sha256Hash = SHA256.Create();
         byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));

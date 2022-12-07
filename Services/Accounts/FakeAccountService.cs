@@ -24,16 +24,9 @@ public class FakeAccountService : IAccountService
 
         AccountDto.Mutate model = request.Account;
 
-        Account acc = new Account() {
-            Id = accounts.Max(x => x.Id) + 1,
-            Firstname = model.Firstname,
-            Lastname = model.Lastname,
-            Email = model.Email,
-            Role = Enum.Parse<Role>(model.Role, true),
-            PasswordHash = model.Password,
-            Department = model.Department,
-            Education = model.Education,
-            IsActive = model.IsActive
+        Account acc = new(model.Firstname, model.Lastname, model.Email, Enum.Parse<Role>(model.Role, true), model.Password, model.Department, model.Education, model.IsActive)
+        {
+            Id = accounts.Max(x => x.Id) + 1
         };
         accounts.Add(acc);
         response.AccountId = acc.Id;
@@ -63,7 +56,6 @@ public class FakeAccountService : IAccountService
         account.Lastname = model.Lastname;
         account.Email = model.Email;
         account.Role = (Role)Enum.Parse(typeof(Role), model.Role);
-        account.PasswordHash = model.Password;
         account.Department = model.Department;
         account.Education = model.Education;
         account.IsActive = model.IsActive;

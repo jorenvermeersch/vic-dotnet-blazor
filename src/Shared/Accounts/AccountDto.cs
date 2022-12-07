@@ -28,33 +28,10 @@ public static class AccountDto
         public string Email { get; set; } = default!;
         public string Role { get; set; } = default!;
         public bool IsActive { get; set; } = true;
-        public string Password { get; set; } = default!;
+        public string? Password { get; set; } = default!;
         public string Department { get; set; } = default!;
         public string Education { get; set; } = default!;
 
-        public class Validator : AbstractValidator<Mutate>
-        {
-            public Validator()
-            {
-                RuleFor(x => x.Firstname)
-                    .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Voornaam")))
-                    .Matches(ValidationRegex.Name).WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")));
-                RuleFor(x => x.Lastname)
-                    .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Naam")))
-                    .Matches(ValidationRegex.Name).WithMessage(string.Format(FormMessages.INVALIDNAME("Naam")));
-                RuleFor(x => x.Email)
-                    .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Email")))
-                    .EmailAddress().WithMessage(string.Format(FormMessages.INVALIDEMAIL()));
-                RuleFor(x => x.Role)
-                    .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Rol")));
-                RuleFor(x => x.Password)
-                    .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Wachtwoord")))
-                    .Matches(ValidationRegex.Password).WithMessage(string.Format(FormMessages.INVALIDPASSWORD()));
-                RuleFor(x => x.Department)
-                    .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Departement")));
-                RuleFor(x => x.Education)
-                    .Matches(ValidationRegex.Education).WithMessage(string.Format(FormMessages.INVALIDNAME("Opleiding")));
-            }
-        }
+        
     }
 }
