@@ -6,6 +6,7 @@ using Client.VirtualMachines;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Services.Processors;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
@@ -43,6 +44,7 @@ namespace Client
 
             //builder.Services.AddScoped<IAccountService, Services.Accounts.AccountService>();
             builder.Services.AddScoped<IPortService, PortService>();
+            builder.Services.AddScoped<IProcessorService, ProcessorService>();
 
             builder.Services.AddLocalization();
 
