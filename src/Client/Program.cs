@@ -41,9 +41,9 @@ namespace Client
             builder.Services.AddScoped<IVirtualMachineService, VirtualMachineService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
 
-            //builder.Services.AddScoped<IAccountService, Services.Accounts.AccountService>();
-            builder.Services.AddScoped<IPortService, PortService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProcessorService, ProcessorService>();
+            builder.Services.AddScoped<IPortService, VirtualMachines.PortService>();
 
             builder.Services.AddLocalization();
 

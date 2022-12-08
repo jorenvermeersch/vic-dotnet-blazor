@@ -66,8 +66,7 @@ public static class VirtualMachineDto
         public Template Template { get; set; } = default!;
         public string Reason { get; set; } = default!;
         public Status Status { get; set; } = default!;
-        //public long hostId { get; set; }
-        public HostDto.Index Host { get; set; } = default!;
+        public long HostId { get; set; } = default!;
         public SpecificationsDto Specifications { get; set; } = new();
         public long RequesterId { get; set; }
         public long UserId { get; set; }

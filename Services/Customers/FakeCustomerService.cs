@@ -9,21 +9,12 @@ namespace Services.Customers;
 
 public class FakeCustomerService : ICustomerService
 {
-    private static readonly List<Customer> customers = new();
+    public static readonly List<Customer> customers = new();
 
     static FakeCustomerService()
     {
         customers = FakeInitializerService.FakeCustomers ?? new List<Customer>();
     }
-
-    //public Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
-    //{
-    //    var externalcustomerFaker = new CustomerFaker.ExternalCustomerFaker();
-    //    var internalcustomerFaker = new CustomerFaker.InternalCustomerFaker();
-
-    //    customers.AddRange(externalcustomerFaker.UseSeed(1234).Generate(25));
-    //    customers.AddRange(internalcustomerFaker.UseSeed(1234).Generate(30));
-    //}
 
     public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
     {
@@ -202,7 +193,7 @@ public class FakeCustomerService : ICustomerService
 
         response.TotalAmount = query.Count();
 
-        response.Customers = query.OrderBy(x => x.Id).Skip((request.Page - 1) * request.Amount).Take(request.Amount).Select(x => new CustomerDto.Index
+        response.Customers = query.Skip((request.Page - 1) * request.Amount).Take(request.Amount).Select(x => new CustomerDto.Index
         {
             Id = x.Id,
             Name = String.Format("{0} {1}", x.ContactPerson.Firstname, x.ContactPerson.Lastname),

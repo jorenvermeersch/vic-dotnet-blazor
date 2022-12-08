@@ -44,7 +44,7 @@ public class FakeInitializerService : IFakeInitializerService
         FakeSpecifications = new SpecificationsFaker().UseSeed(seed).Generate(20);
         FakeTimeSpans = new TimeSpanFaker().UseSeed(seed).Generate(20);
         FakeCredentials = new CredentialFaker().UseSeed(seed).Generate(20);
-        FakeContactPersons = new ContactPersonFaker().UseSeed(seed).Generate(60);
+        FakeContactPersons = new ContactPersonFaker().UseSeed(seed).Generate(100);
         FakeCustomers.AddRange(new CustomerFaker.InternalCustomerFaker(FakeContactPersons).UseSeed(seed).Generate(25));
         FakeCustomers.AddRange(new CustomerFaker.ExternalCustomerFaker(FakeContactPersons).UseSeed(seed).Generate(20));
         FakeAccounts = new AccountFaker().UseSeed(seed).Generate(25);

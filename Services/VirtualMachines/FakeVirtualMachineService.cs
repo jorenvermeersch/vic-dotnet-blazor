@@ -11,6 +11,8 @@ using Shared.VirtualMachines;
 using Azure.Core;
 using Domain.Exceptions;
 using Services.FakeInitializer;
+using Services.Customers;
+using Domain.Customers;
 
 namespace Service.VirtualMachines;
 
@@ -25,7 +27,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     // Helper Function
     private CustomerType ReturnsCustomerType(string type)
     {
-        CustomerType customerType = CustomerType.None;
+        CustomerType customerType = new();
         switch (type)
         {
             case "InternalCustomer": customerType = CustomerType.Intern; break;
@@ -38,16 +40,16 @@ public class FakeVirtualMachineService : IVirtualMachineService
     {
         var args = new VirtualMachineArgs
         {
-            Template = /*(Template)Enum.Parse(typeof(Template), model.Template)*/ model.Template,
-            Mode = /*(Mode)Enum.Parse(typeof(Mode), model.Mode)*/ model.Mode,
+            Template =  model.Template,
+            Mode =  model.Mode,
             Fqdn = model.Fqdn,
             Availabilities = model.Availabilities,
-            BackupFrequency = /*(BackupFrequency)Enum.Parse(typeof(BackupFrequency), model.BackupFrequency)*/ model.BackupFrequency,
+            BackupFrequency =  model.BackupFrequency,
             ApplicationDate = model.ApplicationDate,
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
-            Status = /*(Status)Enum.Parse(typeof(Status), model.Status)*/ model.Status,
+            Status = model.Status,
             Reason = model.Reason,
-            Ports = model.Ports.Select(x => new Port(x, x.ToString())).ToList(),
+            Ports = /*model.Ports.Select(x => new Port(x, x.ToString())).ToList()*/ null,
             Host = null,
             Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
             Account = null,

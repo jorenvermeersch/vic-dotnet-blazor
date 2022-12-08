@@ -106,6 +106,24 @@ namespace Client.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tuesday.
+        /// </summary>
+        public static string Dinsdag {
+            get {
+                return ResourceManager.GetString("Dinsdag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thursday.
+        /// </summary>
+        public static string Donderdag {
+            get {
+                return ResourceManager.GetString("Donderdag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vrijdag.
         /// </summary>
         public static string Friday {
@@ -129,6 +147,15 @@ namespace Client.Shared.Resources {
         public static string InProgress {
             get {
                 return ResourceManager.GetString("InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monday.
+        /// </summary>
+        public static string Maandag {
+            get {
+                return ResourceManager.GetString("Maandag", resourceCulture);
             }
         }
         
@@ -241,6 +268,15 @@ namespace Client.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friday.
+        /// </summary>
+        public static string Vrijdag {
+            get {
+                return ResourceManager.GetString("Vrijdag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Observer.
         /// </summary>
         public static string Waarnemer {
@@ -273,6 +309,33 @@ namespace Client.Shared.Resources {
         public static string Weekly {
             get {
                 return ResourceManager.GetString("Weekly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wednesday.
+        /// </summary>
+        public static string Woensdag {
+            get {
+                return ResourceManager.GetString("Woensdag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saturday.
+        /// </summary>
+        public static string Zaterdag {
+            get {
+                return ResourceManager.GetString("Zaterdag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sunday.
+        /// </summary>
+        public static string Zondag {
+            get {
+                return ResourceManager.GetString("Zondag", resourceCulture);
             }
         }
     }

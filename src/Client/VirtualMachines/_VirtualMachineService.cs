@@ -1,4 +1,5 @@
 ﻿using Client.Extensions;
+using Shared.Hosts;
 using Shared.VirtualMachines;
 using System.Net.Http.Json;
 
@@ -12,9 +13,10 @@ public class VirtualMachineService : IVirtualMachineService
         this.client = client;
     }
 
-    public Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
+    public async Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
     {
-        throw new NotImplementedException();
+        var response = await client.PostAsJsonAsync($"api/virtual-machines", request);
+        return await response.Content.ReadFromJsonAsync<VirtualMachineResponse.Create>();
     }
 
     public Task DeleteAsync(VirtualMachineRequest.Delete request)

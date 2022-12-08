@@ -4,5 +4,5 @@ public enum CustomerType
 {
     Intern,
     Extern,
-    None
+    //None
 }
