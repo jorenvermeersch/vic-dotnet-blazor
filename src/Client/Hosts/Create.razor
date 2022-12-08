@@ -7,7 +7,7 @@
 <EditForm Model="@Host" OnValidSubmit="@HandleValidSubmit">
     <div class="context-menu">
         <span class="context-menu-label">
-            <TitlePage IconString="desktop" Type=@m.ToString() Mutation="Toevoegen" />
+            <TitlePage IconString="desktop" Type="Host" Mutation="Toevoegen" />
         </span>
         <button type="submit">Toevoegen</button>
     </div>
@@ -22,16 +22,19 @@
 
             <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@NewProcessor">
                 <CustomDropDown Label="Processor type" Items="@MakeProcessorItems()" Action="@SetProcessorValue" />
-                <CustomInputNumber Type="Input.InputType.TEXT" Label="Virtualisatie Factor" @bind-Value="VirtualisationFactor" For="@(()=> VirtualisationFactor)" Margin="true" />
+                <CustomInputNumber Type="Input.InputType.TEXT" Label="Virtualisatie Factor" @bind-Value="NewProcessor.VirtualisationFactor" For="@(()=> NewProcessor.VirtualisationFactor)" Margin="true" />
                 <button type="submit">Toevoegen</button>
             </EditForm>
+            
+        </div>
+        
+        <div class="one-third">
+            <Title Text="Gekozen processoren" />
             @foreach(var c in Host.Specifications.Processors) {
-                Dictionary<string, string> entry = new() { { "Processor", c.Key.Name }, { "Cores", c.Key.Cores }, { "Threads", c.Key.Threads }, { "Virtualisatie Factor", c.Value} };
+                Dictionary<string, string> entry = new() { { "Processor", c.Key.Name }, { "Cores", c.Key.Cores.ToString() }, { "Threads", c.Key.Threads.ToString() }, { "Virtualisatie Factor", c.Value.ToString() } };
                 <DataCard Entries="@entry" customCss="@_customcss" />
             }
         </div>
-        
-        <div class="one-third"></div>
         <div class="one-third"></div>
     </div>
 </EditForm>

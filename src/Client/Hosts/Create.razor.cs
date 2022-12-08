@@ -13,15 +13,12 @@ public partial class Create {
     [Inject] public NavigationManager Navigation { get; set; } = default!;
     [Inject] public IHostService HostService { get; set; } = default!;
     [Inject] public IProcessorService ProcessorService { get; set; } = default!;
-
-    private EditForm? Editform { get; set; } = new();
     private HostDto.Mutate Host { get; set; } = new();
-    public int VirtualisationFactor { get; set; } = default!;
 
     private List<ProcessorDto>? Processors { get; set; }
     public ProcessorDto SelectedProcessors { get; set; }
     public List<ProcessorDto>? ChosenProcessors { get; set; }
-    public ProcessorVirtualisation? NewProcessor { get; set; }
+    public ProcessorVirtualisation? NewProcessor { get; set; } = new();
     private string _customcss = "background-color: white";
 
     protected override async Task OnInitializedAsync() {

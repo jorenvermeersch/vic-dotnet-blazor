@@ -21,6 +21,6 @@ public static class HostDto
     public class Mutate
     {
         public string Name { get; set; } = default!;
-        public HostSpecificationsDto Specifications { get; set; } = default!;
+        public HostSpecificationsDto Specifications { get; set; } = new();
     }
 }
