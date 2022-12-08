@@ -35,8 +35,8 @@ public partial class Details
 
         host = response.Host;
         _server.Add("name", new() { { "Naam", host.Name } });
-        _server.Add("resources", new() { { "vCPUs", CalculateVirtualCpu().ToString() }, { "Geheugen", host.Specifications.Memory.ToString() }, { "Opslag", host.Specifications.Storage.ToString() } });
-        _server.Add("remainingResources", new() { { "vCPUs", host.RemainingResources.VirtualProcessors.ToString() }, { "Geheugen", host.RemainingResources.Memory.ToString() }, { "Opslag", host.RemainingResources.Storage.ToString() } });
+        _server.Add("resources", new() { { "vCPUs", CalculateVirtualCpu().ToString() }, { "Geheugen",string.Format("{0} GB", host.Specifications.Memory.ToString()) }, { "Opslag", string.Format("{0} GB", host.Specifications.Storage.ToString()) } });
+        _server.Add("remainingResources", new() { { "vCPUs", host.RemainingResources.VirtualProcessors.ToString() }, { "Geheugen", string.Format("{0} GB", host.RemainingResources.Memory.ToString()) }, { "Opslag", string.Format("{0} GB", host.RemainingResources.Storage.ToString()) } });
         foreach (var p in host.Specifications.Processors)
         {
             _processors.Add(new Dictionary<string, string>() { {"Type", p.Key.Name }, { "Cores", p.Key.Cores.ToString() }, { "Threads", p.Key.Threads.ToString() }, { "Virtualisatiefactor", p.Value.ToString()} });
