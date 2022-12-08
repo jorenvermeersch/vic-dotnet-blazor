@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Newtonsoft.Json;
 using Services.Processors;
 using Shared.Hosts;
+using System.Drawing.Text;
 
 namespace Client.Hosts;
 
@@ -29,9 +30,8 @@ public partial class Create {
     }
 
     private async void HandleValidSubmit() {
-        HostResponse.Create response = await HostService.CreateAsync(new HostRequest.Create {
-            Host = Host
-        });
+        var newHost = new HostRequest.Create { Host = Host };
+        HostResponse.Create response = await HostService.CreateAsync(newHost);
         Navigation!.NavigateTo("host/" + response.HostId);
     }
     private Dictionary<string, string> MakeProcessorItems() => Processors.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
