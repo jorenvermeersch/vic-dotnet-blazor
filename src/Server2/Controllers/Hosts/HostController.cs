@@ -40,7 +40,7 @@ public class HostController : ControllerBase
     public async Task<IActionResult> CreateAsync([FromBody] HostRequest.Create request)
     {
         HostResponse.Create response = await hostService.CreateAsync(request);
-        return CreatedAtAction(nameof(CreateAsync), response.HostId);
+        return CreatedAtAction(nameof(CreateAsync), response);
     }
 
     [SwaggerOperation("Edits hosts.")]
@@ -48,7 +48,7 @@ public class HostController : ControllerBase
     public async Task<IActionResult> EditAsync([FromBody] HostDto.Mutate model, long hostId)
     {
         HostResponse.Edit response = await hostService.EditAsync(new HostRequest.Edit { Host = model, HostId = hostId });
-        return Accepted(nameof(EditAsync), response.HostId);
+        return Accepted(nameof(EditAsync), response);
     }
 
     [SwaggerOperation("Deletes hosts.")]

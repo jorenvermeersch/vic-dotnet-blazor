@@ -17,8 +17,8 @@ public class HostService : IHostService
     public async Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
     {
         var response = await client.PostAsJsonAsync($"api/hosts", request);
-        //return await response.Content.ReadFromJsonAsync<HostResponse.Create>();
-        return new HostResponse.Create() { HostId = 1 };
+        return await response.Content.ReadFromJsonAsync<HostResponse.Create>();
+       // return new HostResponse.Create() { HostId = 1 };
     }
 
     public Task DeleteAsync(HostRequest.Delete request)
