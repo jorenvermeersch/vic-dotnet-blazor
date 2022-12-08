@@ -6,7 +6,6 @@ using Client.VirtualMachines;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Services.Processors;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;

@@ -26,7 +26,7 @@ public partial class Create
           Amount = 5
         });
         Processors = processorResponse.Processors;
-        m = Processors.Count();
+        m = processorResponse.TotalAmount;
     }
 
     private async void HandleValidSubmit()
