@@ -5,7 +5,6 @@
 <PageTitle>Host Toevoegen</PageTitle>
 
 <EditForm Model="@Host" OnValidSubmit="@HandleValidSubmit">
-    <FluentValidationValidator TValidator="HostValidation" />
     <div class="context-menu">
         <span class="context-menu-label">
             <TitlePage IconString="desktop" Type=@m.ToString() Mutation="Toevoegen" />
@@ -16,15 +15,22 @@
     <div class="three-column-layout">
         <div class="one-third">
             <Title Text="Algemene informatie" />
-            <CustomDropDown Label="Naam" Items="@MakeProcessorItems()" Action="@SetProcessorValue" />
+            <AddInput Type="Input.InputType.TEXT" Label="Naam" @bind-Value="Host.Name" For="@(()=> Host.Name)" Margin="true" />
+            <CustomInputNumber Type="Input.InputType.TEXT" Label="Geheugen" @bind-Value="Host.Specifications.Memory" For="@(()=> Host.Specifications.Memory)" Margin="true" />
+            <CustomInputNumber Type="Input.InputType.TEXT" Label="Opslag" @bind-Value="Host.Specifications.Storage" For="@(()=> Host.Specifications.Storage)" Margin="true" />
+            <Title Text="Processoren"></Title>
 
-           @* <AddInput Type="@Input.InputType.TEXT" Label="Naam" @bind-Value="Host.Name" For="@(()=>Host.Name)" />
-*@
-            @*<CustomInputNumber label="Vcpu" @bind-Value="Host.Specifications.Processors" For="@(()=>Host.Specifications.Processors)" />*@
-           @* <CustomInputNumber label="Opslag" @bind-Value="Host.Specifications.Storage" For="@(()=>Host.Specifications.Storage)" />
-              <CustomInputNumber label="Geheugen" @bind-Value="Host.Specifications.Memory" For="@(()=>Host.Specifications.Memory)" />
-*@
+            <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@NewProcessor">
+                <CustomDropDown Label="Processor type" Items="@MakeProcessorItems()" Action="@SetProcessorValue" />
+                <CustomInputNumber Type="Input.InputType.TEXT" Label="Virtualisatie Factor" @bind-Value="VirtualisationFactor" For="@(()=> VirtualisationFactor)" Margin="true" />
+                <button type="submit">Toevoegen</button>
+            </EditForm>
+            @foreach(var c in Host.Specifications.Processors) {
+                Dictionary<string, string> entry = new() { { "Processor", c.Key.Name }, { "Cores", c.Key.Cores }, { "Threads", c.Key.Threads }, { "Virtualisatie Factor", c.Value} };
+                <DataCard Entries="@entry" customCss="@_customcss" />
+            }
         </div>
+        
         <div class="one-third"></div>
         <div class="one-third"></div>
     </div>
