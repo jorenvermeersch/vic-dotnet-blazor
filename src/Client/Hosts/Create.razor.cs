@@ -3,6 +3,7 @@ using Domain.Constants;
 using Domain.VirtualMachines;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Newtonsoft.Json;
 using Services.Processors;
 using Shared.Hosts;
 
@@ -17,12 +18,12 @@ public partial class Create
     private EditForm? Editform { get; set; } = new();
     private HostDto.Mutate Host { get; set; } = new();
 
-    List<ProcessorDto> Processors { get; set; } = new();
+    private List<ProcessorDto>? Processors { get; set; }
     int m { get; set; } = new();
 
     protected override async Task OnInitializedAsync() {
         ProcessorResponse.GetIndex processorResponse = await ProcessorService.GetIndexAsync(new ProcessorRequest.GetIndex {
-          
+          Amount = 5
         });
         Processors = processorResponse.Processors;
         m = Processors.Count();
@@ -36,6 +37,7 @@ public partial class Create
         });
         Navigation!.NavigateTo("host/" + response.HostId);
     }
-    private Dictionary<string, string> MakeProcessorItems() => Processors.ToDictionary(x => x.Name, x => x.Name);
+    private Dictionary<string, string> MakeProcessorItems() => Processors.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
     private void SetProcessorValue(string value) => Host.Name = "test";
+
 }

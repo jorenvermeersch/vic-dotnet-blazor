@@ -132,6 +132,10 @@ public partial class Create
     private void SetTemplateValue(string value) => VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), value);
     private Dictionary<string, string> MakeBackUpFrequencyItems() => Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => x.ToString(), x => x.ToString());
     private void SetBackUpFrequencyValue(string value) => VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), value);
+    
+    
+    
+    
     private Dictionary<string, string> MakeHostItems() => Hosts.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
     private void SetHostValue(string value)
     {
