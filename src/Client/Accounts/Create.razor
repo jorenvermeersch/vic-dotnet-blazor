@@ -1,16 +1,34 @@
 ﻿@page "/account/add"
+@page "/account/{id:long}/edit"
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master")]
 
 <PageTitle>Account Toevoegen</PageTitle>
 
 <EditForm Model="@Account" OnValidSubmit="@HandleValidSubmit">
-    <FluentValidationValidator TValidator="AccountValidation"/>
+    <FluentValidationValidator/>
     <div class="context-menu">
+        
         <span class="context-menu-label">
-            <TitlePage IconString="user" Type="Account" Mutation="Toevoegen" />
+            @if (Convert.ToBoolean(Id))
+            {
+                <TitlePage IconString="user" Type="Account" Mutation="Wijzigen" />
+            }
+            else
+            {
+                <TitlePage IconString="user" Type="Account" Mutation="Toevoegen" />
+            }
+
         </span>
-        <button type="submit">Toevoegen</button>
+        @if (Convert.ToBoolean(Id))
+        {
+            <button type="submit">Wijzigen </button>
+        }
+        else
+        {
+            <button type="submit">Toevoegen </button>
+        }
+
     </div>
     <div class="three-column-layout">
         <div class="one-third">
@@ -18,12 +36,6 @@
             <AddInput Type="@Input.InputType.SELECT" Label="Rol" Required="@true" Items="@roles" @bind-Value="Account.Role" For="@(()=>Account.Role)"/>
             <AddInput Type="@Input.InputType.TEXT" Label="Departement" Required="@true" @bind-Value="Account.Department" For="@(() => Account.Department)" />
             <AddInput Type="@Input.InputType.TEXT" Label="Opleiding" Required="@false" @bind-Value="Account.Education" For="@(() => Account.Education)" />
-                @*<div class="input-container">
-                    <label>
-                    Actief:
-                    </label>
-                <InputCheckbox @bind-Value="@Account.IsActive" style="width: 18px; height: 18px; position: relative; left: -318px;" />
-                </div>*@
             <CustomCheckbox Label="Actief" @bind-Value="@Account.IsActive" />
         </div>
         <div class="one-third">
@@ -31,8 +43,13 @@
             <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@true" @bind-Value="Account.Firstname" For="@(() => Account.Firstname)" />
             <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Account.Lastname" For="@(() => Account.Lastname)" />
             <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@true" @bind-Value="Account.Email" For="@(() => Account.Email)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Wachtwoord" Required="@true" @bind-Value="Account.Password" For="@(() => Account.Password)" />
-        </div>
+
+            @if (!Convert.ToBoolean(Id))
+            {
+                <AddInput Type="@Input.InputType.TEXT" Label="Wachtwoord" Required="@true" @bind-Value="Account.Password" For="@(() => Account.Password)" />
+
+            }
+            </div>
         <div class="one-third">
         </div>
     </div>

@@ -1,4 +1,6 @@
 ﻿using Domain.Constants;
+using FluentValidation;
+using Shared.Validation;
 
 namespace Shared.Accounts;
 
@@ -26,8 +28,10 @@ public static class AccountDto
         public string Email { get; set; } = default!;
         public string Role { get; set; } = default!;
         public bool IsActive { get; set; } = true;
-        public string Password { get; set; } = default!;
+        public string? Password { get; set; } = default!;
         public string Department { get; set; } = default!;
         public string Education { get; set; } = default!;
+
+        
     }
 }

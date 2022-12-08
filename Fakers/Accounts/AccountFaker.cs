@@ -16,6 +16,7 @@ public class AccountFaker : EntityFaker<Account>
             f.PickRandom(Enum.GetValues(typeof(Role)).Cast<Role>().ToList()),
             f.Internet.Password(),
             f.PickRandom(departments),
-            f.PickRandom(educations)));
+            f.PickRandom(educations),
+            true));
     }
 }

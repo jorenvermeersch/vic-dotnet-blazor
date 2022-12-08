@@ -1,4 +1,6 @@
 ﻿using Domain.Constants;
+using FluentValidation;
+using Shared.Validation;
 using Shared.VirtualMachines;
 
 namespace Shared.Customers;
@@ -36,5 +38,7 @@ public static class CustomerDto
         public string? CompanyName { get; set; }
         public ContactPersonDto ContactPerson { get; set; } = new();
         public ContactPersonDto? BackupContactPerson { get; set; } = new();
+
+        
     }
 }
