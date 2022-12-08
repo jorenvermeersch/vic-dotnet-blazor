@@ -30,10 +30,19 @@
         
         <div class="one-third">
             <Title Text="Gekozen processoren" />
-            @foreach(var c in Host.Specifications.Processors) {
+            @if (Host.Specifications.Processors.Any())
+            {
+                @foreach(var c in Host.Specifications.Processors) {
                 Dictionary<string, string> entry = new() { { "Processor", c.Key.Name }, { "Cores", c.Key.Cores.ToString() }, { "Threads", c.Key.Threads.ToString() }, { "Virtualisatie Factor", c.Value.ToString() } };
-                <DataCard Entries="@entry" customCss="@_customcss" />
+                    <DataCard Entries="@entry" customCss="@_customcss" />
+                }
+
             }
+            else
+            {
+                <NoResultsMsg Message="Geen processoren gekozen."/>
+            }
+
         </div>
         <div class="one-third"></div>
     </div>

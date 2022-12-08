@@ -41,6 +41,7 @@ public partial class Create {
 
     private void AddProcessor() {
         Host.Specifications.Processors.Add(new KeyValuePair<ProcessorDto, int>(NewProcessor.Processor, NewProcessor.VirtualisationFactor));
+        NewProcessor = new();
     }
 
     public class ProcessorVirtualisation {
