@@ -19,11 +19,11 @@
 <div class="three-column-layout">
     <div class="one-third">
         <DataCard Entries="@_server.GetValueOrDefault("name")" />
-        <Title Text="Overblevende specificaties" />
+        <Title Text="Specificaties" />
+        <DataCard Entries="@_server.GetValueOrDefault("resources")" />
+        <Title Text="Resterende specificaties" />
         <DataCard Entries="@_server.GetValueOrDefault("remainingResources")" />
 
-        <Title Text="Totale specificaties" />
-        <DataCard Entries="@_server.GetValueOrDefault("resources")" />
         <Title Text="Processoren"/>
         @foreach(var p in _processors)
         {

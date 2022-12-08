@@ -27,6 +27,11 @@
     flex-grow: 2;
     height: 48px;
     border-radius: 50px;
+    width: 0px;
+}
+
+.dropdown label {
+    width: 0px;
 }
 
 .dropdown input{
