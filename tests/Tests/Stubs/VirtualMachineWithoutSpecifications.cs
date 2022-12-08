@@ -1,6 +1,4 @@
-﻿using Domain.Accounts;
-
-namespace Tests.Stubs;
+﻿namespace Tests.Stubs;
 
 public static class VirtualMachineWithoutSpecifications
 {
@@ -8,7 +6,7 @@ public static class VirtualMachineWithoutSpecifications
 
     private static ContactPerson _contact = new("Jane", "Doe", "jane.doe@hotmail.com", "907-642-6874");
     private static Customer _customer = new InternalCustomer(Institution.HoGent, "DIT", "Toegepaste Informatica", _contact, null, new List<VirtualMachine>());
-    private static Account _account = new("Joren", "Vermeersch", "joren.vermeersch@student.hogent.be", Role.Admin, "Fsdt1@t", "DIT", "Toegepaste Informatica");
+    private static Account _account = new("Joren", "Vermeersch", "joren.vermeersch@student.hogent.be", Role.Admin, "Fsdt1@t", "DIT", "Toegepaste Informatica", true);
 
     public static VirtualMachine Create(Host<VirtualMachine>? server)
     {
