@@ -1,48 +1,49 @@
 ﻿using Domain.Accounts;
-using Domain.Common;
 using Domain.Constants;
-using Domain.Hosts;
-using Fakers.Accounts;
 using Services.FakeInitializer;
 using Shared.Accounts;
-using Shared.Hosts;
 
 namespace Service.Accounts;
 
 public class FakeAccountService : IAccountService
 {
-    private static readonly List<Account> accounts = new();
+
+    public static List<Account> Accounts { get; private set; } = new List<Account>();
+    //private static readonly List<Account> accounts = new();
 
     static FakeAccountService()
-    {        
-        accounts = FakeInitializerService.FakeAccounts ?? new List<Account>();
+    {
+        Accounts = FakeInitializerService.FakeAccounts ?? new List<Account>();
     }
 
-    public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request) {
+    public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
+    {
         AccountResponse.Create response = new();
-        var query = accounts.AsQueryable();
+        var query = Accounts.AsQueryable();
 
         AccountDto.Mutate model = request.Account;
 
         Account acc = new(model.Firstname, model.Lastname, model.Email, Enum.Parse<Role>(model.Role, true), model.Password, model.Department, model.Education, model.IsActive)
         {
-            Id = accounts.Max(x => x.Id) + 1
+            Id = Accounts.Max(x => x.Id) + 1
         };
-        accounts.Add(acc);
+        Accounts.Add(acc);
         response.AccountId = acc.Id;
         return response;
     }
 
-    public async Task DeleteAsync(AccountRequest.Delete request) {
-        var account = accounts.SingleOrDefault(x => x.Id == request.AccountId);
+    public async Task DeleteAsync(AccountRequest.Delete request)
+    {
+        var account = Accounts.SingleOrDefault(x => x.Id == request.AccountId);
         if (account != null)
-            accounts.Remove(account);
+            Accounts.Remove(account);
     }
 
-    public async Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request) {
+    public async Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)
+    {
 
         AccountResponse.Edit response = new();
-        var account = accounts.SingleOrDefault(x => x.Id == request.AccountId);
+        var account = Accounts.SingleOrDefault(x => x.Id == request.AccountId);
 
         if (account == null)
         {
@@ -65,11 +66,13 @@ public class FakeAccountService : IAccountService
 
     }
 
-    public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request) {
+    public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
+    {
         AccountResponse.GetDetail response = new();
-        var query = accounts.AsQueryable();
+        var query = Accounts.AsQueryable();
 
-        response.Account = query.Select(x => new AccountDto.Detail {
+        response.Account = query.Select(x => new AccountDto.Detail
+        {
             Id = x.Id,
             Department = x.Department,
             Education = x.Education,
@@ -81,10 +84,11 @@ public class FakeAccountService : IAccountService
         }).SingleOrDefault(x => x.Id == request.AccountId) ?? new AccountDto.Detail();
         return response;
     }
-       
-    public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request) {
+
+    public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
+    {
         AccountResponse.GetIndex response = new();
-        var query = accounts.AsQueryable();
+        var query = Accounts.AsQueryable();
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
             query = query.Where(x => x.Firstname.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase)
@@ -100,7 +104,8 @@ public class FakeAccountService : IAccountService
         query = query.Take(request.Amount);
 
         query.OrderBy(x => x.Email);
-        response.Accounts = query.Select(x => new AccountDto.Index {
+        response.Accounts = query.Select(x => new AccountDto.Index
+        {
             Id = x.Id,
             Email = x.Email,
             Firstname = x.Firstname,

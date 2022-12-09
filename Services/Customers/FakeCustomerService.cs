@@ -1,5 +1,4 @@
-﻿using Domain.Accounts;
-using Domain.Constants;
+﻿using Domain.Constants;
 using Domain.Customers;
 using Services.FakeInitializer;
 using Shared.Customers;
@@ -9,11 +8,12 @@ namespace Services.Customers;
 
 public class FakeCustomerService : ICustomerService
 {
-    public static readonly List<Customer> customers = new();
+
+    public static List<Customer> Customers { get; private set; } = new List<Customer>();
 
     static FakeCustomerService()
     {
-        customers = FakeInitializerService.FakeCustomers ?? new List<Customer>();
+        Customers = FakeInitializerService.FakeCustomers ?? new List<Customer>();
     }
 
     public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
@@ -21,10 +21,10 @@ public class FakeCustomerService : ICustomerService
         Customer customer;
         CustomerDto.Mutate createdCustomer = request.Customer;
         ContactPerson contactperson = new(createdCustomer.ContactPerson.Firstname, createdCustomer.ContactPerson.Lastname, createdCustomer.ContactPerson.Email, createdCustomer.ContactPerson.Phonenumber);
-        ContactPerson backupContactperson=null;
-        if ( !string.IsNullOrEmpty( createdCustomer.BackupContactPerson.Firstname))
+        ContactPerson backupContactperson = null;
+        if (!string.IsNullOrEmpty(createdCustomer.BackupContactPerson.Firstname))
         {
-             backupContactperson = new(createdCustomer.BackupContactPerson.Firstname, createdCustomer.BackupContactPerson.Lastname, createdCustomer.BackupContactPerson.Email, createdCustomer.BackupContactPerson.Phonenumber);
+            backupContactperson = new(createdCustomer.BackupContactPerson.Firstname, createdCustomer.BackupContactPerson.Lastname, createdCustomer.BackupContactPerson.Email, createdCustomer.BackupContactPerson.Phonenumber);
 
         }
 
@@ -37,12 +37,12 @@ public class FakeCustomerService : ICustomerService
                 createdCustomer.Education,
                 contactperson,
                 backupContactperson
-                
+
                 )
             {
-                Id = customers.Max(x => x.Id) + 1
+                Id = Customers.Max(x => x.Id) + 1
             };
-            
+
         }
         else
         {
@@ -53,14 +53,15 @@ public class FakeCustomerService : ICustomerService
                backupContactperson
                )
             {
-                Id = customers.Max(x => x.Id) + 1
+                Id = Customers.Max(x => x.Id) + 1
             };
 
         }
 
-        customers.Add(customer);
+        Customers.Add(customer);
 
-        return new CustomerResponse.Create{
+        return new CustomerResponse.Create
+        {
             CustomerId = customer.Id
         };
     }
@@ -68,19 +69,19 @@ public class FakeCustomerService : ICustomerService
     public async Task DeleteAsync(CustomerRequest.Delete request)
     {
         await Task.Delay(100);
-        var customer = customers.Find(x => x.Id == request.CustomerId);
-        customers.Remove(customer);
+        var customer = Customers.Find(x => x.Id == request.CustomerId);
+        Customers.Remove(customer);
     }
 
     public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
     {
         await Task.Delay(100);
-        Customer customer = customers.SingleOrDefault(x => x.Id == request.CustomerId);
-        int index = customers.IndexOf(customer);
+        Customer customer = Customers.SingleOrDefault(x => x.Id == request.CustomerId);
+        int index = Customers.IndexOf(customer);
 
         ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
         ContactPerson backupContactPerson = null;
-        if (request.Customer.BackupContactPerson is not null && !string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname) )
+        if (request.Customer.BackupContactPerson is not null && !string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname))
         {
             backupContactPerson = new ContactPerson(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Phonenumber);
         }
@@ -94,9 +95,9 @@ public class FakeCustomerService : ICustomerService
             inCus.ContactPerson = contactPerson;
             inCus.BackupContactPerson = backupContactPerson;
 
-            customers[index] = inCus;
+            Customers[index] = inCus;
         }
-        else if(customer is ExternalCustomer)
+        else if (customer is ExternalCustomer)
         {
             ExternalCustomer exCus = (ExternalCustomer)customer;
             exCus.CompanyName = request.Customer.CompanyName;
@@ -104,9 +105,9 @@ public class FakeCustomerService : ICustomerService
             exCus.ContactPerson = contactPerson;
             exCus.BackupContactPerson = backupContactPerson;
 
-            customers[index] = exCus;
+            Customers[index] = exCus;
         }
-        
+
 
         return new CustomerResponse.Edit
         {
@@ -119,10 +120,10 @@ public class FakeCustomerService : ICustomerService
     {
         CustomerResponse.GetDetail response = new();
         //.Where(x => customertype.ToLower() == "extern" ? x is ExternalCustomer : x is InternalCustomer)
-        response.Customer = customers.Where(x => x.Id == request.CustomerId).Select(x =>
+        response.Customer = Customers.Where(x => x.Id == request.CustomerId).Select(x =>
         {
-            ContactPersonDto backup=null;
-            if (x.BackupContactPerson is not null && !string.IsNullOrEmpty( x.BackupContactPerson.Firstname))
+            ContactPersonDto backup = null;
+            if (x.BackupContactPerson is not null && !string.IsNullOrEmpty(x.BackupContactPerson.Firstname))
             {
                 backup = new ContactPersonDto
                 {
@@ -132,7 +133,7 @@ public class FakeCustomerService : ICustomerService
                     Phonenumber = x.BackupContactPerson.PhoneNumber
                 };
             }
-            
+
             //basic customer information
             CustomerDto.Detail customer = new()
             {
@@ -145,10 +146,11 @@ public class FakeCustomerService : ICustomerService
                     Phonenumber = x.ContactPerson.PhoneNumber
                 },
                 BackupContactPerson = backup,
-                VirtualMachines = x.VirtualMachines.Select(x =>new VirtualMachineDto.Index{
-                   Id = x.Id,
-                   Fqdn = x.Fqdn,
-                   Status = x.Status
+                VirtualMachines = x.VirtualMachines.Select(x => new VirtualMachineDto.Index
+                {
+                    Id = x.Id,
+                    Fqdn = x.Fqdn,
+                    Status = x.Status
                 }).ToList(),
             };
 
@@ -179,7 +181,7 @@ public class FakeCustomerService : ICustomerService
     public async Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)
     {
         CustomerResponse.GetIndex response = new();
-        var query = customers.AsQueryable();
+        var query = Customers.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {

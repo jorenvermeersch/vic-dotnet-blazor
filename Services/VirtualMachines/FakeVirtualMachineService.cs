@@ -1,18 +1,18 @@
-﻿using Domain.Constants;
+﻿using Domain.Accounts;
+using Domain.Constants;
+using Domain.Customers;
+using Domain.Exceptions;
 using Domain.Hosts;
-using Domain.Accounts;
 using Domain.VirtualMachines;
-using Fakers.VirtualMachines;
+using Service.Accounts;
+using Services.Customers;
+using Services.FakeInitializer;
+using Services.Hosts;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
 using Shared.Ports;
 using Shared.VirtualMachines;
-using Azure.Core;
-using Domain.Exceptions;
-using Services.FakeInitializer;
-using Services.Customers;
-using Domain.Customers;
 
 namespace Service.VirtualMachines;
 
@@ -38,23 +38,31 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
     private VirtualMachineArgs createArgsVirtualMachine(VirtualMachineDto.Mutate model)
     {
+        Server host = FakeHostService.Hosts.Where(x => x.Id == model.HostId).SingleOrDefault();
+        Customer user = FakeCustomerService.Customers.Where(x => x.Id == model.UserId).SingleOrDefault();
+        Customer requester = FakeCustomerService.Customers.Where(x => x.Id == model.RequesterId).SingleOrDefault();
+        Account account = FakeAccountService.Accounts.Where(x => x.Id == model.AdministratorId).SingleOrDefault();
+
         var args = new VirtualMachineArgs
         {
-            Template =  model.Template,
-            Mode =  model.Mode,
+            Template = model.Template,
+            Mode = model.Mode,
             Fqdn = model.Fqdn,
             Availabilities = model.Availabilities,
-            BackupFrequency =  model.BackupFrequency,
+            BackupFrequency = model.BackupFrequency,
             ApplicationDate = model.ApplicationDate,
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
             Status = model.Status,
             Reason = model.Reason,
-            Ports = /*model.Ports.Select(x => new Port(x, x.ToString())).ToList()*/ null,
-            Host = null,
+            Ports = /*model.Ports.Select(x => new Port(x, x.ToString())).ToList()*/new List<Port>(),
+            Host = host,
             Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
-            Account = null,
-            Requester = null,
-            User = null
+            Account = account,
+            Requester = requester,
+            User = user,
+            Name = model.Name,
+            HasVpnConnection = model.hasVpnConnection,
+            Specifications = new Domain.Common.Specifications(memory: model.Specifications.Memory, storage: model.Specifications.Storage)
         };
         return args;
     }
@@ -136,7 +144,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             Ports = x.Ports.Select(y => new PortDto { Number = y.Number, Service = y.Service }).ToList(),
             // specifications may be wrong
             Specification = new SpecificationsDto() { Memory = x.Specifications.Memory, Storage = x.Specifications.Storage, VirtualProcessors = x.Specifications.Processors },
-            Host = (x.Host != null ? new HostDto.Index() { Id = x.Host.Id, Name = x.Host.Name } : null),
+            Host = new HostDto.Index() { Id = x.Host.Id, Name = x.Host.Name },
             Credentials = x.Credentials.Select(y => new CredentialsDto { Username = y.Username, Role = y.Role, PasswordHash = y.PasswordHash }).ToList(),
             Account = new AccountDto.Index() { Id = x.Account.Id, Email = x.Account.Email, Firstname = x.Account.Firstname, Lastname = x.Account.Lastname, IsActive = x.Account.IsActive, Role = x.Account.Role },
             Requester = new CustomerDto.Index() { Id = x.Requester.Id, Name = (x.Requester.ContactPerson.Firstname + " " + x.Requester.ContactPerson.Lastname), Email = x.Requester.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.Requester.GetType().ToString()) },
@@ -156,7 +164,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             query = query.Where(x => x.Fqdn.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
         if (request.IsUnfinished)
         {
-            query = query.Where(x => x.Status == Status.InProgress || x.Status==Status.Requested);
+            query = query.Where(x => x.Status == Status.InProgress || x.Status == Status.Requested);
         }
         response.TotalAmount = query.Count();
 

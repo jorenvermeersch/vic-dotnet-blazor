@@ -1,21 +1,19 @@
-﻿using Domain.Hosts;
+﻿using Domain.Common;
+using Domain.Hosts;
 using Domain.VirtualMachines;
-using Fakers.Hosts;
 using Services.FakeInitializer;
 using Shared.Hosts;
-using Shared.Ports;
 using Shared.VirtualMachines;
-using Domain.Common;
 
 namespace Services.Hosts;
 
 public class FakeHostService : IHostService
 {
-    private static readonly List<Server> hosts = new List<Server>();
+    public static List<Server> Hosts { get; private set; } = new List<Server>();
 
-    static FakeHostService() 
+    static FakeHostService()
     {
-        hosts = FakeInitializerService.FakeHosts ?? new List<Server>();
+        Hosts = FakeInitializerService.FakeHosts ?? new List<Server>();
     }
 
     public async Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
@@ -30,26 +28,26 @@ public class FakeHostService : IHostService
                 model.Specifications.Storage, model.Specifications.Memory
             ), new HashSet<VirtualMachine>())
         {
-            Id = hosts.Max(x => x.Id) + 1,
+            Id = Hosts.Max(x => x.Id) + 1,
         };
 
         response.HostId = host.Id;
 
-        hosts.Add(host);
+        Hosts.Add(host);
         return response;
     }
 
     public async Task DeleteAsync(HostRequest.Delete request)
     {
-        var host = hosts.SingleOrDefault(x => x.Id == request.HostId);
+        var host = Hosts.SingleOrDefault(x => x.Id == request.HostId);
         if (host != null)
-            hosts.Remove(host);
+            Hosts.Remove(host);
     }
 
     public async Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
     {
         HostResponse.Edit response = new();
-        var host = hosts.SingleOrDefault(x => x.Id == request.HostId);
+        var host = Hosts.SingleOrDefault(x => x.Id == request.HostId);
 
         if (host == null)
         {
@@ -73,7 +71,7 @@ public class FakeHostService : IHostService
     {
         HostResponse.GetDetail response = new();
 
-        response.Host = hosts.Where(x => x.Id == request.HostId).Select(x => new HostDto.Detail
+        response.Host = Hosts.Where(x => x.Id == request.HostId).Select(x => new HostDto.Detail
         {
             Id = x.Id,
             Name = x.Name,
@@ -83,16 +81,17 @@ public class FakeHostService : IHostService
                 Fqdn = y.Fqdn,
                 Status = y.Status,
             }).ToList(),
-            RemainingResources = new SpecificationsDto() 
-            { 
+            RemainingResources = new SpecificationsDto()
+            {
                 Memory = x.RemainingResources.Memory,
-                Storage = x.RemainingResources.Storage, 
-                VirtualProcessors = x.RemainingResources.Processors 
+                Storage = x.RemainingResources.Storage,
+                VirtualProcessors = x.RemainingResources.Processors
             },
-            Specifications = new HostSpecificationsDto() {
+            Specifications = new HostSpecificationsDto()
+            {
                 Memory = x.Specifications.Memory,
                 Storage = x.Specifications.Storage,
-                Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Key.Cores, Name = y.Key.Name, Threads = y.Key.Threads}, y.Value)).ToList()
+                Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Key.Cores, Name = y.Key.Name, Threads = y.Key.Threads }, y.Value)).ToList()
             }
         }).SingleOrDefault() ?? new HostDto.Detail();
 
@@ -102,7 +101,7 @@ public class FakeHostService : IHostService
 
     public async Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request)
     {
-        var query = hosts.AsQueryable();
+        var query = Hosts.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
