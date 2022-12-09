@@ -56,15 +56,25 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Regelmaat"));
 
         // TODO: Not objects, but Id of request, user and account are given!
-        /*        RuleFor(x => x.Requester)
-                    .Cascade(CascadeMode.StopOnFirstFailure)
-                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Aanvrager"));
-                RuleFor(x => x.User)
-                    .Cascade(CascadeMode.StopOnFirstFailure)
-                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
-                RuleFor(x => x.Account)
-                    .Cascade(CascadeMode.StopOnFirstFailure)
-                    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
-                RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());*/
+        RuleFor(x => x.RequesterId)
+            .Cascade(CascadeMode.StopOnFirstFailure)
+            .GreaterThan(0).WithMessage(FormMessages.NOTEMPTY("Aanvrager"));
+        RuleFor(x => x.UserId)
+            .Cascade(CascadeMode.StopOnFirstFailure)
+            .GreaterThan(0).WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
+        RuleFor(x => x.AdministratorId)
+            .Cascade(CascadeMode.StopOnFirstFailure)
+            .GreaterThan(0).WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
+        RuleFor(x => x.HostId)
+            .Cascade(CascadeMode.StopOnFirstFailure)
+            .GreaterThan(0).WithMessage(FormMessages.NOTEMPTY("Host"));
+
+        //RuleFor(x => x.UserId)
+        //    .Cascade(CascadeMode.StopOnFirstFailure)
+        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
+        //RuleFor(x => x.AdministratorId)
+        //    .Cascade(CascadeMode.StopOnFirstFailure)
+        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
+        //RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());
     }
 }

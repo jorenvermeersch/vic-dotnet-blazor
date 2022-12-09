@@ -11,7 +11,7 @@ public static class CustomerFaker
 
     public class ExternalCustomerFaker : EntityFaker<ExternalCustomer>
     {
-        public ExternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl")
+        public ExternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl") : base(Id: 1)
         {
             var types = new[] { "Voka", "Unizo" };
             List<ContactPerson> contacts = fakeContactPersons;
@@ -28,7 +28,7 @@ public static class CustomerFaker
 
     public class InternalCustomerFaker : EntityFaker<InternalCustomer>
     {
-        public InternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl")
+        public InternalCustomerFaker(List<ContactPerson> fakeContactPersons, string locale = "nl", int id = 1) : base(Id: id)
         {
             var departments = new[] { "DIT", "DBO", "DBT" };
             var educations = new[] { "", "Toegepaste Informatica", "Bedrijfsmanagement", "Elektro-mechanica" };

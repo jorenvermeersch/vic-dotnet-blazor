@@ -31,7 +31,7 @@ public partial class Create
     private CredentialsDto? newCredential = new();
     //private string selectedAvailability;
     private string _customcss = "background-color: white";
-    
+
 
     public List<string> Backups { get; set; } = Enum.GetNames(typeof(BackupFrequency)).ToList();
     public List<string> Modes { get; set; } = Enum.GetNames(typeof(Mode)).ToList();
@@ -89,7 +89,7 @@ public partial class Create
     }
 
     //STATUS
-    private Dictionary<string, string> MakeStatusItems() => Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x =>localizer[ x.ToString()].ToString(), x => x.ToString());
+    private Dictionary<string, string> MakeStatusItems() => Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
     private void SetStatusValue(string value) => VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), value);
 
     //MODE
@@ -99,14 +99,14 @@ public partial class Create
     //TEMPLATE
     private Dictionary<string, string> MakeTemplateItems() => Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
     private void SetTemplateValue(string value) => VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), value);
-    
+
     //BACKUPFREQUENCY
     private Dictionary<string, string> MakeBackUpFrequencyItems() => Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
     private void SetBackUpFrequencyValue(string value) => VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), value);
 
     //AVAILABILITIES
     private Dictionary<string, string> MakeAvailibilityItems() => Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => localizer![x.ToString()].ToString(), x => x.ToString());
-    private HashSet<Availability> chosenAvailabilities= new();
+    private HashSet<Availability> chosenAvailabilities = new();
     private void SetAvailabilityValue(string value)
     {
         chosenAvailabilities.Add((Availability)Enum.Parse(typeof(Availability), value, true));
@@ -121,11 +121,11 @@ public partial class Create
     private void SetPortValue(string value)
     {
         var port = JsonConvert.DeserializeObject<PortDto>(value)!;
-        if (!selectedPorts.Where(x=>x.Service == port.Service).Any())
+        if (!selectedPorts.Where(x => x.Service == port.Service).Any())
         {
             selectedPorts.Add(port);
         }
-        
+
     }
     public void RemovePortFromList(PortDto port)
     {
@@ -140,7 +140,7 @@ public partial class Create
     }
 
     //TODO - REQUESTER & USER (Key has dupplicates?)
-    private Dictionary<string, string> MakeCustomerItems() => Customers.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
+    private Dictionary<string, string> MakeCustomerItems() => Customers.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
     private void SetRequesterValue(string value)
     {
         VirtualMachine.RequesterId = JsonConvert.DeserializeObject<CustomerDto.Index>(value)!.Id;
@@ -174,7 +174,7 @@ public partial class Create
     {
 
         VirtualMachine.Credentials = credentialList;
-        VirtualMachine.Ports = selectedPorts.Select(x=>x.Number).ToList();
+        VirtualMachine.Ports = selectedPorts.Select(x => x.Number).ToList();
         VirtualMachine.Availabilities = chosenAvailabilities.ToList();
 
         VirtualMachineResponse.Create response = await VirtualMachineService.CreateAsync(new VirtualMachineRequest.Create

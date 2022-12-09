@@ -91,12 +91,12 @@
         <div class="one-third">
             <Title Text="Gebruikers"></Title>
 
-            @*<CustomDropDown Label="Aanvrager" Items="@MakeCustomerItems()" Action="@SetRequesterValue" />
+            <CustomDropDown Label="Aanvrager" Items="@MakeCustomerItems()" Action="@SetRequesterValue" />
             <ValidationMessage For=@(() => VirtualMachine.RequesterId) />
             <CustomDropDown Label="Gebruiker" Items="@MakeCustomerItems()" Action="@SetUserValue" />
-            <ValidationMessage For=@(() => VirtualMachine.UserId) />*@
+            <ValidationMessage For=@(() => VirtualMachine.UserId) />
 
-            <CustomDropDown Label="Gebruiker" Items="@MakeAccountItems()" Action="@SetAccountValue" />
+            <CustomDropDown Label="Verantwoordelijke" Items="@MakeAccountItems()" Action="@SetAccountValue" />
             <ValidationMessage For=@(() => VirtualMachine.AdministratorId) />
 
             <Title Text="Logingegevens" />
