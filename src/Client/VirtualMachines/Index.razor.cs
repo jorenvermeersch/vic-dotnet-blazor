@@ -31,6 +31,11 @@ public partial class Index
         selectedPage = Page > 0 ? Page : 1;
     }
 
+    private async Task ShowMoreDetails()
+    {
+        NavigationManager.NavigateTo("/virtual-machine/advanced-list");
+    }
+
     private async Task ClickHandler(int pageNr)
     {
         Page= pageNr;

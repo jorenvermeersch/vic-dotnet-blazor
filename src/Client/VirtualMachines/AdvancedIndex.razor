@@ -1,6 +1,7 @@
 ﻿@page "/virtual-machine/advanced-list"
 @attribute [Authorize]
 
+
 <div class="center-table">
     <div class="table-wrapper">
         <MudTable Style="width: 100%" Items="@virtualMachines" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Shared.VirtualMachines.VirtualMachineDto.Detail,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
@@ -27,26 +28,33 @@
                 <MudTh>Memory</MudTh>
                 <MudTh>Storage</MudTh>
                 <MudTh>Host</MudTh>
-
+                <MudTh>Account</MudTh>
+                <MudTh>Requester</MudTh>
+                <MudTh>User</MudTh>
+                <MudTh>hasVpnConnection</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Fqdn">@context.Fqdn</MudTd>
-                <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
-                <MudTd DataLabel="Id">@context.Name</MudTd>
-                <MudTd DataLabel="Id">@context.Template.ToString()</MudTd>
-                <MudTd DataLabel="Id">@context.Mode.ToString()</MudTd>
-                <MudTd DataLabel="Id">@string.Join(", ", context.Availabilities)</MudTd>
-                <MudTd DataLabel="Id">@context.BackupFrequenty.ToString()</MudTd>
-                <MudTd DataLabel="Id">@context.ApplicationDate</MudTd>
-                <MudTd DataLabel="Id">@context.TimeSpan.StartDate</MudTd>
-                <MudTd DataLabel="Id">@context.TimeSpan.EndDate</MudTd>
-                <MudTd DataLabel="Id">@context.Reason</MudTd>
-                <MudTd DataLabel="Id">@string.Join(", ", context.Ports)</MudTd>
-                <MudTd DataLabel="Id">@context.Specification.VirtualProcessors</MudTd>
-                <MudTd DataLabel="Id">@context.Specification.Memory</MudTd>
-                <MudTd DataLabel="Id">@context.Specification.Storage</MudTd>
-                <MudTd DataLabel="Id">@context.Host.Name</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Id</MudTd>
+                <MudTd Style="@style" DataLabel="Fqdn">@context.Fqdn</MudTd>
+                <MudTd Style="@style" DataLabel="Status">@context.Status.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Name</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Template.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Mode.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@string.Join(", ", context.Availabilities)</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.BackupFrequenty.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.ApplicationDate</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.TimeSpan.StartDate</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.TimeSpan.EndDate</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Reason</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@string.Join(", ", context.Ports.Select(x => x.Service))</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Specification.VirtualProcessors</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Specification.Memory</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Specification.Storage</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Host.Name</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Account.Firstname @context.Account.Lastname</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.Requester.Name</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.User.Name</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@context.hasVpnConnection</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />
@@ -54,3 +62,7 @@
         </MudTable>
     </div>
 </div>
+
+@code{
+    private string style = "white-space: nowrap";
+}
