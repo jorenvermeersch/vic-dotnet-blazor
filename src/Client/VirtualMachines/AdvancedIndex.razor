@@ -1,0 +1,27 @@
+﻿@page "/virtual-machine/advanced-list"
+@attribute [Authorize]
+
+<div class="center-table">
+    <div class="table-wrapper">
+        <MudTable Style="width: 100%" Items="@virtualMachines" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Shared.VirtualMachines.VirtualMachineDto.Index,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Virtuele machines</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Fqdn</MudTh>
+                <MudTh>Status</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Fqdn">@context.Fqdn</MudTd>
+                <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </div>
+</div>

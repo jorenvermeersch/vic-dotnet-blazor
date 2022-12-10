@@ -14,7 +14,7 @@ public partial class Create
 
     [Inject] public IAccountService AccountService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
-    [Inject] public IStringLocalizer<Shared.Resources.Resource> Localizer { get; set; } = default!;
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> Localizer { get; set; } = default!;
 
 
     private List<string> roles = Enum.GetNames(typeof(Role)).ToList();

@@ -18,7 +18,7 @@ public partial class Create
     [Inject] public IAccountService AccountService { get; set; } = default!;
     [Inject] public IPortService PortService { get; set; } = default!;
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
-    [Inject] public IStringLocalizer<Shared.Resources.Resource> localizer { get; set; } = default!;
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> localizer { get; set; } = default!;
     [Inject] public NavigationManager? Navigation { get; set; }
 
     private EditForm? Editform { get; set; } = new();

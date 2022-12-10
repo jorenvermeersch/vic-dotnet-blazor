@@ -7,7 +7,7 @@ namespace Client._Pages;
 public partial class Index
 {
     [Inject] public IVirtualMachineService? VirtualMachineService { get; set; }
-    [Inject] public IStringLocalizer<Client.Shared.Resources.Resource> localizer { get; set; }
+    [Inject] public IStringLocalizer<Client.SharedFiles.Resources.Resource> localizer { get; set; }
 
     string _startLabel = "24/10", _endLabel = "30/10";
     private List<VirtualMachineDto.Index> virtualMachines = new();

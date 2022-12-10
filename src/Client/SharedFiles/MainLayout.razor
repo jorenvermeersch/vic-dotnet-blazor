@@ -12,12 +12,9 @@
     @Body
 </main>
 
-@code {
-    private string _currentUrl = "";
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
-    protected override void OnInitialized()
-    {
-        _currentUrl = NavigationManager.Uri;
-    }
-}
+
 

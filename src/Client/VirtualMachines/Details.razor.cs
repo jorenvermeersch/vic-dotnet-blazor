@@ -9,7 +9,7 @@ public partial class Details
 {
     [Inject] private IVirtualMachineService? VirtualMachineService { get; set; }
     [Inject] private NavigationManager? Navigation { get; set; }
-    [Inject] private IStringLocalizer<Shared.Resources.Resource>? localizer { get; set; }
+    [Inject] private IStringLocalizer<SharedFiles.Resources.Resource>? localizer { get; set; }
     [Parameter] public long Id { get; set; }
 
     //Model
