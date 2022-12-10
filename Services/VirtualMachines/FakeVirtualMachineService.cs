@@ -182,8 +182,42 @@ public class FakeVirtualMachineService : IVirtualMachineService
         return response;
     }
 
+    public async Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
+    {
+        VirtualMachineResponse.GetAllDetails response = new();
+        var query = machines.AsQueryable();
+
+        response.TotalAmount = query.Count();
+        response.VirtualMachines = query.Select(x => new VirtualMachineDto.Detail
+        {
+            Id = x.Id,
+            Fqdn = x.Fqdn,
+            Status = x.Status,
+            Name = x.Name,
+            Template = x.Template,
+            Mode = x.Mode,
+            Availabilities = x.Availabilities.Select(x => x.ToString()).ToList() ?? new List<string>(),
+            BackupFrequenty = x.BackupFrequency,
+            ApplicationDate = x.ApplicationDate,
+            TimeSpan = new TimeSpanDto() { StartDate = x.TimeSpan.StartDate, EndDate = x.TimeSpan.EndDate },
+            Reason = x.Reason,
+            Ports = x.Ports.Select(y => new PortDto { Number = y.Number, Service = y.Service }).ToList(),
+            // specifications may be wrong
+            Specification = new SpecificationsDto() { Memory = x.Specifications.Memory, Storage = x.Specifications.Storage, VirtualProcessors = x.Specifications.Processors },
+            Host = new HostDto.Index() { Id = x.Host.Id, Name = x.Host.Name },
+            Credentials = x.Credentials.Select(y => new CredentialsDto { Username = y.Username, Role = y.Role, PasswordHash = y.PasswordHash }).ToList(),
+            Account = new AccountDto.Index() { Id = x.Account.Id, Email = x.Account.Email, Firstname = x.Account.Firstname, Lastname = x.Account.Lastname, IsActive = x.Account.IsActive, Role = x.Account.Role },
+            Requester = new CustomerDto.Index() { Id = x.Requester.Id, Name = (x.Requester.ContactPerson.Firstname + " " + x.Requester.ContactPerson.Lastname), Email = x.Requester.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.Requester.GetType().ToString()) },
+            User = new CustomerDto.Index() { Id = x.User.Id, Name = (x.User.ContactPerson.Firstname + " " + x.User.ContactPerson.Lastname), Email = x.User.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.User.GetType().ToString()) },
+            hasVpnConnection = x.HasVpnConnection
+        }).ToList();
+        return response;
+    }
+
     public Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request)
     {
         throw new NotImplementedException();
     }
+
+    
 }

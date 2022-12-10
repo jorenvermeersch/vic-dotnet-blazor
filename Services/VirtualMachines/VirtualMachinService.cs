@@ -23,6 +23,11 @@ public class VirtualMachinService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
+    public Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         throw new NotImplementedException();

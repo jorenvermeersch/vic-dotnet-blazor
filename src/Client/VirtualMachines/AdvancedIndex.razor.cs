@@ -12,21 +12,21 @@ public partial class AdvancedIndex
     private bool bordered = false;
     private string searchString1 = "";
 
-    private VirtualMachineDto.Index selectedItem1 = null;
-    private IEnumerable<VirtualMachineDto.Index> virtualMachines = new List<VirtualMachineDto.Index>();
+    private VirtualMachineDto.Detail selectedItem1 = null;
+    private IEnumerable<VirtualMachineDto.Detail> virtualMachines = new List<VirtualMachineDto.Detail>();
 
     [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
 
 
     protected async override Task OnInitializedAsync()
     {
-        VirtualMachineResponse.GetIndex response = await VirtualMachineService.GetIndexAsync(new VirtualMachineRequest.GetIndex()) ?? new VirtualMachineResponse.GetIndex();
+        VirtualMachineResponse.GetAllDetails response = await VirtualMachineService.GetAllDetailsAsync(new VirtualMachineRequest.GetAllDetails()) ?? new VirtualMachineResponse.GetAllDetails();
         virtualMachines = response.VirtualMachines;
     }
 
-    private bool FilterFunc1(VirtualMachineDto.Index element) => FilterFunc(element, searchString1);
+    private bool FilterFunc1(VirtualMachineDto.Detail element) => FilterFunc(element, searchString1);
 
-    private bool FilterFunc(VirtualMachineDto.Index element, string searchString)
+    private bool FilterFunc(VirtualMachineDto.Detail element, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;

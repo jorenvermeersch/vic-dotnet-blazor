@@ -16,6 +16,11 @@ public static class VirtualMachineRequest
         public long MachineId { get; set; }
     }
 
+    public class GetAllDetails
+    {
+
+    }
+
     public class Delete
     {
         public long MachineId { get; set; }

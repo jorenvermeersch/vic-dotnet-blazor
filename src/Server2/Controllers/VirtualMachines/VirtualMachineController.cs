@@ -15,6 +15,17 @@ public class VirtualMachineController : ControllerBase
         this.virtualMachineService = virtualMachineService;
     }
 
+    //api/virtual-machines/alldetails
+
+    [SwaggerOperation("Returns a list of virtual machines with details.")]
+    [HttpGet("alldetails")]
+    public async Task<VirtualMachineResponse.GetAllDetails> GetIndexAsync([FromQuery] VirtualMachineRequest.GetAllDetails request)
+    {
+        VirtualMachineResponse.GetAllDetails virtualMachineResponse = await virtualMachineService.GetAllDetailsAsync(new VirtualMachineRequest.GetAllDetails());
+        return virtualMachineResponse;
+    }
+
+
     [SwaggerOperation("Returns a list of virtual machines.")]
     [HttpGet]
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync([FromQuery] VirtualMachineRequest.GetIndex request)

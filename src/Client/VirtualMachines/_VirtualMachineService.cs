@@ -29,6 +29,13 @@ public class VirtualMachineService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
+    public async Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
+    {
+        var queryParameters = request.GetQueryString();
+        var response = await client.GetFromJsonAsync<VirtualMachineResponse.GetAllDetails>($"api/virtual-machines/alldetails");
+        return response!;
+    }
+
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         var queryParameters = request.GetQueryString();
