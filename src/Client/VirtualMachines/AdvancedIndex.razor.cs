@@ -13,7 +13,7 @@ public partial class AdvancedIndex
     private string searchString1 = "";
 
     private VirtualMachineDto.Detail selectedItem1 = null;
-    private IEnumerable<VirtualMachineDto.Detail> virtualMachines = new List<VirtualMachineDto.Detail>();
+    private IEnumerable<VirtualMachineDto.Detail>? virtualMachines = null;
 
     [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
 
