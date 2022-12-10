@@ -34,6 +34,26 @@ public partial class AdvancedIndex
             return true;
         if (element.Status.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
+        if (element.Template.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Mode.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.BackupFrequenty.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Reason.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (string.Join(", ", element.Ports.Select(x => x.Service)).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Host.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ((element.Account.Firstname + element.Account.Lastname).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Requester.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.User.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
         return false;
     }
 
