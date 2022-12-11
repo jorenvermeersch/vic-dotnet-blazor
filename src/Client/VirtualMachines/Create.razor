@@ -1,12 +1,12 @@
 ﻿@page "/virtual-machine/add"
+@using Blazored.FluentValidation
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master, Administrator")]
 
 <PageTitle>Virtuele Machine Toevoegen</PageTitle>
 
-
 <EditForm OnValidSubmit="@HandleValidSubmit" Model="@VirtualMachine">
-    <FluentValidationValidator TValidator="VirtualMachineValidation" />
+    <FluentValidationValidator />
     <div class="context-menu">
         <span class="context-menu-label">
             <TitlePage IconString="desktop" Type="Virtuele Machine" Mutation="Toevoegen" />
@@ -18,45 +18,38 @@
             <Title Text="Configuratie" />
             <RequiredInput Type="@Input.InputType.TEXT" Label="Naam" @bind-Value="VirtualMachine.Name" For="@(()=>VirtualMachine.Name)" />
             <RequiredInput Type="@Input.InputType.TEXT" Label="FQDN" @bind-Value="VirtualMachine.Fqdn" For="@(()=>VirtualMachine.Fqdn)" />
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Mode" Items="@Modes" @bind-Value="VirtualMachine.Mode" For="@(()=>VirtualMachine.Mode)" />
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Template" Items="@Templates" @bind-Value="VirtualMachine.Template" For="@(()=>VirtualMachine.Template)" />
+
+            <CustomDropDown Label="Mode" Items="@MakeModeItems()" Action="@SetModeValue" />
+            <ValidationMessage For=@(() => VirtualMachine.Status) />
+
+            <CustomDropDown Label="Template" Items="@MakeTemplateItems()" Action="@SetTemplateValue" />
+            <ValidationMessage For=@(() => VirtualMachine.Status) />
+
 
 
             <RequiredInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachine.Reason" For="@(()=>VirtualMachine.Reason)" />
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Status" Items="@Statuses" @bind-Value="VirtualMachine.Status" For="@(()=>VirtualMachine.Status)" />
+
+            <CustomDropDown Label="Status" Items="@MakeStatusItems()" Action="@SetStatusValue" />
+            <ValidationMessage For=@(() => VirtualMachine.Status) />
 
             <Title Text="Poorten" />
-            
-            <EditForm Model="@Port" Context="PortContext" OnValidSubmit="@AddPortToList">
-                
-                <div>
-                    <div class="input-container" style="margin-top: 10px">
-                        <select @bind="SelectedPort" class="input" style="@_customcss" type="text" placeholder="geef een poort in">
-                            <option value="" disabled selected hidden>Geef een poort in </option>
-                            @foreach (var item in PortOptions)
-                            {
-                                <option value="@item">@item</option>
-                            }
-                        </select>
-                        <button type="submit" style="margin-left:10px;" @onclick="AddPortToList"> + </button>
-                    </div>
-                </div>
-            </EditForm>
+
+            <CustomDropDown Label="Poort" Items="@MakePortItems()" Action="@SetPortValue" />
+
             <div class="buttonList">
-                @foreach (var item in _ports)
+                @foreach (var item in selectedPorts)
                 {
-                    <PortButton Text="@item" OnClick="@(() => RemovePortFromList(item))" />
+                    <PortButton Text="@item.Service" OnClick="@(() => RemovePortFromList(item))" />
                 }
             </div>
 
             <CustomCheckbox Label="VPN" @bind-Value="VirtualMachine.hasVpnConnection"></CustomCheckbox>
 
 
-
-
-
             <Title Text="Specificaties" />
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Host" Items="@Hosts" @bind-Value="Host" For="@(()=>Host)" />
+            <CustomDropDown Label="Host" Items="@MakeHostItems()" Action="@SetHostValue" />
+            <ValidationMessage For=@(() => VirtualMachine.HostId) />
+
             <CustomInputNumber Label="vCPUs" @bind-Value="@VirtualMachine.Specifications.VirtualProcessors" For="@(()=>VirtualMachine.Specifications.VirtualProcessors)" Required=true />
             <CustomInputNumber Label="Geheugen" @bind-Value="@VirtualMachine.Specifications.Memory" For="@(()=>VirtualMachine.Specifications.Memory)" Required=true />
             <CustomInputNumber Label="Opslag" @bind-Value="@VirtualMachine.Specifications.Storage" For="@(()=>VirtualMachine.Specifications.Storage)" Required=true />
@@ -79,31 +72,36 @@
             @foreach(var availability in Availabilities){
             <AvailabilityOption DayOfWeek="Availability.Wednesday" PartOfDay="PartOfDay.FullDay" customCss="@_customcss" />
             }*@
+            <CustomDropDown Label="Beschikbaarheden" Items="@MakeAvailibilityItems()" Action="@SetAvailabilityValue" />
+
+            <div class="buttonList">
+                @foreach (var item in chosenAvailabilities)
+                {
+                    <PortButton Text="@item.ToString()" OnClick="@(() => RemoveAvailabilityFromList(item))" />
+                }
+            </div>
 
 
             <Title Text="Back-ups" />
-            <RequiredInput PlaceHolder="" Items="@Backups" Type="@Input.InputType.SELECT" Label="Regelmaat" @bind-Value="@VirtualMachine.BackupFrequency" For="@(()=>VirtualMachine.BackupFrequency)" />
+            <CustomDropDown Label="Status" Items="@MakeBackUpFrequencyItems()" Action="@SetBackUpFrequencyValue" />
+            <ValidationMessage For=@(() => VirtualMachine.BackupFrequency) />
+            
         </div>
 
         <div class="one-third">
             <Title Text="Gebruikers"></Title>
-            @*<RequiredInput Type="@Input.InputType.SELECT" Label="Aanvrager" Items="@Customers" @bind-Value="@VirtualMachine.Requester" For="@(()=>VirtualMachine.Requester)" />
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Gebruiker" Items="@Customers" @bind-Value="@VirtualMachine.User" For="@(()=>VirtualMachine.User)" />
 
-            <Title Text="Verantwoordelijke"></Title>
-            <RequiredInput Type="@Input.InputType.SELECT" Label="Verantwoordelijke" Items="@Accounts" @bind-Value="@VirtualMachine.Account" For="@(()=>VirtualMachine.Account)" />*@
+            <CustomDropDown Label="Aanvrager" Items="@MakeCustomerItems()" Action="@SetRequesterValue" />
+            <ValidationMessage For=@(() => VirtualMachine.RequesterId) />
+            <CustomDropDown Label="Gebruiker" Items="@MakeCustomerItems()" Action="@SetUserValue" />
+            <ValidationMessage For=@(() => VirtualMachine.UserId) />
 
+            <CustomDropDown Label="Verantwoordelijke" Items="@MakeAccountItems()" Action="@SetAccountValue" />
+            <ValidationMessage For=@(() => VirtualMachine.AdministratorId) />
 
-            @*            <ChildContent  Context="" />
-            <GenericSelect Items="@Account">
-
-            @context
-
-            </GenericSelect>
-            *@
             <Title Text="Logingegevens" />
             <EditForm Context="CredentialContext" OnValidSubmit="@AddCredential" Model="@newCredential">
-                <FluentValidationValidator TValidator="CredentialValidation" />
+                <FluentValidationValidator/>
                 <AddInput Type="Input.InputType.TEXT" Label="Username" @bind-Value="newCredential.Username" For="@(()=> newCredential.Username)" Margin="true" />
                 <AddInput Type="Input.InputType.TEXT" Label="Role" @bind-Value="newCredential.Role" For="@(()=> newCredential.Role)" Margin="true" />
                 <AddInput Type="Input.InputType.TEXT" Label="PasswordHash" @bind-Value="newCredential.PasswordHash" For="@(()=> newCredential.PasswordHash)" Margin="true" />
@@ -123,6 +121,7 @@
 
     </div>
 </EditForm>
+
 
 
 

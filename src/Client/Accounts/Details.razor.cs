@@ -13,7 +13,7 @@ public partial class Details
 
     [Inject] public IAccountService? AccountService { get; set; }
     [Inject] public NavigationManager? Navigation { get; set; }
-    [Inject] public IStringLocalizer<Shared.Resources.Resource>? localizer { get; set; }
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource>? localizer { get; set; }
 
 
 

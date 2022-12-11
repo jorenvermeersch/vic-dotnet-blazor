@@ -35,11 +35,11 @@ public class AccountController : ControllerBase {
     }
 
     [SwaggerOperation("Edits accounts.")]
-    [HttpPut("{accountId}")]
-    public async Task<IActionResult> EditAsync([FromBody] AccountDto.Mutate model, long accountId)
+    [HttpPut]
+    public async Task<IActionResult> EditAsync( AccountRequest.Edit request)
     {
-        AccountResponse.Edit response = await accountService.EditAsync(new AccountRequest.Edit { Account = model, AccountId = accountId });
-        return Accepted(nameof(EditAsync), response.AccountId);
+        AccountResponse.Edit response = await accountService.EditAsync(request);
+        return Accepted(nameof(EditAsync), response);
     }
 
     [SwaggerOperation("Deletes accounts.")]

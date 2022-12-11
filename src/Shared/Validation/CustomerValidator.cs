@@ -17,21 +17,10 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
             .NotEmpty().When(customer => customer.CustomerType == "Intern").WithMessage(FormMessages.NOTEMPTY("Departement"));
         RuleFor(x => x.Institution)
             .NotEmpty().When(customer => customer.CustomerType == "Intern").WithMessage(FormMessages.NOTEMPTY("Institutie"));
+
         RuleFor(x => x.ContactPerson)
             .NotEmpty().SetValidator(new ContactPersonValidator());
-
-        RuleFor(x => x.BackupContactPerson.Firstname)
-            .Matches(Validation.Name).WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")));
-        RuleFor(x => x.BackupContactPerson.Lastname)
-            .Matches(Validation.Name).WithMessage(string.Format(FormMessages.INVALIDNAME("Voornaam")))
-            .NotEmpty()
-            .When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
-        RuleFor(x => x.BackupContactPerson.Email)
-            .NotEmpty()
-            .EmailAddress()
-            .When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
-        RuleFor(x => x.BackupContactPerson.Phonenumber)
-            .Matches(Validation.PhoneNumber)
-            .When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
+        RuleFor(x => x.BackupContactPerson)
+            .NotEmpty().SetValidator(new ContactPersonValidator()).When(customer => !string.IsNullOrEmpty(customer.BackupContactPerson.Firstname));
     }
 }

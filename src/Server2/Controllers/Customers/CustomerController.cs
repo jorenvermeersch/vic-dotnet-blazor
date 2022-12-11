@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Customers;
 using Swashbuckle.AspNetCore.Annotations;
@@ -40,16 +41,18 @@ public class CustomerController : ControllerBase
 
     [SwaggerOperation("Edits an existing customer.")]
     [HttpPut]
-    public async Task<CustomerResponse.Edit> Edit(CustomerRequest.Edit request)
+    public async Task<IActionResult> EditAsync(CustomerRequest.Edit request)
     {
-        return await customerService.EditAsync(request);
+        var response = await customerService.EditAsync(request);
+        return Accepted(nameof(EditAsync), response);
     }
 
     [SwaggerOperation("Deletes an existing customer.")]
     [HttpDelete("{CustomerId}")]
-    public Task Delete([FromRoute] CustomerRequest.Delete request)
+    public async Task<IActionResult> Delete([FromRoute] CustomerRequest.Delete request)
     {
-        return customerService.DeleteAsync(request);
+        await customerService.DeleteAsync(request);
+        return NoContent();
     }
 }
 

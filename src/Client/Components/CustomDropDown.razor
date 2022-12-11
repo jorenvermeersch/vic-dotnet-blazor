@@ -1,0 +1,75 @@
+﻿
+
+
+<div>
+    <div class="input-container">
+        <label for="">
+@*            @_label
+            @if (Required)
+            {
+                <sup class="requiredinput">*</sup>
+            }*@
+            @Label: *
+        </label>
+        <div class="dropdown">
+            
+            <button type="button" class="dropdownbutton" @onclick="ToggleDropDown">@DropDownChosenItem</button>
+            <div class="dropdownitems" style=@style>
+                <input placeholder="Zoeken..." @oninput="showValidItems"/>
+                @foreach (var item in filteredItems)
+                {
+                    <button type="button" class="dropdownbuttonitem" onclick="@(() => OptionChosen(item.Key, item.Value))">@item.Key</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Dictionary<string, string> filteredItems = new();
+
+    [Parameter]
+    public Dictionary<string, string> Items { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<string> Action { get; set; } = default!;
+
+    [Parameter]
+    public string Label { get; set; } = "";
+
+    private string DropDownChosenItem { get; set; } = "Kies...";
+
+    private bool shown = false;
+    private string style = "display: none";
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine(Items);
+        filteredItems = Items;
+    }
+
+    private void ToggleDropDown()
+    {
+        shown = !shown;
+        style = shown ? "display: block" : "display: none";
+    }
+
+    private async void OptionChosen(string chosenOptionKey, string chosenOptionValue)
+    {
+        ToggleDropDown();
+        DropDownChosenItem = chosenOptionKey;
+        await Action.InvokeAsync(chosenOptionValue);
+    }
+
+    private void showValidItems(ChangeEventArgs args)
+    {
+        filteredItems = new();
+        foreach (var item in Items)
+        {
+            if (item.Key.ToLower().Contains(args.Value.ToString().ToLower()))
+            {
+                filteredItems.Add(item.Key, item.Value); 
+            }
+        }
+    }
+}

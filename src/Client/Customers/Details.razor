@@ -8,9 +8,11 @@
         <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i>
             <span>Terug</span>
         </span>
-        <span>
-            <Button Text="Beheren" Href=@string.Format("customer/{0}/edit", Id) />
-        </span>
+        <AuthorizeView Roles="Master, Administrator">
+            <span>
+                <Button Text="Beheren" Href=@string.Format("customer/{0}/edit", Id) />
+            </span>
+        </AuthorizeView>
     </div>
 </div>
 <div class="three-column-layout">

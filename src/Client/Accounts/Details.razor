@@ -9,9 +9,11 @@
             <span>Terug</span>
         </span>
         <StatusIndicator State=@(account.IsActive ? "Active" : "Inactive") />
+        <AuthorizeView Roles="Master">
         <span>
-            <Button Text="Beheren" />
+            <Button Text="Beheren" Href=@string.Format("account/{0}/edit", Id)/>
         </span>
+        </AuthorizeView>
     </div>
 </div>
 <div class="three-column-layout">

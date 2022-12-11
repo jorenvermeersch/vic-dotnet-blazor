@@ -15,6 +15,17 @@ public class VirtualMachineController : ControllerBase
         this.virtualMachineService = virtualMachineService;
     }
 
+    //api/virtual-machines/alldetails
+
+    [SwaggerOperation("Returns a list of virtual machines with details.")]
+    [HttpGet("alldetails")]
+    public async Task<VirtualMachineResponse.GetAllDetails> GetIndexAsync([FromQuery] VirtualMachineRequest.GetAllDetails request)
+    {
+        VirtualMachineResponse.GetAllDetails virtualMachineResponse = await virtualMachineService.GetAllDetailsAsync(new VirtualMachineRequest.GetAllDetails());
+        return virtualMachineResponse;
+    }
+
+
     [SwaggerOperation("Returns a list of virtual machines.")]
     [HttpGet]
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync([FromQuery] VirtualMachineRequest.GetIndex request)
@@ -33,25 +44,25 @@ public class VirtualMachineController : ControllerBase
 
     [SwaggerOperation("Creates a new virtual malchine.")]
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] VirtualMachineDto.Mutate model)
+    public async Task<IActionResult> CreateAsync([FromBody] VirtualMachineRequest.Create request)
     {
-        VirtualMachineResponse.Create response = await virtualMachineService.CreateAsync(new VirtualMachineRequest.Create() { VirtualMachine = model });
-        return CreatedAtAction(nameof(CreateAsync), response.MachineId);
+        VirtualMachineResponse.Create response = await virtualMachineService.CreateAsync(request);
+        return CreatedAtAction(nameof(CreateAsync), response);
     }
 
     [SwaggerOperation("Edits a virtual machine.")]
-    [HttpPut("{machineId}")]
-    public async Task<IActionResult> EditAsync([FromBody] VirtualMachineDto.Mutate model, long machineId)
+    [HttpPut]
+    public async Task<IActionResult> EditAsync(VirtualMachineRequest.Edit request)
     {
-        VirtualMachineResponse.Edit response = await virtualMachineService.EditAsync(new VirtualMachineRequest.Edit() { MachineId = machineId, VirtualMachine = model });
-        return Accepted(nameof(EditAsync), response.MachineId);
+        VirtualMachineResponse.Edit response = await virtualMachineService.EditAsync(request);
+        return Accepted(nameof(EditAsync), response);
     }
 
     [SwaggerOperation("Deletes a virtual machine")]
     [HttpDelete("{machineId}")]
-    public async Task<IActionResult> Delete(int machineId)
+    public async Task<IActionResult> Delete(VirtualMachineRequest.Delete request)
     {
-        await virtualMachineService.DeleteAsync(new VirtualMachineRequest.Delete { MachineId = machineId });
+        await virtualMachineService.DeleteAsync(request);
         return NoContent();
     }
 

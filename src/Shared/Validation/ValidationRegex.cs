@@ -2,7 +2,8 @@
 
 namespace Shared.Validation;
 
-public static class Validation
+
+public static class ValidationRegex
 {
     public static Regex Name => new("^[a-zA-Z]{2}[- a-zA-Zéèçàùëüöï]*$");
     public static Regex Email => new("^\\S+@\\S+\\.\\S+$");

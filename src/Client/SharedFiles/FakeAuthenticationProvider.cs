@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
-namespace Client.Shared;
+namespace Client.Authentication;
 
 public class FakeAuthenticationProvider : AuthenticationStateProvider
 {

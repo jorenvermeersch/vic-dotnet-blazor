@@ -9,19 +9,28 @@
             <i class="fa-solid fa-arrow-left"></i>
             <span>Terug</span>
         </span>
+        <AuthorizeView Roles="Master, Administrator">
         <span>
             <Button Text="Beheren" />
         </span>
+        </AuthorizeView>
     </div>
 </div>
 <div class="three-column-layout">
     <div class="one-third">
         <DataCard Entries="@_server.GetValueOrDefault("name")" />
-
         <Title Text="Specificaties" />
         <DataCard Entries="@_server.GetValueOrDefault("resources")" />
-        <Title Text="Overblevende specificaties" />
+        <Title Text="Resterende specificaties" />
         <DataCard Entries="@_server.GetValueOrDefault("remainingResources")" />
+
+        <Title Text="Processoren"/>
+        @foreach(var p in _processors)
+        {
+            <DataCard Entries=@p/>
+        }
+
+        
     </div>
     <div class="two-thirds">
 

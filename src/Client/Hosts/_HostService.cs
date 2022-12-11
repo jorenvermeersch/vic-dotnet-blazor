@@ -1,6 +1,8 @@
 ﻿using Client.Extensions;
+using Shared.Customers;
 using Shared.Hosts;
 using Shared.VirtualMachines;
+using System.Net;
 using System.Net.Http.Json;
 
 namespace Client.Hosts;
@@ -12,9 +14,10 @@ public class HostService : IHostService
     {
         this.client = client;
     }
-    public Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
+    public async Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
     {
-        throw new NotImplementedException();
+        var response = await client.PostAsJsonAsync($"api/hosts", request);
+        return await response.Content.ReadFromJsonAsync<HostResponse.Create>();
     }
 
     public Task DeleteAsync(HostRequest.Delete request)

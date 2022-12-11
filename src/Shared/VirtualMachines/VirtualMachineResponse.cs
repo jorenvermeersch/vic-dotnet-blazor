@@ -13,6 +13,12 @@ public class VirtualMachineResponse
         public VirtualMachineDto.Detail VirtualMachine { get; set; } = default!;
     }
 
+    public class GetAllDetails
+    {
+        public List<VirtualMachineDto.Detail> VirtualMachines { get; set; } = default!;
+        public int TotalAmount { get; set; }
+    }
+
     public class Delete
     {
     }

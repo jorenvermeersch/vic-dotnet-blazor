@@ -10,7 +10,7 @@ public partial class Create
     private CustomerDto.Mutate Customer { get; set; } = new();
 
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
-    [Inject] public NavigationManager? Navigation { get; set; }
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
 
 
     private List<string> _typesClient = Enum.GetNames(typeof(CustomerType)).ToList();
@@ -51,7 +51,6 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
-        Console.WriteLine(Customer.CustomerType);
         if (Convert.ToBoolean(Id))
         {
 

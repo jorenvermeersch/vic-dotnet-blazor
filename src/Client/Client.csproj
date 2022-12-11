@@ -7,15 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\CustomDropDown.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\CustomDropDown.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\css\variables.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.FluentValidation" Version="2.1.0-preview.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.10" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.0" />
+    <PackageReference Include="MudBlazor" Version="6.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Shared\Resources\Resource.Designer.cs">
+    <Compile Update="SharedFiles\Resources\Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
@@ -37,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Shared\Resources\Resource.resx">
+    <EmbeddedResource Update="SharedFiles\Resources\Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>

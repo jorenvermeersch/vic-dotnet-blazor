@@ -12,9 +12,9 @@ public class EntityFaker<TEntity> : Faker<TEntity> where TEntity : Entity
     /// Default constructor to generate an Id and set locale to 'NL' as default.
     /// </summary>
     /// <param name="locale"></param>
-    protected EntityFaker(string locale = "nl") : base(locale)
+    protected EntityFaker(string locale = "nl", int Id = 1) : base(locale)
     {
-        int id = 1;
+        int id = Id;
         RuleFor(x => x.Id, f => id++);
     }
 

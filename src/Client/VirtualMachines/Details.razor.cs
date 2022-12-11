@@ -9,7 +9,7 @@ public partial class Details
 {
     [Inject] private IVirtualMachineService? VirtualMachineService { get; set; }
     [Inject] private NavigationManager? Navigation { get; set; }
-    [Inject] private IStringLocalizer<Shared.Resources.Resource>? localizer { get; set; }
+    [Inject] private IStringLocalizer<SharedFiles.Resources.Resource>? localizer { get; set; }
     [Parameter] public long Id { get; set; }
 
     //Model
@@ -42,8 +42,8 @@ public partial class Details
         _config.Add("Template", localizer![virtualMachine.Template.ToString()]);
         _config.Add("Reden", virtualMachine.Reason);
         _specs.Add("vCPUs", virtualMachine.Specification.VirtualProcessors.ToString());
-        _specs.Add("Geheugen", virtualMachine.Specification.Memory.ToString());
-        _specs.Add("Opslag", virtualMachine.Specification.Storage.ToString());
+        _specs.Add("Geheugen", string.Format("{0} GB", virtualMachine.Specification.Memory.ToString()));
+        _specs.Add("Opslag", string.Format("{0} GB", virtualMachine.Specification.Storage.ToString()));
         //if (virtualMachine.Availabilities.Count>1){
         //    _available.Add("Beschikbaarheid", string.Join(", ", virtualMachine.Availabilities));
         //}

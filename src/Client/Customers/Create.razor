@@ -1,6 +1,5 @@
 ﻿@page "/customer/add"
 @page "/customer/{id:long}/edit"
-@using Client.Validation
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master, Administrator")]
 
@@ -8,17 +7,29 @@
 
 
  <EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit">
-     @*<FluentValidationValidator TValidator="CustomerValidator"></FluentValidationValidator>*@
+     <FluentValidationValidator/>
     <div class="context-menu">
+        
         <span class="context-menu-label">
-            <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />
+            @if (Convert.ToBoolean(Id))
+            {
+                <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />
+            }
+            else
+            {
+                <TitlePage IconString="user" Type="Klant" Mutation="Wijzigen" />
+            }
+
         </span>
-        @if(Convert.ToBoolean(Id)){
+        @if (Convert.ToBoolean(Id))
+        {
             <button type="submit">Wijzigen </button>
-        }else{
+        }
+        else
+        {
             <button type="submit">Toevoegen </button>
         }
-        
+
     </div>
     
     <div class="three-column-layout">
