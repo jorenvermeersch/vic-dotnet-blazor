@@ -33,7 +33,8 @@ public abstract class Host<T> : Machine where T : Machine
     }
     public Specifications RemainingResources { get; set; }
     public ISet<T> Machines { get; set; } = new HashSet<T>();
-    public IList<History<Host<T>, T>> History => new ReadOnlyCollection<History<Host<T>, T>>(_history);
+    public IList<History<Host<T>, T>> History =>
+        new ReadOnlyCollection<History<Host<T>, T>>(_history);
     #endregion
 
     #region Constructors

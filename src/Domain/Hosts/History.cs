@@ -27,7 +27,9 @@ public class History<T, U>
 
     private Specifications CalculateSpecificationsUsed()
     {
-        int processorsUsed, memoryUsed, storageUsed;
+        int processorsUsed,
+            memoryUsed,
+            storageUsed;
         Specifications specifications = Host.Specifications;
         Specifications remainingResources = Host.RemainingResources;
 
@@ -36,6 +38,5 @@ public class History<T, U>
         storageUsed = specifications.Storage - remainingResources.Storage;
 
         return new Specifications(processorsUsed, memoryUsed, storageUsed);
-
     }
 }
