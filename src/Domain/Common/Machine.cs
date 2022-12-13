@@ -5,15 +5,15 @@ namespace Domain.Common;
 public abstract class Machine : Entity
 {
     #region Properties
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [NotMapped]
-    public Specifications Specifications { get; set; }
+    public Specifications Specifications { get; set; } = default!;
     #endregion
 
     #region Constructors
 
-    public Machine() { }
+    protected Machine() { }
 
     public Machine(string name, Specifications specifications)
     {

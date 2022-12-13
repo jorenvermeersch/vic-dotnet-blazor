@@ -6,10 +6,11 @@ public class Specifications
     public int Processors { get; set; }
     public int Memory { get; set; }
     public int Storage { get; set; }
-    public IList<int> Values => new List<int>() { Processors, Memory, Storage };
+    public IReadOnlyList<int> Values => new List<int>() { Processors, Memory, Storage };
     #endregion
 
     #region Constructors
+    protected Specifications() { }
     public Specifications(int memory, int storage)
     {
         Memory = memory;

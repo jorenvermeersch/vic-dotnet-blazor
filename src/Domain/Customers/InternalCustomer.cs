@@ -7,11 +7,12 @@ public class InternalCustomer : Customer
 {
     #region Properties
     public Institution Institution { get; set; }
-    public string Department { get; set; }
-    public string Education { get; set; }
+    public string Department { get; set; } = default!;
+    public string Education { get; set; } = default!;
     #endregion
 
     #region Constructors
+    private InternalCustomer() { }
     public InternalCustomer(
         Institution institution,
         string department,
@@ -25,7 +26,5 @@ public class InternalCustomer : Customer
         Department = department;
         Education = education;
     }
-
-    public InternalCustomer() { }
     #endregion
 }

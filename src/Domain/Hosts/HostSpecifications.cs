@@ -13,6 +13,7 @@ public class HostSpecifications : Specifications
     #endregion
 
     #region Constructors
+    private HostSpecifications() { }
     public HostSpecifications(
         IList<KeyValuePair<Processor, int>> processors,
         int storage,
@@ -26,7 +27,6 @@ public class HostSpecifications : Specifications
     #endregion
 
     #region Methods
-
     public void AddProccessor(Processor processor, int virtualisationFactor)
     {
         Guard.Against.NegativeOrZero(virtualisationFactor, nameof(virtualisationFactor));

@@ -5,11 +5,12 @@ namespace Domain.Customers;
 public class ExternalCustomer : Customer
 {
     #region Properties
-    public string CompanyName { get; set; }
-    public string Type { get; set; }
+    public string CompanyName { get; set; } = default!;
+    public string Type { get; set; } = default!;
     #endregion
 
     #region Constructors
+    private ExternalCustomer() { }
     public ExternalCustomer(
         string name,
         string type,
@@ -21,7 +22,5 @@ public class ExternalCustomer : Customer
         CompanyName = name;
         Type = type;
     }
-
-    public ExternalCustomer() { }
     #endregion
 }

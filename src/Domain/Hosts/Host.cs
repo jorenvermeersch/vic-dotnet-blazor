@@ -1,13 +1,12 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Common;
-using System.Collections.ObjectModel;
 
 namespace Domain.Hosts;
 
 public abstract class Host<T> : Machine where T : Machine
 {
     #region Fields
-    private HostSpecifications _specifications;
+    private HostSpecifications _specifications = default!;
     private List<History<Host<T>, T>> _history = new();
     #endregion
 
@@ -31,13 +30,13 @@ public abstract class Host<T> : Machine where T : Machine
             RemainingResources = CalculateRemainingResources();
         }
     }
-    public Specifications RemainingResources { get; set; }
+    public Specifications RemainingResources { get; set; } = default!;
     public ISet<T> Machines { get; set; } = new HashSet<T>();
-    public IList<History<Host<T>, T>> History =>
-        new ReadOnlyCollection<History<Host<T>, T>>(_history);
+    public IReadOnlyList<History<Host<T>, T>> History => _history.AsReadOnly();
     #endregion
 
     #region Constructors
+    private Host() { }
     public Host(string name, HostSpecifications specifications, ISet<T>? machines)
         : base(name, specifications)
     {
@@ -143,8 +142,7 @@ public abstract class Host<T> : Machine where T : Machine
 
     public void GenerateHistory()
     {
-        History.Add(new History<Host<T>, T>(this));
+        _history.Add(new History<Host<T>, T>(this));
     }
-
     #endregion
 }
