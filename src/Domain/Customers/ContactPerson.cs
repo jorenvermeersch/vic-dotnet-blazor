@@ -13,6 +13,7 @@ public class ContactPerson : Entity
 
     #region Constructors
     private ContactPerson() { }
+
     public ContactPerson(
         string firstname,
         string lastname,

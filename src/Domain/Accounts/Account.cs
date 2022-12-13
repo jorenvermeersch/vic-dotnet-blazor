@@ -11,14 +11,14 @@ public class Account : Entity
     public string Lastname { get; set; } = default!;
     public string Email { get; set; } = default!;
     public Role Role { get; set; }
-    public string PasswordHash { get; } = default!;
+    public string PasswordHash { get; set; } = default!;
     public bool IsActive { get; set; } = default!;
     public string Department { get; set; } = default!;
     public string Education { get; set; } = default!;
     #endregion
 
     #region Constructors
-    private Account() { }
+    public Account() { } // TODO: Change to private constructor after correct database mapping. 
 
     public Account(
         string firstname,

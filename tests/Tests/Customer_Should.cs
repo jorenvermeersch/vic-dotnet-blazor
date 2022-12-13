@@ -1,6 +1,6 @@
 ﻿namespace Tests;
 
-public class CustomerTest
+public class Customer_Should
 {
     private Customer? _customer;
     private ContactPerson? _backupContactPerson;

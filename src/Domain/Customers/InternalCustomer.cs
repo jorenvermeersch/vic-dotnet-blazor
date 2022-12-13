@@ -13,6 +13,7 @@ public class InternalCustomer : Customer
 
     #region Constructors
     private InternalCustomer() { }
+
     public InternalCustomer(
         Institution institution,
         string department,

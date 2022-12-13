@@ -10,6 +10,7 @@ public class Processor : Entity
 
     #region Constructors
     private Processor() { }
+
     public Processor(string name, int cores, int threads)
     {
         Name = name;

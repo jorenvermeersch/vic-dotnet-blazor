@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-public class ServerTest
+public class Server_Should
 {
     private Server? _server;
 

@@ -11,6 +11,7 @@ public class ExternalCustomer : Customer
 
     #region Constructors
     private ExternalCustomer() { }
+
     public ExternalCustomer(
         string name,
         string type,

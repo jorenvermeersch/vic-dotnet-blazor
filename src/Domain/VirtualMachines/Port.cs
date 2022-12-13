@@ -9,6 +9,7 @@ public class Port : Entity
 
     #region Constructors
     private Port() { }
+
     public Port(int number, string service)
     {
         Number = number;

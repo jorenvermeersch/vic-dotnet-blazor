@@ -11,6 +11,7 @@ public class Specifications
 
     #region Constructors
     protected Specifications() { }
+
     public Specifications(int memory, int storage)
     {
         Memory = memory;

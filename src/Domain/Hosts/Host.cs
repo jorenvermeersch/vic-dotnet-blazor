@@ -37,6 +37,7 @@ public abstract class Host<T> : Machine where T : Machine
 
     #region Constructors
     private Host() { }
+
     public Host(string name, HostSpecifications specifications, ISet<T>? machines)
         : base(name, specifications)
     {

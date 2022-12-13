@@ -9,6 +9,7 @@ public class TimeSpan
 
     #region Constructors
     private TimeSpan() { }
+
     public TimeSpan(DateTime startDate, DateTime endDate)
     {
         StartDate = startDate;

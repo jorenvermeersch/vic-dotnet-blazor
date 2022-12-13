@@ -119,7 +119,7 @@ public class VirtualMachine : Machine
         User = args.User;
         HasVpnConnection = args.HasVpnConnection;
 
-        // TODO: Uncomment after implementing database mapping. 
+        // TODO: Uncomment after implementing database mapping.
         //_host.AddMachine(this); // Remaining resources host are automatically updated.
     }
     #endregion

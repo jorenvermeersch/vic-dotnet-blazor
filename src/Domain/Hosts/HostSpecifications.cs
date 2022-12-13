@@ -14,6 +14,7 @@ public class HostSpecifications : Specifications
 
     #region Constructors
     private HostSpecifications() { }
+
     public HostSpecifications(
         IList<KeyValuePair<Processor, int>> processors,
         int storage,

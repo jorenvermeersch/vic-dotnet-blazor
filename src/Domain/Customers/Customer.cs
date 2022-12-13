@@ -40,6 +40,7 @@ public abstract class Customer : Entity
 
     #region Constructors
     protected Customer() { }
+
     public Customer(
         ContactPerson contactPerson,
         ContactPerson? backupContact = null,
@@ -57,7 +58,7 @@ public abstract class Customer : Entity
     {
         if (contactPerson.HasTheSameContactInformation(backupContact))
         {
-            // TODO: Uncomment after implementing database mapping. 
+            // TODO: Uncomment after implementing database mapping.
             // throw new ArgumentException("Contact person and backup contact should be different");
         }
     }
