@@ -36,7 +36,7 @@
 
             <CustomDropDown Label="Poort" Items="@MakePortItems()" Action="@SetPortValue" />
 
-            <div class="buttonList">
+            <div class="button-list">
                 @foreach (var item in selectedPorts)
                 {
                     <PortButton Text="@item.Service" OnClick="@(() => RemovePortFromList(item))" />
@@ -74,7 +74,7 @@
             }*@
             <CustomDropDown Label="Beschikbaarheden" Items="@MakeAvailibilityItems()" Action="@SetAvailabilityValue" />
 
-            <div class="buttonList">
+            <div class="button-list">
                 @foreach (var item in chosenAvailabilities)
                 {
                     <PortButton Text="@item.ToString()" OnClick="@(() => RemoveAvailabilityFromList(item))" />

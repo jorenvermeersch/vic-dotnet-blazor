@@ -29,8 +29,9 @@
     --three-column-gap: 66px;
     /* Heights. */
     --card-height: 48px;
-    --nav-height: 80px;
+    --nav-height: 64px;
     /* Padding. */
+    --padding-ty: 2px;
     --padding-sm: 5px;
     --padding-md: 10px;
     --padding-lg: 20px;

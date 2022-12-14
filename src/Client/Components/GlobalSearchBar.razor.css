@@ -1,5 +1,5 @@
 ﻿.global-search-bar {
-  --search-bar-height: calc(2 * var(--card-height));
+    --search-bar-height: calc(2 * var(--card-height));
 }
 
 .global-search-bar {

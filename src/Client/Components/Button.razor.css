@@ -3,7 +3,7 @@
     display: inline-block;
     font-size: var(--text-sm);
     font-weight: 600;
-    padding: var(--padding-sm) calc(2 * var(--padding-sm));
+    padding: var(--padding-ty) calc(2 * var(--padding-sm));
     border-radius: calc(4 * var(--padding-sm));
     text-decoration: none;
     width: fit-content;
