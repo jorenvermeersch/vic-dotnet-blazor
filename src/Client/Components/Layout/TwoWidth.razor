@@ -1,0 +1,8 @@
+﻿<div class="two-thirds">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

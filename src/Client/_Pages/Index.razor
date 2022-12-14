@@ -19,9 +19,8 @@
     
 </div>
 
-<div class="three-column-layout">
-    <div class="one-third">
-
+<ThreeColumnLayout>
+    <OneWidth>
         <Title Text="Onafgewerkte virtuele machines" />
         
         @foreach (var vm in virtualMachines)
@@ -30,21 +29,20 @@
         }
 
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-    </div>
-    <div class="two-thirds">
+    </OneWidth>
+    <TwoWidth>
         <Title Text="Verbruik deze week" />
-        <div class="two-columns-container">
+        <TwoColumns>
             <div>
-                <Graph Title="Virtuele machines" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel"/>
+                <Graph Title="Virtuele machines" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
                 <Graph Title="Virtuele processoren" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
             </div>
             <div>
                 <Graph Title="Geheugen" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
                 <Graph Title="Opslag" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
             </div>
-            
-        </div>
-    </div>
-</div>
+        </TwoColumns>
+    </TwoWidth>
+</ThreeColumnLayout>
 
 
