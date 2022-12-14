@@ -1,8 +1,8 @@
-﻿using BogusStore.Fakers.Common;
+﻿using Bogus;
 
 namespace Fakers.TimeSpan;
 
-public class TimeSpanFaker : EntityFaker<Domain.VirtualMachines.TimeSpan>
+public class TimeSpanFaker : Faker<Domain.VirtualMachines.TimeSpan>
 {
     public TimeSpanFaker()
     {

@@ -7,7 +7,7 @@ namespace Domain.Customers;
 public abstract class Customer : Entity
 {
     #region Fields
-    private ContactPerson _contactPerson;
+    private ContactPerson _contactPerson = default!;
     private ContactPerson? _backupContactPerson;
     #endregion
 
@@ -35,10 +35,12 @@ public abstract class Customer : Entity
     }
 
     [NotMapped]
-    public IList<VirtualMachine> VirtualMachines { get; set; }
+    public IList<VirtualMachine> VirtualMachines { get; set; } = default!;
     #endregion
 
     #region Constructors
+    protected Customer() { }
+
     public Customer(
         ContactPerson contactPerson,
         ContactPerson? backupContact = null,
@@ -50,15 +52,14 @@ public abstract class Customer : Entity
         _backupContactPerson = backupContact;
         VirtualMachines = virtualMachines ?? new List<VirtualMachine>();
     }
-
-    public Customer() { }
     #endregion
 
     private void ValidateContacts(ContactPerson contactPerson, ContactPerson? backupContact)
     {
-        //if (contactPerson.HasTheSameContactInformation(backupContact))
-        //{
-        //    //throw new ArgumentException("Contact person and backup contact should be different");
-        //}
+        if (contactPerson.HasTheSameContactInformation(backupContact))
+        {
+            // TODO: Uncomment after implementing database mapping.
+            // throw new ArgumentException("Contact person and backup contact should be different");
+        }
     }
 }

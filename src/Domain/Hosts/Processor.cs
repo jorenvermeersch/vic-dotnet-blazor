@@ -3,12 +3,14 @@
 public class Processor : Entity
 {
     #region Properties
-    public string Name { get; set; }
-    public int Cores { get; set; }
-    public int Threads { get; set; }
+    public string Name { get; set; } = default!;
+    public int Cores { get; set; } = default!;
+    public int Threads { get; set; } = default!;
     #endregion
 
     #region Constructors
+    private Processor() { }
+
     public Processor(string name, int cores, int threads)
     {
         Name = name;

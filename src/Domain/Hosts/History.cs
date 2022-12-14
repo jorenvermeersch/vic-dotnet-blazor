@@ -7,15 +7,14 @@ public class History<T, U>
     where U : Machine
 {
     #region Properties
-    public T Host { get; private set; }
-    public DateTime Date { get; private set; } = DateTime.UtcNow;
-    public Specifications Specifications { get; private set; }
-    public Specifications SpecificationsUsed { get; private set; }
+    public T Host { get; } = default!;
+    public DateTime Date { get; } = DateTime.UtcNow;
+    public Specifications Specifications { get; } = default!;
+    public Specifications SpecificationsUsed { get; } = default!;
     #endregion
 
-
     #region Constructors
-    public History() { }
+    private History() { }
 
     public History(T host)
     {
