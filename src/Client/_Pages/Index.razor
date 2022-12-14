@@ -28,18 +28,18 @@
             <EntityCard Value="@vm.Fqdn" Active=@false Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
         }
 
-        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+        <PageSelector OnClick="@ChangePage" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
     </OneWidth>
     <TwoWidth>
         <Title Text="Verbruik deze week" />
         <TwoColumns>
             <div>
-                <Graph Title="Virtuele machines" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
-                <Graph Title="Virtuele processoren" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
+                <BarGraph Title="Virtuele machines" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
+                <BarGraph Title="Virtuele processoren" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
             </div>
             <div>
-                <Graph Title="Geheugen" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
-                <Graph Title="Opslag" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
+                <BarGraph Title="Geheugen" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
+                <BarGraph Title="Opslag" Unit="Aantal" StartLabel="@_startLabel" EndLabel="@_endLabel" />
             </div>
         </TwoColumns>
     </TwoWidth>
