@@ -31,7 +31,8 @@ public class VirtualMachine : Machine
             }
 
             base.Specifications = value;
-            _host.UpdateRemainingResources(); // Host cannot detect itself when the required resources of the virtual machines it houses change.
+            // Note: Host detects itself when the required resources of the virtual machines it houses change.
+            Host.UpdateHistory();
         }
     }
 
@@ -120,7 +121,7 @@ public class VirtualMachine : Machine
         HasVpnConnection = args.HasVpnConnection;
 
         // TODO: Uncomment after implementing database mapping.
-        //_host.AddMachine(this); // Remaining resources host are automatically updated.
+        _host.AddMachine(this); // Remaining resources host are automatically updated.
     }
     #endregion
 

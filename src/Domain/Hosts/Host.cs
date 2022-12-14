@@ -20,17 +20,17 @@ public abstract class Host<T> : Machine where T : Machine
             _specifications = value;
 
             // Check if new specifications are able to run existing machines.
-            if (CalculateRemainingResources().Values.Any(amount => amount < 0))
+            if (RemainingResources.Values.Any(amount => amount < 0))
             {
                 _specifications = current;
                 throw new ArgumentException(
                     "New specifications are insufficient for running existing machines"
                 );
             }
-            RemainingResources = CalculateRemainingResources();
+            UpdateHistory();
         }
     }
-    public Specifications RemainingResources { get; set; } = default!;
+    public Specifications RemainingResources => CalculateRemainingResources();
     public ISet<T> Machines { get; set; } = new HashSet<T>();
     public IReadOnlyList<History<Host<T>, T>> History => _history.AsReadOnly();
     #endregion
@@ -54,7 +54,7 @@ public abstract class Host<T> : Machine where T : Machine
             );
         }
 
-        RemainingResources = remainingResources;
+        UpdateHistory();
     }
     #endregion
 
@@ -87,11 +87,6 @@ public abstract class Host<T> : Machine where T : Machine
         return RemainingResources.HasResourcesFor(machine.Specifications);
     }
 
-    public void UpdateRemainingResources()
-    {
-        RemainingResources = CalculateRemainingResources();
-    }
-
     public void AddMachine(T machine)
     {
         Guard.Against.Null(machine, nameof(machine));
@@ -111,21 +106,21 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         Machines.Add(machine);
-        UpdateRemainingResources();
+        UpdateHistory();
     }
 
     public void RemoveMachine(T machine)
     {
         Guard.Against.Null(machine, nameof(machine));
         Machines.Remove(machine);
-        UpdateRemainingResources();
+        UpdateHistory();
     }
 
     public void AddProcessor(Processor processor, int virtualisationFactor)
     {
         // Check for negative or zero virtualisation factor happens in HostSpecifications.
         _specifications.AddProccessor(processor, virtualisationFactor);
-        UpdateRemainingResources();
+        UpdateHistory();
     }
 
     public void RemoveProcessor(Processor processor, int virtualisationFactor)
@@ -138,10 +133,10 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         _specifications.RemoveProcessor(processor, virtualisationFactor);
-        UpdateRemainingResources();
+        UpdateHistory();
     }
 
-    public void GenerateHistory()
+    public void UpdateHistory()
     {
         _history.Add(new History<Host<T>, T>(this));
     }
