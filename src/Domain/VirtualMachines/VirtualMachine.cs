@@ -76,7 +76,12 @@ public class VirtualMachine : Machine
             if (_host != value)
             {
                 value.AddMachine(this); // Throws if new host does not have enough remaining resources.
-                _host.RemoveMachine(this); // Remove from old host.
+
+                // TODO: Remove this check after adding service layer properly. 
+                if (_host is not null)
+                {
+                    _host.RemoveMachine(this); // Remove from old host.
+                }
                 _host = value;
             }
         }
@@ -121,7 +126,7 @@ public class VirtualMachine : Machine
         HasVpnConnection = args.HasVpnConnection;
 
         // TODO: Uncomment after implementing database mapping.
-        _host.AddMachine(this); // Remaining resources host are automatically updated.
+        //_host.AddMachine(this); // Remaining resources host are automatically updated.
     }
     #endregion
 
