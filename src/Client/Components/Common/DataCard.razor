@@ -1,13 +1,14 @@
-﻿<div class="card data-card" style="@customCss">
+﻿@{
+    var hoverable = OnClick.HasDelegate ? "hoverable" : ""; 
+}
+
+<div class="card data-card @hoverable" style="@customCss" @onclick="HandleClickAsync">
     @foreach (KeyValuePair<string, string> entry in Entries)
     {
         <div class="entry">
             <p class="label">@entry.Key</p>
             <p class="value" title="@entry.Value">@entry.Value</p>
         </div>
-        @if(OnClick.HasDelegate){
-            <button class="fa-solid fa-xmark methodexecutor" @onclick="@(() => OnClick.InvokeAsync())"></button>
-        }
     }
 </div>
 

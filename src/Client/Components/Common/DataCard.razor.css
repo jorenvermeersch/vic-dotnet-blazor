@@ -5,6 +5,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     position: relative;
+    box-sizing: border-box;
 }
 
 .methodexecutor {
@@ -37,8 +38,14 @@
   overflow: hidden;
 }
 
+.hoverable:hover {
+    cursor: pointer;
+    box-sizing: border-box;
+    border-bottom: var(--border-size-md) solid var(--blue);
+}
+
 @media screen and (min-width: 480px) {
-  .data-card .entry {
+    .data-card .entry {
     flex-direction: row;
   }
 

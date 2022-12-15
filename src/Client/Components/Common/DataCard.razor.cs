@@ -8,9 +8,17 @@ public partial class DataCard
     public IDictionary<string, string> Entries { get; set; } = default!;
 
     [Parameter]
-    public EventCallback<string> OnClick { get; set; } = new();
+    public EventCallback OnClick { get; set; } = new();
 
     [Parameter]
     public string customCss { get; set; } = "";
+
+    private async Task HandleClickAsync()
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
 
 }
