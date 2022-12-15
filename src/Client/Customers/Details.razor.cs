@@ -1,3 +1,4 @@
+using Client.Extensions;
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Shared.Customers;
@@ -41,7 +42,7 @@ public partial class Details
         totalPages = (totalVirtualMachines / 10) + 1;
 
         _username.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
-        _general.Add("Klant type", customer.CustomerType.ToString());
+        _general.Add("Soort", customer.CustomerType.ToString());
 
         if (customer.CustomerType == CustomerType.Intern)
         {
@@ -56,18 +57,18 @@ public partial class Details
         }
 
         _contactInformation.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
-        _contactInformation.Add("E-mailadres", customer.ContactPerson.Email);
-        _contactInformation.Add("Telefoonnummer", customer.ContactPerson.Phonenumber);
+        _contactInformation.Add("E-mailadres", customer.ContactPerson.Email.FormatIfEmpty());
+        _contactInformation.Add("Telefoonnummer", customer.ContactPerson.Phonenumber.FormatIfEmpty());
 
         if (!string.IsNullOrEmpty(customer.BackupContactPerson?.Firstname))
         {
             _backupContactInformation.Add("Naam", string.Concat(customer.BackupContactPerson.Firstname, " ", customer.BackupContactPerson.Lastname));
-            _backupContactInformation.Add("E-mailadres", customer.BackupContactPerson.Email);
-            _backupContactInformation.Add("Telefoonnummer", customer.BackupContactPerson?.Phonenumber);
+            _backupContactInformation.Add("E-mailadres", customer.BackupContactPerson.Email.FormatIfEmpty());
+            _backupContactInformation.Add("Telefoonnummer", customer.BackupContactPerson.Phonenumber.FormatIfEmpty());
         }
     }
 
-    private async Task ClickHandler(int pageNr)
+    private async Task ChangePage(int pageNr)
     {
         offset = (pageNr - 1) * 10;
         selectedPage = pageNr;
