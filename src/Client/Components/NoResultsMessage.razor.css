@@ -1,0 +1,6 @@
+﻿.no-result {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    min-height: var(--card-height);
+}
