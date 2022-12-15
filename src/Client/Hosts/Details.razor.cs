@@ -7,17 +7,21 @@ namespace Client.Hosts;
 
 public partial class Details
 {
+    private HostDto.Detail? host;
+
     [Inject] public NavigationManager Navigation { get; set; } = default!;
     [Inject] public IHostService HostService { get; set; } = default!;
-
 
     [Parameter]
     public long Id { get; set; }
 
-    private HostDto.Detail? host;
+    private Dictionary<string, Dictionary<string, string>> datacards = new();
+    private string NAME_KEY = "NAME";
+    private string SPECIFICATIONS_KEY = "SPECIFICATIONS_KEY";
+    private string REMAINING_SPECIFICATIONS_KEY = "REMAINING_SPECIFICATIONS_KEY";
 
-    private Dictionary<string, Dictionary<string, string>> server = new();
     private List<Dictionary<string, string>> processors = new();
+
     private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
     private int offset, totalVirtualMachines, totalPages = 0;
     private int selectedPage = 1;
@@ -28,15 +32,53 @@ public partial class Details
         {
             HostId = Id
         });
-
         host = response.Host;
-        server.Add("name", new() { { "Naam", host.Name } });
-        server.Add("resources", new() { { "vCPUs", CalculateVirtualCpu().ToString() }, { "Geheugen", host.Specifications.Memory.ToString().GbFormat() }, { "Opslag", host.Specifications.Storage.ToString().GbFormat() } });
-        server.Add("remainingResources", new() { { "vCPUs", host.RemainingResources.VirtualProcessors.ToString() }, { "Geheugen", host.RemainingResources.Memory.ToString().GbFormat() }, { "Opslag", host.RemainingResources.Storage.ToString().GbFormat() } });
-        foreach (var p in host.Specifications.Processors)
+
+        datacards = new()
         {
-            processors.Add(new Dictionary<string, string>() { { "Type", p.Key.Name }, { "Cores", p.Key.Cores.ToString() }, { "Threads", p.Key.Threads.ToString() }, { "Virtualisatiefactor", p.Value.ToString() } });
+            {
+                NAME_KEY,
+                new()
+                {
+                    {  "Naam", host.Name },
+                }
+            },
+            {
+                SPECIFICATIONS_KEY,
+                new()
+                {
+                    { "vCPUs", CalculateTotalVirtualProcessors().ToString() },
+                    { "Geheugen", host.Specifications.Memory.ToString().GbFormat() },
+                    { "Opslag", host.Specifications.Storage.ToString().GbFormat() }
+
+                }
+            },
+            {
+                REMAINING_SPECIFICATIONS_KEY,
+                new()
+                {
+                    {  "vCPUs", host.RemainingResources.VirtualProcessors.ToString() },
+                    { "Geheugen", host.RemainingResources.Memory.ToString().GbFormat() },
+                    { "Opslag", host.RemainingResources.Storage.ToString().GbFormat() }
+
+                }
+            },
+        };
+
+        foreach (var processor in host.Specifications.Processors)
+        {
+            processors.Add(
+                new()
+                {
+                    { "Type", processor.Key.Name },
+                    { "Cores", processor.Key.Cores.ToString() },
+                    { "Threads", processor.Key.Threads.ToString() },
+                    { "Virtualisatiefactor", processor.Value.ToString() }
+                }
+            );
         }
+
+
         totalVirtualMachines = host?.Machines?.Count() ?? 0;
         totalPages = (totalVirtualMachines / 10) + 1;
     }
@@ -51,8 +93,8 @@ public partial class Details
         offset = (pageNr - 1) * 10;
         selectedPage = pageNr;
     }
-    private int CalculateVirtualCpu()
+    private int CalculateTotalVirtualProcessors()
     {
-        return host.Specifications.Processors.Select(pair => pair.Key.Cores * pair.Value).Sum();
+        return host!.Specifications.Processors.Select(pair => pair.Key.Cores * pair.Value).Sum();
     }
 }

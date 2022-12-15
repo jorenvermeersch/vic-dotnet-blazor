@@ -20,13 +20,13 @@ else
                 </AuthorizeView>
             </ButtonGroup>
 
-            <DataCard Entries="@server.GetValueOrDefault("name")" />
+            <DataCard Entries="@datacards.GetValueOrDefault(NAME_KEY)" />
 
             <Title Text="Specificaties" />
-            <DataCard Entries="@server.GetValueOrDefault("resources")" />
+            <DataCard Entries="@datacards.GetValueOrDefault(SPECIFICATIONS_KEY)" />
 
             <Title Text="Resterende specificaties" />
-            <DataCard Entries="@server.GetValueOrDefault("remainingResources")" />
+            <DataCard Entries="@datacards.GetValueOrDefault(REMAINING_SPECIFICATIONS_KEY)" />
 
             <Title Text="Processoren" />
             @foreach (var processor in processors)
