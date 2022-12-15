@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Shared.VirtualMachines;
-using static MudBlazor.CategoryTypes;
 
 namespace Client.VirtualMachines;
 

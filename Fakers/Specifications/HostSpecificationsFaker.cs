@@ -1,9 +1,7 @@
 ﻿using Bogus;
 using Domain.Common;
 using Domain.Hosts;
-using Domain.VirtualMachines;
 using Fakers.Processors;
-using Fakers.VirtualMachines;
 
 namespace Fakers.Specifications;
 

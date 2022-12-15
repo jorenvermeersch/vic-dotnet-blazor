@@ -1,9 +1,5 @@
-﻿using Client.VirtualMachines;
-using Microsoft.AspNetCore.Mvc;
-using Services.VirtualMachines;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shared.Hosts;
-using Shared.Ports;
-using Shared.VirtualMachines;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Controllers.Hosts;

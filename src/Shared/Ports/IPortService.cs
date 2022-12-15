@@ -1,6 +1,4 @@
-﻿using Shared.Hosts;
-
-namespace Shared.Ports;
+﻿namespace Shared.Ports;
 
 public interface IPortService
 {

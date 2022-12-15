@@ -1,6 +1,5 @@
 ﻿using Client.Extensions;
 using Shared.Ports;
-using Shared.VirtualMachines;
 using System.Net.Http.Json;
 
 namespace Client.VirtualMachines

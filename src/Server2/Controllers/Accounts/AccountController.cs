@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using Shared.Accounts;
-using Shared.Hosts;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Controllers.Accounts;

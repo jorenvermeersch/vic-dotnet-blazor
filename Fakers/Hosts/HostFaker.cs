@@ -2,8 +2,6 @@
 using Domain.Common;
 using Domain.Hosts;
 using Domain.VirtualMachines;
-using Fakers.Specifications;
-using Fakers.VirtualMachines;
 
 namespace Fakers.Hosts;
 

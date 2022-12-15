@@ -1,6 +1,5 @@
 ﻿using Shared.Hosts;
 using Domain.Hosts;
-using Fakers.Processors;
 using Services.FakeInitializer;
 
 namespace Services.Processors;

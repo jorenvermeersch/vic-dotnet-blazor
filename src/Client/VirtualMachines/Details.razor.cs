@@ -1,4 +1,5 @@
 using Client.Extensions;
+using Client.SharedFiles.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.VirtualMachines;
@@ -10,7 +11,7 @@ public partial class Details
 {
     [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
-    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> Localizer { get; set; } = default!;
+    [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = default!;
     [Parameter] public long Id { get; set; }
 
     private VirtualMachineDto.Detail? machine;

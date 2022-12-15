@@ -1,5 +1,4 @@
 using Domain.Constants;
-using Domain.Customers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.Accounts;
@@ -58,7 +57,7 @@ public partial class Create
         }
         else
         {
-            
+
             AccountRequest.Create request = new()
             {
                 Account = Account
@@ -66,6 +65,6 @@ public partial class Create
             AccountResponse.Create response = await AccountService!.CreateAsync(request);
             Navigation!.NavigateTo("account/" + response.AccountId);
         }
-        
+
     }
 }
