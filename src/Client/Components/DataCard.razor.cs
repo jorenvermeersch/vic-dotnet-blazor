@@ -4,12 +4,13 @@ namespace Client.Components;
 
 public partial class DataCard
 {
-    [Parameter]
+    [Parameter, EditorRequired]
     public IDictionary<string, string> Entries { get; set; } = new Dictionary<string, string>();
 
-    public DataCard()
-    {
-        Entries.Add("Email", "joren.vermeersch@student.hogent.be");
-        Entries.Add("Telefoonnummer", "09 325 05 27");
-    }
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; } = new();
+
+    [Parameter]
+    public string customCss { get; set; } = "";
+
 }
