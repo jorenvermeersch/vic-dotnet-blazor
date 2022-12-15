@@ -12,4 +12,9 @@ public static class ObjectExtensions
 
         return string.Join("&", properties.ToArray());
     }
+
+    public static string GbFormat(this string input)
+    {
+        return $"{input} GB";
+    }
 }

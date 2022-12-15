@@ -45,8 +45,6 @@
 }
 
     .Deployed i {
-/*        position: absolute;
-        left: -30px;*/
         color: white;
         margin-right: 7px;
         animation: zoof 2s ease-in-out infinite;
