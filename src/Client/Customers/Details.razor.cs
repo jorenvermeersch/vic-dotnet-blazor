@@ -8,14 +8,15 @@ namespace Client.Customers;
 
 public partial class Details
 {
+    private CustomerDto.Detail? customer;
     [Parameter] public long Id { get; set; }
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
 
-    private CustomerDto.Detail? Customer;
 
 
-    private IEnumerable<VirtualMachineDto.Index> virtualMachines = new List<VirtualMachineDto.Index>() ;
+
+    private IEnumerable<VirtualMachineDto.Index> virtualMachines = new List<VirtualMachineDto.Index>();
     private int offset = 0, totalVirtualMachines, totalPages = 0;
     private int selectedPage = 1;
 
@@ -32,37 +33,37 @@ public partial class Details
             CustomerId = Id
         };
         var response = await CustomerService.GetDetailAsync(request);
-        Customer = response.Customer;
-        
+        customer = response.Customer;
 
-        virtualMachines = Customer.VirtualMachines;
-        totalVirtualMachines = Customer.VirtualMachines.Count;
+
+        virtualMachines = customer.VirtualMachines;
+        totalVirtualMachines = customer.VirtualMachines.Count;
         totalPages = (totalVirtualMachines / 10) + 1;
 
-        _username.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
-        _general.Add("Klant type", Customer.CustomerType.ToString());
+        _username.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
+        _general.Add("Klant type", customer.CustomerType.ToString());
 
-        if (Customer.CustomerType == CustomerType.Intern)
+        if (customer.CustomerType == CustomerType.Intern)
         {
-            _general.Add("Instituut", Customer.Institution.ToString()!);
-            _general.Add("Departement", Customer.Department!);
-            _general.Add("Opleiding", Customer.Education!);
+            _general.Add("Instituut", customer.Institution.ToString()!);
+            _general.Add("Departement", customer.Department!);
+            _general.Add("Opleiding", customer.Education!);
         }
         else
         {
-            _general.Add("Naam", Customer.CompanyName!);
-            _general.Add("Type", Customer.CompanyType!);
+            _general.Add("Naam", customer.CompanyName!);
+            _general.Add("Type", customer.CompanyType!);
         }
 
-        _contactInformation.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
-        _contactInformation.Add("E-mailadres", Customer.ContactPerson.Email);
-        _contactInformation.Add("Telefoonnummer", Customer.ContactPerson.Phonenumber);
+        _contactInformation.Add("Naam", string.Concat(customer.ContactPerson.Firstname, " ", customer.ContactPerson.Lastname));
+        _contactInformation.Add("E-mailadres", customer.ContactPerson.Email);
+        _contactInformation.Add("Telefoonnummer", customer.ContactPerson.Phonenumber);
 
-        if (!string.IsNullOrEmpty(Customer.BackupContactPerson?.Firstname))
+        if (!string.IsNullOrEmpty(customer.BackupContactPerson?.Firstname))
         {
-            _backupContactInformation.Add("Naam", string.Concat(Customer.BackupContactPerson.Firstname, " ", Customer.BackupContactPerson.Lastname));
-            _backupContactInformation.Add("E-mailadres", Customer.BackupContactPerson.Email);
-            _backupContactInformation.Add("Telefoonnummer", Customer.BackupContactPerson?.Phonenumber);
+            _backupContactInformation.Add("Naam", string.Concat(customer.BackupContactPerson.Firstname, " ", customer.BackupContactPerson.Lastname));
+            _backupContactInformation.Add("E-mailadres", customer.BackupContactPerson.Email);
+            _backupContactInformation.Add("Telefoonnummer", customer.BackupContactPerson?.Phonenumber);
         }
     }
 

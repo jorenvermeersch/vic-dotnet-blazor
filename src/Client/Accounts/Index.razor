@@ -1,63 +1,69 @@
 ﻿@page "/account/list"
 
-<TopBar>
+@if (accounts is null)
+{
+    <Loading />
+}
+else
+{
     <AuthorizeView Roles="Master">
-        <Label Text="Toevoegen" />
-        <Button Text="Beheerder" Href="/account/add" />
+        <TopBar>
+            <Label Text="Toevoegen" />
+            <Button Text="Beheerder" Href="/account/add" />
+        </TopBar>
     </AuthorizeView>
-</TopBar>
 
-<ThreeColumnLayout>
-    <OneWidth>
-        <Title Text="Filteropties" />
-        <div style="display: flex; justify-content: space-between;">
-            <Button Text="Reset" OnClick="() => ResetFilter()" />
-            <Button Text="Filteren" OnClick="HandleFilter" />
-        </div>
+    <ThreeColumnLayout>
+        <OneWidth>
+            <Title Text="Filteropties" />
+            <div style="display: flex; justify-content: space-between;">
+                <Button Text="Reset" OnClick="() => ResetFilter()" />
+                <Button Text="Filteren" OnClick="HandleFilter" />
+            </div>
 
-        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm=SearchValue />
+            <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm=SearchValue />
 
-        <FilterResetContainer>
-            <ButtonGroup>
-                <Label Text="Rol" />
-                <Button Text="Master" OnClick="@FilterMaster" Toggle=@toggleMaster />
-                <Button Text="Admin" OnClick="@FilterAdmin" Toggle=@toggleAdmin />
-                <Button Text="Waarnemer" OnClick="@FilterObserver" Toggle=@toggleObserver />
-            </ButtonGroup>
-        </FilterResetContainer>
-    </OneWidth>
-    <TwoWidth>
-        <Title Text="Alle beheerders" />
-        @if (accounts is not null && accounts.Any())
-        {
-            <WithTwoColumns>
-                <div>
-                    @foreach (var account in accounts.Take(10))
-                    {
-                        <EntityCard 
-                            Value="@account.GetFullName()" 
-                            Active="@account.IsActive" 
-                            Href="@account.GetDetailUrl()" />
-                    }
-                </div>
-                <div>
-                    @foreach (var account in accounts.Skip(10).Take(10))
-                    {
-                        <EntityCard 
-                            Value="@account.GetFullName()"
+            <FilterResetContainer>
+                <ButtonGroup>
+                    <Label Text="Rol" />
+                    <Button Text="Master" OnClick="@FilterMaster" Toggle=@toggleMaster />
+                    <Button Text="Admin" OnClick="@FilterAdmin" Toggle=@toggleAdmin />
+                    <Button Text="Waarnemer" OnClick="@FilterObserver" Toggle=@toggleObserver />
+                </ButtonGroup>
+            </FilterResetContainer>
+        </OneWidth>
+        <TwoWidth>
+            <Title Text="Alle beheerders" />
+            @if (accounts.Any())
+            {
+                <WithTwoColumns>
+                    <div>
+                        @foreach (var account in accounts.Take(10))
+                        {
+                            <EntityCard Value="@account.GetFullName()"
                             Active="@account.IsActive"
                             Href="@account.GetDetailUrl()" />
-                    }
-                </div>
-            </WithTwoColumns>
-        }
-        else
-        {
-            <NoResultsMessage Message="Er zijn geen beheerders met opgegeven zoekcriteria" />
-        }
+                        }
+                    </div>
+                    <div>
+                        @foreach (var account in accounts.Skip(10).Take(10))
+                        {
+                            <EntityCard Value="@account.GetFullName()"
+                            Active="@account.IsActive"
+                            Href="@account.GetDetailUrl()" />
+                        }
+                    </div>
+                </WithTwoColumns>
+            }
+            else
+            {
+                <NoResultsMessage Message="Er zijn geen beheerders die overeenstemmen met opgegeven zoekcriteria" />
+            }
 
-        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-    </TwoWidth>
-</ThreeColumnLayout>
+            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+        </TwoWidth>
+    </ThreeColumnLayout>
+}
+
 
 

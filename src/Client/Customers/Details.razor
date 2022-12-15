@@ -1,57 +1,72 @@
 ﻿@page "/customer/{id:long}"
 @attribute [Authorize]
 
-<PageTitle>Klant [customer name] Details</PageTitle>
+<PageTitle>Details</PageTitle>
 
-<div class="top-bar" >
-    <div class="top-bar-items" style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small-title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i>
-            <span>Terug</span>
-        </span>
-        <AuthorizeView Roles="Master, Administrator">
-            <span>
-                <Button Text="Beheren" Href=@string.Format("customer/{0}/edit", Id) />
+@if (@customer is null)
+{
+    <Loading />
+}
+else
+{
+    <TopBar>
+        <div class="top-bar-items" style="display: flex">
+            <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small-title" @onclick="NavigateBack">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Terug</span>
             </span>
-        </AuthorizeView>
-    </div>
-</div>
-<div class="three-column-layout">
-    <div class="one-third">
-    <DataCard Entries="@_username" />
+            <AuthorizeView Roles="Master, Administrator">
+                <span>
+                    <Button Text="Beheren" Href="@customer.GetEditUrl()" />
+                </span>
+            </AuthorizeView>
+        </div>
+    </TopBar>
 
-    <Title Text="Algemeen" />
-    <DataCard Entries="@_general" />
+    <ThreeColumnLayout>
+        <OneWidth>
+            <DataCard Entries="@_username" />
 
-    <Title Text="Contactgegevens" />
-    <DataCard Entries="@_contactInformation" />
-    @if(_backupContactInformation.ContainsKey("Naam")){
-            <DataCard Entries="@_backupContactInformation" />
-    }
-    
-    </div>
-    <div class="two-thirds">
-        <Title Text="Virtuele machines" />
-        @if (virtualMachines.Any())
-        {
-            <div class="two-columns-container">
-                <div>
-                    @foreach (var vm in virtualMachines.Take(5))
-                    {
-                        <EntityCard Value=@vm.Fqdn Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-                    }
-                </div>
-                <div>
-                    @foreach (var vm in virtualMachines.Skip(5).Take(5))
-                    {
-                        <EntityCard Value=@vm.Fqdn Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-                    }
-                </div>
-            </div>
-            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-        }
-        else
-        {
-            <NoResultsMessage Message="Deze klant heeft geen virtuele machines." />
-        }
-    </div>
-</div>
+            <Title Text="Algemeen" />
+            <DataCard Entries="@_general" />
+
+            <Title Text="Contactgegevens" />
+            <DataCard Entries="@_contactInformation" />
+
+            @if (_backupContactInformation.ContainsKey("Naam"))
+            {
+                <DataCard Entries="@_backupContactInformation" />
+            }
+        </OneWidth>
+        <TwoWidth>
+            <Title Text="Virtuele machines" />
+            @if (virtualMachines is not null && virtualMachines.Any())
+            {
+                <WithTwoColumns>
+                    <div>
+                        @foreach (var machine in virtualMachines.Take(5))
+                        {
+                            <EntityCard Value="@machine.Fqdn"
+                            Active="@machine.IsActive()"
+                            Href="@machine.GetDetailUrl()" />
+                        }
+                    </div>
+                    <div>
+                        @foreach (var machine in virtualMachines.Skip(5).Take(5))
+                        {
+                            <EntityCard Value="@machine.Fqdn"
+                            Active="@machine.IsActive()"
+                            Href="@machine.GetDetailUrl()" />
+                        }
+                    </div>
+                </WithTwoColumns>
+                <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+            }
+            else
+            {
+                <NoResultsMessage Message="Deze klant heeft geen virtuele machines" />
+            }
+        </TwoWidth>
+    </ThreeColumnLayout>
+}
+
