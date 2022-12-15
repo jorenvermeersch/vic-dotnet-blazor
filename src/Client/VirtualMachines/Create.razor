@@ -3,7 +3,7 @@
 @layout NoGlobalSearchLayout
 @attribute [Authorize(Roles = "Master, Administrator")]
 
-<PageTitle>Virtuele Machine Toevoegen</PageTitle>
+<PageTitle>Virtuele machine toevoegen</PageTitle>
 
 <EditForm OnValidSubmit="@HandleValidSubmit" Model="@VirtualMachine">
     <FluentValidationValidator />

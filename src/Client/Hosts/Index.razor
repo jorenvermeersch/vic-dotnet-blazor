@@ -1,6 +1,8 @@
 ﻿@page "/host/list"
 @attribute [Authorize]
 
+<PageTitle>Hosts</PageTitle>
+
 @if (hosts is null)
 {
     <Loading />

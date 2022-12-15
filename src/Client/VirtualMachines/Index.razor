@@ -1,6 +1,8 @@
 ﻿@page "/virtual-machine/list"
 @attribute [Authorize]
 
+<PageTitle>Virtuele machines</PageTitle>
+
 @if (virtualMachines is null)
 {
     <Loading />
