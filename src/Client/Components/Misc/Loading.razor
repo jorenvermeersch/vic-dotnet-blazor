@@ -4,8 +4,13 @@
 
 <div class="center-container @adjustHeight">
     <MudProgressCircular Color="Color.Info" Indeterminate="true" />
+    <p>@Text...</p>
 </div>
 
 @code {
+    [Parameter]
+    public string Text { get; set; } = "Gegevens ophalen";
+
+    [Parameter]
     public bool HasGlobalSearchBar { get; set; } = true; 
 }

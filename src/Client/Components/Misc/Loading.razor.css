@@ -1,9 +1,11 @@
 ﻿.center-container {
     --search-bar-height: calc(2 * var(--card-height));
     display: flex;
+    flex-direction: column; 
     height: calc(100vh - var(--nav-height) - var(--padding-lg));
     align-items: center;
     justify-content: center;
+    gap: var(--padding-lg); 
 }
 
 .has-global-search {
