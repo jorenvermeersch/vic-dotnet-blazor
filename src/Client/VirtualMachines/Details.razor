@@ -21,29 +21,29 @@ else
                 </AuthorizeView>
             </ButtonGroup>
 
-            <DataCard Entries="@generalInformation" />
-            <DataCard Entries="@host" OnClick="NavigateToHost" />
+            <DataCard Entries="@datacards.GetValueOrDefault(GENERAL_INFORMATION_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(HOST_NAME_KEY)" OnClick="NavigateToHost" />
 
             <Title Text="Specificaties en configuratie" />
-            <DataCard Entries="@specifications" />
-            <DataCard Entries="@configuration" />
-            <DataCard Entries="@ports" />
+            <DataCard Entries="@datacards.GetValueOrDefault(SPECIFICATIONS_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(CONFIGURATION_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(PORTS_KEY)" />
         </OneWidth>
         <OneWidth>
             <Title Text="Beschikbaarheid en back-ups" />
-            <DataCard Entries="@availabilities" />
-            <DataCard Entries="@backup" />
-
+            <DataCard Entries="@datacards.GetValueOrDefault(BACKUPS_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(AVAILABILITY_KEY)" />
+            
             <Title Text="Klanten" />
-            <DataCard Entries="@requester" OnClick="NavigateToRequester" />
-            <DataCard Entries="@user" OnClick="NavigateToUser" />
+            <DataCard Entries="@datacards.GetValueOrDefault(REQUESTER_KEY)" OnClick="NavigateToRequester" />
+            <DataCard Entries="@datacards.GetValueOrDefault(USER_KEY)" OnClick="NavigateToUser" />
 
             <Title Text="Beheerder" />
-            <DataCard Entries="@administrator" OnClick="NavigateToAdministrator" />
+            <DataCard Entries="@datacards.GetValueOrDefault(ADMIN_KEY)" OnClick="NavigateToAdministrator" />
         </OneWidth>
         <OneWidth>
             <Title Text="Logingegevens" />
-            @foreach (var data in loginCredentials)
+            @foreach (var data in credentials)
             {
                 <DataCard Entries="@data" />
             }

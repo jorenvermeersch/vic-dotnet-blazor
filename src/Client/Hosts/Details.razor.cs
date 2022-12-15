@@ -17,8 +17,8 @@ public partial class Details
 
     private Dictionary<string, Dictionary<string, string>> datacards = new();
     private string NAME_KEY = "NAME";
-    private string SPECIFICATIONS_KEY = "SPECIFICATIONS_KEY";
-    private string REMAINING_SPECIFICATIONS_KEY = "REMAINING_SPECIFICATIONS_KEY";
+    private string SPECIFICATIONS_KEY = "SPECIFICATIONS";
+    private string REMAINING_SPECIFICATIONS_KEY = "REMAINING_SPECIFICATIONS";
 
     private List<Dictionary<string, string>> processors = new();
 

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.VirtualMachines;
 
-
 namespace Client.VirtualMachines;
 
 public partial class Details
@@ -16,20 +15,19 @@ public partial class Details
 
     private VirtualMachineDto.Detail? machine;
 
-    #region Dictionaries
-    private Dictionary<string, string> generalInformation = new();
-    private Dictionary<string, string> specifications = new();
-    private Dictionary<string, string> configuration = new();
-    private Dictionary<string, string> ports = new();
-    private Dictionary<string, string> availabilities = new();
-    private Dictionary<string, string> backup = new();
-    private Dictionary<string, string> user = new();
-    private Dictionary<string, string> requester = new();
-    private Dictionary<string, string> administrator = new();
-    private List<Dictionary<string, string>> loginCredentials = new();
-    private Dictionary<string, string> host = new();
-    #endregion
+    private Dictionary<string, Dictionary<string, string>> datacards = new();
+    private string GENERAL_INFORMATION_KEY = "GENERAL_INFORMATION";
+    private string HOST_NAME_KEY = "HOST_NAME";
+    private string SPECIFICATIONS_KEY = "SPECIFICATIONS";
+    private string CONFIGURATION_KEY = "CONFIGURATION";
+    private string PORTS_KEY = "PORTS";
+    private string BACKUPS_KEY = "BACKUPS";
+    private string AVAILABILITY_KEY = "AVAILABILITY";
+    private string REQUESTER_KEY = "REQUESTER";
+    private string USER_KEY = "USER";
+    private string ADMIN_KEY = "ADMIN";
 
+    private List<Dictionary<string, string>> credentials = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,40 +39,99 @@ public partial class Details
         );
         machine = response.VirtualMachine;
 
-        SetGeneralInformation();
-
-        host.Add("Hostnaam", machine!.Host.Name);
-        configuration.Add("Mode", machine.Mode.ToString());
-        configuration.Add("Template", Localizer![machine.Template.ToString()]);
-        configuration.Add("Reden", machine.Reason);
-        specifications.Add("vCPUs", machine.Specification.VirtualProcessors.ToString());
-        specifications.Add("Geheugen", machine.Specification.Memory.ToString().GbFormat());
-        specifications.Add("Opslag", machine.Specification.Storage.ToString().GbFormat());
-        availabilities.Add("Backups", Localizer[machine.BackupFrequenty.ToString()]);
-        backup.Add("Aangevraagd op", machine.ApplicationDate.FormatDate());
-        backup.Add("Start", machine.TimeSpan.StartDate.FormatDate());
-        backup.Add("Einde", machine.TimeSpan.EndDate.FormatDate());
-        administrator.Add("Opgezet door", machine.Account.GetFullName());
-        user.Add("Gebruiker", machine!.User.Name);
-        requester.Add("Aanvrager", machine!.Requester.Name);
-        ports.Add("Externe Toegang", string.Join(", ", machine.Ports.Select(p => p.Service)));
-        ports.Add("VPN", machine.hasVpnConnection.ToString());
-        foreach (var credential in machine.Credentials) loginCredentials.Add(new Dictionary<string, string>() { { "Gebruikersnaam", credential.Username }, { "Rol", credential.Role } });
-    }
-
-    #region Dictionary setters
-    private void SetGeneralInformation()
-    {
-        generalInformation = new()
+        datacards = new()
         {
-            { "Naam", machine!.Name },
-            { "FQDN", machine!.Fqdn }
+            {
+                GENERAL_INFORMATION_KEY,
+                new()
+                {
+                    { "Naam", machine.Name },
+                    { "FQDN", machine.Fqdn }
+                }
+            },
+            {
+                HOST_NAME_KEY,
+                new()
+                {
+                    { "Hostnaam", machine.Host.Name }
+                }
+            },
+            {
+                SPECIFICATIONS_KEY,
+                new()
+                {
+                    { "vCPUs", machine.Specification.VirtualProcessors.ToString() },
+                    { "Geheugen", machine.Specification.Memory.ToString().GbFormat() },
+                    { "Opslag", machine.Specification.Storage.ToString().GbFormat() }
+                }
+            },
+            {
+                CONFIGURATION_KEY,
+                new()
+                {
+                    { "Mode", machine.Mode.ToString() },
+                    { "Template", Localizer![machine.Template.ToString()] },
+                    { "Reden", machine.Reason }
+                }
+            },
+            {
+                PORTS_KEY,
+                new()
+                {
+                    { "Externe Toegang", string.Join(", ", machine.Ports.Select(port => port.Service)) },
+                    { "VPN", machine.hasVpnConnection ? "Ja" : "Neen" },
+                }
+            },
+            {
+                BACKUPS_KEY,
+                new()
+                {
+                    { "Back-ups", Localizer[machine.BackupFrequenty.ToString()] },
+                }
+            },
+            {
+                AVAILABILITY_KEY,
+                new()
+                {
+                    { "Aangevraagd op", machine.ApplicationDate.FormatDate() },
+                    { "Start", machine.TimeSpan.StartDate.FormatDate() },
+                    { "Einde", machine.TimeSpan.EndDate.FormatDate() },
+                }
+            },
+            {
+                REQUESTER_KEY,
+                new()
+                {
+                    { "Aanvrager", machine.Requester.Name },
+
+                }
+            },
+            {
+                USER_KEY,
+                new()
+                {
+                    { "Gebruiker", machine.User.Name },
+
+                }
+            },
+            {
+                ADMIN_KEY,
+                new()
+                {
+                    { "Opgezet door", machine.Account.GetFullName() },
+
+                }
+            },
+
         };
+
+        foreach (var credential in machine.Credentials)
+        {
+            credentials.Add(new() { { "Gebruikersnaam", credential.Username }, { "Rol", credential.Role } });
+        }
+
+
     }
-
-    //TODO: Add this setter for all dictionaries. 
-    #endregion
-
 
     #region Navigate functions
     private void NavigateBack()
