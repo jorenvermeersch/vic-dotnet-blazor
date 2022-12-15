@@ -1,10 +1,4 @@
-﻿/* Context menu */
-.top-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--padding-md);
-    align-items: center;
-}
+﻿/* Top Bar */
 
 .top-bar-label {
     flex: 1;
@@ -124,21 +118,6 @@ select {
 .small-title {
     color: var(--dark-blue);
     font-weight: bold;
-}
-
-.filter-button-area {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    align-items: center;
-}
-
-.reset-area {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-content: center;
-    align-items: center;
 }
 
 /* Button */

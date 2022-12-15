@@ -16,15 +16,14 @@
         </div>
 
         <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm=SearchValue />
-
-        <div class="reset-area">
-            <div class="filter-button-area">
-                <p>Rol: </p>
+        <FilterResetContainer>
+            <FilterButtonGroup>
+                <Label Text="Rol" />
                 <Button Text="Master" OnClick="@FilterMaster" Toggle=@toggleMaster />
                 <Button Text="Admin" OnClick="@FilterAdmin" Toggle=@toggleAdmin />
                 <Button Text="Waarnemer" OnClick="@FilterObserver" Toggle=@toggleObserver />
-            </div>
-        </div>
+            </FilterButtonGroup>
+        </FilterResetContainer>
     </OneWidth>
     <TwoWidth>
         <Title Text="Alle accounts" />

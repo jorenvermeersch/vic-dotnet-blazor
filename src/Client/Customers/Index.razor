@@ -15,8 +15,8 @@
 
         <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm="@SearchValue" />
 
-        <div class="reset-area">
-            <div class="filter-button-area">
+        <div class="filter-reset-container">
+            <div class="filter-button-group">
                 <p>Type: </p>
                 <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
                 <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
