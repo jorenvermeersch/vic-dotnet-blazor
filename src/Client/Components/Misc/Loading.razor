@@ -1,9 +1,11 @@
-﻿<div class="loading-screen-wrapper">
-    <div class="loading-screen">
-        <div class="loading-items">
-            <span><i class="fa-solid fa-vr-cardboard"></i> Virtual IT Company</span>
+﻿@{
+    var adjustHeight = HasGlobalSearchBar ? "has-global-search" : ""; 
+}
 
-            <div class="loading-line" />
-        </div>
-    </div>
+<div class="center-container @adjustHeight">
+    <MudProgressCircular Color="Color.Info" Indeterminate="true" />
 </div>
+
+@code {
+    public bool HasGlobalSearchBar { get; set; } = true; 
+}
