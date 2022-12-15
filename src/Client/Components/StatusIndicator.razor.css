@@ -5,19 +5,21 @@
     justify-content: center;
     gap: var(--padding-sm);
     border-radius: calc(4 * var(--padding-sm));
-
     color: var(--dark-gray);
+    border: var(--border-size) solid var(--light-gray);
     background-color: var(--light-gray);
     font-size: var(--text-sm);
     font-weight: 600;
-    padding: var(--padding-sm) calc(2 * var(--padding-sm));
+    padding: var(--padding-ty) calc(2 * var(--padding-sm));
     text-decoration: none;
     user-select: none;
 }
 
 .active {
-    color: var(--green); 
-    background-color: var(--light-green); 
+    color: var(--white);
+    background-color: var(--blue);
+    border-color: var(--blue); 
+    
 }
 
 @keyframes zoof {

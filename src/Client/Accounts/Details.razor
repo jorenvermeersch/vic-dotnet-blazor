@@ -7,51 +7,29 @@
 }
 else
 {
-    <TopBar>
-        <BackButton Text="Terug" OnClick="NavigateBack" />
-        <StatusIndicator State=@(account.IsActive ? "Active" : "Inactive") />
-        <AuthorizeView Roles="Master">
-            <span>
-                <Button Text="Beheren" Href=@string.Format("account/{0}/edit", Id) />
-            </span>
-        </AuthorizeView>
-    </TopBar>
-
     <ThreeColumnLayout>
         <OneWidth>
-            <DataCard Entries="@_username" />
+            <ButtonGroup>
+                <BackButton Text="Terug" OnClick="NavigateBack" />
+                <span class="outline-end">
+                    <StatusIndicator State="@account.GetStateString()" />
+                </span>
+                <AuthorizeView Roles="Master, Administrator">
+                    <Button Text="Beheren" Href="@account.GetDetailUrl()" />
+                </AuthorizeView>
+            </ButtonGroup>
+            
+            <DataCard Entries="@username" />
 
             <Title Text="Algemeen" />
-            <DataCard Entries="@_general" />
+            <DataCard Entries="@generalInformation" />
 
             <Title Text="Contactgegevens" />
-            <DataCard Entries="@_contactInformation" />
+            <DataCard Entries="@contactInformation" />
         </OneWidth>
         <TwoWidth>
             <Title Text="Virtuele machines" />
-            @*//TODO: machines have not been fetched yet MERGE WITH BRANCH -- ROBIN*@
-            @*        @if (virtualMachines.Any())
-        {
-        <div class="two-columns-container">
-        <div>
-        @foreach (var vm in virtualMachines.Take(5))
-        {
-        <StatusCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-        }
-        </div>
-        <div>
-        @foreach (var vm in virtualMachines.Skip(5).Take(5))
-        {
-        <StatusCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-        }
-        </div>
-        </div>
-        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-        }
-        else
-        {*@
-            <NoResultsMessage Message="Deze beheerder is verantwoordelijk voor geen enkele virtuele machine." />
-            @*}*@
+            <NoResultsMessage Message="Deze beheerder is voorlopig nog geen virtuele machines toegewezen" />
         </TwoWidth>
     </ThreeColumnLayout>
 }

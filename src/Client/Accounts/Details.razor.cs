@@ -10,30 +10,29 @@ public partial class Details
 {
     private AccountDto.Detail? account;
 
-    [Inject] public IAccountService? AccountService { get; set; }
-    [Inject] public NavigationManager? Navigation { get; set; }
-    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource>? localizer { get; set; }
-
-
+    [Inject] public IAccountService AccountService { get; set; } = default!;
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> Localizer { get; set; } = default!;
 
     [Parameter] public long Id { get; set; }
 
     private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
     private int offset, totalVirtualMachines, totalPages = 0;
     private int selectedPage = 1;
-    private Dictionary<string, string>? _username = new();
-    private Dictionary<string, string>? _general = new();
-    private Dictionary<string, string>? _contactInformation = new();
+
+    private Dictionary<string, string>? username = new();
+    private Dictionary<string, string>? generalInformation = new();
+    private Dictionary<string, string>? contactInformation = new();
 
     protected override async Task OnInitializedAsync()
     {
         AccountResponse.GetDetail response = await AccountService.GetDetailAsync(new AccountRequest.GetDetail() { AccountId = Id }) ?? new AccountResponse.GetDetail();
         account = response.Account;
-        _general?.Add("Role", localizer![account!.Role.ToString()]);
-        _username?.Add("Naam", string.Concat(account!.Firstname, " ", account!.Lastname));
-        _general?.Add("Departement", account!.Department);
-        _general?.Add("Opleiding", account!.Education);
-        _contactInformation?.Add("E-mailadres", account!.Email);
+        generalInformation?.Add("Role", Localizer[account!.Role.ToString()]);
+        username?.Add("Naam", string.Concat(account!.Firstname, " ", account!.Lastname));
+        generalInformation?.Add("Departement", account!.Department);
+        generalInformation?.Add("Opleiding", account!.Education);
+        contactInformation?.Add("E-mailadres", account!.Email);
         //VirtualMachineResponse.GetIndex vmresponse = await virtualMachineService.GetVirtualMachinesByAccountId(new VirtualMachineRequest.GetByObjectId{ObjectId = account.Id});
         //virtualMachines = vmresponse.VirtualMachines;
         //totalVirtualMachines = vmresponse.TotalAmount;
@@ -43,13 +42,5 @@ public partial class Details
     private void NavigateBack()
     {
         Navigation!.NavigateTo("account/list");
-    }
-
-    private async Task ClickHandler(int pageNr)
-    {
-        return;
-        //offset = (pageNr - 1) * 10;
-        //virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
-        //selectedPage = pageNr;
     }
 }

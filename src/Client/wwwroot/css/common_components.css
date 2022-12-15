@@ -121,9 +121,8 @@ select {
 }
 
 /* Button */
-button {
-    background-color: transparent;
-    font-family: var(--font-stack);
+.button,
+.button-inverse {
     display: inline-block;
     font-size: var(--text-sm);
     font-weight: 600;
@@ -131,13 +130,37 @@ button {
     border-radius: calc(4 * var(--padding-sm));
     text-decoration: none;
     width: fit-content;
-    color: var(--dark-blue);
-    border: var(--border-size) solid var(--dark-blue);
 }
 
-button:hover {
+.button:hover {
     color: var(--white);
     background-color: var(--blue);
     border-color: var(--blue);
     cursor: pointer;
+}
+
+.button {
+    color: var(--dark-blue);
+    border: var(--border-size) solid var(--dark-blue);
+}
+
+.button-inverse {
+    color: var(--white);
+    border: var(--border-size) solid var(--white);
+}
+
+.toggle-on {
+    color: var(--white);
+    background-color: var(--blue);
+    border-color: var(--blue);
+}
+
+.toggle-off {
+    color: var(--dark-blue);
+    border: var(--border-size) solid var(--dark-blue);
+}
+
+/* Testing */
+.outline-end {
+    margin-inline-start: auto; 
 }

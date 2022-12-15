@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Web;
 
 namespace Client.Extensions;
 
@@ -16,5 +17,10 @@ public static class ObjectExtensions
     public static string GbFormat(this string input)
     {
         return $"{input} GB";
+    }
+
+    public static string FormatIfEmpty(this string? input)
+    {
+        return input.IsNullOrEmpty() ? "-" : input!;
     }
 }

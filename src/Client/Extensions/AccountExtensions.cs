@@ -15,4 +15,9 @@ public static class AccountExtensions
     {
         return $"{route}/{account.Id}";
     }
+
+    public static string GetStateString(this AccountDto.Detail account)
+    {
+        return account.IsActive ? "Active" : "Inactive";
+    }
 }

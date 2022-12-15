@@ -1,13 +1,13 @@
 ﻿.data-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
 }
 
-.methodexecutor{
+.methodexecutor {
     position: absolute;
     right: 10px;
     top: 10px;
