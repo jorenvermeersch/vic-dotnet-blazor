@@ -1,54 +1,56 @@
 ﻿@page "/virtual-machine/{id:long}"
 @attribute [Authorize]
 
-<PageTitle>Virtual Machine @virtualMachine.Name  Details</PageTitle>
+<PageTitle>Details machine</PageTitle>
 
-<div class="top-bar" >
-    <div class="top-bar-items" style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small-title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i>
-            <span>Terug</span>
-        </span>
-        <StatusIndicator State="@virtualMachine.Status.ToString()" />
-        <AuthorizeView Roles="Master, Administrator">
-            <span>
-                <Button Text="Beheren" />
-            </span>
-        </AuthorizeView>
-    </div>
-</div>
+@if(machine is null)
+{
+    <Loading />
+}
+else
+{
+    <ThreeColumnLayout>
+        <OneWidth>
+            <ButtonGroup>
+                <BackButton Text="Terug" OnClick="NavigateBack" />
+                <span class="outline-end">
+                    <StatusIndicator State="@machine.Status.ToString()" />
+                </span>
+                <AuthorizeView Roles="Master, Administrator">
+                    <Button Text="Beheren" />
+                </AuthorizeView>
+            </ButtonGroup>
 
-<div class="three-column-layout">
-    <div class="one-third">
-        <DataCard Entries="@_defaultInformation" />
+            <DataCard Entries="@generalInformation" />
+            <DataCard Entries="@host" OnClick="NavigateToHost" />
 
-        <Title Text="Specificaties en configuratie" />
-        <DataCard Entries="@_specs" />
-        <DataCard Entries="@_config" />
-        <DataCard Entries="@_ports" />
+            <Title Text="Specificaties en configuratie" />
+            <DataCard Entries="@specifications" />
+            <DataCard Entries="@configuration" />
+            <DataCard Entries="@ports" />
+        </OneWidth>
+        <OneWidth>
+            <Title Text="Beschikbaarheid en back-ups" />
+            <DataCard Entries="@availabilities" />
+            <DataCard Entries="@backup" />
 
-        <Title Text="Beschikbaarheid en back-ups" />
-        <DataCard Entries="@_available" />
-        <DataCard Entries="@_backups" />
+            <Title Text="Klanten" />
+            <DataCard Entries="@requester" OnClick="NavigateToRequester" />
+            <DataCard Entries="@user" OnClick="NavigateToUser" />
 
-    </div>
-<div class="one-third">
-    <Title Text="Logingegevens" />
-    @foreach(var data in _logindata){
-            <DataCard Entries="@data" />
-    }
-     
-</div>
-<div class="one-third">
-    <Title Text="Aanvrager" />
-    <DataCard Entries="@_requester" />
+            <Title Text="Beheerder" />
+            <DataCard Entries="@administrator" OnClick="NavigateToAdministrator" />
+        </OneWidth>
+        <OneWidth>
+            <Title Text="Logingegevens" />
+            @foreach (var data in loginCredentials)
+            {
+                <DataCard Entries="@data" />
+            }
+        </OneWidth>
+    </ThreeColumnLayout>
+}
 
-    <Title Text="Gebruiker" />
-    <DataCard Entries="@_user" />
-
-    <Title Text="Verantwoordelijken" />
-    <DataCard Entries="@_personincharge" />
-</div>
-</div>
 
 
 

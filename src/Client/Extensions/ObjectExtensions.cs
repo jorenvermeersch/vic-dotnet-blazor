@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 using System.Web;
 
 namespace Client.Extensions;
@@ -22,5 +23,11 @@ public static class ObjectExtensions
     public static string FormatIfEmpty(this string? input)
     {
         return input.IsNullOrEmpty() ? "-" : input!;
+    }
+
+    public static string FormatDate(this DateTime date, string format = "d MMMM yyyy")
+    {
+        var cultureInfo = new CultureInfo("nl-BE");
+        return date.ToString(format, cultureInfo);
     }
 }

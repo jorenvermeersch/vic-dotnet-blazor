@@ -1,3 +1,4 @@
+using Client.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.VirtualMachines;
@@ -7,64 +8,98 @@ namespace Client.VirtualMachines;
 
 public partial class Details
 {
-    [Inject] private IVirtualMachineService? VirtualMachineService { get; set; }
-    [Inject] private NavigationManager? Navigation { get; set; }
-    [Inject] private IStringLocalizer<SharedFiles.Resources.Resource>? localizer { get; set; }
+    [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> Localizer { get; set; } = default!;
     [Parameter] public long Id { get; set; }
 
-    //Model
-    private VirtualMachineDto.Detail? virtualMachine;
+    private VirtualMachineDto.Detail? machine;
 
-    private Dictionary<string, string> _defaultInformation = new();
-    private Dictionary<string, string> _specs = new();
-    private Dictionary<string, string> _config = new();
-    private Dictionary<string, string> _ports = new();
-    private Dictionary<string, string> _available = new();
-    private Dictionary<string, string> _backups = new();
-    private Dictionary<string, string> _user = new();
-    private Dictionary<string, string> _requester = new();
-    private Dictionary<string, string> _personincharge = new();
-    private List<Dictionary<string, string>> _logindata = new();
-    private Dictionary<string, string> _host = new();
-    //private Dictionary<string, string> _logindata = new();
+    #region Dictionaries
+    private Dictionary<string, string> generalInformation = new();
+    private Dictionary<string, string> specifications = new();
+    private Dictionary<string, string> configuration = new();
+    private Dictionary<string, string> ports = new();
+    private Dictionary<string, string> availabilities = new();
+    private Dictionary<string, string> backup = new();
+    private Dictionary<string, string> user = new();
+    private Dictionary<string, string> requester = new();
+    private Dictionary<string, string> administrator = new();
+    private List<Dictionary<string, string>> loginCredentials = new();
+    private Dictionary<string, string> host = new();
+    #endregion
 
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        VirtualMachineResponse.GetDetail response = await VirtualMachineService.GetDetailAsync(new VirtualMachineRequest.GetDetail() { MachineId = Id }) ?? new VirtualMachineResponse.GetDetail();
-        virtualMachine = response.VirtualMachine;
+        VirtualMachineResponse.GetDetail response = await VirtualMachineService.GetDetailAsync(
+            new VirtualMachineRequest.GetDetail()
+            {
+                MachineId = Id
+            }
+        );
+        machine = response.VirtualMachine;
 
+        SetGeneralInformation();
 
-        _defaultInformation.Add("Naam", virtualMachine!.Name);
-        _defaultInformation.Add("FQDN", virtualMachine!.Fqdn);
-        _defaultInformation.Add("Hostnaam", virtualMachine!.Host.Name);
-        _config.Add("Mode", virtualMachine.Mode.ToString());
-        _config.Add("Template", localizer![virtualMachine.Template.ToString()]);
-        _config.Add("Reden", virtualMachine.Reason);
-        _specs.Add("vCPUs", virtualMachine.Specification.VirtualProcessors.ToString());
-        _specs.Add("Geheugen", string.Format("{0} GB", virtualMachine.Specification.Memory.ToString()));
-        _specs.Add("Opslag", string.Format("{0} GB", virtualMachine.Specification.Storage.ToString()));
-        //if (virtualMachine.Availabilities.Count>1){
-        //    _available.Add("Beschikbaarheid", string.Join(", ", virtualMachine.Availabilities));
-        //}
-        _available.Add("Backups", localizer[virtualMachine.BackupFrequenty.ToString()]);
-        _backups.Add("Aangevraagd op", virtualMachine.ApplicationDate.ToShortDateString());
-        _backups.Add("Start", virtualMachine.TimeSpan.StartDate.ToShortDateString());
-        _backups.Add("Einde", virtualMachine.TimeSpan.EndDate.ToShortDateString());
-        _personincharge.Add("Opgezet door", virtualMachine.Account?.Firstname + " " + virtualMachine.Account?.Lastname);
-        _personincharge.Add("Ondersteuning", virtualMachine.Account?.Firstname + " " + virtualMachine.Account?.Lastname);
-        _user.Add("Naam", virtualMachine!.User.Name);
-        _user.Add("Email", virtualMachine!.User.Email);
-        _requester.Add("Naam", virtualMachine!.Requester.Name);
-        _requester.Add("Email", virtualMachine!.Requester.Email);
-        _ports.Add("Externe Toegang", string.Join(", ", virtualMachine.Ports.Select(p => p.Service)));
-        _ports.Add("VPN", virtualMachine.hasVpnConnection.ToString());
-        foreach (var credential in virtualMachine.Credentials) _logindata.Add(new Dictionary<string, string>() { { "Gebruikersnaam", credential.Username }, { "Rol", credential.Role } });
-        _host.Add("Naam", virtualMachine.Host.Name);
+        host.Add("Hostnaam", machine!.Host.Name);
+        configuration.Add("Mode", machine.Mode.ToString());
+        configuration.Add("Template", Localizer![machine.Template.ToString()]);
+        configuration.Add("Reden", machine.Reason);
+        specifications.Add("vCPUs", machine.Specification.VirtualProcessors.ToString());
+        specifications.Add("Geheugen", machine.Specification.Memory.ToString().GbFormat());
+        specifications.Add("Opslag", machine.Specification.Storage.ToString().GbFormat());
+        availabilities.Add("Backups", Localizer[machine.BackupFrequenty.ToString()]);
+        backup.Add("Aangevraagd op", machine.ApplicationDate.FormatDate());
+        backup.Add("Start", machine.TimeSpan.StartDate.FormatDate());
+        backup.Add("Einde", machine.TimeSpan.EndDate.FormatDate());
+        administrator.Add("Opgezet door", machine.Account.GetFullName());
+        user.Add("Gebruiker", machine!.User.Name);
+        requester.Add("Aanvrager", machine!.Requester.Name);
+        ports.Add("Externe Toegang", string.Join(", ", machine.Ports.Select(p => p.Service)));
+        ports.Add("VPN", machine.hasVpnConnection.ToString());
+        foreach (var credential in machine.Credentials) loginCredentials.Add(new Dictionary<string, string>() { { "Gebruikersnaam", credential.Username }, { "Rol", credential.Role } });
     }
 
+    #region Dictionary setters
+    private void SetGeneralInformation()
+    {
+        generalInformation = new()
+        {
+            { "Naam", machine!.Name },
+            { "FQDN", machine!.Fqdn }
+        };
+    }
+
+    //TODO: Add this setter for all dictionaries. 
+    #endregion
+
+
+    #region Navigate functions
     private void NavigateBack()
     {
-        Navigation!.NavigateTo("virtual-machine/list");
+        Navigation.NavigateTo("virtual-machine/list");
     }
+
+    private void NavigateToRequester()
+    {
+
+        Navigation.NavigateTo($"customer/{machine!.Requester.Id}");
+    }
+
+    private void NavigateToUser()
+    {
+        Navigation.NavigateTo($"customer/{machine!.User.Id}");
+    }
+
+    private void NavigateToHost()
+    {
+        Navigation.NavigateTo($"host/{machine!.Host.Id}");
+    }
+
+    private void NavigateToAdministrator()
+    {
+        Navigation.NavigateTo($"host/{machine!.Account.Id}");
+    }
+    #endregion
 }
