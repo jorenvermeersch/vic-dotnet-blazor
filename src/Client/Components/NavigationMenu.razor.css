@@ -1,6 +1,10 @@
 ﻿
 
-/*General stying for both narrow and wide variants. */
+/* General stying for both narrow and wide variants. */
+li {
+    cursor: pointer; 
+}
+
 .navigation-bar-narrow-wrapper .navigation-bar-narrow,
 .navigation-bar-wide {
   display: flex;
@@ -113,13 +117,29 @@
 }
 
 /* Wide styling. */
+
 .navigation-bar-wide {
   display: none;
   align-items: center;
 }
 
 .navigation-bar-wide ul li:first-of-type i {
-  color: var(--blue);
+    color: var(--blue);
+}
+
+#logout-button {
+    color: var(--dark-blue); 
+    padding-left: var(--padding-sm); 
+}
+
+.navigation-bar-wide ul li a:hover {
+    text-decoration: underline var(--blue) var(--border-size-md);
+    text-underline-position: under;
+    text-underline-offset: calc(var(--padding-sm) / 2);
+}
+
+.navigation-bar-wide ul li:first-of-type a:hover {
+    text-decoration: none; 
 }
 
 @media screen and (min-width: 768px) {

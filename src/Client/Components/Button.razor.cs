@@ -14,7 +14,7 @@ public partial class Button
     public EventCallback OnClick { get; set; } = new();
 
     [Parameter]
-    public bool Inverse { get; set; } = false;
+    public bool InverseStyle { get; set; } = false;
 
     [Parameter]
     public bool Toggle { get; set; } = false;
