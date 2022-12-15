@@ -1,7 +1,5 @@
-using Azure;
 using Microsoft.AspNetCore.Components;
 using Shared.VirtualMachines;
-using System.Drawing.Printing;
 
 namespace Client.VirtualMachines;
 
@@ -16,7 +14,7 @@ public partial class Index
     private int totalVirtualMachines = 0;
     private int totalPages;
     private int selectedPage = 1;
-    private readonly int amount=20;
+    private readonly int amount = 20;
     protected override async Task OnParametersSetAsync()
     {
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
@@ -38,7 +36,7 @@ public partial class Index
 
     private async Task ClickHandler(int pageNr)
     {
-        Page= pageNr;
+        Page = pageNr;
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
         {
             Page = pageNr,
