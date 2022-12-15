@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace Client.Components;
+namespace Client.Components.Misc;
 
 public partial class BarGraph
 {

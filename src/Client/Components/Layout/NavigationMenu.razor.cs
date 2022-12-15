@@ -1,7 +1,7 @@
 using Client.Authentication;
 using Microsoft.AspNetCore.Components;
 
-namespace Client.Components;
+namespace Client.Components.Layout;
 
 public partial class NavigationMenu
 {
