@@ -1,60 +1,68 @@
 ﻿@page "/account/{id:long}"
 <PageTitle>Account Details</PageTitle>
 
-<div class="top-bar">
-    <div class="top-bar-items" style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small-title" @onclick="NavigateBack">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>Terug</span>
-        </span>
-        <StatusIndicator State=@(account.IsActive ? "Active" : "Inactive") />
-        <AuthorizeView Roles="Master">
-        <span>
-            <Button Text="Beheren" Href=@string.Format("account/{0}/edit", Id)/>
-        </span>
-        </AuthorizeView>
-    </div>
-</div>
-<div class="three-column-layout">
-    <div class="one-third">
-        <DataCard Entries="@_username" />
+@if (account is null)
+{
+    <Loading />
+}
+else
+{
+    <TopBar>
+        <div class="top-bar-items" style="display: flex">
+            <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small-title" @onclick="NavigateBack">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Terug</span>
+            </span>
+            <StatusIndicator State=@(account.IsActive ? "Active" : "Inactive") />
+            <AuthorizeView Roles="Master">
+                <span>
+                    <Button Text="Beheren" Href=@string.Format("account/{0}/edit", Id) />
+                </span>
+            </AuthorizeView>
+        </div>
+    </TopBar>
 
-        <Title Text="Algemeen" />
-        <DataCard Entries="@_general" />
+    <ThreeColumnLayout>
+        <OneWidth>
+            <DataCard Entries="@_username" />
 
-        <Title Text="Contactgegevens" />
-        <DataCard Entries="@_contactInformation" />
-    </div>
-    <div class="two-thirds"> 
+            <Title Text="Algemeen" />
+            <DataCard Entries="@_general" />
 
-        <Title Text="Virtuele machines" />
-
-
-        @*//TODO: machines have not been fetched yet MERGE WITH BRANCH -- ROBIN*@
-@*        @if (virtualMachines.Any())
+            <Title Text="Contactgegevens" />
+            <DataCard Entries="@_contactInformation" />
+        </OneWidth>
+        <TwoWidth>
+            <Title Text="Virtuele machines" />
+            @*//TODO: machines have not been fetched yet MERGE WITH BRANCH -- ROBIN*@
+            @*        @if (virtualMachines.Any())
         {
-            <div class="two-columns-container">
-                <div>
-                    @foreach (var vm in virtualMachines.Take(5))
-                    {
-                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-                    }
-                </div>
-                <div>
-                    @foreach (var vm in virtualMachines.Skip(5).Take(5))
-                    {
-                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
-                    }
-                </div>
-            </div>
-            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+        <div class="two-columns-container">
+        <div>
+        @foreach (var vm in virtualMachines.Take(5))
+        {
+        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
+        }
+        </div>
+        <div>
+        @foreach (var vm in virtualMachines.Skip(5).Take(5))
+        {
+        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested) Href=@string.Concat("virtual-machine/", vm.Id) />
+        }
+        </div>
+        </div>
+        <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
         }
         else
         {*@
             <NoResultsMessage Message="Deze beheerder is verantwoordelijk voor geen enkele virtuele machine." />
-        @*}*@
-    </div>
-</div>
+            @*}*@
+        </TwoWidth>
+    </ThreeColumnLayout>
+}
+
+
+
 
 
 

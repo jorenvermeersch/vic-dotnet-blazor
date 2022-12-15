@@ -16,37 +16,44 @@
         </div>
 
         <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm=SearchValue />
+
         <FilterResetContainer>
-            <FilterButtonGroup>
+            <ButtonGroup>
                 <Label Text="Rol" />
                 <Button Text="Master" OnClick="@FilterMaster" Toggle=@toggleMaster />
                 <Button Text="Admin" OnClick="@FilterAdmin" Toggle=@toggleAdmin />
                 <Button Text="Waarnemer" OnClick="@FilterObserver" Toggle=@toggleObserver />
-            </FilterButtonGroup>
+            </ButtonGroup>
         </FilterResetContainer>
     </OneWidth>
     <TwoWidth>
-        <Title Text="Alle accounts" />
-        @if (accounts.Any())
+        <Title Text="Alle beheerders" />
+        @if (accounts is not null && accounts.Any())
         {
-            <div class="two-columns-container">
+            <WithTwoColumns>
                 <div>
                     @foreach (var account in accounts.Take(10))
                     {
-                        <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
+                        <EntityCard 
+                            Value="@account.GetFullName()" 
+                            Active="@account.IsActive" 
+                            Href="@account.GetDetailUrl()" />
                     }
                 </div>
                 <div>
                     @foreach (var account in accounts.Skip(10).Take(10))
                     {
-                        <EntityCard Value="@string.Concat(account.Firstname, " ", account.Lastname)" Active="@account.IsActive" Href=@string.Concat("account/", account.Id)></EntityCard>
+                        <EntityCard 
+                            Value="@account.GetFullName()"
+                            Active="@account.IsActive"
+                            Href="@account.GetDetailUrl()" />
                     }
                 </div>
-            </div>
+            </WithTwoColumns>
         }
         else
         {
-            <NoResultsMessage Message="Oei, er zijn geen beheerders met de gegeven zoekcriteria." />
+            <NoResultsMessage Message="Er zijn geen beheerders met opgegeven zoekcriteria" />
         }
 
         <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />

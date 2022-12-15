@@ -2,30 +2,31 @@
 @attribute [Authorize]
 
 
-
-<div class="top-bar">
-
-    <AuthorizeView Roles="Master, Administrator">
-        <Label Text="Toevoegen" />
-    </AuthorizeView>
-    <AuthorizeView Roles="Master">
-        <Button Text="Beheerder" Href="/account/add" />
-    </AuthorizeView>
-    <AuthorizeView Roles="Master, Administrator">
-        <Button Text="Klant" Href="/customer/add" />
-        <Button Href="/virtual-machine/add" Text="Virtuele machine" />
-        <Button Href="/host/add" Text="Host" />
-    </AuthorizeView>
-    
-</div>
+<TopBar>
+    <ButtonGroup>
+        <AuthorizeView Roles="Master, Administrator">
+            <Label Text="Toevoegen" />
+        </AuthorizeView>
+        <AuthorizeView Roles="Master">
+            <Button Text="Beheerder" Href="/account/add" />
+        </AuthorizeView>
+        <AuthorizeView Roles="Master, Administrator">
+            <Button Text="Klant" Href="/customer/add" />
+            <Button Text="Virtuele machine" Href="/virtual-machine/add" />
+            <Button Text="Host" Href="/host/add" />
+        </AuthorizeView>
+    </ButtonGroup>
+</TopBar>
 
 <ThreeColumnLayout>
     <OneWidth>
         <Title Text="Onafgewerkte virtuele machines" />
-        
-        @foreach (var vm in virtualMachines)
+        @foreach (var machine in virtualMachines)
         {
-            <EntityCard Value="@vm.Fqdn" Active=@false Href=@string.Concat("virtual-machine/", vm.Id)></EntityCard>
+            <EntityCard 
+                Value="@machine.Fqdn" 
+                Active=@false
+                Href="@machine.GetDetailUrl()" />
         }
 
         <PageSelector OnClick="@ChangePage" NumberOfPages=@totalPages SelectedPage="@selectedPage" />

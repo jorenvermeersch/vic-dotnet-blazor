@@ -8,7 +8,6 @@ namespace Client.Accounts;
 
 public partial class Details
 {
-    //MODEL
     private AccountDto.Detail? account;
 
     [Inject] public IAccountService? AccountService { get; set; }
@@ -20,8 +19,8 @@ public partial class Details
     [Parameter] public long Id { get; set; }
 
     private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
-    int offset, totalVirtualMachines, totalPages = 0;
-    int selectedPage = 1;
+    private int offset, totalVirtualMachines, totalPages = 0;
+    private int selectedPage = 1;
     private Dictionary<string, string>? _username = new();
     private Dictionary<string, string>? _general = new();
     private Dictionary<string, string>? _contactInformation = new();
