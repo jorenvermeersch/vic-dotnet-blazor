@@ -1,4 +1,5 @@
 ﻿footer {
+    margin-top: var(--padding-lg); 
     height: var(--nav-height);
     color: var(--dark-blue);
     background-color: var(--light-blue);
