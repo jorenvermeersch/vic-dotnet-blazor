@@ -37,18 +37,16 @@ else
                     <div>
                         @foreach (var host in hosts.Take(10))
                         {
-                            <EntityCard 
+                            <Card 
                                 Value="@host.Name"
-                                Active="@true"
                                 Href="@host.GetDetailUrl()" />
                         }
                     </div>
                     <div>
                         @foreach (var host in hosts.Skip(10).Take(10))
                         {
-                            <EntityCard 
+                            <Card 
                                 Value="@host.Name"
-                                Active="@true"
                                 Href="@host.GetDetailUrl()" />
                         }
                     </div>

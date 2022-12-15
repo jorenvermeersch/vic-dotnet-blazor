@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Client.Components
 {
-    public partial class EntityCard
+    public partial class StatusCard
     {
         [Parameter, EditorRequired]
         public string Href { get; set; } = default!;

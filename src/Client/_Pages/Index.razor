@@ -23,7 +23,7 @@
         <Title Text="Onafgewerkte virtuele machines" />
         @foreach (var machine in virtualMachines)
         {
-            <EntityCard 
+            <StatusCard 
                 Value="@machine.Fqdn" 
                 Active=@false
                 Href="@machine.GetDetailUrl()" />

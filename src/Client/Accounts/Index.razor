@@ -40,7 +40,7 @@ else
                     <div>
                         @foreach (var account in accounts.Take(10))
                         {
-                            <EntityCard Value="@account.GetFullName()"
+                            <StatusCard Value="@account.GetFullName()"
                             Active="@account.IsActive"
                             Href="@account.GetDetailUrl()" />
                         }
@@ -48,7 +48,7 @@ else
                     <div>
                         @foreach (var account in accounts.Skip(10).Take(10))
                         {
-                            <EntityCard Value="@account.GetFullName()"
+                            <StatusCard Value="@account.GetFullName()"
                             Active="@account.IsActive"
                             Href="@account.GetDetailUrl()" />
                         }

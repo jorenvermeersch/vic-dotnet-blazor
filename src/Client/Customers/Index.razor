@@ -42,17 +42,17 @@ else
                     <div>
                         @foreach (var customer in customers.Take(10))
                         {
-                            <EntityCard Value="@customer.Name"
-                            Active="@true"
-                            Href="@customer.GetDetailUrl()" />
+                            <Card 
+                                Value="@customer.Name"
+                                Href="@customer.GetDetailUrl()" />
                         }
                     </div>
                     <div>
                         @foreach (var customer in customers.Skip(10).Take(10))
                         {
-                            <EntityCard Value="@customer.Name"
-                            Active="@true"
-                            Href="@customer.GetDetailUrl()" />
+                            <Card 
+                                Value="@customer.Name"
+                                Href="@customer.GetDetailUrl()" />
                         }
                     </div>
                 </WithTwoColumns>

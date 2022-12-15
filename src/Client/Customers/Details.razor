@@ -46,7 +46,7 @@ else
                     <div>
                         @foreach (var machine in virtualMachines.Take(5))
                         {
-                            <EntityCard Value="@machine.Fqdn"
+                            <StatusCard Value="@machine.Fqdn"
                             Active="@machine.IsActive()"
                             Href="@machine.GetDetailUrl()" />
                         }
@@ -54,7 +54,7 @@ else
                     <div>
                         @foreach (var machine in virtualMachines.Skip(5).Take(5))
                         {
-                            <EntityCard Value="@machine.Fqdn"
+                            <StatusCard Value="@machine.Fqdn"
                             Active="@machine.IsActive()"
                             Href="@machine.GetDetailUrl()" />
                         }

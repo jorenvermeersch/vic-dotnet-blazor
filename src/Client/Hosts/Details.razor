@@ -42,13 +42,13 @@
                 <div>
                     @foreach (var vm in virtualMachines.Take(5))
                     {
-                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested || vm.Status == Status.InProgress) Href=@string.Concat("virtual-machine/", vm.Id) />
+                        <StatusCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested || vm.Status == Status.InProgress) Href=@string.Concat("virtual-machine/", vm.Id) />
                     }
                 </div>
                 <div>
                     @foreach (var vm in virtualMachines.Skip(5).Take(5))
                     {
-                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested || vm.Status == Status.InProgress) Href=@string.Concat("virtual-machine/", vm.Id) />
+                        <StatusCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested || vm.Status == Status.InProgress) Href=@string.Concat("virtual-machine/", vm.Id) />
                     }
                 </div>
                 
