@@ -20,13 +20,13 @@ else
                 </AuthorizeView>
             </ButtonGroup>
             
-            <DataCard Entries="@username" />
+            <DataCard Entries="@datacards.GetValueOrDefault(USERNAME_KEY)" />
 
             <Title Text="Algemeen" />
-            <DataCard Entries="@generalInformation" />
+            <DataCard Entries="@datacards.GetValueOrDefault(GENERAL_INFORMATION_KEY)" />
 
             <Title Text="Contactgegevens" />
-            <DataCard Entries="@contactInformation" />
+            <DataCard Entries="@datacards.GetValueOrDefault(CONTACT_INFORMATION_KEY)" />
         </OneWidth>
         <TwoWidth>
             <Title Text="Virtuele machines" />

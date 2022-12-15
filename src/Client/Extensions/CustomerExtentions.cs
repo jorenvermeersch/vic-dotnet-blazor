@@ -1,10 +1,26 @@
-﻿using Shared.Customers;
+﻿using Domain.Constants;
+using Shared.Customers;
 
 namespace Client.Extensions;
 
 public static class CustomerExtentions
 {
     private static string route = "customer";
+
+    public static string GetFullName(this CustomerDto.Detail customer)
+    {
+        return $"{customer.ContactPerson.Firstname} {customer.ContactPerson.Lastname}";
+    }
+    public static string GetFullName(this ContactPersonDto contact)
+    {
+        return $"{contact.Firstname} {contact.Lastname}";
+    }
+
+
+    public static bool IsInternal(this CustomerDto.Detail customer)
+    {
+        return customer.CustomerType == CustomerType.Intern;
+    }
 
     public static string GetDetailUrl(this CustomerDto.Index customer)
     {

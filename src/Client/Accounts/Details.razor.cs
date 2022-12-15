@@ -1,8 +1,8 @@
 
+using Client.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.Accounts;
-using Shared.VirtualMachines;
 
 namespace Client.Accounts;
 
@@ -16,27 +16,50 @@ public partial class Details
 
     [Parameter] public long Id { get; set; }
 
-    private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
-    private int offset, totalVirtualMachines, totalPages = 0;
-    private int selectedPage = 1;
-
-    private Dictionary<string, string>? username = new();
-    private Dictionary<string, string>? generalInformation = new();
-    private Dictionary<string, string>? contactInformation = new();
+    private Dictionary<string, Dictionary<string, string>> datacards = new();
+    private string USERNAME_KEY = "USERNAME";
+    private string GENERAL_INFORMATION_KEY = "GENERAL_INFORMATION";
+    private string CONTACT_INFORMATION_KEY = "CONTACT_INFORMATION";
 
     protected override async Task OnInitializedAsync()
     {
-        AccountResponse.GetDetail response = await AccountService.GetDetailAsync(new AccountRequest.GetDetail() { AccountId = Id }) ?? new AccountResponse.GetDetail();
+        AccountResponse.GetDetail response = await AccountService.GetDetailAsync(
+            new AccountRequest.GetDetail()
+            {
+                AccountId = Id
+            }
+        );
         account = response.Account;
-        generalInformation?.Add("Role", Localizer[account!.Role.ToString()]);
-        username?.Add("Naam", string.Concat(account!.Firstname, " ", account!.Lastname));
-        generalInformation?.Add("Departement", account!.Department);
-        generalInformation?.Add("Opleiding", account!.Education);
-        contactInformation?.Add("E-mailadres", account!.Email);
-        //VirtualMachineResponse.GetIndex vmresponse = await virtualMachineService.GetVirtualMachinesByAccountId(new VirtualMachineRequest.GetByObjectId{ObjectId = account.Id});
-        //virtualMachines = vmresponse.VirtualMachines;
-        //totalVirtualMachines = vmresponse.TotalAmount;
-        //totalPages = (totalVirtualMachines / 10) + 1;
+
+        datacards = new()
+        {
+             {
+                USERNAME_KEY,
+                new()
+                {
+                    { "Naam", account!.GetFullName() },
+                }
+            },
+            {
+                GENERAL_INFORMATION_KEY,
+                new()
+                {
+                    { "Rol", Localizer[account!.Role.ToString()] },
+                    { "Departement", account!.Department },
+                    { "Opleiding", account!.Education.FormatIfEmpty() },
+                }
+            },
+            {
+                CONTACT_INFORMATION_KEY,
+                new()
+                {
+                    { "E-mailadres", account!.Email },
+                }
+            }
+        };
+
+        // TODO: Fetch virtual machines of admin. 
+
     }
 
     private void NavigateBack()

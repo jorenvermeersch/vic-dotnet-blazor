@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using Shared.Validation;
-using Shared.VirtualMachines;
-
-namespace Shared.Customers;
+﻿namespace Shared.Customers;
 public class ContactPersonDto
 {
     public string? Firstname { get; set; } = default!;
@@ -10,6 +6,6 @@ public class ContactPersonDto
     public string? Email { get; set; } = default!;
     public string? Phonenumber { get; set; }
 
-    
+
 
 }

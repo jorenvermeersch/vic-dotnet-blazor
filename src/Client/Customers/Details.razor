@@ -19,17 +19,17 @@ else
                     </span>
                 </AuthorizeView>
             </ButtonGroup>
-            <DataCard Entries="@_username" />
+            <DataCard Entries="@datacards.GetValueOrDefault(USERNAME_KEY)" />
 
             <Title Text="Algemeen" />
-            <DataCard Entries="@_general" />
+            <DataCard Entries="@datacards.GetValueOrDefault(GENERAL_INFORMATION_KEY)" />
 
             <Title Text="Contactgegevens" />
-            <DataCard Entries="@_contactInformation" />
+            <DataCard Entries="@datacards.GetValueOrDefault(CONTACT_KEY)" />
 
             @if (customer.BackupContactPerson is not null)
             {
-                <DataCard Entries="@_backupContactInformation" />
+                <DataCard Entries="@datacards.GetValueOrDefault(BACKUP_CONTACT_KEY)" />
             }
         </OneWidth>
         <TwoWidth>
