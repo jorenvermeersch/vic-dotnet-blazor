@@ -125,6 +125,7 @@ li {
 
 .navigation-bar-wide ul li:first-of-type i {
     color: var(--blue);
+    padding-right: var(--padding-sm); 
 }
 
 #logout-button {

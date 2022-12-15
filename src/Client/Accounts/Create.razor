@@ -8,18 +8,6 @@
 <EditForm Model="@Account" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator/>
     <div class="top-bar">
-        
-        <span class="top-bar-label">
-            @if (Convert.ToBoolean(Id))
-            {
-                <TitlePage IconString="user" Type="Account" Mutation="Wijzigen" />
-            }
-            else
-            {
-                <TitlePage IconString="user" Type="Account" Mutation="Toevoegen" />
-            }
-
-        </span>
         @if (Convert.ToBoolean(Id))
         {
             <button type="submit">Wijzigen </button>

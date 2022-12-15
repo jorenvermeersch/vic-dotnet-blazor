@@ -1,0 +1,17 @@
+﻿.form-header {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: var(--padding-md);
+}
+
+.form-header i {
+    color: var(--blue);
+}
+
+.form-header p {
+    color: var(--dark-blue); 
+    font-size: var(--text-md); 
+    font-weight: 600; 
+}
+
