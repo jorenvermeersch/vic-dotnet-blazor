@@ -1,23 +1,23 @@
 ﻿/* Context menu */
-.context-menu {
+.top-bar {
     display: flex;
     flex-wrap: wrap;
     gap: var(--padding-md);
     align-items: center;
 }
 
-.context-menu-label {
+.top-bar-label {
     flex: 1;
     font-size: var(--text-md);
     font-weight: 600;
     color: var(--dark-blue);
 }
 
-.context-menu-icon {
+.top-bar-icon {
     color: var(--blue);
 }
 
-.context-items {
+.top-bar-items {
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -8,9 +8,9 @@
 
  <EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit">
      <FluentValidationValidator/>
-    <div class="context-menu">
+    <div class="top-bar">
         
-        <span class="context-menu-label">
+        <span class="top-bar-label">
             @if (Convert.ToBoolean(Id))
             {
                 <TitlePage IconString="user" Type="Klant" Mutation="Toevoegen" />
