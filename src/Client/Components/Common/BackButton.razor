@@ -1,0 +1,13 @@
+﻿<a 
+    class="back-button" 
+    href="@Href"
+    @onclick="OnClick">
+        <i class="fa-solid fa-arrow-left fa-lg"></i>
+        <span>@Text</span>
+</a>
+
+@code {
+    [Parameter, EditorRequired] public string Text { get; set; } = default!; 
+    [Parameter] public string? Href { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; } = new(); 
+}
