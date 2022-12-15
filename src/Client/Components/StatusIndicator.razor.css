@@ -1,54 +1,24 @@
 ﻿
 .status-container {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--padding-sm);
+    border-radius: calc(4 * var(--padding-sm));
+
+    color: var(--dark-gray);
+    background-color: var(--light-gray);
     font-size: var(--text-sm);
     font-weight: 600;
     padding: var(--padding-sm) calc(2 * var(--padding-sm));
-    border-radius: calc(4 * var(--padding-sm));
     text-decoration: none;
     user-select: none;
-    width: fit-content;
-    height: 30px;
-    color: white;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
 }
 
-.Requested {
-    background-color: #777da7
+.active {
+    color: var(--green); 
+    background-color: var(--light-green); 
 }
-
-    .Requested i {
-        color: white
-    }
-
-.InProgress {
-    background-color: #f4b942
-}
-
-    .InProgress i {
-        color: white
-    }
-
-.ReadyToDeploy {
-    background-color: #70b77e
-}
-
-    .ReadyToDeploy i {
-        color: white
-    }
-
-.Deployed {
-    background-color: royalblue;
-    position: relative;
-}
-
-    .Deployed i {
-        color: white;
-        margin-right: 7px;
-        animation: zoof 2s ease-in-out infinite;
-    }
 
 @keyframes zoof {
     0%{
@@ -64,18 +34,3 @@
 
 
 
-.Active {
-    background-color: #70b77e
-}
-
-    .Active i {
-        color: white
-    }
-
-.Inactive {
-    background-color: #777da7
-}
-
-    .Inactive i {
-        color: white
-    }

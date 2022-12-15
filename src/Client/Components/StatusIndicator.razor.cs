@@ -11,6 +11,9 @@ public partial class StatusIndicator
 
     [Parameter, EditorRequired]
     public string State { get; set; } = default!;
+
+    public bool isActive => State == "Active" || State == "Deployed";
+
     private string GetIcon()
     {
         switch (State)
@@ -18,11 +21,11 @@ public partial class StatusIndicator
             case "Requested":
                 return "fa-regular fa-envelope";
             case "InProgress":
-                return "fa-solid fa-list-check";
+                return "fa-solid fa-microchip";
             case "ReadyToDeploy":
-                return "fa-solid fa-check";
+                return "fa-solid fa-gear";
             case "Deployed":
-                return "fa-solid fa-rocket";
+                return "fa-solid fa-check";
             case "Active":
                 return "fa-solid fa-check";
             case "Inactive":

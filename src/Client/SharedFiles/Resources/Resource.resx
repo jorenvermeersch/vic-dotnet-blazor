@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>Actief</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrator</value>
   </data>
@@ -130,7 +133,7 @@
     <value>Dagelijks</value>
   </data>
   <data name="Deployed" xml:space="preserve">
-    <value>In gebruik</value>
+    <value>Actief</value>
   </data>
   <data name="Dinsdag" xml:space="preserve">
     <value>Tuesday</value>
@@ -144,8 +147,11 @@
   <data name="FullDay" xml:space="preserve">
     <value>Volledige dag</value>
   </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Niet actief</value>
+  </data>
   <data name="InProgress" xml:space="preserve">
-    <value>In verwerking</value>
+    <value>In behandeling</value>
   </data>
   <data name="Maandag" xml:space="preserve">
     <value>Monday</value>
@@ -172,7 +178,7 @@
     <value>Geconfigureerd</value>
   </data>
   <data name="Requested" xml:space="preserve">
-    <value>In aanvraag</value>
+    <value>Aangevraagd</value>
   </data>
   <data name="Saturday" xml:space="preserve">
     <value>Zaterdag</value>
