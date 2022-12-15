@@ -23,26 +23,4 @@
 
 </div>
 
-@code {
-    
-    [Parameter] public IList<int> Data { get; set; } = new List<int>();
-    [Parameter] public int UpperBound { get; set; } = 10;
 
-    [Parameter] public string Title { get; set; } = "Title";
-    [Parameter] public string Unit { get; set; } = "Unit";
-    [Parameter] public string StartLabel { get; set; } = "Start";
-    [Parameter] public string EndLabel { get; set; } = "End";
-
-    protected override void OnInitialized()
-    {
-        Data.Add(3);
-        Data.Add(1);
-        Data.Add(8);
-        Data.Add(5); 
-        Data.Add(0);
-        Data.Add(2);
-        Data.Add(3);
-        Data.Add(10);
-    }
-
-}
