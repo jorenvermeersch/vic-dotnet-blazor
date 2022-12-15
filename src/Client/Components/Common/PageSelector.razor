@@ -1,0 +1,13 @@
+﻿<div class="page-selector-wrapper">
+    <div class="page-selector">     
+       @if(NumberOfPages != 1) {
+            @for (int pageNumber = 1; pageNumber <= NumberOfPages; pageNumber++)
+            {
+                int index = pageNumber;
+                string classname = index == SelectedPage ? "selected" : "";
+                <button class=@classname @onclick="@(() => OnClick.InvokeAsync(index))">@pageNumber</button>
+            }
+       }   
+    </div>
+</div>
+

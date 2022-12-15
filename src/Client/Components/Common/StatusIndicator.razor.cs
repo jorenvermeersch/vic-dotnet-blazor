@@ -2,7 +2,7 @@ using Client.SharedFiles.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
-namespace Client.Components;
+namespace Client.Components.Common;
 
 public partial class StatusIndicator
 {
