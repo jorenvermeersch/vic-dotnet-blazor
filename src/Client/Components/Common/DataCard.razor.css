@@ -41,14 +41,12 @@
 }
 
 .hoverable {
-    
     cursor: pointer;
     box-sizing: border-box;
     border-bottom: var(--border-size-md) solid transparent;
 }
 
-.hoverable:hover{
-    display: block;
+.hoverable:hover {
     cursor: pointer;
     box-sizing: border-box;
     border-bottom: var(--border-size-md) solid var(--blue);
