@@ -123,7 +123,10 @@ select {
 /* Button */
 .button,
 .button-inverse {
-    display: inline-block;
+    height: var(--button-height);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
     font-size: var(--text-sm);
     font-weight: 600;
     padding: var(--padding-ty) calc(2 * var(--padding-sm));

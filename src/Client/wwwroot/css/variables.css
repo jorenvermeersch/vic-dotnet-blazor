@@ -34,6 +34,7 @@
     /* Heights. */
     --card-height: 48px;
     --nav-height: 64px;
+    --button-height: 28px; 
     /* Padding. */
     --padding-ty: 2px;
     --padding-sm: 5px;
