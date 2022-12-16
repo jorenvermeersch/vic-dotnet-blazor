@@ -28,7 +28,14 @@
     [Parameter]
     public string Label { get; set; } = "";
 
-    private string DropDownChosenItem { get; set; } = "Kies...";
+    private string _dropDownChosenItem = "Kies...";
+
+    public string DropDownChosenItem 
+    {
+        get => shown ? "Menu sluiten" : _dropDownChosenItem; 
+        set => _dropDownChosenItem = value; 
+    
+    } 
 
     private bool shown = false;
     private string style = "display: none";
@@ -43,7 +50,6 @@
     {
         shown = !shown;
         style = shown ? "display: block" : "display: none";
-        DropDownChosenItem = shown ? "Menu sluiten..." : "Kies..."; 
     }
 
     private async void OptionChosen(string chosenOptionKey, string chosenOptionValue)
