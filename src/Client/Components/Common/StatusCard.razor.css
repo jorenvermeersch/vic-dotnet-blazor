@@ -5,6 +5,7 @@
     height: var(--card-height);
     box-sizing: border-box;
     text-decoration: none;
+    border-bottom: var(--border-size-md) solid transparent;
 }
 
 .indicator {
