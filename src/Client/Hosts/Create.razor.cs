@@ -58,6 +58,8 @@ public partial class Create
 
     private void AddProcessor()
     {
+        if (ChosenProcessor.Processor is null || ChosenProcessor.VirtualisationFactor <= 0) return;
+
         Host.Specifications.Processors.Add(
             new KeyValuePair<ProcessorDto, int>(ChosenProcessor.Processor!, ChosenProcessor.VirtualisationFactor)
         );
