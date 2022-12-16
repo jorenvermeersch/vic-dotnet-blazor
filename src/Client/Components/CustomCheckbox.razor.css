@@ -1,0 +1,16 @@
+﻿.checkbox {
+    min-height: var(--card-height); 
+}
+
+.checkbox-container {
+    height: 100%; 
+    display: flex; 
+    align-items: center;
+    width: 0px;
+    flex-grow: 2;
+}
+
+input {
+    height: calc(var(--card-height) / 3);
+    width: calc(var(--card-height) / 3);
+}
