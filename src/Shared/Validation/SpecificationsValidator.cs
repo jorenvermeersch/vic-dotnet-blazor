@@ -14,15 +14,15 @@ public class SpecificationsValidator : AbstractValidator<SpecificationsDto>
     {
         RuleFor(x => x.VirtualProcessors)
             .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("vCPU"))
-            .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minProcessorCount));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("vCPU"))
+            .GreaterThan(_minProcessorCount).WithMessage(ValidationMessages.GREATER_THAN(_minProcessorCount));
         RuleFor(x => x.Memory)
             .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Geheugen"))
-            .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minMemoryCount));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Geheugen"))
+            .GreaterThan(_minProcessorCount).WithMessage(ValidationMessages.GREATER_THAN(_minMemoryCount));
         RuleFor(x => x.Storage)
             .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Opslag"))
-            .GreaterThan(_minProcessorCount).WithMessage(FormMessages.GREATERTHAN(_minStorageCount));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Opslag"))
+            .GreaterThan(_minProcessorCount).WithMessage(ValidationMessages.GREATER_THAN(_minStorageCount));
     }
 }
