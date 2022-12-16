@@ -25,7 +25,7 @@
     color: var(--black);
     background-color: var(--light-gray);
     border-radius: 2px;
-    padding: 17px;
+    padding: var(--card-padding);
     font-size: 0.875rem;
 }
 
@@ -59,7 +59,7 @@ select {
     height: var(--card-height);
     border: none;
     outline: none;
-    padding: 17px;
+    padding: var(--card-padding);
     background-color: var(--light-gray);
     border-radius: var( --border-radius);
 }

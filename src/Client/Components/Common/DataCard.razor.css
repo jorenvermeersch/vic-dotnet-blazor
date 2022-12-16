@@ -42,8 +42,8 @@
     display: block; 
     position: absolute;
     color: var(--dark-blue); 
-    bottom: 17px;
-    right: 17px;
+    bottom: var(--card-padding);
+    right: var(--card-padding);
 }
 
 .hoverable .hover-icon.vertical-center {
