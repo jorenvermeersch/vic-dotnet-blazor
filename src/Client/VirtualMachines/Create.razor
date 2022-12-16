@@ -46,7 +46,8 @@
 
             <CustomCheckbox Label="VPN" @bind-Value="VirtualMachine.hasVpnConnection"></CustomCheckbox>
 
-
+        </OneWidth>
+        <OneWidth>
             <Title Text="Specificaties" />
             <CustomDropDown Label="Host" Items="@MakeHostItems()" Action="@SetHostValue" />
             <ValidationMessage For=@(() => VirtualMachine.HostId) />
@@ -54,8 +55,7 @@
             <CustomInputNumber Label="vCPUs" @bind-Value="@VirtualMachine.Specifications.VirtualProcessors" For="@(()=>VirtualMachine.Specifications.VirtualProcessors)" Required=true />
             <CustomInputNumber Label="Geheugen" @bind-Value="@VirtualMachine.Specifications.Memory" For="@(()=>VirtualMachine.Specifications.Memory)" Required=true />
             <CustomInputNumber Label="Opslag" @bind-Value="@VirtualMachine.Specifications.Storage" For="@(()=>VirtualMachine.Specifications.Storage)" Required=true />
-        </OneWidth>
-        <OneWidth>
+
              <Title Text="Beschikbaarheid" />
             <CustomInputDate Label="Aangevraagd op" @bind-Value="@VirtualMachine.ApplicationDate" For="@(()=>VirtualMachine.ApplicationDate)" Required=true />
             <CustomInputDate Label="Start" @bind-Value="@VirtualMachine.StartDate" For="@(()=>VirtualMachine.StartDate)" Required=true />

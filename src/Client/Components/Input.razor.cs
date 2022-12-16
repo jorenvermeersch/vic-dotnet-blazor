@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 
 namespace Client.Components;
 
-
 public partial class Input : InputBase<string>
 {
     private string _label = "Label: ";
@@ -39,7 +38,6 @@ public partial class Input : InputBase<string>
 
     [Parameter]
     public EventCallback<string> Action { get; set; } = new();
-    //[Parameter] public string Label { get; set; } = "Label: ";
 
     public enum InputType
     {
