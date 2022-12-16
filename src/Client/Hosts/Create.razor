@@ -29,7 +29,12 @@
                         Label="Type" 
                         Items="@SerializeProcessorsForDropDown()" 
                         Action="@SetChosenProcessor" />
-
+                
+                    @if (ChosenProcessor.Processor is not null)
+                    {
+                        <DataCard Entries="@chosenProcessorSpecifications" InverseStyle=true />
+                    }
+                  
                     <CustomInputNumber 
                         Type="Input.InputType.TEXT" 
                         Label="Virtualisatiefactor" 

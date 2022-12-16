@@ -14,6 +14,9 @@ public partial class DataCard
     public string? HoverIcon { get; set; }
 
     [Parameter]
+    public bool InverseStyle { get; set; } = false;
+
+    [Parameter]
     public string customCss { get; set; } = "";
 
     private async Task HandleClickAsync()

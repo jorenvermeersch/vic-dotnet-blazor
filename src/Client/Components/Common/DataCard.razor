@@ -1,9 +1,10 @@
 ﻿@{
+    var inverse = InverseStyle ? "inverse" : ""; 
     var hoverable = OnClick.HasDelegate ? "hoverable" : ""; 
     var verticalCenter = Entries.Count == 1 ? "vertical-center" : ""; 
 }
 
-<div class="card data-card @hoverable" style="@customCss" @onclick="HandleClickAsync">
+<div class="card data-card @hoverable @inverse" style="@customCss" @onclick="HandleClickAsync">
     @foreach (KeyValuePair<string, string> entry in Entries)
     {
         <div class="entry">

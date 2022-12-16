@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+.inverse {
+    background-color: var(--white); 
+}
+
 .data-card .entry {
     display: flex;
     flex-wrap: wrap;

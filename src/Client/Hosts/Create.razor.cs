@@ -20,6 +20,7 @@ public partial class Create
 
     private List<ProcessorDto>? Processors { get; set; }
     public VirtualProcessor ChosenProcessor { get; set; } = new();
+    private Dictionary<string, string> chosenProcessorSpecifications = new();
 
     private string customcss = "background-color: white";
 
@@ -47,6 +48,12 @@ public partial class Create
     private void SetChosenProcessor(string value)
     {
         ChosenProcessor.Processor = JsonConvert.DeserializeObject<ProcessorDto>(value)!;
+        chosenProcessorSpecifications = new()
+        {
+            { "Cores", ChosenProcessor.Processor.Cores.ToString() },
+            { "Threads", ChosenProcessor.Processor.Threads.ToString() },
+        };
+
     }
 
     private void AddProcessor()
