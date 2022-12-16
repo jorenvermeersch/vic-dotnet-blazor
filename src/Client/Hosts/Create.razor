@@ -23,19 +23,18 @@
             <CustomInputNumber Type="Input.InputType.TEXT" Label="Opslag" @bind-Value="Host.Specifications.Storage" For="@(()=> Host.Specifications.Storage)" Required=true />
             <Title Text="Processoren"></Title>
 
-            <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@NewProcessor">
+            <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@ChosenProcessor">
                 <OneWidth>
                     <CustomDropDown 
                         Label="Type" 
-                        Items="@MakeProcessorItems()" 
-                        Action="@SetProcessorValue" />
+                        Items="@SerializeProcessorsForDropDown()" 
+                        Action="@SetChosenProcessor" />
 
                     <CustomInputNumber 
                         Type="Input.InputType.TEXT" 
                         Label="Virtualisatiefactor" 
-                        @bind-Value="NewProcessor.VirtualisationFactor" 
-                        For="@(()=> NewProcessor.VirtualisationFactor)" 
-                        Margin="true" />
+                        @bind-Value="ChosenProcessor.VirtualisationFactor" 
+                        For="@(()=> ChosenProcessor.VirtualisationFactor)" />
 
                     <span class="outline-end">
                         <button type="submit" class="button">Toevoegen</button>
@@ -48,16 +47,19 @@
             <Title Text="Gekozen processoren" />
             @if (Host.Specifications.Processors.Any())
             {
-                @foreach (var c in Host.Specifications.Processors)
+                @foreach (var processor in Host.Specifications.Processors)
                 {
-                    Dictionary<string, string> entry = new() 
+                    Dictionary<string, string> specifications = new() 
                     { 
-                        { "Processor", c.Key.Name }, 
-                        { "Cores", c.Key.Cores.ToString() }, 
-                        { "Threads", c.Key.Threads.ToString() }, 
-                        { "Virtualisatiefactor", c.Value.ToString() } 
+                        { "Processor", processor.Key.Name }, 
+                        { "Cores", processor.Key.Cores.ToString() }, 
+                        { "Threads", processor.Key.Threads.ToString() }, 
+                        { "Virtualisatiefactor", processor.Value.ToString() } 
                     };
-                    <DataCard Entries="@entry" customCss="@_customcss" />
+                    <DataCard 
+                        Entries="@specifications"
+                        OnClick="() => RemoveProcessor(processor)"
+                        customCss="@customcss" />
                 }
 
             }
