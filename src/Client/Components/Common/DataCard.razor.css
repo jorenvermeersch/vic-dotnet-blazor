@@ -32,7 +32,23 @@
   overflow: hidden;
 }
 
-.hoverable:hover {
+.hoverable::after {
+    content: '';
+    border-bottom: var(--border-size-md) solid var(--blue);
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+}
+
+.hoverable {
+    
+    cursor: pointer;
+    box-sizing: border-box;
+    border-bottom: var(--border-size-md) solid transparent;
+}
+
+.hoverable:hover{
+    display: block;
     cursor: pointer;
     box-sizing: border-box;
     border-bottom: var(--border-size-md) solid var(--blue);
