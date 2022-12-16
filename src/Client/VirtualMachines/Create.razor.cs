@@ -85,27 +85,60 @@ public partial class Create
 
         PortResponse.GetAll portRequest = await PortService.GetAllAsync(new PortRequest.GetAll());
         Ports = portRequest.Ports!;
-
     }
 
+    private bool FetchingResources => false;
+
     //STATUS
-    private Dictionary<string, string> MakeStatusItems() => Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
-    private void SetStatusValue(string value) => VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), value);
+    private Dictionary<string, string> MakeStatusItems()
+    {
+        return Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
+    }
+
+    private void SetStatusValue(string value)
+    {
+        VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), value);
+    }
 
     //MODE
-    private Dictionary<string, string> MakeModeItems() => Enum.GetValues(typeof(Mode)).Cast<Mode>().ToDictionary(x => x.ToString(), x => x.ToString());
-    private void SetModeValue(string value) => VirtualMachine.Mode = (Mode)Enum.Parse(typeof(Mode), value);
+    private Dictionary<string, string> MakeModeItems()
+    {
+        return Enum.GetValues(typeof(Mode)).Cast<Mode>().ToDictionary(x => x.ToString(), x => x.ToString());
+    }
+
+    private void SetModeValue(string value)
+    {
+        VirtualMachine.Mode = (Mode)Enum.Parse(typeof(Mode), value);
+    }
 
     //TEMPLATE
-    private Dictionary<string, string> MakeTemplateItems() => Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
-    private void SetTemplateValue(string value) => VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), value);
+    private Dictionary<string, string> MakeTemplateItems()
+    {
+        return Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
+    }
+
+    private void SetTemplateValue(string value)
+    {
+        VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), value);
+    }
 
     //BACKUPFREQUENCY
-    private Dictionary<string, string> MakeBackUpFrequencyItems() => Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
-    private void SetBackUpFrequencyValue(string value) => VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), value);
+    private Dictionary<string, string> MakeBackUpFrequencyItems()
+    {
+        return Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
+    }
+
+    private void SetBackUpFrequencyValue(string value)
+    {
+        VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), value);
+    }
 
     //AVAILABILITIES
-    private Dictionary<string, string> MakeAvailibilityItems() => Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => localizer![x.ToString()].ToString(), x => x.ToString());
+    private Dictionary<string, string> MakeAvailibilityItems()
+    {
+        return Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => localizer![x.ToString()].ToString(), x => x.ToString());
+    }
+
     private HashSet<Availability> chosenAvailabilities = new();
     private void SetAvailabilityValue(string value)
     {
@@ -117,7 +150,11 @@ public partial class Create
     }
 
     //PORT
-    private Dictionary<string, string> MakePortItems() => Ports.ToDictionary(x => x.Service.ToString(), x => JsonConvert.SerializeObject(x));
+    private Dictionary<string, string> MakePortItems()
+    {
+        return Ports.ToDictionary(x => x.Service.ToString(), x => JsonConvert.SerializeObject(x));
+    }
+
     private void SetPortValue(string value)
     {
         var port = JsonConvert.DeserializeObject<PortDto>(value)!;
@@ -133,14 +170,22 @@ public partial class Create
     }
 
     //HOST
-    private Dictionary<string, string> MakeHostItems() => Hosts.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
+    private Dictionary<string, string> MakeHostItems()
+    {
+        return Hosts.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
+    }
+
     private void SetHostValue(string value)
     {
         VirtualMachine.HostId = JsonConvert.DeserializeObject<HostDto.Index>(value)!.Id;
     }
 
     //TODO - REQUESTER & USER (Key has dupplicates?)
-    private Dictionary<string, string> MakeCustomerItems() => Customers.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
+    private Dictionary<string, string> MakeCustomerItems()
+    {
+        return Customers.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
+    }
+
     private void SetRequesterValue(string value)
     {
         VirtualMachine.RequesterId = JsonConvert.DeserializeObject<CustomerDto.Index>(value)!.Id;
@@ -151,7 +196,11 @@ public partial class Create
     }
 
     //ACCOUNT
-    private Dictionary<string, string> MakeAccountItems() => Accounts.ToDictionary(x => string.Format("{0} {1}", x.Firstname, x.Lastname).ToString(), x => JsonConvert.SerializeObject(x));
+    private Dictionary<string, string> MakeAccountItems()
+    {
+        return Accounts.ToDictionary(x => string.Format("{0} {1}", x.Firstname, x.Lastname).ToString(), x => JsonConvert.SerializeObject(x));
+    }
+
     private void SetAccountValue(string value)
     {
         VirtualMachine.AdministratorId = JsonConvert.DeserializeObject<AccountDto.Index>(value)!.Id;
