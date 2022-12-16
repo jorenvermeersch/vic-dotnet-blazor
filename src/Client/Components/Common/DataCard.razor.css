@@ -43,6 +43,7 @@
 .hoverable {
     cursor: pointer;
     box-sizing: border-box;
+    padding-bottom: calc(var(--card-padding) - var(--border-size-md)); /* Stop hover border from increasing height of card */
     border-bottom: var(--border-size-md) solid transparent;
 }
 
