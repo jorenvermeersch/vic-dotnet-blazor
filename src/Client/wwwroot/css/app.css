@@ -58,3 +58,10 @@
     color: #508bcb;
 }
 
+.validation-message {
+    color: red;
+    font-size: var(--text-sm);
+    color: var(--dark-blue);
+    padding-top: var(--padding-sm); 
+}
+

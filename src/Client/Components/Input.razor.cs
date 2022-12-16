@@ -9,13 +9,19 @@ public partial class Input : InputBase<string>
 {
     private string _label = "Label: ";
     private bool _required = false;
-    [Parameter] public bool IsDisabled { get; set; } = false;
+
+    [Parameter]
+    public bool IsDisabled { get; set; } = false;
+
     [Parameter]
     public string PlaceHolder { get; set; } = "";
+
     [Parameter]
     public InputType Type { get; set; } = InputType.TEXT;
+
     [Parameter]
     public List<string> Items { get; set; } = new();
+
     [Parameter]
     public string Label
     {
@@ -30,7 +36,7 @@ public partial class Input : InputBase<string>
     public bool Required { get; set; } = false;
     [Parameter]
     public int OptionalId { get; set; } = -1;
-    
+
     [Parameter]
     public EventCallback<string> Action { get; set; } = new();
     //[Parameter] public string Label { get; set; } = "Label: ";
@@ -40,7 +46,7 @@ public partial class Input : InputBase<string>
         SELECT,
         TEXT
     }
-    
+
     public string SelectedOption
     {
         get => _selectedOption;
@@ -50,11 +56,11 @@ public partial class Input : InputBase<string>
             Action.InvokeAsync(_selectedOption);
         }
     }
-    
+
     private string _selectedOption = "";
     [Parameter, EditorRequired] public Expression<Func<string>> For { get; set; } = default!;
     [Parameter] public string? Id { get; set; }
-    
+
     protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
     {
         result = value;
