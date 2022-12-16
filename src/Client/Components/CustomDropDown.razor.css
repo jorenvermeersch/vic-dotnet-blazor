@@ -24,7 +24,7 @@
 
 .dropdown {
     position: relative;
-    width: 18.88px;
+    width: 34px; /* Hardcoded base length that fixes the issue */
     flex-grow: 2;
     height: var(--card-height);
     border-radius: 50px;

@@ -90,7 +90,7 @@ select {
 
     .input-container label {
         width: 0px;
-        min-width: min-content;
+        /*min-width: min-content;*/
         flex-grow: 1;
         padding-bottom: 0px;
     }
