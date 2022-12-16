@@ -22,7 +22,10 @@ else
             </ButtonGroup>
 
             <DataCard Entries="@datacards.GetValueOrDefault(GENERAL_INFORMATION_KEY)" />
-            <DataCard Entries="@datacards.GetValueOrDefault(HOST_NAME_KEY)" OnClick="NavigateToHost" />
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(HOST_NAME_KEY)" 
+                OnClick="NavigateToHost"
+                HoverIcon="fa-solid fa-arrow-right fa-lg" />
 
             <Title Text="Specificaties en configuratie" />
             <DataCard Entries="@datacards.GetValueOrDefault(SPECIFICATIONS_KEY)" />
@@ -35,11 +38,20 @@ else
             <DataCard Entries="@datacards.GetValueOrDefault(AVAILABILITY_KEY)" />
             
             <Title Text="Klanten" />
-            <DataCard Entries="@datacards.GetValueOrDefault(REQUESTER_KEY)" OnClick="NavigateToRequester" />
-            <DataCard Entries="@datacards.GetValueOrDefault(USER_KEY)" OnClick="NavigateToUser" />
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(REQUESTER_KEY)" 
+                OnClick="NavigateToRequester"
+                HoverIcon="fa-solid fa-arrow-right fa-lg"/>
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(USER_KEY)" 
+                OnClick="NavigateToUser"
+                HoverIcon="fa-solid fa-arrow-right fa-lg" />
 
             <Title Text="Beheerder" />
-            <DataCard Entries="@datacards.GetValueOrDefault(ADMIN_KEY)" OnClick="NavigateToAdministrator" />
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(ADMIN_KEY)" 
+                OnClick="NavigateToAdministrator"
+                HoverIcon="fa-solid fa-arrow-right fa-lg" />
         </OneWidth>
         <OneWidth>
             <Title Text="Logingegevens" />

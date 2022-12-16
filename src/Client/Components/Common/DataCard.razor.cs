@@ -11,6 +11,9 @@ public partial class DataCard
     public EventCallback OnClick { get; set; } = new();
 
     [Parameter]
+    public string? HoverIcon { get; set; }
+
+    [Parameter]
     public string customCss { get; set; } = "";
 
     private async Task HandleClickAsync()

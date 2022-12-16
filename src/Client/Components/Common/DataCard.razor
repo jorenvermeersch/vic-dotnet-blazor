@@ -1,5 +1,6 @@
 ﻿@{
     var hoverable = OnClick.HasDelegate ? "hoverable" : ""; 
+    var verticalCenter = Entries.Count == 1 ? "vertical-center" : ""; 
 }
 
 <div class="card data-card @hoverable" style="@customCss" @onclick="HandleClickAsync">
@@ -8,6 +9,11 @@
         <div class="entry">
             <p class="label">@entry.Key</p>
             <p class="value" title="@entry.Value">@entry.Value</p>
+
+            @if (OnClick.HasDelegate && HoverIcon is not null)
+            {
+                <i class="@HoverIcon @verticalCenter hover-icon"></i>
+            }
         </div>
     }
 </div>

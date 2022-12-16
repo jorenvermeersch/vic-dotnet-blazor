@@ -61,6 +61,4 @@ public partial class Create
     {
         Host.Specifications.Processors.Remove(processor);
     }
-
-
 }

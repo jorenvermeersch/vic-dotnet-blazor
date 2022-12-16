@@ -8,16 +8,6 @@
     box-sizing: border-box;
 }
 
-.methodexecutor {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background:none;
-    border: none;
-    color: var(--dark-blue);
-    cursor: pointer;
-}
-
 .data-card .entry {
     display: flex;
     flex-wrap: wrap;
@@ -42,6 +32,22 @@
     cursor: pointer;
     box-sizing: border-box;
     border-bottom: var(--border-size-md) solid var(--blue);
+}
+
+.hover-icon {
+    display: none; 
+}
+
+.hoverable:hover .hover-icon { 
+    display: block; 
+    position: absolute;
+    color: var(--dark-blue); 
+    bottom: 17px;
+    right: 17px;
+}
+
+.hoverable .hover-icon.vertical-center {
+    bottom: 50%;
 }
 
 @media screen and (min-width: 480px) {
