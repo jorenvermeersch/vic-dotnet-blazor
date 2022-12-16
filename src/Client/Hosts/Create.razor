@@ -37,7 +37,9 @@
                         For="@(()=> NewProcessor.VirtualisationFactor)" 
                         Margin="true" />
 
-                    <button type="submit" class="button">Toevoegen</button>
+                    <span class="outline-end">
+                        <button type="submit" class="button">Toevoegen</button>
+                    </span>
                 </OneWidth>
                
             </EditForm>
@@ -48,14 +50,22 @@
             {
                 @foreach (var c in Host.Specifications.Processors)
                 {
-                    Dictionary<string, string> entry = new() { { "Processor", c.Key.Name }, { "Cores", c.Key.Cores.ToString() }, { "Threads", c.Key.Threads.ToString() }, { "Virtualisatie Factor", c.Value.ToString() } };
+                    Dictionary<string, string> entry = new() 
+                    { 
+                        { "Processor", c.Key.Name }, 
+                        { "Cores", c.Key.Cores.ToString() }, 
+                        { "Threads", c.Key.Threads.ToString() }, 
+                        { "Virtualisatiefactor", c.Value.ToString() } 
+                    };
                     <DataCard Entries="@entry" customCss="@_customcss" />
                 }
 
             }
             else
             {
-                <NoResultsMessage Message="Geen processoren gekozen." />
+                <NoResultsMessage 
+                    Message="Geen processoren gekozen." 
+                    InverseStyle=true />
             }
         </OneWidth>
         <OneWidth>

@@ -4,3 +4,7 @@
     align-items: center; 
     min-height: var(--card-height);
 }
+
+.inverse {
+    background-color: var(--white); 
+}
