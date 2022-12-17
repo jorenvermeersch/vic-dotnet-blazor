@@ -65,8 +65,6 @@ public partial class Input : InputBase<string>
         validationErrorMessage = null;
         return true;
     }
-
-    //@oninput="(ChangeEventArgs __e) => Action.InvokeAsync(string.Concat(this.OptionalId, __e?.Value?.ToString()))"
 }
 
 

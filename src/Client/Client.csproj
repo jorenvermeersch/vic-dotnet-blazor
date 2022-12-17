@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Form\" />
     <Folder Include="wwwroot\css\assets\images\" />
   </ItemGroup>
 
