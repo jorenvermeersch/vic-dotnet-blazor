@@ -11,7 +11,7 @@ namespace Domain.VirtualMachines;
 public class VirtualMachine : Machine
 {
     #region Fields
-    private Host<VirtualMachine> _host;
+    private Host<VirtualMachine> _host = default!;
     #endregion
 
     #region Properties
@@ -31,7 +31,8 @@ public class VirtualMachine : Machine
             }
 
             base.Specifications = value;
-            _host.UpdateRemainingResources(); // Host cannot detect itself when the required resources of the virtual machines it houses change.
+            // Note: Host detects itself when the required resources of the virtual machines it houses change.
+            Host.UpdateHistory();
         }
     }
 
@@ -41,7 +42,7 @@ public class VirtualMachine : Machine
     [NotMapped]
     public Mode Mode { get; set; }
 
-    public string Fqdn { get; set; }
+    public string Fqdn { get; set; } = default!;
 
     [NotMapped]
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
@@ -53,13 +54,13 @@ public class VirtualMachine : Machine
     public DateTime ApplicationDate { get; set; }
 
     [NotMapped]
-    public TimeSpan TimeSpan { get; set; }
+    public TimeSpan TimeSpan { get; set; } = default!;
 
     [NotMapped]
     public Status Status { get; set; }
 
     [NotMapped]
-    public string Reason { get; set; }
+    public string Reason { get; set; } = default!;
 
     [NotMapped]
     public IList<Port> Ports { get; set; } = new List<Port>();
@@ -75,8 +76,12 @@ public class VirtualMachine : Machine
             if (_host != value)
             {
                 value.AddMachine(this); // Throws if new host does not have enough remaining resources.
-                if (_host != null)
+
+                // TODO: Remove this check after adding service layer properly.
+                if (_host is not null)
+                {
                     _host.RemoveMachine(this); // Remove from old host.
+                }
                 _host = value;
             }
         }
@@ -86,21 +91,20 @@ public class VirtualMachine : Machine
     public IList<Credentials> Credentials { get; set; } = new List<Credentials>();
 
     [NotMapped]
-    public Account Account { get; set; }
+    public Account Account { get; set; } = default!;
 
     [NotMapped]
-    public Customer Requester { get; set; }
+    public Customer Requester { get; set; } = default!;
 
     [NotMapped]
-    public Customer User { get; set; }
+    public Customer User { get; set; } = default!;
 
-    // TODO: Add to VirtualMachineArgs and constructor.
     public bool HasVpnConnection { get; set; }
     #endregion
 
     #region Constructors
 
-    public VirtualMachine() { }
+    private VirtualMachine() { }
 
     public VirtualMachine(VirtualMachineArgs args) : base(args.Name, args.Specifications)
     {
@@ -119,7 +123,9 @@ public class VirtualMachine : Machine
         Account = args.Account;
         Requester = args.Requester;
         User = args.User;
+        HasVpnConnection = args.HasVpnConnection;
 
+        // TODO: Uncomment after implementing database mapping.
         //_host.AddMachine(this); // Remaining resources host are automatically updated.
     }
     #endregion

@@ -7,18 +7,18 @@ namespace Domain.Accounts;
 public class Account : Entity
 {
     #region Properties
-    public string Firstname { get; set; }
-    public string Lastname { get; set; }
-    public string Email { get; set; }
+    public string Firstname { get; set; } = default!;
+    public string Lastname { get; set; } = default!;
+    public string Email { get; set; } = default!;
     public Role Role { get; set; }
-    public string PasswordHash { get; set; }
-    public bool IsActive { get; set; }
-    public string Department { get; set; }
-    public string Education { get; set; }
+    public string PasswordHash { get; set; } = default!;
+    public bool IsActive { get; set; } = default!;
+    public string Department { get; set; } = default!;
+    public string Education { get; set; } = default!;
     #endregion
 
     #region Constructors
-    public Account() { }
+    public Account() { } // TODO: Change to private constructor after correct database mapping.
 
     public Account(
         string firstname,

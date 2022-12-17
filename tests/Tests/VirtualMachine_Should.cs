@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-public class VirtualMachineTest
+public class VirtualMachine_Should
 {
     private VirtualMachine? _machine;
 

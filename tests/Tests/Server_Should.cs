@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-public class ServerTest
+public class Server_Should
 {
     private Server? _server;
 
@@ -136,5 +136,76 @@ public class ServerTest
         machine.Specifications = new(2, 2, 2);
 
         Should.Throw<ArgumentException>(() => _server.RemoveProcessor(processor, virtualisationFactor));
+    }
+
+    [Fact]
+    public void Server_has_history_after_being_created()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.History.Count.ShouldBe(1);
+    }
+
+    [Fact]
+    public void Server_adds_history_after_updating_specifications()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { }, 2, 2);
+        _server.History.Count.ShouldBe(2);
+    }
+
+    [Fact]
+    public void Server_adds_history_after_adding_processor()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
+        _server.AddProcessor(processor, 1);
+        _server.History.Count.ShouldBe(2);
+
+    }
+
+    [Fact]
+    public void Server_adds_history_after_removing_processor()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        Processor processor = HostSpecificationsFactory.CreateProcessor(2, 2);
+        int virtualisatieFactor = 1;
+        _server.AddProcessor(processor, virtualisatieFactor);
+        _server.RemoveProcessor(processor, virtualisatieFactor);
+
+        _server.History.Count.ShouldBe(3);
+    }
+
+    [Fact]
+    public void Server_adds_history_after_adding_virtual_machine()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { 2 }, 2, 2);
+
+        VirtualMachineWithoutSpecifications.Create(_server);
+        _server.History.Count.ShouldBe(3);
+    }
+
+    [Fact]
+    public void Server_adds_history_after_removing_virtual_machine()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { 2 }, 2, 2);
+
+        VirtualMachine machine = VirtualMachineWithoutSpecifications.Create(_server);
+        _server.RemoveMachine(machine);
+
+        _server.History.Count.ShouldBe(4);
+    }
+
+    [Fact]
+    public void Server_adds_history_after_changing_running_virtual_machine_specifications()
+    {
+        _server = ServerWithoutSpecifications.Create();
+        _server.Specifications = HostSpecificationsFactory.Create(new List<int> { 2 }, 2, 2);
+
+        VirtualMachine machine = VirtualMachineWithoutSpecifications.Create(_server);
+        machine.Specifications = new(2, 2, 2);
+
+        _server.History.Count.ShouldBe(4);
     }
 }

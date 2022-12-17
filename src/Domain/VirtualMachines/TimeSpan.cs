@@ -1,6 +1,6 @@
 ﻿namespace Domain.VirtualMachines;
 
-public class TimeSpan : Entity
+public class TimeSpan
 {
     #region Properties
     public DateTime StartDate { get; set; }
@@ -8,6 +8,8 @@ public class TimeSpan : Entity
     #endregion
 
     #region Constructors
+    private TimeSpan() { }
+
     public TimeSpan(DateTime startDate, DateTime endDate)
     {
         StartDate = startDate;
