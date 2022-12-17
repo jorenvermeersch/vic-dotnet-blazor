@@ -141,6 +141,9 @@
   <data name="Donderdag" xml:space="preserve">
     <value>Thursday</value>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>Nee</value>
+  </data>
   <data name="Friday" xml:space="preserve">
     <value>Vrijdag</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="Thursday" xml:space="preserve">
     <value>Donderdag</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Ja</value>
   </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Dinsdag</value>

@@ -18,35 +18,35 @@ else{
                 <MudTh>Id</MudTh>
                 <MudTh>Fqdn</MudTh>
                 <MudTh>Status</MudTh>
-                <MudTh>Name</MudTh>
+                <MudTh>Naam</MudTh>
                 <MudTh>Template</MudTh>
                 <MudTh>Mode</MudTh>
                 <MudTh>Host</MudTh>
-                <MudTh>Availabilities</MudTh>
-                <MudTh>BackupFrequency</MudTh>
-                <MudTh>ApplicationDate</MudTh>
-                <MudTh>StartDate</MudTh>
-                <MudTh>EndDate</MudTh>
-                <MudTh>Reason</MudTh>
-                <MudTh>Ports</MudTh>
-                <MudTh>VirtualProcessors</MudTh>
-                <MudTh>Memory</MudTh>
-                <MudTh>Storage</MudTh>
-                <MudTh>Account</MudTh>
-                <MudTh>Requester</MudTh>
-                <MudTh>User</MudTh>
-                <MudTh>hasVpnConnection</MudTh>
+                <MudTh>Beschikbaarheden</MudTh>
+                <MudTh>Back-up frequentie</MudTh>
+                <MudTh>Aangevraagd op</MudTh>
+                <MudTh>Start</MudTh>
+                <MudTh>Eind</MudTh>
+                <MudTh>Reden</MudTh>
+                <MudTh>Poorten</MudTh>
+                <MudTh>VirtualProcessoren</MudTh>
+                <MudTh>Geheugen</MudTh>
+                <MudTh>Opslag</MudTh>
+                <MudTh>Beheerder</MudTh>
+                <MudTh>Aanvrager</MudTh>
+                <MudTh>Gebruiker</MudTh>
+                <MudTh>Vpn verbinding toegestaan</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd Style="@style" DataLabel="Id"><a href="/virtual-machine/@context.Id">@context.Id</a></MudTd>
                 <MudTd Style="@style" DataLabel="Fqdn">@context.Fqdn</MudTd>
-                <MudTd Style="@style" DataLabel="Status">@context.Status.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Status">@localizer[context.Status.ToString()]</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.Name</MudTd>
-                <MudTd Style="@style" DataLabel="Id">@context.Template.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Id"> @localizer[context.Template.ToString()]</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.Mode.ToString()</MudTd>
                 <MudTd Style="@style" DataLabel="Id"><a href="/host/@context.Host.Id">@context.Host.Name</a></MudTd>
-                <MudTd Style="@style" DataLabel="Id">@string.Join(", ", context.Availabilities)</MudTd>
-                <MudTd Style="@style" DataLabel="Id">@context.BackupFrequenty.ToString()</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@string.Join(", ", context.Availabilities.Select(a=>localizer[a]))</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@localizer[context.BackupFrequenty.ToString()]</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.ApplicationDate</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.TimeSpan.StartDate</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.TimeSpan.EndDate</MudTd>
@@ -58,7 +58,7 @@ else{
                 <MudTd Style="@style" DataLabel="Id">@context.Account.Firstname @context.Account.Lastname</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.Requester.Name</MudTd>
                 <MudTd Style="@style" DataLabel="Id">@context.User.Name</MudTd>
-                <MudTd Style="@style" DataLabel="Id">@context.hasVpnConnection</MudTd>
+                <MudTd Style="@style" DataLabel="Id">@localizer[context.hasVpnConnection.ToString()]</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />

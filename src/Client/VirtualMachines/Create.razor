@@ -28,10 +28,10 @@ else
                 <RequiredInput Type="@Input.InputType.TEXT" Label="FQDN" @bind-Value="VirtualMachine.Fqdn" For="@(()=>VirtualMachine.Fqdn)" />
 
                 <CustomDropDown Label="Mode" Items="@MakeModeItems()" Action="@SetModeValue" />
-                <ValidationMessage For=@(() => VirtualMachine.Status) />
+                <ValidationMessage For=@(() => VirtualMachine.Mode) />
 
                 <CustomDropDown Label="Template" Items="@MakeTemplateItems()" Action="@SetTemplateValue" />
-                <ValidationMessage For=@(() => VirtualMachine.Status) />
+                <ValidationMessage For=@(() => VirtualMachine.Template) />
 
                 <RequiredInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachine.Reason" For="@(()=>VirtualMachine.Reason)" />
 
@@ -71,13 +71,13 @@ else
                 <div class="button-list">
                     @foreach (var item in chosenAvailabilities)
                     {
-                        <PortButton Text="@item.ToString()" OnClick="@(() => RemoveAvailabilityFromList(item))" />
+                        <PortButton Text="@localizer[item.ToString()]" OnClick="@(() => RemoveAvailabilityFromList(item))" />
                     }
                 </div>
 
 
                 <Title Text="Back-ups" />
-                <CustomDropDown Label="Status" Items="@MakeBackUpFrequencyItems()" Action="@SetBackUpFrequencyValue" />
+                <CustomDropDown Label="Regelmaat" Items="@MakeBackUpFrequencyItems()" Action="@SetBackUpFrequencyValue" />
                 <ValidationMessage For=@(() => VirtualMachine.BackupFrequency) />
             </OneWidth>
             <OneWidth>

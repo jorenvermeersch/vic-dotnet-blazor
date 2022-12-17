@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Shared.VirtualMachines;
 
 namespace Client.VirtualMachines;
@@ -15,6 +16,7 @@ public partial class AdvancedIndex
     private IEnumerable<VirtualMachineDto.Detail>? virtualMachines = null;
 
     [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> localizer { get; set; } = default!;
 
 
     protected async override Task OnInitializedAsync()

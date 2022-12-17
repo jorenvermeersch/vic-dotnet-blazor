@@ -133,6 +133,15 @@ namespace Client.SharedFiles.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nee.
+        /// </summary>
+        public static string False {
+            get {
+                return ResourceManager.GetString("False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vrijdag.
         /// </summary>
         public static string Friday {
@@ -273,6 +282,15 @@ namespace Client.SharedFiles.Resources {
         public static string Thursday {
             get {
                 return ResourceManager.GetString("Thursday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ja.
+        /// </summary>
+        public static string True {
+            get {
+                return ResourceManager.GetString("True", resourceCulture);
             }
         }
         
