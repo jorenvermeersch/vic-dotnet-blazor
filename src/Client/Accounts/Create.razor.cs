@@ -29,10 +29,6 @@ public partial class Create
     }
     private async void HandleValidSubmit()
     {
-        // Translate role back to stringified enum value. 
-        int position = translatedRoles.FindIndex(role => role == Account.Role);
-        Account.Role = Localizer[roles[position]];
-
         AccountRequest.Create request = new()
         {
             Account = Account
