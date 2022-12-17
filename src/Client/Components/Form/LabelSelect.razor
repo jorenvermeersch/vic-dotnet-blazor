@@ -8,7 +8,10 @@
     <div class="input-container">
         <label for="@Label">
             <text>@Label:</text>
-            <sup class="required-input">*</sup>
+            @if (Required)
+            {
+                <sup class="required-input">*</sup>
+            }
         </label>
         <select @bind="@CurrentValue" class="input @inverse">
             <option value="" disabled selected hidden>@Placeholder</option>

@@ -20,6 +20,7 @@
             <Title Text="Algemene informatie" />
 
             <LabelSelect Label="Rol"
+                         Required="@true"
                          Options="@roles"
                          DisplayOptions="@translatedRoles"
                          @bind-Value="@Account.Role"

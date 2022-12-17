@@ -23,6 +23,9 @@ public partial class LabelSelect : InputBase<string>
     public string Placeholder { get; set; } = "";
 
     [Parameter]
+    public bool Required { get; set; } = false;
+
+    [Parameter]
     public bool InverseStyle { get; set; } = true;
 
 
