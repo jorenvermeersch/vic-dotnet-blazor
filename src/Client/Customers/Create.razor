@@ -98,13 +98,14 @@
                         @bind-Value="Customer.BackupContactPerson.Lastname"
                         For="@(() => Customer.BackupContactPerson.Lastname)" />
 
-            <LabelInput Label="Naam"
+            <LabelInput Label="E-mailadres"
                         Required="@backupRequired"
                         OnChange="(value) => UpdateBackupContactRequired(value, 2)"
                         @bind-Value="Customer.BackupContactPerson.Email"
                         For="@(() => Customer.BackupContactPerson.Email)" />
 
             <LabelInput Label="Telefoonnummer"
+                        OnChange="(value) => UpdateBackupContactRequired(value, 3)"
                         @bind-Value="Customer.BackupContactPerson.Phonenumber"
                         For="@(() => Customer.BackupContactPerson.Phonenumber)" />
         </OneWidth>

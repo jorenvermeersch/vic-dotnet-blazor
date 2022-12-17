@@ -27,19 +27,16 @@ public static class ValidationMessages
         return string.Format("De einddatum moet na de startdatum vallen.");
     }
 
-
-
-
-
-
-
     public static string InvalidName(string field)
     {
         return $"{field} mag geen cijfers of speciale tekens bevatten.";
     }
 
     public static string UnknownRole => "Onbekende rol.";
-    public static string InvalidEmailAddress => "Dit is geen geldig e-mailadres.";
+    public static string UnknownCustomerType => "Onbekende soort.";
+    public static string UnknownInstitution => "Onbekend instituut.";
+    public static string InvalidEmailAddress => "E-mailadres is niet geldig.";
+    public static string InvalidPhoneNumber => "Telefoonnummer is niet geldig.";
     public static string InvalidPassword =>
-        "Wachtwoord moet minstens 8 karakters bevatten, met minstens 1 speciale teken, 1 cijfer en 1 hoofdletter.";
+        "Wachtwoord moet minstens acht karakters bevatten, met minstens één speciale teken, één cijfer en één hoofdletter.";
 }

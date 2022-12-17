@@ -18,11 +18,11 @@ public partial class Create
     private List<string> institutions = Enum.GetNames(typeof(Institution)).ToList();
 
     private bool backupRequired = false;
-    private string[] backupContactValues = new string[3] { "", "", "" };
+    private string?[] backupContactValues = new string?[4] { "", "", "", "" };
 
     private void UpdateBackupContactRequired(string? value, int index)
     {
-        backupContactValues[index] = value ?? "";
+        backupContactValues[index] = value;
         backupRequired = backupContactValues.Any(value => !value.IsNullOrEmpty());
     }
 
