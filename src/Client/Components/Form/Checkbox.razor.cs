@@ -1,25 +1,20 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Client.Components.Form;
 
-public partial class Checkbox
+public partial class Checkbox : InputBase<bool>
 {
     [Parameter, EditorRequired]
     public string Label { get; set; } = default!;
-    private bool _value;
-    [Parameter]
-    public bool Value
+
+    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out bool result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
-        get => _value;
-        set
-        {
-            if (_value == value)
-                return;
-            _value = value;
-            ValueChanged.InvokeAsync(value);
-        }
+        result = value.IsNullOrEmpty();
+        validationErrorMessage = null;
+        return true;
     }
 
-    [Parameter]
-    public EventCallback<bool> ValueChanged { get; set; }
 }

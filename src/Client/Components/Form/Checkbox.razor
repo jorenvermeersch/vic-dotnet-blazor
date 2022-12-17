@@ -1,8 +1,10 @@
-﻿<div class="input-container checkbox">
+﻿@inherits InputBase<bool>
+
+<div class="input-container checkbox">
     <label>
         @Label:
     </label>
     <div class="checkbox-container">
-        <input type="checkbox" checked=@Value @bind-value="Value" />
+        <input type="checkbox" @bind="@CurrentValue"/>
     </div>  
 </div>
