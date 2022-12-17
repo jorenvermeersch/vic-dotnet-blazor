@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
@@ -24,6 +25,15 @@ public partial class LabelInput : InputBase<string>
 
     [Parameter]
     public string InputType { get; set; } = "text";
+
+    [Parameter]
+    public string? TestValue { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!TestValue.IsNullOrEmpty()) CurrentValue = TestValue;
+        base.OnInitialized();
+    }
 
     protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out string result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
