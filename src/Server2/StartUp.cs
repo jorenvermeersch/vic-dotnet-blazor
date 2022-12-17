@@ -1,10 +1,21 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Client.VirtualMachines;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
+using Service.Accounts;
+using Service.VirtualMachines;
 using Services;
+using Services.Customers;
 using Services.FakeInitializer;
+using Services.Hosts;
+using Services.Processors;
+using Shared.Accounts;
+using Shared.Customers;
+using Shared.Hosts;
+using Shared.Ports;
+using Shared.VirtualMachines;
 
 namespace Server;
 
@@ -61,13 +72,14 @@ public class StartUp
           });
         });
 
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            options.Authority = Configuration["Auth0:Authority"];
+            options.Authority = $"https://{Configuration["Auth0:Domain"]}";
             options.Audience = Configuration["Auth0:ApiIdentifier"];
         });
 
@@ -82,7 +94,6 @@ public class StartUp
 
 
         services.AddRazorPages();
-
         services.AddScoped<FakeSeeder>();
     }
 
@@ -97,7 +108,6 @@ public class StartUp
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virtual IT Company API");
-               // c.OAuthClientId(Configuration["Authentication:ClientId"]);
             });
         }
         else
@@ -117,6 +127,7 @@ public class StartUp
 
         app.UseAuthentication();
         app.UseAuthorization();
+
 
         app.UseEndpoints(endpoints =>
         {

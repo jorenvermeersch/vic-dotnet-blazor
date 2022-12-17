@@ -25,10 +25,9 @@ namespace Client
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddHttpClient("VicAPI", client => client.BaseAddress = new Uri("https://localhost:5001"))
-                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-                   .CreateClient("VicAPI"));
+            builder.Services.AddHttpClient("ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ServerAPI"));
 
             builder.Services.AddScoped(sp => new HttpClient
             {
