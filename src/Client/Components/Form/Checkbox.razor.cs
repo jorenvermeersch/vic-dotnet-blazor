@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 
-namespace Client.Components;
+namespace Client.Components.Form;
 
-public partial class CustomCheckbox
+public partial class Checkbox
 {
     [Parameter, EditorRequired]
     public string Label { get; set; } = default!;

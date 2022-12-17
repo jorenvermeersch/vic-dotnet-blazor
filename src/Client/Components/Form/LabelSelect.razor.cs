@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Client.Components.Form;
 
-public partial class LabelSelect
+public partial class LabelSelect : InputBase<string>
 {
     [Parameter, EditorRequired]
     public Expression<Func<string>> For { get; set; } = default!;
