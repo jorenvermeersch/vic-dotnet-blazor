@@ -30,8 +30,6 @@ public partial class LabelInput : InputBase<string>
     [Parameter]
     public string? TestValue { get; set; }
 
-    [Parameter]
-    public EventCallback<string> OnChange { get; set; } = new();
 
     protected override void OnInitialized()
     {
@@ -44,13 +42,5 @@ public partial class LabelInput : InputBase<string>
         result = value ?? "";
         validationErrorMessage = null;
         return true;
-    }
-
-    private async Task HandleChange(string? value)
-    {
-        if (OnChange.HasDelegate)
-        {
-            await OnChange.InvokeAsync(value);
-        }
     }
 }
