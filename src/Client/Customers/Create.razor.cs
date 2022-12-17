@@ -1,5 +1,6 @@
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 using Shared.Customers;
 
 namespace Client.Customers;
@@ -16,15 +17,13 @@ public partial class Create
     private List<string> customerTypes = Enum.GetNames(typeof(CustomerType)).ToList();
     private List<string> institutions = Enum.GetNames(typeof(Institution)).ToList();
 
-    private string _customcss = "background-color: white";
     private bool backupRequired = false;
-    private string[] _values = new string[3] { "", "", "" };
-    public void MakeRequired(string value)
+    private string[] backupContactValues = new string[3] { "", "", "" };
+
+    private void UpdateBackupContactRequired(string? value, int index)
     {
-        int index = int.Parse(value.Substring(0, 1));
-        string txt = value.Substring(1);
-        _values[index] = txt;
-        backupRequired = _values.All(e => (e == "" || e == null)) ? false : true;
+        backupContactValues[index] = value ?? "";
+        backupRequired = backupContactValues.Any(value => !value.IsNullOrEmpty());
     }
 
     private async void HandleValidSubmit()

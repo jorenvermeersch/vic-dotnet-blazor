@@ -8,6 +8,7 @@ namespace Client.Components.Form;
 
 public partial class LabelInput : InputBase<string>
 {
+
     [Parameter, EditorRequired]
     public Expression<Func<string>> For { get; set; } = default!;
 
@@ -29,9 +30,12 @@ public partial class LabelInput : InputBase<string>
     [Parameter]
     public string? TestValue { get; set; }
 
+    [Parameter]
+    public EventCallback<string> OnChange { get; set; } = new();
+
     protected override void OnInitialized()
     {
-        if (!TestValue.IsNullOrEmpty()) CurrentValue = TestValue;
+        if (!TestValue.IsNullOrEmpty()) CurrentValue = TestValue!;
         base.OnInitialized();
     }
 
@@ -40,5 +44,13 @@ public partial class LabelInput : InputBase<string>
         result = value ?? "";
         validationErrorMessage = null;
         return true;
+    }
+
+    private async Task HandleChange(string? value)
+    {
+        if (OnChange.HasDelegate)
+        {
+            await OnChange.InvokeAsync(value);
+        }
     }
 }

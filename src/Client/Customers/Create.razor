@@ -86,10 +86,27 @@
         </OneWidth>
         <OneWidth>
             <Title Text="Back-up contactgegevens" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@backupRequired" Action="(value) => MakeRequired(value)" OptionalId="0" @bind-Value="@Customer.BackupContactPerson.Firstname" For="@(() => Customer.BackupContactPerson.Firstname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@backupRequired" Action="(value) => MakeRequired(value)" OptionalId="1" @bind-Value="@Customer.BackupContactPerson.Lastname" For="@(() => Customer.BackupContactPerson.Lastname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@backupRequired" Action="(value) => MakeRequired(value)" OptionalId="2" @bind-Value="@Customer.BackupContactPerson.Email" For="@(() => Customer.BackupContactPerson.Email)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" @bind-Value="@Customer.BackupContactPerson.Phonenumber" For="@(() => Customer.BackupContactPerson.Phonenumber)" />
+            <LabelInput Label="Voornaam"
+                        Required="@backupRequired"
+                        OnChange="(value) => UpdateBackupContactRequired(value, 0)"
+                        @bind-Value="Customer.BackupContactPerson.Firstname"
+                        For="@(() => Customer.BackupContactPerson.Firstname)" />
+
+            <LabelInput Label="Naam"
+                        Required="@backupRequired"
+                        OnChange="(value) => UpdateBackupContactRequired(value, 1)"
+                        @bind-Value="Customer.BackupContactPerson.Lastname"
+                        For="@(() => Customer.BackupContactPerson.Lastname)" />
+
+            <LabelInput Label="Naam"
+                        Required="@backupRequired"
+                        OnChange="(value) => UpdateBackupContactRequired(value, 2)"
+                        @bind-Value="Customer.BackupContactPerson.Email"
+                        For="@(() => Customer.BackupContactPerson.Email)" />
+
+            <LabelInput Label="Telefoonnummer"
+                        @bind-Value="Customer.BackupContactPerson.Phonenumber"
+                        For="@(() => Customer.BackupContactPerson.Phonenumber)" />
         </OneWidth>
     </ThreeColumnLayout>
 </EditForm>
