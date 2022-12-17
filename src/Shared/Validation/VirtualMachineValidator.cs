@@ -18,12 +18,12 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
         RuleFor(x => x.Name)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Naam"))
-            .MinimumLength(_nameLenght).WithMessage(ValidationMessages.MIN_LENGTH(_nameLenght));
+            .MinimumLength(_nameLenght).WithMessage(ValidationMessages.MinimumLength(_nameLenght));
         RuleFor(x => x.Fqdn)
             .Cascade(CascadeMode.StopOnFirstFailure)
             //.Matches("\"^(?!:\\\\/\\\\/)(?=.{1,255}$)((.{1,63}\\\\.){1,127}(?![0-9]*$)[a-z0-9-]+\\\\.?)$\"").WithMessage(string.Format("Dit is geen geldige FQDN."))
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("FQDN"))
-            .MinimumLength(_fqdnLenght).WithMessage(ValidationMessages.MIN_LENGTH(_fqdnLenght));
+            .MinimumLength(_fqdnLenght).WithMessage(ValidationMessages.MinimumLength(_fqdnLenght));
         RuleFor(x => x.Mode)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Mode"));
@@ -33,7 +33,7 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
         RuleFor(x => x.Reason)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Reden"))
-            .MinimumLength(_reasonLenght).WithMessage(ValidationMessages.MIN_LENGTH(_reasonLenght));
+            .MinimumLength(_reasonLenght).WithMessage(ValidationMessages.MinimumLength(_reasonLenght));
         RuleFor(x => x.Status)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Status"));

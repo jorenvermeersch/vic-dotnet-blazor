@@ -8,12 +8,12 @@ public class ContactPersonValidator : AbstractValidator<ContactPersonDto>
     public ContactPersonValidator()
     {
         RuleFor(x => x.Firstname).NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Voornaam")))
-            .Matches(ValidationRegex.Name).WithMessage(string.Format(ValidationMessages.INVALID_NAME("Voornaam")));
+            .Matches(ValidationRegex.Name).WithMessage(string.Format(ValidationMessages.InvalidName("Voornaam")));
         RuleFor(x => x.Lastname).NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Naam")))
-            .Matches(ValidationRegex.Name).WithMessage(string.Format(ValidationMessages.INVALID_NAME("Naam")));
+            .Matches(ValidationRegex.Name).WithMessage(string.Format(ValidationMessages.InvalidName("Naam")));
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Email")))
-            .EmailAddress().WithMessage(string.Format(ValidationMessages.INVALID_EMAIL()));
+            .EmailAddress().WithMessage(string.Format(ValidationMessages.InvalidEmailAddress));
         RuleFor(x => x.Phonenumber)
             .Matches(ValidationRegex.PhoneNumber);
 
