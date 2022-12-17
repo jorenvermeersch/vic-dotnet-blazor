@@ -30,7 +30,7 @@ else
 
                 <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@ChosenProcessor">
                     <OneWidth>
-                        <CustomDropDown Label="Type"
+                        <DropDown Label="Type"
                                     Items="@SerializeProcessorsForDropDown()"
                                     Action="@SetChosenProcessor" />
 

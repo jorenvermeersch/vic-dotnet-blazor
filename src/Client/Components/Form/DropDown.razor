@@ -1,0 +1,19 @@
+﻿<div>
+    <div class="input-container">
+        <label for="">
+            @Label:
+        </label>
+        <div class="dropdown">
+            <button type="button" class="drop-down-button" @onclick="ToggleDropDown">@DropDownChosenItem</button>
+            <div class="drop-down-items" style=@style>
+                <input placeholder="Zoeken..." @oninput="ShowValidItems"/>
+                @foreach (var item in filteredItems)
+                {
+                    <button type="button" class="drop-down-button-item" onclick="@(() => OptionChosen(item.Key, item.Value))">@item.Key</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
