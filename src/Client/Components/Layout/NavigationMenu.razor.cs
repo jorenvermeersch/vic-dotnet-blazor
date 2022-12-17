@@ -1,5 +1,6 @@
 using Client.Authentication;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Client.Components.Layout;
 
@@ -14,23 +15,23 @@ public partial class NavigationMenu
     [Parameter]
     public string name { get; set; } = "Name";
 
-    private void LoginAsAdmin()
-    {
-        FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Administrator);
-    }
+    //private void LoginAsAdmin()
+    //{
+    //    FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Administrator);
+    //}
 
-    private void LoginAsAnonymous()
-    {
-        FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Anonymous);
-    }
+    //private void LoginAsAnonymous()
+    //{
+    //    FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Anonymous);
+    //}
 
-    private void LoginAsMaster()
-    {
-        FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Master);
-    }
+    //private void LoginAsMaster()
+    //{
+    //    FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Master);
+    //}
 
-    private void LoginAsObserver()
-    {
-        FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Observer);
-    }
+    //private void LoginAsObserver()
+    //{
+    //    FakeAuthenticationProvider.ChangeAuthenticationState(FakeAuthenticationProvider.Observer);
+    //}
 }

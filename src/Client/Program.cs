@@ -13,6 +13,7 @@ using Shared.Hosts;
 using Shared.Ports;
 using Shared.VirtualMachines;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Client.SharedFiles;
 
 namespace Client
 {
@@ -24,9 +25,8 @@ namespace Client
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddHttpClient("VicAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-       .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
+            builder.Services.AddHttpClient("VicAPI", client => client.BaseAddress = new Uri("https://localhost:5001"))
+                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                    .CreateClient("VicAPI"));
 
@@ -41,9 +41,8 @@ namespace Client
                 builder.Configuration.Bind("Auth0", options.ProviderOptions);
                 options.ProviderOptions.ResponseType = "code";
                 options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
-            });
+            }).AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>(); ;
 
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             //builder.Services.AddAuthorizationCore();
             //builder.Services.AddScoped<FakeAuthenticationProvider>();
             //builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<FakeAuthenticationProvider>());

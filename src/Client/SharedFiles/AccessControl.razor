@@ -5,11 +5,15 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity.Name!
-        <a href="#" @onclick="BeginSignOut">Log out</a>
+        <div>
+            <a href="#" @onclick="BeginSignOut">
+                @context.User.Identity.Name 
+                <i class="fa-solid fa-right-from-bracket fa-lg" id="logout-button" />
+            </a>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/login">Log in</a>
+        <Button Href="authentication/login" Text="Inloggen"/>
     </NotAuthorized>
 </AuthorizeView>
 

@@ -1,14 +1,15 @@
 ﻿@using System.Security.Claims;
-@inject FakeAuthenticationProvider FakeAuthenticationProvider
+
+@*@inject FakeAuthenticationProvider FakeAuthenticationProvider*@
 
 
-<div class="fake-auth" style="display: @_display">
+@*<div class="fake-auth" style="display: @_display">
     <p>Beschikbare rollen: </p>
     <Button OnClick="LoginAsMaster" Text="@FakeAuthenticationProvider.Master.FindFirst(ClaimTypes.Name)?.Value"/>
     <Button OnClick="LoginAsAdmin" Text="@FakeAuthenticationProvider.Administrator.FindFirst(ClaimTypes.Name)?.Value"/>
     <Button OnClick="LoginAsObserver" Text="@FakeAuthenticationProvider.Observer.FindFirst(ClaimTypes.Name)?.Value"/>
     <Button OnClick="LoginAsAnonymous" Text="Anonymous"/>
-</div>
+</div>*@
 
 
 
@@ -38,14 +39,15 @@
             </li>
             
         </AuthorizeView>
-        @if (@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value=="Anonymous") {
+        @*@if (@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value=="Anonymous") {
             <li></li>
-        } else {
+        } else {*@
             <li @onclick="() => showOrHideChangeRole()">
-                @FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value
-                <i class="fa-solid fa-right-from-bracket fa-lg" id="logout-button"></i>
+                @*@AuthenticationState.User.Claims.FirstOrDefault()!.Value
+                <i class="fa-solid fa-right-from-bracket fa-lg" id="logout-button"></i>*@
+                <AccessControl/>
             </li>
-        }   
+        @*}   *@
         </ul>
     </nav>
 
@@ -66,7 +68,7 @@
         <div class="navigation-options">
             <ul>
                 <li class="selected">
-                    <a href=".">@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value</a>
+                    <a href=".">Angela</a>
                 </li>
                 <li>
                     <a href="/customer/list">Klanten</a>
@@ -80,10 +82,10 @@
                 <li>
                     <a href=".">Verbruik</a>
                 </li>
-                <AccessControl />
+                
             </ul>
             <div class="logout">
-                <Button Text="Uitloggen" InverseStyle="true" />
+            <AccessControl />
             </div>
         </div>
     </div>
