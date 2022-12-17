@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Hosts;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -6,6 +7,7 @@ namespace Server.Controllers.Processors;
 
 [ApiController]
 [Route("/api/processors/")]
+[Authorize]
 public class ProcessorController : ControllerBase
 {
     private readonly IProcessorService processorService;

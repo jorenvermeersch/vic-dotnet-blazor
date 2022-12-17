@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Hosts;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -6,6 +7,7 @@ namespace Server.Controllers.Hosts;
 
 [ApiController]
 [Route("/api/hosts/")]
+[Authorize]
 public class HostController : ControllerBase
 {
     private readonly IHostService hostService;
@@ -33,6 +35,7 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Creates hosts.")]
     [HttpPost]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> CreateAsync([FromBody] HostRequest.Create request)
     {
         HostResponse.Create response = await hostService.CreateAsync(request);
@@ -41,6 +44,7 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Edits hosts.")]
     [HttpPut("{hostId}")]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> EditAsync([FromBody] HostDto.Mutate model, long hostId)
     {
         HostResponse.Edit response = await hostService.EditAsync(new HostRequest.Edit { Host = model, HostId = hostId });
@@ -49,6 +53,7 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Deletes hosts.")]
     [HttpDelete("{hostId}")]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> Delete(int hostId)
     {
         await hostService.DeleteAsync(new HostRequest.Delete { HostId = hostId });

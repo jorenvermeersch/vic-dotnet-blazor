@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
@@ -25,6 +26,8 @@ public class StartUp
         var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("VirtualItCompany"));
         services.AddServices();
 
+        
+
 
         services.AddDbContextFactory<VicDBContext>(options =>
             options.UseSqlServer(builder.ConnectionString, opt => opt.EnableRetryOnFailure()).EnableSensitiveDataLogging(Configuration.GetValue<bool>("Logging:EnableSqlParameterLogging"))
@@ -35,7 +38,48 @@ public class StartUp
             c.CustomSchemaIds(type => type.FullName.Replace("+", "."));
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Virtual IT Company API", Version = "v1" });
             c.EnableAnnotations();
+
+            var securitySchema = new OpenApiSecurityScheme
+            {
+                Description = "Using the Authorization header with the Bearer scheme.",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            };
+
+            c.AddSecurityDefinition("Bearer", securitySchema);
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+          {
+              { securitySchema, new[] { "Bearer" } }
+          });
         });
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.Authority = Configuration["Auth0:Authority"];
+            options.Audience = Configuration["Auth0:ApiIdentifier"];
+        });
+
+        //services.AddAuth0AuthenticationClient(config =>
+        //{
+        //    config.Domain = Configuration["Auth0:Authority"];
+        //    config.ClientId = Configuration["Auth0:ClientId"];
+        //    config.ClientSecret = Configuration["Auth0:ClientSecret"];
+        //});
+
+        //services.AddAuth0ManagementClient().AddManagementAccessToken();
+
 
         services.AddRazorPages();
 
@@ -50,7 +94,11 @@ public class StartUp
             app.UseDeveloperExceptionPage();
             app.UseWebAssemblyDebugging();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virtual IT Company API"));
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virtual IT Company API");
+               // c.OAuthClientId(Configuration["Authentication:ClientId"]);
+            });
         }
         else
         {

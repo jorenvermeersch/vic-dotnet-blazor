@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Accounts;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -6,6 +7,7 @@ namespace Server.Controllers.Accounts;
 
 [ApiController]
 [Route("/api/accounts/")]
+[Authorize]
 public class AccountController : ControllerBase {
     private readonly IAccountService accountService;
 
@@ -28,12 +30,14 @@ public class AccountController : ControllerBase {
 
     [SwaggerOperation("Create a new account")]
     [HttpPost]
+    [Authorize(Roles = "Master")]
     public async Task<AccountResponse.Create> CreateAsync([FromBody] AccountRequest.Create request) {
         return await accountService.CreateAsync(request);
     }
 
     [SwaggerOperation("Edits accounts.")]
     [HttpPut]
+    [Authorize(Roles = "Master")]
     public async Task<IActionResult> EditAsync( AccountRequest.Edit request)
     {
         AccountResponse.Edit response = await accountService.EditAsync(request);
@@ -42,6 +46,7 @@ public class AccountController : ControllerBase {
 
     [SwaggerOperation("Deletes accounts.")]
     [HttpDelete("{accountId}")]
+    [Authorize(Roles = "Master")]
     public async Task<IActionResult> Delete(long accountId)
     {
         await accountService.DeleteAsync(new AccountRequest.Delete { AccountId = accountId });
