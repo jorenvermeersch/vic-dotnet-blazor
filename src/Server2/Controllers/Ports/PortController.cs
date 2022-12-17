@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.Processors;
-using Shared.Hosts;
 using Shared.Ports;
 using Swashbuckle.AspNetCore.Annotations;
 

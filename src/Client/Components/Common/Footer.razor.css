@@ -1,0 +1,29 @@
+﻿footer {
+    margin-top: var(--padding-lg); 
+    height: var(--nav-height);
+    color: var(--dark-blue);
+    background-color: var(--light-blue);
+    
+    font-size: var(--text-sm); 
+    font-weight: 600; 
+}
+
+.footer-container {
+    display: flex; 
+    align-items: center; 
+    justify-content: left; 
+    max-width: var(--extremely-large);
+    height: 100%; 
+    margin: auto; 
+    padding: 0px var(--padding-md); 
+}
+
+.footer-inverse {
+    background-color: var(--white);
+}
+
+@media screen and (min-width: 1600px) {
+    .footer-container {
+        padding: 0px; 
+    }
+}

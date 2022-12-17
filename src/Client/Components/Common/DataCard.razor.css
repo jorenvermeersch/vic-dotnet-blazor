@@ -1,0 +1,90 @@
+﻿.data-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.inverse {
+    background-color: var(--white); 
+}
+
+.data-card .entry {
+    display: flex;
+    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    text-overflow: ellipsis;
+}
+
+.data-card .entry .label {
+  font-weight: 600;
+  flex: 1;
+  padding-bottom: 5px;
+}
+
+.data-card .entry .value {
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.hoverable::after {
+    content: '';
+    border-bottom: var(--border-size-md) solid var(--blue);
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+}
+
+.hoverable {
+    cursor: pointer;
+    box-sizing: border-box;
+    padding-bottom: calc(var(--card-padding) - var(--border-size-md)); /* Stop hover border from increasing height of card */
+    border-bottom: var(--border-size-md) solid transparent;
+}
+
+.hoverable:hover {
+    cursor: pointer;
+    box-sizing: border-box;
+    border-bottom: var(--border-size-md) solid var(--blue);
+}
+
+.hover-icon {
+    display: none; 
+}
+
+.hoverable:hover .hover-icon { 
+    display: block; 
+    position: absolute;
+    color: var(--dark-blue); 
+    bottom: var(--card-padding);
+    right: var(--card-padding);
+}
+
+.hoverable .hover-icon.vertical-center {
+    bottom: 50%;
+}
+
+@media screen and (min-width: 480px) {
+    .data-card .entry {
+    flex-direction: row;
+  }
+
+  .data-card .entry .label {
+    width: 0px;
+    min-width: min-content;
+    flex-grow: 1;
+    padding-bottom: 0px;
+  }
+
+  .data-card .entry .value {
+    width: 0px;
+    flex-grow: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

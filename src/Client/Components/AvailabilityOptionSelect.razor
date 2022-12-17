@@ -1,6 +1,6 @@
 ﻿@inject IStringLocalizer<Client.SharedFiles.Resources.Resource> localizer
 
-<div class="input-container multioption">
+<div class="input-container multi-option">
     <select class="input" type="text" style="@customCss" @bind="Value">
         @foreach (string day in Enum.GetNames(typeof(DayOfWeek)))
         {

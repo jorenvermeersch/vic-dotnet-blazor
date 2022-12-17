@@ -1,6 +1,4 @@
 ﻿using Domain.Constants;
-using FluentValidation;
-using Shared.Validation;
 
 namespace Shared.Accounts;
 

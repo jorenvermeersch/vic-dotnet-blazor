@@ -1,4 +1,4 @@
-﻿.dropdownbuttonitem{
+﻿.drop-down-button-item {
     border-radius: 0px;
     border: none;
     width: 100%;
@@ -8,7 +8,7 @@
     border-bottom: 1px solid var(--blue);
 }
 
-.dropdownitems{
+.drop-down-items {
     position: absolute;
     left: 0px;
     top: 52px;
@@ -24,17 +24,17 @@
 
 .dropdown {
     position: relative;
+    width: 34px; /* Hardcoded base length that fixes the issue */
     flex-grow: 2;
-    height: 48px;
+    height: var(--card-height);
     border-radius: 50px;
-    width: 0px;
 }
 
 .dropdown label {
     width: 0px;
 }
 
-.dropdown input{
+.dropdown input {
     border: none;
     border-bottom: 1px solid var(--blue);
     width: 100%;
@@ -42,20 +42,20 @@
     outline: none;
 }
 
-.dropdownbutton {
+.drop-down-button {
     background: var(--white);
-    width: 100%;
+    width: 100%; 
     height: 100%;
-    max-width: 350px;
-    /*border: 1px solid var(--blue);*/
     border: none;
     border-radius: 0px;
+    
 }
 
-.dropdownbutton:hover{
-    background-color: var(--dark-blue)
+.drop-down-button:hover{
+    background-color: var(--dark-blue); 
+    color: var(--white); 
 }
 
-.dropdownitems .dropdownbuttonitem:last-child {
+.drop-down-items .drop-down-button-item:last-child {
     border-bottom: none;
 }

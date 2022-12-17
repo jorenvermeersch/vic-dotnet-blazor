@@ -1,8 +1,5 @@
 ﻿using Client.Extensions;
 using Shared.Accounts;
-using Shared.Customers;
-using Shared.Hosts;
-using System.Diagnostics.Metrics;
 using System.Net.Http.Json;
 
 namespace Client.Accounts;

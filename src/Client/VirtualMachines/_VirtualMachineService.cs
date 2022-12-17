@@ -1,5 +1,4 @@
 ﻿using Client.Extensions;
-using Shared.Hosts;
 using Shared.VirtualMachines;
 using System.Net.Http.Json;
 

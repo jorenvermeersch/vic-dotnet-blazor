@@ -1,6 +1,5 @@
 ﻿:root {
     /* Colors */
-    --lighter-blue: #508bcb;
     --light-blue: #f2f7fb;
     --blue: #508bcb;
     --dark-blue: #3c6999;
@@ -8,6 +7,8 @@
     --light-gray: #f4f5f7;
     --dark-gray: #6c757d;
     --black: #343a40;
+    --light-red: #FAD8D7;
+    --dark-red: #7A4645;
     /* Screen size breakpoints */
     --extra-small: 480px;
     --small: 640px;
@@ -29,8 +30,10 @@
     --three-column-gap: 66px;
     /* Heights. */
     --card-height: 48px;
-    --nav-height: 80px;
+    --nav-height: 64px;
+    --button-height: 28px;
     /* Padding. */
+    --padding-ty: 2px;
     --padding-sm: 5px;
     --padding-md: 10px;
     --padding-lg: 20px;

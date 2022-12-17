@@ -1,0 +1,13 @@
+﻿.card {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    height: var(--card-height);
+    border-bottom: var(--border-size-md) solid transparent;
+}
+
+.card:hover {
+    font-weight: 600;
+    border-bottom: var(--border-size-md) solid var(--blue);
+}

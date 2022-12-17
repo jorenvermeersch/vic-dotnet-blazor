@@ -1,0 +1,88 @@
+﻿@using System.Security.Claims;
+@inject FakeAuthenticationProvider FakeAuthenticationProvider
+
+
+<div class="fake-auth" style="display: @_display">
+    <p>Beschikbare rollen: </p>
+    <Button OnClick="LoginAsMaster" Text="@FakeAuthenticationProvider.Master.FindFirst(ClaimTypes.Name)?.Value"/>
+    <Button OnClick="LoginAsAdmin" Text="@FakeAuthenticationProvider.Administrator.FindFirst(ClaimTypes.Name)?.Value"/>
+    <Button OnClick="LoginAsObserver" Text="@FakeAuthenticationProvider.Observer.FindFirst(ClaimTypes.Name)?.Value"/>
+    <Button OnClick="LoginAsAnonymous" Text="Anonymous"/>
+</div>
+
+
+
+    <nav class="navigation-bar-wide">
+        <ul>
+            <li>
+                <a href=".">
+                    <i class="fa-solid fa-vr-cardboard"></i>
+                    Virtual IT Company
+                </a>
+            </li>
+            <AuthorizeView Roles="Master, Observer, Administrator">
+            <li>
+                <a href="/account/list">Beheerders</a>
+            </li>
+            <li>
+                <a href="/customer/list">Klanten</a>
+            </li>
+            <li>
+                <a href="/virtual-machine/list">Machines</a>
+            </li>
+            <li>
+                <a href="/host/list">Hosts</a>
+            </li>
+            <li>
+                <a href=".">Verbruik</a>
+            </li>
+            
+        </AuthorizeView>
+        @if (@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value=="Anonymous") {
+            <li></li>
+        } else {
+            <li @onclick="() => showOrHideChangeRole()">
+                @FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value
+                <i class="fa-solid fa-right-from-bracket fa-lg" id="logout-button"></i>
+            </li>
+        }   
+        </ul>
+    </nav>
+
+    <div class="navigation-bar-narrow-wrapper">
+        <nav class="navigation-bar-narrow">
+            <ul>
+                <li>
+                    <a href=".">
+                        <i class="fa-solid fa-vr-cardboard"></i>
+                        Virtual IT Company
+                    </a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+                </li>
+            </ul>
+        </nav>
+        <div class="navigation-options">
+            <ul>
+                <li class="selected">
+                    <a href=".">@FakeAuthenticationProvider.Current.FindFirst(ClaimTypes.Name)?.Value</a>
+                </li>
+                <li>
+                    <a href="/customer/list">Klanten</a>
+                </li>
+                <li>
+                    <a href="/virtual-machine/list">Machines</a>
+                </li>
+                <li>
+                    <a href="/host/list">Hosts</a>
+                </li>
+                <li>
+                    <a href=".">Verbruik</a>
+                </li>
+            </ul>
+            <div class="logout">
+                <Button Text="Uitloggen" InverseStyle="true" />
+            </div>
+        </div>
+    </div>

@@ -9,5 +9,7 @@
 }
 
 main {
-    padding-bottom: var(--padding-xlg);
+    --search-bar-height: calc(2 * var(--card-height));
+    min-height: calc(100vh - var(--nav-height) - var(--search-bar-height));
 }
+

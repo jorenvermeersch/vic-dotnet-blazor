@@ -1,6 +1,4 @@
-﻿using Domain.Hosts;
-using Domain.VirtualMachines;
-using Shared.Hosts;
+﻿using Domain.VirtualMachines;
 using Shared.Ports;
 
 namespace Services.Ports;

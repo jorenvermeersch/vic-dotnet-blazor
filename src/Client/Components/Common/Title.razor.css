@@ -1,0 +1,10 @@
+﻿.title {
+  border-bottom: var(--border-size-md) solid var(--dark-blue);
+}
+
+.title h2 {
+  color: var(--black); 
+  font-size: var(--text-md);
+  font-weight: 600;
+  padding: var(--padding-md) 0px var(--padding-ty) 0px;
+}

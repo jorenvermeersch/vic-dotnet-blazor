@@ -1,17 +1,9 @@
 ﻿using BogusStore.Fakers.Common;
 using Domain.Accounts;
-using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;
 using Domain.Hosts;
 using Domain.VirtualMachines;
-using Fakers.Accounts;
-using Fakers.Credentials;
-using Fakers.Hosts;
-using Fakers.Customers;
-using Fakers.Specifications;
-using Fakers.TimeSpan;
-using System;
 
 namespace Fakers.VirtualMachines;
 

@@ -1,14 +1,13 @@
 ﻿
 @inherits InputBase<string>
 
-
 <div>
     <div class="input-container">
         <label for="">
             @_label
             @if (Required)
             {
-                <sup class="requiredinput">*</sup>
+                <sup class="required-input">*</sup>
             }
         </label>
         @if (Type == InputType.TEXT)

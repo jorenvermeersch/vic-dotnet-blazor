@@ -1,8 +1,5 @@
 ﻿using Client.Extensions;
-using Shared.Customers;
 using Shared.Hosts;
-using Shared.VirtualMachines;
-using System.Net;
 using System.Net.Http.Json;
 
 namespace Client.Hosts;

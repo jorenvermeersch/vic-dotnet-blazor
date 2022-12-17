@@ -1,0 +1,6 @@
+﻿.top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-md);
+    align-items: center;
+}

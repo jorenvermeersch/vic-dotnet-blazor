@@ -20,7 +20,7 @@ body {
 
 /* Center main */
 .three-column-layout,
-.context-menu {
+.top-bar {
     max-width: var(--extremely-large);
     padding-top: var(--padding-lg);
     margin: auto;
@@ -79,7 +79,7 @@ body {
         grid-column: 2 / span 2;
     }
 
-    .context-menu {
+    .top-bar {
         padding-left: 0px; 
         padding-right: 0px; 
     }
@@ -96,18 +96,18 @@ main {
 }
 
 /* Context menu */
-.context-menu {
+.top-bar {
     max-width: 489.33333px; 
 }
 
 @media screen and (min-width: 1065px) {
-    .context-menu {
+    .top-bar {
         max-width: 1045px; 
     }
 }
 
 @media screen and (min-width: 1600px) {
-    .context-menu {
+    .top-bar {
         max-width: var(--extremely-large);
     }
 }

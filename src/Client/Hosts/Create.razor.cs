@@ -1,52 +1,73 @@
-using Domain.Accounts;
-using Domain.Constants;
-using Domain.VirtualMachines;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Newtonsoft.Json;
-using Services.Processors;
 using Shared.Hosts;
-using System.Drawing.Text;
 
 namespace Client.Hosts;
 
-public partial class Create {
+public partial class Create
+{
+    public class VirtualProcessor
+    {
+        public ProcessorDto? Processor { get; set; }
+        public int VirtualisationFactor { get; set; }
+
+    }
+
     [Inject] public NavigationManager Navigation { get; set; } = default!;
     [Inject] public IHostService HostService { get; set; } = default!;
     [Inject] public IProcessorService ProcessorService { get; set; } = default!;
     private HostDto.Mutate Host { get; set; } = new();
 
     private List<ProcessorDto>? Processors { get; set; }
-    public ProcessorDto SelectedProcessors { get; set; }
-    public List<ProcessorDto>? ChosenProcessors { get; set; }
-    public ProcessorVirtualisation? NewProcessor { get; set; } = new();
-    private string _customcss = "background-color: white";
+    public VirtualProcessor ChosenProcessor { get; set; } = new();
+    private Dictionary<string, string> chosenProcessorSpecifications = new();
 
-    protected override async Task OnInitializedAsync() {
-        ProcessorResponse.GetIndex processorResponse = await ProcessorService.GetIndexAsync(new ProcessorRequest.GetIndex {
+    private string customcss = "background-color: white";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProcessorResponse.GetIndex response = await ProcessorService.GetIndexAsync(new ProcessorRequest.GetIndex
+        {
             Amount = 5
         });
-        Processors = processorResponse.Processors;
+        Processors = response.Processors;
     }
 
-    private async void HandleValidSubmit() {
-        var newHost = new HostRequest.Create { Host = Host };
-        HostResponse.Create response = await HostService.CreateAsync(newHost);
-        Navigation!.NavigateTo("host/" + response.HostId);
+    private async void HandleValidSubmit()
+    {
+        var request = new HostRequest.Create { Host = Host };
+        HostResponse.Create response = await HostService.CreateAsync(request);
+        Navigation.NavigateTo($"host/{response.HostId}");
     }
-    private Dictionary<string, string> MakeProcessorItems() => Processors.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
-    private void SetProcessorValue(string value){
-        NewProcessor.Processor = JsonConvert.DeserializeObject<ProcessorDto>(value)!;
-    }
-
-    private void AddProcessor() {
-        Host.Specifications.Processors.Add(new KeyValuePair<ProcessorDto, int>(NewProcessor.Processor, NewProcessor.VirtualisationFactor));
-        NewProcessor = new();
+    private Dictionary<string, string> SerializeProcessorsForDropDown()
+    {
+        return Processors!.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
     }
 
-    public class ProcessorVirtualisation {
-        public ProcessorDto Processor { get; set; }
-        public int VirtualisationFactor { get; set; }
+    private void SetChosenProcessor(string value)
+    {
+        ChosenProcessor.Processor = JsonConvert.DeserializeObject<ProcessorDto>(value)!;
+        chosenProcessorSpecifications = new()
+        {
+            { "Cores", ChosenProcessor.Processor.Cores.ToString() },
+            { "Threads", ChosenProcessor.Processor.Threads.ToString() },
+        };
 
+    }
+
+    private void AddProcessor()
+    {
+        if (ChosenProcessor.Processor is null || ChosenProcessor.VirtualisationFactor <= 0) return;
+
+        Host.Specifications.Processors.Add(
+            new KeyValuePair<ProcessorDto, int>(ChosenProcessor.Processor!, ChosenProcessor.VirtualisationFactor)
+        );
+        ChosenProcessor = new();
+    }
+
+    private void RemoveProcessor(KeyValuePair<ProcessorDto, int> processor)
+    {
+        Host.Specifications.Processors.Remove(processor);
     }
 }

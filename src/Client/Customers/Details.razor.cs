@@ -1,4 +1,4 @@
-using Domain.Constants;
+using Client.Extensions;
 using Microsoft.AspNetCore.Components;
 using Shared.Customers;
 using Shared.VirtualMachines;
@@ -8,65 +8,102 @@ namespace Client.Customers;
 
 public partial class Details
 {
+    private CustomerDto.Detail? customer;
     [Parameter] public long Id { get; set; }
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
 
-    private CustomerDto.Detail? Customer;
+    private Dictionary<string, Dictionary<string, string>> datacards = new();
+    private string USERNAME_KEY = "USERNAME";
+    private string GENERAL_INFORMATION_KEY = "GENERAL_INFORMATION";
+    private string CONTACT_KEY = "CONTACT";
+    private string BACKUP_CONTACT_KEY = "BACKUP_CONTACT";
 
-
-    private IEnumerable<VirtualMachineDto.Index> virtualMachines = new List<VirtualMachineDto.Index>() ;
+    private IEnumerable<VirtualMachineDto.Index> virtualMachines = new List<VirtualMachineDto.Index>();
     private int offset = 0, totalVirtualMachines, totalPages = 0;
     private int selectedPage = 1;
 
 
-    private Dictionary<string, string> _username = new();
-    private Dictionary<string, string> _general = new();
-    private Dictionary<string, string> _contactInformation = new();
-    private Dictionary<string, string> _backupContactInformation = new();
 
     protected override async Task OnInitializedAsync()
     {
-        CustomerRequest.GetDetail request = new()
+        var response = await CustomerService.GetDetailAsync(new CustomerRequest.GetDetail()
         {
             CustomerId = Id
-        };
-        var response = await CustomerService.GetDetailAsync(request);
-        Customer = response.Customer;
-        
+        });
+        customer = response.Customer;
 
-        virtualMachines = Customer.VirtualMachines;
-        totalVirtualMachines = Customer.VirtualMachines.Count;
-        totalPages = (totalVirtualMachines / 10) + 1;
-
-        _username.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
-        _general.Add("Klant type", Customer.CustomerType.ToString());
-
-        if (Customer.CustomerType == CustomerType.Intern)
+        // General information. 
+        datacards = new()
         {
-            _general.Add("Instituut", Customer.Institution.ToString()!);
-            _general.Add("Departement", Customer.Department!);
-            _general.Add("Opleiding", Customer.Education!);
+            {
+                USERNAME_KEY,
+                new()
+                {
+                    { "Naam", customer.GetFullName() }
+                }
+            },
+            {
+                CONTACT_KEY,
+                new()
+                {
+                    { "Naam", customer.ContactPerson.GetFullName() },
+                    { "E-mailadres", customer.ContactPerson.Email.FormatIfEmpty() },
+                    { "Telefoonnummer", customer.ContactPerson.Phonenumber.FormatIfEmpty() }
+                }
+            },
+        };
+
+        // Information based on customer type. 
+        if (customer.IsInternal())
+        {
+            datacards.Add(
+                GENERAL_INFORMATION_KEY,
+                new()
+                {
+                    { "Soort", customer.CustomerType.ToString() },
+                    { "Instituut", customer.Institution.ToString()! },
+                    { "Departement", customer.Department! },
+                    { "Opleiding", customer.Education! }
+                }
+            );
+
         }
         else
         {
-            _general.Add("Naam", Customer.CompanyName!);
-            _general.Add("Type", Customer.CompanyType!);
+            datacards.Add(
+               GENERAL_INFORMATION_KEY,
+               new()
+               {
+                   { "Soort", customer.CustomerType.ToString() },
+                   { "Naam", customer.CompanyType! },
+                   { "Type", customer.CompanyName! },
+               }
+           );
         }
 
-        _contactInformation.Add("Naam", string.Concat(Customer.ContactPerson.Firstname, " ", Customer.ContactPerson.Lastname));
-        _contactInformation.Add("E-mailadres", Customer.ContactPerson.Email);
-        _contactInformation.Add("Telefoonnummer", Customer.ContactPerson.Phonenumber);
-
-        if (!string.IsNullOrEmpty(Customer.BackupContactPerson?.Firstname))
+        // Back-up contact information. 
+        if (customer.BackupContactPerson is not null)
         {
-            _backupContactInformation.Add("Naam", string.Concat(Customer.BackupContactPerson.Firstname, " ", Customer.BackupContactPerson.Lastname));
-            _backupContactInformation.Add("E-mailadres", Customer.BackupContactPerson.Email);
-            _backupContactInformation.Add("Telefoonnummer", Customer.BackupContactPerson?.Phonenumber);
+            datacards.Add(
+                BACKUP_CONTACT_KEY,
+                new()
+                {
+                    { "Naam", customer.BackupContactPerson.GetFullName() },
+                    { "E-mailadres", customer.BackupContactPerson.Email.FormatIfEmpty() },
+                    { "Telefoonnummer", customer.BackupContactPerson.Phonenumber.FormatIfEmpty() }
+                }
+            );
         }
+
+        // TODO: Properly do virtual machines. 
+
+        virtualMachines = customer.VirtualMachines;
+        totalVirtualMachines = customer.VirtualMachines.Count;
+        totalPages = (totalVirtualMachines / 10) + 1;
     }
 
-    private async Task ClickHandler(int pageNr)
+    private async Task ChangePage(int pageNr)
     {
         offset = (pageNr - 1) * 10;
         selectedPage = pageNr;

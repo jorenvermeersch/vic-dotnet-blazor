@@ -1,5 +1,4 @@
 ﻿using BogusStore.Fakers.Common;
-using Domain.Common;
 using Domain.Hosts;
 
 namespace Fakers.Processors;

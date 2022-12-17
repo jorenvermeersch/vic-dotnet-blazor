@@ -1,67 +1,45 @@
 ﻿@page "/host/{id:long}"
 @attribute [Authorize]
 
-<PageTitle>Host [host name] Details</PageTitle>
+<PageTitle>Details host</PageTitle>
 
-<div class="context-menu">
-    <div class="context-items" style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>Terug</span>
-        </span>
-        <AuthorizeView Roles="Master, Administrator">
-        <span>
-            <Button Text="Beheren" />
-        </span>
-        </AuthorizeView>
-    </div>
-</div>
-<div class="three-column-layout">
-    <div class="one-third">
-        <DataCard Entries="@_server.GetValueOrDefault("name")" />
-        <Title Text="Specificaties" />
-        <DataCard Entries="@_server.GetValueOrDefault("resources")" />
-        <Title Text="Resterende specificaties" />
-        <DataCard Entries="@_server.GetValueOrDefault("remainingResources")" />
+@if(host is null)
+{
+    <Loading />
+}
+else
+{
+    <ThreeColumnLayout>
+        <OneWidth>
+            <ButtonGroup>
+                <BackButton Text="Terug" OnClick="NavigateBack" />
+                <AuthorizeView Roles="Master, Administrator">
+                    <span class="outline-end">
+                        <Button Text="Beheren" />
+                    </span>
+                </AuthorizeView>
+            </ButtonGroup>
 
-        <Title Text="Processoren"/>
-        @foreach(var p in _processors)
-        {
-            <DataCard Entries=@p/>
-        }
+            <DataCard Entries="@datacards.GetValueOrDefault(NAME_KEY)" />
 
-        
-    </div>
-    <div class="two-thirds">
+            <Title Text="Specificaties" />
+            <DataCard Entries="@datacards.GetValueOrDefault(SPECIFICATIONS_KEY)" />
 
-        <Title Text="Virtuele machines" />
-        @*TODO: vms ophalen voor host*@
-@*        @if (virtualMachines.Any())
-        {
-            <div class="two-columns-container">
-                <div>
-                    @foreach (var vm in virtualMachines.Take(5))
-                    {
-                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested || vm.Status == Status.InProgress) Href=@string.Concat("virtual-machine/", vm.Id) />
-                    }
-                </div>
-                <div>
-                    @foreach (var vm in virtualMachines.Skip(5).Take(5))
-                    {
-                        <EntityCard Value=@vm.FQDN Active=@(vm.Status == Status.Requested || vm.Status == Status.InProgress) Href=@string.Concat("virtual-machine/", vm.Id) />
-                    }
-                </div>
-                
-            </div>
+            <Title Text="Resterende specificaties" />
+            <DataCard Entries="@datacards.GetValueOrDefault(REMAINING_SPECIFICATIONS_KEY)" />
 
+            <Title Text="Processoren" />
+            @foreach (var processor in processors)
+            {
+                    <DataCard Entries=@processor />
+            }
+        </OneWidth>
+        <TwoWidth>
+            <Title Text="Virtuele machines" />
+             <NoResultsMessage Message="Deze host heeft geen virtuele machines"/>
+        </TwoWidth>
+    </ThreeColumnLayout>
+}
 
-            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-        }
-        else
-        {*@
-            <NoResultsMsg Message="Deze server heeft geen virtuele machines."/>
-        @*}*@
-    </div>
-</div>
 
 

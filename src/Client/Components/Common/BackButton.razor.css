@@ -1,0 +1,23 @@
+﻿.back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--padding-sm);
+
+    font-size: var(--text-md);
+    font-weight: 600;
+
+    color: var(--dark-blue);
+    padding: var(--padding-sm) calc(2 * var(--padding-sm));
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    border-radius: calc(4 * var(--padding-sm));
+    background-color: var(--light-blue); 
+}
+
+.back-button i {
+    color: var(--blue); 
+}

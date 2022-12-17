@@ -1,0 +1,9 @@
+﻿@{
+    var active = isActive ? "active" : "";  
+}
+<div class="status-container @active">
+    <i class=@GetIcon()></i>
+    <p>@Localizer[State]</p>
+</div>
+
+

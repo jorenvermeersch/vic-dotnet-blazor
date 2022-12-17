@@ -9,10 +9,10 @@ public class CredentialsValidator : AbstractValidator<CredentialsDto>
     public CredentialsValidator()
     {
         RuleFor(x => x.Username)
-            .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Username")))
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Username")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
         RuleFor(x => x.PasswordHash)
-            .Matches(ValidationRegex.Password).WithMessage(string.Format(FormMessages.INVALIDPASSWORD()))
+            .Matches(ValidationRegex.Password).WithMessage(string.Format(ValidationMessages.INVALID_PASSWORD()))
             .NotEmpty().WithMessage("Geef een waarde in");
         RuleFor(x => x.Role)
            .NotEmpty().WithMessage("Geef een waarde in");

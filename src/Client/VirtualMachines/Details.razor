@@ -1,54 +1,68 @@
 ﻿@page "/virtual-machine/{id:long}"
 @attribute [Authorize]
 
-<PageTitle>Virtual Machine @virtualMachine.Name  Details</PageTitle>
+<PageTitle>Details virtuele machine</PageTitle>
 
-<div class="context-menu" >
-    <div class="context-items" style="display: flex">
-        <span style="flex: 1; cursor: pointer; display: flex; gap: 10px" class="small_title" @onclick="NavigateBack"><i class="fa-solid fa-arrow-left" ></i>
-            <span>Terug</span>
-        </span>
-        <StatusIndicator State="@virtualMachine.Status.ToString()" />
-        <AuthorizeView Roles="Master, Administrator">
-            <span>
-                <Button Text="Beheren" />
-            </span>
-        </AuthorizeView>
-    </div>
-</div>
+@if(machine is null)
+{
+    <Loading />
+}
+else
+{
+    <ThreeColumnLayout>
+        <OneWidth>
+            <ButtonGroup>
+                <BackButton Text="Terug" OnClick="NavigateBack" />
+                <span class="outline-end">
+                    <StatusIndicator State="@machine.Status.ToString()" />
+                </span>
+                <AuthorizeView Roles="Master, Administrator">
+                    <Button Text="Beheren" />
+                </AuthorizeView>
+            </ButtonGroup>
 
-<div class="three-column-layout">
-    <div class="one-third">
-        <DataCard Entries="@_defaultInformation" />
+            <DataCard Entries="@datacards.GetValueOrDefault(GENERAL_INFORMATION_KEY)" />
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(HOST_NAME_KEY)" 
+                OnClick="NavigateToHost"
+                HoverIcon="fa-solid fa-arrow-right fa-lg" />
 
-        <Title Text="Specificaties en configuratie" />
-        <DataCard Entries="@_specs" />
-        <DataCard Entries="@_config" />
-        <DataCard Entries="@_ports" />
+            <Title Text="Specificaties en configuratie" />
+            <DataCard Entries="@datacards.GetValueOrDefault(SPECIFICATIONS_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(CONFIGURATION_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(PORTS_KEY)" />
+        </OneWidth>
+        <OneWidth>
+            <Title Text="Beschikbaarheid en back-ups" />
+            <DataCard Entries="@datacards.GetValueOrDefault(BACKUPS_KEY)" />
+            <DataCard Entries="@datacards.GetValueOrDefault(AVAILABILITY_KEY)" />
+            
+            <Title Text="Klanten" />
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(REQUESTER_KEY)" 
+                OnClick="NavigateToRequester"
+                HoverIcon="fa-solid fa-arrow-right fa-lg"/>
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(USER_KEY)" 
+                OnClick="NavigateToUser"
+                HoverIcon="fa-solid fa-arrow-right fa-lg" />
 
-        <Title Text="Beschikbaarheid en back-ups" />
-        <DataCard Entries="@_available" />
-        <DataCard Entries="@_backups" />
+            <Title Text="Beheerder" />
+            <DataCard 
+                Entries="@datacards.GetValueOrDefault(ADMIN_KEY)" 
+                OnClick="NavigateToAdministrator"
+                HoverIcon="fa-solid fa-arrow-right fa-lg" />
+        </OneWidth>
+        <OneWidth>
+            <Title Text="Logingegevens" />
+            @foreach (var data in credentials)
+            {
+                <DataCard Entries="@data" />
+            }
+        </OneWidth>
+    </ThreeColumnLayout>
+}
 
-    </div>
-<div class="one-third">
-    <Title Text="Logingegevens" />
-    @foreach(var data in _logindata){
-            <DataCard Entries="@data" />
-    }
-     
-</div>
-<div class="one-third">
-    <Title Text="Aanvrager" />
-    <DataCard Entries="@_requester" />
-
-    <Title Text="Gebruiker" />
-    <DataCard Entries="@_user" />
-
-    <Title Text="Verantwoordelijken" />
-    <DataCard Entries="@_personincharge" />
-</div>
-</div>
 
 
 

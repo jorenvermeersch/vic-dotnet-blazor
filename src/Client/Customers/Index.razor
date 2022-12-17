@@ -1,55 +1,70 @@
 ﻿@page "/customer/list"
 @attribute [Authorize]
 
-<div class="context-menu">
-    <Label Text="Toevoegen" />
-    <Button Text="Klant" Href="/customer/add" />
-</div>
-<div class="three-column-layout">
-    <div class="one-third">
-        <Title Text="Filteropties" />
-        <div style="display: flex; justify-content: space-between;">
-            <Button Text="Reset" OnClick="() => ResetFilter()" />
-            <Button Text="Filteren" OnClick="@HandleFilter"/>
-        </div>
+<PageTitle>Klanten</PageTitle>
 
-        <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm="@SearchValue" />
+@if (customers is null)
+{
+    <Loading />
+}
+else
+{
+    <AuthorizeView Roles="Master, Administrator">
+        <TopBar>
+            <ButtonGroup>
+                <Label Text="Toevoegen" />
+                <Button Text="Klant" Href="/customer/add" />
+            </ButtonGroup>
+        </TopBar>
+    </AuthorizeView>
 
-        <div class="reset-area">
-            <div class="filterbuttonarea">
-                <p>Type: </p>
-                <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
-                <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
+    <ThreeColumnLayout>
+        <OneWidth>
+            <Title Text="Filteropties" />
+            <div style="display: flex; justify-content: space-between;">
+                <Button Text="Reset" OnClick="() => ResetFilter()" />
+                <Button Text="Filteren" OnClick="@HandleFilter" />
             </div>
-        </div>
-    </div>
-    <div class="two-thirds">
-        <Title Text="Alle klanten" />
-        @if (customers.Any())
-        {
-            
-            <div class="two-columns-container">
-                <div>
-                    @foreach (var customer in customers.Take(10))
-                    {
-                        <EntityCard Value="@customer.Name" Active="@true" Href=@string.Concat("customer/", customer.Id)></EntityCard>
-                    }
-                </div>
-                <div>
-                    @foreach (var customer in customers.Skip(10).Take(10))
-                    {
-                        <EntityCard Value="@customer.Name" Active="@true" Href=@string.Concat("customer/", customer.Id)></EntityCard>
-                    }
-                </div>
-            </div>
-        }
-        else
-        {
-            <NoResultsMsg Message="Oei, er zijn geen klanten met de gegeven zoekcriteria." />
-        }
-    
-    <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-    </div>
-</div>
 
+            <Searchbar PlaceHolder="Geef een zoekterm in" @bind-Searchterm="@SearchValue" />
+
+            <FilterResetContainer>
+                <ButtonGroup>
+                    <Label Text="Type" />
+                    <Button Text="Intern" OnClick="@FilterIntern" Toggle=@toggleIntern />
+                    <Button Text="Extern" OnClick="@FilterExtern" Toggle=@toggleExtern />
+                </ButtonGroup>
+            </FilterResetContainer>
+        </OneWidth>
+        <TwoWidth>
+            <Title Text="Alle klanten" />
+            @if (customers.Any())
+            {
+                <WithTwoColumns>
+                    <div>
+                        @foreach (var customer in customers.Take(10))
+                        {
+                            <Card 
+                                Value="@customer.Name"
+                                Href="@customer.GetDetailUrl()" />
+                        }
+                    </div>
+                    <div>
+                        @foreach (var customer in customers.Skip(10).Take(10))
+                        {
+                            <Card 
+                                Value="@customer.Name"
+                                Href="@customer.GetDetailUrl()" />
+                        }
+                    </div>
+                </WithTwoColumns>
+                <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+            }
+            else
+            {
+                <NoResultsMessage Message="Er zijn geen klanten die overeenstemmen met opgegeven zoekcriteria" />
+            }
+        </TwoWidth>
+    </ThreeColumnLayout>
+}
 

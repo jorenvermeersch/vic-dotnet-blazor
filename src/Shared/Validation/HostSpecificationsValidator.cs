@@ -8,9 +8,9 @@ public class HostSpecificationsValidator : AbstractValidator<HostSpecificationsD
     public HostSpecificationsValidator()
     {
         RuleFor(x=>x.Storage)
-            .GreaterThan(10).WithMessage(FormMessages.GREATERTHAN(10));
+            .GreaterThan(10).WithMessage(ValidationMessages.GREATER_THAN(10));
         RuleFor(x => x.Memory)
-            .GreaterThan(10).WithMessage(FormMessages.GREATERTHAN(10));
-        RuleFor(x => x.Processors).NotNull().WithMessage(FormMessages.NOTEMPTY("Aantal"));
+            .GreaterThan(10).WithMessage(ValidationMessages.GREATER_THAN(10));
+        RuleFor(x => x.Processors).NotNull().WithMessage(ValidationMessages.NotEmpty("Aantal"));
     }
 }

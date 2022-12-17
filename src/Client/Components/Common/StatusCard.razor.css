@@ -1,0 +1,26 @@
+﻿.status-card {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: var(--card-height);
+    box-sizing: border-box;
+    text-decoration: none;
+    border-bottom: var(--border-size-md) solid transparent;
+}
+
+.indicator {
+    background-color: var(--dark-gray);
+    width: var(--indicator-radius);
+    height: var(--indicator-radius);
+    border-radius: 50%; 
+    margin-left: auto; 
+}
+
+.indicator.active {
+    background-color: var(--blue); 
+}
+
+.status-card:hover {
+    font-weight: 600; 
+    border-bottom: var(--border-size-md) solid var(--blue); 
+}

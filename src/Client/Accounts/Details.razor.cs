@@ -1,56 +1,69 @@
 
+using Client.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.Accounts;
-using Shared.VirtualMachines;
 
 namespace Client.Accounts;
 
 public partial class Details
 {
-    //MODEL
     private AccountDto.Detail? account;
 
-    [Inject] public IAccountService? AccountService { get; set; }
-    [Inject] public NavigationManager? Navigation { get; set; }
-    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource>? localizer { get; set; }
-
-
+    [Inject] public IAccountService AccountService { get; set; } = default!;
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> Localizer { get; set; } = default!;
 
     [Parameter] public long Id { get; set; }
 
-    private IEnumerable<VirtualMachineDto.Index>? virtualMachines;
-    int offset, totalVirtualMachines, totalPages = 0;
-    int selectedPage = 1;
-    private Dictionary<string, string>? _username = new();
-    private Dictionary<string, string>? _general = new();
-    private Dictionary<string, string>? _contactInformation = new();
+    private Dictionary<string, Dictionary<string, string>> datacards = new();
+    private string USERNAME_KEY = "USERNAME";
+    private string GENERAL_INFORMATION_KEY = "GENERAL_INFORMATION";
+    private string CONTACT_INFORMATION_KEY = "CONTACT_INFORMATION";
 
     protected override async Task OnInitializedAsync()
     {
-        AccountResponse.GetDetail response = await AccountService.GetDetailAsync(new AccountRequest.GetDetail() { AccountId = Id }) ?? new AccountResponse.GetDetail();
+        AccountResponse.GetDetail response = await AccountService.GetDetailAsync(
+            new AccountRequest.GetDetail()
+            {
+                AccountId = Id
+            }
+        );
         account = response.Account;
-        _general?.Add("Role", localizer![account!.Role.ToString()]);
-        _username?.Add("Naam", string.Concat(account!.Firstname, " ", account!.Lastname));
-        _general?.Add("Departement", account!.Department);
-        _general?.Add("Opleiding", account!.Education);
-        _contactInformation?.Add("E-mailadres", account!.Email);
-        //VirtualMachineResponse.GetIndex vmresponse = await virtualMachineService.GetVirtualMachinesByAccountId(new VirtualMachineRequest.GetByObjectId{ObjectId = account.Id});
-        //virtualMachines = vmresponse.VirtualMachines;
-        //totalVirtualMachines = vmresponse.TotalAmount;
-        //totalPages = (totalVirtualMachines / 10) + 1;
+
+        datacards = new()
+        {
+             {
+                USERNAME_KEY,
+                new()
+                {
+                    { "Naam", account!.GetFullName() },
+                }
+            },
+            {
+                GENERAL_INFORMATION_KEY,
+                new()
+                {
+                    { "Rol", Localizer[account!.Role.ToString()] },
+                    { "Departement", account!.Department },
+                    { "Opleiding", account!.Education.FormatIfEmpty() },
+                }
+            },
+            {
+                CONTACT_INFORMATION_KEY,
+                new()
+                {
+                    { "E-mailadres", account!.Email },
+                }
+            }
+        };
+
+        // TODO: Fetch virtual machines of admin. 
+
     }
 
     private void NavigateBack()
     {
         Navigation!.NavigateTo("account/list");
-    }
-
-    private async Task ClickHandler(int pageNr)
-    {
-        return;
-        //offset = (pageNr - 1) * 10;
-        //virtualMachines = await virtualMachineService.GetVirtualMachinesByAccountId(account.Id, offset);
-        //selectedPage = pageNr;
     }
 }

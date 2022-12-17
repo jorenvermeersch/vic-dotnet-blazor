@@ -1,0 +1,26 @@
+﻿<div class="graph-container">
+    <div class="graph-title">@Title <span class="unit">(@Unit)</span></div>
+    <div class="graph">
+        @foreach (int value in Data)
+        {
+             int whitespace = UpperBound - value; 
+            
+            <div class="column">
+                <div style="flex-grow: @whitespace;" class="white-space"></div>
+                
+                @if (value != 0)
+                {
+                    <div style="flex-grow: @value;" class="value">@value</div>
+                }
+                
+            </div>
+        }
+    </div>    
+    <div class="label-container">
+        <div class="start">@StartLabel</div>
+        <div class="end">@EndLabel</div>
+    </div>
+
+</div>
+
+

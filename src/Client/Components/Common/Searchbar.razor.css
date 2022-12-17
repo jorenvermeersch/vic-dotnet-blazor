@@ -1,0 +1,33 @@
+﻿﻿.search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--card-height); 
+}
+
+
+.search-container .input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-family: Graphik, sans-serif;
+    padding-left: var(--padding-md); 
+}
+
+.input-container .input::placeholder {
+    color: var(--dark-gray); 
+}
+.search-container i {
+    color: var(--blue);
+}
+
+.validation-error {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3c6999;
+}
+
+.validation-error i {
+    color: #508bcb;
+}

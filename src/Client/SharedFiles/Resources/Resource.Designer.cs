@@ -61,6 +61,15 @@ namespace Client.SharedFiles.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actief.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrator.
         /// </summary>
         public static string Admin {
@@ -97,7 +106,7 @@ namespace Client.SharedFiles.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In gebruik.
+        ///   Looks up a localized string similar to Actief.
         /// </summary>
         public static string Deployed {
             get {
@@ -142,7 +151,16 @@ namespace Client.SharedFiles.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In verwerking.
+        ///   Looks up a localized string similar to Niet actief.
+        /// </summary>
+        public static string Inactive {
+            get {
+                return ResourceManager.GetString("Inactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In behandeling.
         /// </summary>
         public static string InProgress {
             get {
@@ -223,7 +241,7 @@ namespace Client.SharedFiles.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In aanvraag.
+        ///   Looks up a localized string similar to Aangevraagd.
         /// </summary>
         public static string Requested {
             get {

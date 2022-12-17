@@ -1,6 +1,4 @@
-﻿using Domain.Customers;
-
-namespace Shared.Customers;
+﻿namespace Shared.Customers;
 
 public class CustomerResponse
 {

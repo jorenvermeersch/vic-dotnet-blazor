@@ -9,7 +9,7 @@ public class HostValidator : AbstractValidator<HostDto.Mutate>
     public HostValidator()
     {
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage(string.Format(FormMessages.NOTEMPTY("Naam")))
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Naam")))
             .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
         RuleFor(x => x.Specifications).SetValidator(new HostSpecificationsValidator());
 
