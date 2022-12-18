@@ -5,16 +5,18 @@ namespace Shared.Validation;
 
 public class CredentialsValidator : AbstractValidator<CredentialsDto>
 {
-    private readonly int _nameLength = 2;
+    private readonly int minUsernameLength = 2;
     public CredentialsValidator()
     {
         RuleFor(x => x.Username)
-            .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Username")))
-            .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Gebruikersnaam")))
+            .MinimumLength(minUsernameLength).WithMessage(ValidationMessages.MinimumLength("Gebruikersnaam", minUsernameLength));
+
         RuleFor(x => x.PasswordHash)
-            .Matches(ValidationRegex.Password).WithMessage(string.Format(ValidationMessages.InvalidPassword))
-            .NotEmpty().WithMessage("Geef een waarde in");
+            .Matches(ValidationRegex.Password).WithMessage(ValidationMessages.InvalidPassword)
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Wachtwoord"));
+
         RuleFor(x => x.Role)
-           .NotEmpty().WithMessage("Geef een waarde in");
+           .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Rol"));
     }
 }

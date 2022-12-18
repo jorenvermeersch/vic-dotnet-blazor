@@ -1,3 +1,4 @@
+using Client.SharedFiles.Resources;
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -18,7 +19,7 @@ public partial class Create
     [Inject] public IAccountService AccountService { get; set; } = default!;
     [Inject] public IPortService PortService { get; set; } = default!;
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
-    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> localizer { get; set; } = default!;
+    [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = default!;
     [Inject] public NavigationManager? Navigation { get; set; }
 
     private EditForm? Editform { get; set; } = new();
@@ -54,17 +55,17 @@ public partial class Create
         {{"Gebruikernaam", "admin"}, {"Rol", "User"}});
         for (int i = 0; i < Statuses.Count; i++)
         {
-            Statuses[i] = localizer[Statuses[i]];
+            Statuses[i] = Localizer[Statuses[i]];
         }
 
         for (int i = 0; i < Backups.Count; i++)
         {
-            Backups[i] = localizer[Backups[i]];
+            Backups[i] = Localizer[Backups[i]];
         }
 
         for (int i = 0; i < Templates.Count; i++)
         {
-            Templates[i] = localizer[Templates[i]];
+            Templates[i] = Localizer[Templates[i]];
         }
         //editContext = new(selectedAvailability);
     }
@@ -92,7 +93,7 @@ public partial class Create
     //STATUS
     private Dictionary<string, string> MakeStatusItems()
     {
-        return Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
     private void SetStatusValue(string value)
@@ -114,7 +115,7 @@ public partial class Create
     //TEMPLATE
     private Dictionary<string, string> MakeTemplateItems()
     {
-        return Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
     private void SetTemplateValue(string value)
@@ -125,7 +126,7 @@ public partial class Create
     //BACKUPFREQUENCY
     private Dictionary<string, string> MakeBackUpFrequencyItems()
     {
-        return Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => localizer[x.ToString()].ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
     private void SetBackUpFrequencyValue(string value)
@@ -136,7 +137,7 @@ public partial class Create
     //AVAILABILITIES
     private Dictionary<string, string> MakeAvailibilityItems()
     {
-        return Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => localizer![x.ToString()].ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => Localizer![x.ToString()].ToString(), x => x.ToString());
     }
 
     private HashSet<Availability> chosenAvailabilities = new();

@@ -60,7 +60,7 @@ public static class VirtualMachineDto
         public BackupFrequency BackupFrequency { get; set; } = default!;
         public List<CredentialsDto> Credentials { get; set; } = default!;
         public List<int> Ports { get; set; } = default!;
-        public List<Availability> Availabilities = default!;
+        public List<Availability> Availabilities { get; set; } = default!;
         public bool hasVpnConnection { get; set; }
     }
 }

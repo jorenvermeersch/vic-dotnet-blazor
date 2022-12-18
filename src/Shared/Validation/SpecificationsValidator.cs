@@ -6,23 +6,24 @@ namespace Shared.Validation;
 [Obsolete]
 public class SpecificationsValidator : AbstractValidator<SpecificationsDto>
 {
-    private readonly int _minProcessorCount = 0;
-    private readonly int _minMemoryCount = 0;
-    private readonly int _minStorageCount = 0;
+    private readonly int minProcessorCount = 1;
+    private readonly int minMemory = 1;
+    private readonly int minStorage = 1;
 
     public SpecificationsValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.VirtualProcessors)
-            .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("vCPU"))
-            .GreaterThan(_minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Processoren", _minProcessorCount));
+            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Processoren", minProcessorCount));
+
         RuleFor(x => x.Memory)
-            .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Geheugen"))
-            .GreaterThan(_minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Geheugen", _minMemoryCount));
+            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Geheugen", minMemory));
+
         RuleFor(x => x.Storage)
-            .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Opslag"))
-            .GreaterThan(_minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Opslag", _minStorageCount));
+            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Opslag", minStorage));
     }
 }
