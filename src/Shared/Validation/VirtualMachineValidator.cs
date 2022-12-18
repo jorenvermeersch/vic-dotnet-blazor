@@ -26,56 +26,47 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .MinimumLength(minFqdnLength).WithMessage(ValidationMessages.MinimumLength("FQDN", minFqdnLength));
 
         RuleFor(x => x.Mode)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Mode"));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Mode"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Mode", true));
 
         RuleFor(x => x.Template)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Template"));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Template"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Template", true));
 
         RuleFor(x => x.Reason)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Reden"))
             .MinimumLength(minReasonLength).WithMessage(ValidationMessages.MinimumLength("Reden", minReasonLength));
 
         RuleFor(x => x.Status)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Status"));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Status"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Status", true));
 
-        //RuleFor(x => x.hostId)
-        //    .Cascade(CascadeMode.StopOnFirstFailure)
-        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Host"));
 
         RuleFor(x => x.ApplicationDate)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Datum van aanvraag"));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Aangevraagd op"));
 
         RuleFor(x => x.StartDate)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Startdatum"))
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Start"))
             .LessThan(x => x.EndDate).WithMessage(ValidationMessages.SMALLER_THAN_END_DATE());
 
         RuleFor(x => x.EndDate)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Einddatum"))
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Eind"))
             .GreaterThan(x => x.StartDate).WithMessage(ValidationMessages.GREATER_THAN_DATE());
 
         RuleFor(x => x.BackupFrequency)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Regelmaat"));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Regelmaat"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Regelmaat", true));
 
-        // TODO: Not objects, but Id of request, user and account are given!
         RuleFor(x => x.RequesterId)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Aanvrager"));
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Aanvrager"));
 
         RuleFor(x => x.UserId)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Gebruiker"));
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Gebruiker"));
 
         RuleFor(x => x.AdministratorId)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Verantwoordelijke"));
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Beheerder"));
 
         RuleFor(x => x.HostId)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Host"));
-
-        //RuleFor(x => x.UserId)
-        //    .Cascade(CascadeMode.StopOnFirstFailure)
-        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
-        //RuleFor(x => x.AdministratorId)
-        //    .Cascade(CascadeMode.StopOnFirstFailure)
-        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
-        //RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Host"));
     }
 }

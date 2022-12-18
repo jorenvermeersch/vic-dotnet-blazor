@@ -26,10 +26,8 @@ public partial class Create
     private VirtualMachineDto.Mutate VirtualMachine { get; set; } = new();
     private PortDto Port { get; set; } = new();
 
-    private SpecificationsDto? Specifications;
-    // Credentials
     private List<CredentialsDto> credentialsList = new();
-    private CredentialsDto? newCredential = new();
+    private CredentialsDto NewCredentials = new();
     //private string selectedAvailability;
     private string _customcss = "background-color: white";
 
@@ -49,7 +47,6 @@ public partial class Create
 
     protected override void OnInitialized()
     {
-        Specifications = VirtualMachine.Specifications;
         _entries.Add(0, new()
         {{"Gebruikernaam", "admin"}, {"Rol", "Admin"}});
         _entries.Add(1, new()
@@ -141,14 +138,14 @@ public partial class Create
         return Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => Localizer![x.ToString()].ToString(), x => x.ToString());
     }
 
-    private HashSet<Availability> chosenAvailabilities = new();
+    private HashSet<Availability> chosenDays = new();
     private void AddDay(string value)
     {
-        chosenAvailabilities.Add((Availability)Enum.Parse(typeof(Availability), value, true));
+        chosenDays.Add((Availability)Enum.Parse(typeof(Availability), value, true));
     }
     private void RemoveDay(Availability value)
     {
-        chosenAvailabilities.Remove(value);
+        chosenDays.Remove(value);
     }
 
     //PORT
@@ -217,13 +214,13 @@ public partial class Create
 
     private void AddCredential()
     {
-        credentialsList.Add(newCredential!);
-        newCredential = new();
+        credentialsList.Add(NewCredentials);
+        NewCredentials = new();
     }
 
     private void RemoveCredentials(CredentialsDto credentials)
     {
-
+        credentialsList.Remove(credentials);
     }
 
     private async void HandleValidSubmit()
@@ -231,7 +228,7 @@ public partial class Create
 
         VirtualMachine.Credentials = credentialsList;
         VirtualMachine.Ports = selectedPorts.Select(x => x.Number).ToList();
-        VirtualMachine.Availabilities = chosenAvailabilities.ToList();
+        VirtualMachine.Availabilities = chosenDays.ToList();
 
         VirtualMachineResponse.Create response = await VirtualMachineService.CreateAsync(new VirtualMachineRequest.Create
         {

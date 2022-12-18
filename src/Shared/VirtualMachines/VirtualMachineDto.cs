@@ -24,7 +24,7 @@ public static class VirtualMachineDto
         public Template Template { get; set; }
         [DefaultValue(Mode.IAAS)]
         public Mode Mode { get; set; }
-        public List<string> Availabilities { get; set; } = new List<string>();
+        public List<string> Availabilities { get; set; } = new();
         [DefaultValue(BackupFrequency.Weekly)]
         public BackupFrequency BackupFrequenty { get; set; }
         public DateTime ApplicationDate { get; set; } = DateTime.Now;

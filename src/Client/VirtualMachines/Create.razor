@@ -139,10 +139,10 @@ else
                       Options="@MakeAvailibilityItems()"
                       OnChange="@AddDay" />
 
-                @if (chosenAvailabilities.Any())
+                @if (chosenDays.Any())
                 {
                     <ButtonGroup>
-                        @foreach (var day in chosenAvailabilities)
+                        @foreach (var day in chosenDays)
                         {
                             <PortButton Text="@Localizer[day.ToString()]" OnClick="@(() => RemoveDay(day))" />
                         }
@@ -154,7 +154,7 @@ else
                 }
 
                 <Title Text="Back-ups" />
-                <DropDown Label="Status"
+                <DropDown Label="Regelmaat"
                       Required="@true"
                       Options="@MakeBackUpFrequencyItems()"
                       OnChange="@SetBackUpFrequency">
@@ -187,26 +187,26 @@ else
                 </DropDown>
 
                 <Title Text="Logingegevens" />
-                <EditForm Context="CredentialContext" OnValidSubmit="@AddCredential" Model="@newCredential">
+                <EditForm Context="CredentialContext" OnValidSubmit="@AddCredential" Model="@NewCredentials">
                     <FluentValidationValidator />
                     <OneWidth>
                         <LabelInput Label="Gebruikersnaam"
                                 Required="@true"
-                                @bind-Value="newCredential.Username"
-                                For="@(() => newCredential.Username)"
+                                @bind-Value="NewCredentials.Username"
+                                For="@(() => NewCredentials.Username)"
                                 TestValue="Joren" />
 
                         <LabelInput Label="Rol"
                                 Required="@true"
-                                @bind-Value="newCredential.Role"
-                                For="@(() => newCredential.Role)"
+                                @bind-Value="NewCredentials.Role"
+                                For="@(() => NewCredentials.Role)"
                                 TestValue="Gebruiker" />
 
                         <LabelInput Label="Wachtwoord"
                                 Required="@true"
                                 InputType="password"
-                                @bind-Value="newCredential.PasswordHash"
-                                For="@(() => newCredential.PasswordHash)"
+                                @bind-Value="NewCredentials.PasswordHash"
+                                For="@(() => NewCredentials.PasswordHash)"
                                 TestValue="JoR3n!-53" />
                         <ButtonGroup>
                             <span class="outline-end">
