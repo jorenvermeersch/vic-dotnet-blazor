@@ -78,7 +78,7 @@ public partial class Details
                 PORTS_KEY,
                 new()
                 {
-                    { "Externe Toegang", string.Join(", ", machine.Ports.Select(port => port.Service)) },
+                    { "Externe toegang", string.Join(", ", machine.Ports.Select(port => port.Service)) },
                     { "VPN", machine.hasVpnConnection ? "Ja" : "Neen" },
                 }
             },
@@ -124,6 +124,11 @@ public partial class Details
             },
 
         };
+
+        // TODO: Ports do not get fetched properly. GetDetail. 
+        // TODO: VirtualProcessors always have value 0 after creating manually. 
+
+        Console.WriteLine($"processsors: {machine.Specification.VirtualProcessors}");
 
         foreach (var credential in machine.Credentials)
         {
