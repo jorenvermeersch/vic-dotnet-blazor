@@ -1,4 +1,8 @@
-﻿<div>
+﻿@{
+    var textAlignment = (ChosenOption != closeMenuText && ChosenOption != placeholder) ? "left-align" : "";
+}
+
+<div>
     <div class="input-container">
         <label for="">
             <text>@Label:</text>
@@ -8,7 +12,7 @@
             }
         </label>
         <div class="dropdown">
-            <button type="button" class="drop-down-button" @onclick="ToggleDropDown">@ChosenOption</button>
+            <button type="button" class="drop-down-button @textAlignment" @onclick="ToggleDropDown">@ChosenOption</button>
             <div class="drop-down-items" style=@style>
                 <input placeholder="Zoeken..." @oninput="ShowSearchResults" />
                 @foreach (var item in filteredOptions)

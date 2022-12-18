@@ -45,10 +45,10 @@ public static class VirtualMachineDto
     {
         public string Fqdn { get; set; } = default!;
         public string Name { get; set; } = default!;
-        public Mode Mode { get; set; } = default!;
-        public Template Template { get; set; } = default!;
+        public Mode? Mode { get; set; }
+        public Template? Template { get; set; }
         public string Reason { get; set; } = default!;
-        public Status Status { get; set; } = default!;
+        public Status? Status { get; set; }
         public long HostId { get; set; } = default!;
         public SpecificationsDto Specifications { get; set; } = new();
         public long RequesterId { get; set; }
@@ -57,7 +57,7 @@ public static class VirtualMachineDto
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
-        public BackupFrequency BackupFrequency { get; set; } = default!;
+        public BackupFrequency? BackupFrequency { get; set; }
         public List<CredentialsDto> Credentials { get; set; } = default!;
         public List<int> Ports { get; set; } = default!;
         public List<Availability> Availabilities { get; set; } = default!;

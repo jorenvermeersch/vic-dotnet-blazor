@@ -26,11 +26,11 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .MinimumLength(minFqdnLength).WithMessage(ValidationMessages.MinimumLength("FQDN", minFqdnLength));
 
         RuleFor(x => x.Mode)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Mode"))
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Mode"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Mode", true));
 
         RuleFor(x => x.Template)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Template"))
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Template"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Template", true));
 
         RuleFor(x => x.Reason)
@@ -38,7 +38,7 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .MinimumLength(minReasonLength).WithMessage(ValidationMessages.MinimumLength("Reden", minReasonLength));
 
         RuleFor(x => x.Status)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Status"))
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Status"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Status", true));
 
 
@@ -54,7 +54,7 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .GreaterThan(x => x.StartDate).WithMessage(ValidationMessages.GREATER_THAN_DATE());
 
         RuleFor(x => x.BackupFrequency)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Regelmaat"))
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Regelmaat"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Regelmaat", true));
 
         RuleFor(x => x.RequesterId)

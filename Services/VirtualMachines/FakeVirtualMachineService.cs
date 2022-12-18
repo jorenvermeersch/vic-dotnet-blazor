@@ -45,16 +45,16 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
         var args = new VirtualMachineArgs
         {
-            Template = model.Template,
-            Mode = model.Mode,
+            Template = model.Template!.Value,
+            Mode = model.Mode!.Value,
             Fqdn = model.Fqdn,
             Availabilities = model.Availabilities,
-            BackupFrequency = model.BackupFrequency,
+            BackupFrequency = model.BackupFrequency!.Value,
             ApplicationDate = model.ApplicationDate,
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
-            Status = model.Status,
+            Status = model.Status!.Value,
             Reason = model.Reason,
-            Ports = /*model.Ports.Select(x => new Port(x, x.ToString())).ToList()*/new List<Port>(),
+            Ports = new List<Port>(),
             Host = host,
             Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
             Account = account,
@@ -219,5 +219,5 @@ public class FakeVirtualMachineService : IVirtualMachineService
         throw new NotImplementedException();
     }
 
-    
+
 }

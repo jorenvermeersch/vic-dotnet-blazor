@@ -51,9 +51,14 @@
     
 }
 
-.drop-down-button:hover{
-    background-color: var(--dark-blue); 
-    color: var(--white); 
+.drop-down-button.left-align {
+    justify-content: start; 
+    padding-inline-start: var(--card-padding); 
+}
+
+.drop-down-button:hover {
+    background-color: var(--dark-blue);
+    color: var(--white);
 }
 
 .drop-down-items .drop-down-button-item:last-child {

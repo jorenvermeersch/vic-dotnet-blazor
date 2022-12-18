@@ -7,6 +7,9 @@ public partial class DropDown
 {
     private Dictionary<string, string> filteredOptions = new();
 
+    private string placeholder = "Kies...";
+    private string closeMenuText = "Menu sluiten";
+
     private string chosenOption = "Kies...";
     private bool shown = false;
     private string style = "display: none";
@@ -28,7 +31,7 @@ public partial class DropDown
 
     public string ChosenOption
     {
-        get => shown ? "Menu sluiten" : chosenOption;
+        get => shown ? closeMenuText : chosenOption;
         set => chosenOption = value;
     }
 
