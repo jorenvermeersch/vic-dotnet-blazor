@@ -19,19 +19,17 @@
     <ThreeColumnLayout>
         <OneWidth>
             <Title Text="Algemene informatie" />
-@*            <LabelSelect Label="Soort"
-                         Required="@true"
-                         Options="@customerTypes"
-                         @bind-Value="@Customer.CustomerType"
-                         For="@(() => Customer.CustomerType)" />   *@ 
+            <DropDown Label="Soort"
+                      Options="translatedCustomerTypes"
+                      OnChange="SetCustomerType" />
+            <ValidationMessage For="@(() => Customer.CustomerType)" />
 
             @if (Customer.IsInternal())
             {
-@*                <LabelSelect Label="Instituut"
-                         Required="@true"
-                         Options="@institutions"
-                         @bind-Value="@Customer.Institution"
-                         For="@(() => Customer.Institution)" />*@
+                <DropDown Label="Instituut"
+                      Options="translatedInstitutions"
+                      OnChange="SetInstitution" />
+                <ValidationMessage For="@(() => Customer.Institution)" />
 
                 <LabelInput Label="Departement"
                         Required="@true"
