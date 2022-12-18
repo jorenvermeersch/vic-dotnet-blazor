@@ -5,7 +5,7 @@
 
 <PageTitle>Virtuele machine toevoegen</PageTitle>
 
-@if (FetchingResources)
+@if (FetchingResources())
 {
     <Loading />
 }
@@ -39,14 +39,14 @@ else
 
                 <DropDown Label="Mode"
                       Required="@true"
-                      Options="@MakeModeItems()"
+                      Options="@CreateModeOptions()"
                       OnChange="@SetMode">
                     <ValidationMessage For=@(() => VirtualMachine.Mode) />
                 </DropDown>
 
                 <DropDown Label="Template"
                       Required="@true"
-                      Options="@MakeTemplateItems()"
+                      Options="@CreateTemplateOptions()"
                       OnChange="@SetTemplate">
                     <ValidationMessage For=@(() => VirtualMachine.Template) />
                 </DropDown>
@@ -59,22 +59,22 @@ else
 
                 <DropDown Label="Status"
                       Required="@true"
-                      Options="@MakeStatusItems()"
+                      Options="@CreateStatusOptions()"
                       OnChange="@SetStatus">
                     <ValidationMessage For=@(() => VirtualMachine.Status) />
                 </DropDown>
                 
                 <Title Text="Poorten" />
                 <DropDown Label="Poort"
-                      Options="@MakePortItems()"
-                      OnChange="@SetPortValue" />
+                      Options="@CreatePortOptions()"
+                      OnChange="@AddPort" />
                         
-                @if (selectedPorts is not null && selectedPorts.Any())
+                @if (VirtualMachine.Ports is not null && VirtualMachine.Ports.Any())
                 {
                     <ButtonGroup>
-                        @foreach (var port in selectedPorts)
+                        @foreach (var port in chosenPorts)
                         {
-                            <PortButton Text="@port.Service" OnClick="@(() => UnSelectPort(port))" />
+                            <PortButton Text="@port.Service" OnClick="@(() => RemovePort(port))" />
                         }
                     </ButtonGroup>
                 }
@@ -137,13 +137,13 @@ else
 
                 <DropDown Label="Beschikbaarheid"
                       Required="@true"
-                      Options="@MakeAvailibilityItems()"
+                      Options="@CreateDayOptions()"
                       OnChange="@AddDay" />
 
-                @if (chosenDays.Any())
+                @if (VirtualMachine.Availabilities is not null && VirtualMachine.Availabilities.Any())
                 {
                     <ButtonGroup>
-                        @foreach (var day in chosenDays)
+                        @foreach (var day in VirtualMachine.Availabilities)
                         {
                             <PortButton Text="@Localizer[day.ToString()]" OnClick="@(() => RemoveDay(day))" />
                         }

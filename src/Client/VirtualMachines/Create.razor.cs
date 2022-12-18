@@ -26,10 +26,11 @@ public partial class Create
     private VirtualMachineDto.Mutate VirtualMachine { get; set; } = new();
     private PortDto Port { get; set; } = new();
 
+
     private List<CredentialsDto> credentialsList = new();
+    public HashSet<PortDto> chosenPorts = new();
     private CredentialsDto NewCredentials = new();
-    //private string selectedAvailability;
-    private string _customcss = "background-color: white";
+
 
 
     public List<string> Backups { get; set; } = Enum.GetNames(typeof(BackupFrequency)).ToList();
@@ -41,7 +42,7 @@ public partial class Create
     private List<AccountDto.Index>? Accounts { get; set; }
     public List<PortDto>? Ports { get; set; } = new();
 
-    public HashSet<PortDto> selectedPorts = new();
+
 
     private Dictionary<int, Dictionary<string, string>> _entries = new();
 
@@ -86,87 +87,113 @@ public partial class Create
         Ports = portRequest.Ports!;
     }
 
-    private bool FetchingResources => false;
-
-    //STATUS
-    private Dictionary<string, string> MakeStatusItems()
+    private bool FetchingResources()
     {
-        return Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
+        return (Hosts is null) || (Customers is null) || (Accounts is null) || (Ports is null);
+    }
+
+
+    #region Dropdown Status
+    private Dictionary<string, string> CreateStatusOptions()
+    {
+        return Enum.GetValues(typeof(Status))
+            .Cast<Status>()
+            .ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
     private void SetStatus(string statusString)
     {
-        VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), statusString);
+        bool success = Enum.TryParse(statusString, out Status status);
+        if (success) VirtualMachine.Status = status;
     }
-
-    //MODE
-    private Dictionary<string, string> MakeModeItems()
+    #endregion
+    #region Dropdown Mode
+    private Dictionary<string, string> CreateModeOptions()
     {
-        return Enum.GetValues(typeof(Mode)).Cast<Mode>().ToDictionary(x => x.ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(Mode))
+            .Cast<Mode>()
+            .ToDictionary(x => x.ToString(), x => x.ToString());
     }
 
     private void SetMode(string modeString)
     {
-        VirtualMachine.Mode = (Mode)Enum.Parse(typeof(Mode), modeString);
+        bool success = Enum.TryParse(modeString, out Mode mode);
+        if (success) VirtualMachine.Mode = mode;
     }
-
-    //TEMPLATE
-    private Dictionary<string, string> MakeTemplateItems()
+    #endregion
+    #region DropDown Template
+    private Dictionary<string, string> CreateTemplateOptions()
     {
-        return Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(Template))
+            .Cast<Template>()
+            .ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
     private void SetTemplate(string templateString)
     {
-        VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), templateString);
+        bool success = Enum.TryParse(templateString, out Template template);
+        if (success) VirtualMachine.Template = template;
     }
-
-    //BACKUPFREQUENCY
+    #endregion
+    #region DropDown BackupFrequency
     private Dictionary<string, string> MakeBackUpFrequencyItems()
     {
-        return Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
+        return Enum.GetValues(typeof(BackupFrequency))
+            .Cast<BackupFrequency>()
+            .ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
     private void SetBackUpFrequency(string backupFrequencyString)
     {
-        VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), backupFrequencyString);
+        bool success = Enum.TryParse(backupFrequencyString, out BackupFrequency backupFrequency);
+        if (success) VirtualMachine.BackupFrequency = backupFrequency;
+    }
+    #endregion
+    #region DropDown Availability
+    private Dictionary<string, string> CreateDayOptions()
+    {
+        return Enum.GetValues(typeof(Availability))
+            .Cast<Availability>()
+            .ToDictionary(x => Localizer![x.ToString()].ToString(), x => x.ToString());
     }
 
-    //AVAILABILITIES
-    private Dictionary<string, string> MakeAvailibilityItems()
+    private void AddDay(string dayString)
     {
-        return Enum.GetValues(typeof(Availability)).Cast<Availability>().ToDictionary(x => Localizer![x.ToString()].ToString(), x => x.ToString());
+        bool success = Enum.TryParse(dayString, out Availability day);
+        if (success)
+        {
+            VirtualMachine.Availabilities.Add(day);
+        }
     }
 
-    private HashSet<Availability> chosenDays = new();
-    private void AddDay(string value)
-    {
-        chosenDays.Add((Availability)Enum.Parse(typeof(Availability), value, true));
-    }
     private void RemoveDay(Availability value)
     {
-        chosenDays.Remove(value);
+        VirtualMachine.Availabilities.Remove(value);
+    }
+    #endregion
+    #region DropDown Ports
+    private Dictionary<string, string> CreatePortOptions()
+    {
+        return Ports!.ToDictionary(port => $"{port.Service} ({port.Number})", port => port.Number.ToString());
     }
 
-    //PORT
-    private Dictionary<string, string> MakePortItems()
+    private void AddPort(string portNumberString)
     {
-        return Ports.ToDictionary(x => x.Service.ToString(), x => JsonConvert.SerializeObject(x));
-    }
+        bool success = int.TryParse(portNumberString, out int portNumber);
 
-    private void SetPortValue(string value)
-    {
-        var port = JsonConvert.DeserializeObject<PortDto>(value)!;
-        if (!selectedPorts.Where(x => x.Service == port.Service).Any())
+        if (success && !VirtualMachine.Ports.Where(p => p == portNumber).Any())
         {
-            selectedPorts.Add(port);
-        }
+            VirtualMachine.Ports.Add(portNumber);
+            chosenPorts.Add(Ports!.Where(port => port.Number == portNumber).SingleOrDefault()!);
 
+        }
     }
-    public void UnSelectPort(PortDto port)
+    public void RemovePort(PortDto port)
     {
-        selectedPorts.Remove(port);
+        VirtualMachine.Ports.Remove(port.Number);
+        chosenPorts.Remove(Ports!.Where(p => p.Number == port.Number).SingleOrDefault()!);
     }
+    #endregion
 
     //HOST
     private Dictionary<string, string> MakeHostItems()
@@ -227,8 +254,7 @@ public partial class Create
     {
 
         VirtualMachine.Credentials = credentialsList;
-        VirtualMachine.Ports = selectedPorts.Select(x => x.Number).ToList();
-        VirtualMachine.Availabilities = chosenDays.ToList();
+        VirtualMachine.Ports = chosenPorts.Select(x => x.Number).ToList();
 
         VirtualMachineResponse.Create response = await VirtualMachineService.CreateAsync(new VirtualMachineRequest.Create
         {
