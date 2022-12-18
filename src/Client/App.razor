@@ -3,11 +3,11 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(SharedFiles.MainLayout)">
                  <Authorizing>
-                    <p>Determining session state, please wait...</p>
+                    @*<p>Determining session state, please wait...</p>*@
+                    <Loading />
                 </Authorizing>
                 <NotAuthorized>
-                    <h1>Sorry</h1>
-                    <p>Gelieve in te loggen om dit pagina te raadplegen.</p>
+                    @*<p>Gelieve in te loggen om dit pagina te raadplegen.</p>*@
                     <LoginRedirect />
                 </NotAuthorized>
             </AuthorizeRouteView>
@@ -17,7 +17,7 @@
         <NotFound>
             <PageTitle>Not found</PageTitle>
             <LayoutView Layout="@typeof(SharedFiles.MainLayout)">
-                <p role="alert">Sorry, dit pagina bestaat niet.</p>
+                <p role="alert">Dit pagina bestaat niet.</p>
             </LayoutView>
         </NotFound>
     </Router>

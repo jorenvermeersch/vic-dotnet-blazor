@@ -76,15 +76,6 @@ public class StartUp
             options.Audience = Configuration["Auth0:ApiIdentifier"];
         });
 
-        services.AddAuth0AuthenticationClient(config =>
-        {
-            config.Domain = Configuration["Auth0:Authority"];
-            config.ClientId = Configuration["Auth0:ClientId"];
-            config.ClientSecret = Configuration["Auth0:ClientSecret"];
-        });
-
-        services.AddAuth0ManagementClient().AddManagementAccessToken();
-
 
         services.AddRazorPages();
         services.AddScoped<FakeSeeder>();
