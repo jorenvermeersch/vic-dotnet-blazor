@@ -7,6 +7,8 @@ public class ContactPersonValidator : AbstractValidator<ContactPersonDto>
 {
     public ContactPersonValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.Firstname).NotEmpty().WithMessage(ValidationMessages.NotEmpty("Voornaam"))
             .Matches(ValidationRegex.Name).WithMessage(ValidationMessages.InvalidName("Voornaam"));
 

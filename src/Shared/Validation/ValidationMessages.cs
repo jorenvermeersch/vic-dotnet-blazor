@@ -1,4 +1,6 @@
-﻿namespace Shared.Validation;
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace Shared.Validation;
 
 public static class ValidationMessages
 {
@@ -7,14 +9,15 @@ public static class ValidationMessages
         return $"{field} is verplicht.";
     }
 
-    public static string MinimumLength(int length)
+    public static string MinimumLength(string field, int length)
     {
-        return $"Minimum lengte van {length}";
+        return $"{field} heeft een minimum lengte van {length}.";
     }
 
-    public static string GreatherThan(int number)
+    public static string GreaterThanOrEqual(string field, int number, string unit = "")
     {
-        return string.Format("De waarde voor dit veld moet groter zijn dan {0}.", number);
+        unit = !unit.IsNullOrEmpty() ? $" {unit}" : "";
+        return $"{field} moet groter of gelijk zijn aan {number}{unit}.";
     }
 
     public static string SMALLER_THAN_END_DATE()

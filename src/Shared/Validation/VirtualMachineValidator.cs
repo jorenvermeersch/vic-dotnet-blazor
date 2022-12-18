@@ -18,39 +18,48 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
         RuleFor(x => x.Name)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Naam"))
-            .MinimumLength(_nameLenght).WithMessage(ValidationMessages.MinimumLength(_nameLenght));
+            .MinimumLength(_nameLenght).WithMessage(ValidationMessages.MinimumLength("Naam", _nameLenght));
+
         RuleFor(x => x.Fqdn)
             .Cascade(CascadeMode.StopOnFirstFailure)
-            //.Matches("\"^(?!:\\\\/\\\\/)(?=.{1,255}$)((.{1,63}\\\\.){1,127}(?![0-9]*$)[a-z0-9-]+\\\\.?)$\"").WithMessage(string.Format("Dit is geen geldige FQDN."))
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("FQDN"))
-            .MinimumLength(_fqdnLenght).WithMessage(ValidationMessages.MinimumLength(_fqdnLenght));
+            .MinimumLength(_fqdnLenght).WithMessage(ValidationMessages.MinimumLength("FQDN", _fqdnLenght));
+
         RuleFor(x => x.Mode)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Mode"));
+
         RuleFor(x => x.Template)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Template"));
+
         RuleFor(x => x.Reason)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Reden"))
-            .MinimumLength(_reasonLenght).WithMessage(ValidationMessages.MinimumLength(_reasonLenght));
+            .MinimumLength(_reasonLenght).WithMessage(ValidationMessages.MinimumLength("Reden", _reasonLenght));
+
         RuleFor(x => x.Status)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Status"));
+
         //RuleFor(x => x.hostId)
         //    .Cascade(CascadeMode.StopOnFirstFailure)
         //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Host"));
+
         RuleFor(x => x.ApplicationDate)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Datum van aanvraag"));
+
         RuleFor(x => x.StartDate)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Startdatum"))
             .LessThan(x => x.EndDate).WithMessage(ValidationMessages.SMALLER_THAN_END_DATE());
+
         RuleFor(x => x.EndDate)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Einddatum"))
             .GreaterThan(x => x.StartDate).WithMessage(ValidationMessages.GREATER_THAN_DATE());
+
         RuleFor(x => x.BackupFrequency)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Regelmaat"));

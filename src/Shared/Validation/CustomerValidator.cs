@@ -9,6 +9,8 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
 {
     public CustomerValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.CustomerType)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Soort"))
             .IsEnumName(typeof(CustomerType)).WithMessage(ValidationMessages.UnknownCustomerType);
@@ -36,7 +38,7 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
             .NotEmpty().SetValidator(new ContactPersonValidator());
 
         RuleFor(x => x.BackupContactPerson)
-            .NotEmpty().SetValidator(new ContactPersonValidator()!).When(customer => AnyFieldsFilledIn(customer.BackupContactPerson));
+            .NotEmpty().SetValidator(new ContactPersonValidator()!).When(customer => AnyFieldsFilledIn(customer.BackupContactPerson!));
     }
 
     private bool CheckCustomerType(CustomerDto.Mutate customer, CustomerType type)
@@ -58,9 +60,8 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
         return CheckCustomerType(customer, CustomerType.Extern);
     }
 
-    private bool AnyFieldsFilledIn(ContactPersonDto? contactPerson)
+    private bool AnyFieldsFilledIn(ContactPersonDto contactPerson)
     {
-        if (contactPerson is null) return false;
         string?[] fields = new string?[4] { contactPerson.Firstname, contactPerson.Lastname, contactPerson.Email, contactPerson.Phonenumber };
         return fields.Any(field => !field.IsNullOrEmpty());
     }

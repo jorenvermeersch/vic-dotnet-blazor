@@ -8,6 +8,8 @@ public class AccountValidator : AbstractValidator<AccountDto.Mutate>
 {
     public AccountValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.Firstname)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Voornaam"))
             .Matches(ValidationRegex.Name).WithMessage(ValidationMessages.InvalidName("Voornaam"));
