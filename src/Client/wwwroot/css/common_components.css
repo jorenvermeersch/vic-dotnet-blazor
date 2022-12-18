@@ -168,3 +168,10 @@ select {
     margin-inline-start: auto; 
 }
 
+.form-label {
+    display: inline-block; 
+    color: var(--dark-blue); 
+    font-size: var(--text-sm); 
+    font-weight: 600; 
+    padding-bottom: var(--padding-md); 
+}

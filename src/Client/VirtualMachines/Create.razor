@@ -92,10 +92,24 @@ else
 
                 <DropDown Label="Host"
                       Required="@true"
-                      Options="@MakeHostItems()"
-                      OnChange="@SetHostValue">
+                      Options="@CreateHostOptions()"
+                      OnChange="@SetHost">
                     <ValidationMessage For=@(() => VirtualMachine.HostId) />
                 </DropDown>
+
+                @if(chosenHost is not null)
+                {
+                    Dictionary<string, string> host = new()
+                    {
+                        { "vCPUs", chosenHost.RemainingResources.VirtualProcessors.ToString() },
+                        { "Geheugen", chosenHost.RemainingResources.Memory.ToString().GbFormat() },
+                        { "Opslag", chosenHost.RemainingResources.Storage.ToString().GbFormat() },
+                    };
+                    <div>
+                        <span class="form-label">Resterende specificaties:</span>
+                        <DataCard Entries="@host" InverseStyle="@true" />
+                    </div>  
+                }
 
                 <LabelInputNumber Label="vCPUs"
                               Required="@true"

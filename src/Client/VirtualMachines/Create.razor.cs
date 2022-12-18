@@ -28,7 +28,8 @@ public partial class Create
 
 
     private List<CredentialsDto> credentialsList = new();
-    public HashSet<PortDto> chosenPorts = new();
+    private HashSet<PortDto> chosenPorts = new();
+    public HostDto.Detail? chosenHost;
     private CredentialsDto NewCredentials = new();
 
 
@@ -194,22 +195,39 @@ public partial class Create
         chosenPorts.Remove(Ports!.Where(p => p.Number == port.Number).SingleOrDefault()!);
     }
     #endregion
+    #region DropDown Host
 
-    //HOST
-    private Dictionary<string, string> MakeHostItems()
+    #endregion
+    #region MyRegion
+
+    #endregion
+    #region MyRegion
+
+    #endregion
+
+    private Dictionary<string, string> CreateHostOptions()
     {
-        return Hosts.ToDictionary(x => x.Name.ToString(), x => JsonConvert.SerializeObject(x));
+        return Hosts!.ToDictionary(host => host.Name.ToString(), host => host.Id.ToString());
     }
 
-    private void SetHostValue(string value)
+    private async Task SetHost(string hostIdString)
     {
-        VirtualMachine.HostId = JsonConvert.DeserializeObject<HostDto.Index>(value)!.Id;
+        bool success = int.TryParse(hostIdString, out int hostId);
+
+        if (success)
+        {
+            VirtualMachine.HostId = hostId;
+            var response = await HostService.GetDetailAsync(new HostRequest.GetDetail() { HostId = hostId });
+            chosenHost = response.Host;
+        }
+
+
     }
 
     //TODO - REQUESTER & USER (Key has dupplicates?)
     private Dictionary<string, string> MakeCustomerItems()
     {
-        return Customers.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
+        return Customers!.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
     }
 
     private void SetRequester(string requesterIdString)
