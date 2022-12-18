@@ -13,12 +13,12 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
 
         RuleFor(x => x.CustomerType)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Soort"))
-            .IsEnumName(typeof(CustomerType)).WithMessage(ValidationMessages.UnknownCustomerType);
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Soort", true));
 
         // Internal customer. 
         RuleFor(x => x.Institution)
            .NotEmpty().When(customer => IsInternal(customer)).WithMessage(ValidationMessages.NotEmpty("Instituut"))
-           .IsEnumName(typeof(Institution)).WithMessage(ValidationMessages.UnknownInstitution);
+           .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Instituut"));
 
         RuleFor(x => x.Department)
            .NotEmpty().When(customer => IsInternal(customer)).WithMessage(ValidationMessages.NotEmpty("Departement"));
@@ -41,23 +41,15 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
             .NotEmpty().SetValidator(new ContactPersonValidator()!).When(customer => AnyFieldsFilledIn(customer.BackupContactPerson!));
     }
 
-    private bool CheckCustomerType(CustomerDto.Mutate customer, CustomerType type)
-    {
-        if (Enum.TryParse(customer.CustomerType, out CustomerType result))
-        {
-            return result == type;
-        }
-        return false;
-    }
 
     private bool IsInternal(CustomerDto.Mutate customer)
     {
-        return CheckCustomerType(customer, CustomerType.Intern);
+        return customer.CustomerType == CustomerType.Intern;
     }
 
     private bool IsExternal(CustomerDto.Mutate customer)
     {
-        return CheckCustomerType(customer, CustomerType.Extern);
+        return customer.CustomerType == CustomerType.Extern;
     }
 
     private bool AnyFieldsFilledIn(ContactPersonDto contactPerson)

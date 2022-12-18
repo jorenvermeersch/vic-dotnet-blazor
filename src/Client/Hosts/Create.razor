@@ -46,8 +46,8 @@ else
                     <FluentValidationValidator />
                     <OneWidth>
                         <DropDown Label="Type"
-                              Items="@SerializeProcessorsForDropDown()"
-                              Action="@SetChosenProcessor">
+                              Options="@SerializeProcessorsForDropDown()"
+                              OnChange="@SetChosenProcessor">
                             <ValidationMessage For="@(()=> ChosenProcessor.Processor)" />
                         </DropDown>
                        

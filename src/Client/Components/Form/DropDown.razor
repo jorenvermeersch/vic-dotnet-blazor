@@ -4,12 +4,12 @@
             @Label:
         </label>
         <div class="dropdown">
-            <button type="button" class="drop-down-button" @onclick="ToggleDropDown">@DropDownChosenItem</button>
+            <button type="button" class="drop-down-button" @onclick="ToggleDropDown">@ChosenOption</button>
             <div class="drop-down-items" style=@style>
-                <input placeholder="Zoeken..." @oninput="ShowValidItems" />
+                <input placeholder="Zoeken..." @oninput="ShowSearchResults" />
                 @foreach (var item in filteredItems)
                 {
-                    <button type="button" class="drop-down-button-item" onclick="@(() => OptionChosen(item.Key, item.Value))">@item.Key</button>
+                    <button type="button" class="drop-down-button-item" onclick="@(() => UpdateChosenOption(item.Key, item.Value))">@item.Key</button>
                 }
             </div>
         </div>

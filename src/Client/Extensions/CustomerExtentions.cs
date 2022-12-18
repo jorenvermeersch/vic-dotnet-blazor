@@ -24,12 +24,12 @@ public static class CustomerExtentions
 
     public static bool IsInternal(this CustomerDto.Mutate customer)
     {
-        return customer.CustomerType == CustomerType.Intern.ToString();
+        return customer.CustomerType == CustomerType.Intern;
     }
 
     public static bool IsExternal(this CustomerDto.Mutate customer)
     {
-        return customer.CustomerType == CustomerType.Extern.ToString();
+        return customer.CustomerType == CustomerType.Extern;
     }
 
     public static string GetDetailUrl(this CustomerDto.Index customer)

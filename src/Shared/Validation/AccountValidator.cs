@@ -1,5 +1,4 @@
-﻿using Domain.Constants;
-using FluentValidation;
+﻿using FluentValidation;
 using Shared.Accounts;
 
 namespace Shared.Validation;
@@ -24,7 +23,7 @@ public class AccountValidator : AbstractValidator<AccountDto.Mutate>
 
         RuleFor(x => x.Role)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Rol"))
-            .IsEnumName(typeof(Role)).WithMessage(ValidationMessages.UnknownRole);
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Rol", true));
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Wachtwoord"))

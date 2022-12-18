@@ -1,31 +1,36 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Client.Components.Form;
 
 public partial class DropDown
 {
     private Dictionary<string, string> filteredItems = new();
-    private string _dropDownChosenItem = "Kies...";
+
+    private string chosenOption = "Kies...";
     private bool shown = false;
     private string style = "display: none";
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    [Parameter]
-    public Dictionary<string, string> Items { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public Dictionary<string, string> Options { get; set; } = default!;
 
-    [Parameter]
-    public EventCallback<string> Action { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public EventCallback<string> OnChange { get; set; } = default!;
 
-    [Parameter]
-    public string Label { get; set; } = "";
-
-    public string DropDownChosenItem { get => shown ? "Menu sluiten" : _dropDownChosenItem; set => _dropDownChosenItem = value; }
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = default!;
+    public string ChosenOption
+    {
+        get => shown ? "Menu sluiten" : chosenOption;
+        set => chosenOption = value;
+    }
 
     protected override void OnInitialized()
     {
-        filteredItems = Items;
+        filteredItems = Options;
     }
 
     private void ToggleDropDown()
@@ -34,22 +39,23 @@ public partial class DropDown
         style = shown ? "display: block" : "display: none";
     }
 
-    private async void OptionChosen(string chosenOptionKey, string chosenOptionValue)
+    private async void UpdateChosenOption(string chosenOptionKey, string chosenOptionValue)
     {
         ToggleDropDown();
-        DropDownChosenItem = chosenOptionKey;
-        await Action.InvokeAsync(chosenOptionValue);
+        ChosenOption = chosenOptionKey;
+        await OnChange.InvokeAsync(chosenOptionValue);
     }
 
-    private void ShowValidItems(ChangeEventArgs args)
+    private void ShowSearchResults(ChangeEventArgs args)
     {
         filteredItems = new();
-        foreach (var item in Items)
+        var searchTerm = args.Value?.ToString() ?? "";
+
+        if (!searchTerm.IsNullOrEmpty())
         {
-            if (item.Key.ToLower().Contains(args.Value?.ToString().ToLower()))
-            {
-                filteredItems.Add(item.Key, item.Value);
-            }
+            filteredItems = Options
+                .Where(item => item.Key.ToLower().Contains(searchTerm.ToLower()))
+                .ToDictionary(item => item.Key, item => item.Value);
         }
     }
 }

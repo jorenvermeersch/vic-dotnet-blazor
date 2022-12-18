@@ -35,6 +35,12 @@ public static class ValidationMessages
         return $"{field} mag geen cijfers of speciale tekens bevatten.";
     }
 
+    public static string UnknownEnumValue(string field, bool addLetter = false)
+    {
+        string e = addLetter ? "e" : "";
+        return $"Onbekend{e} {field}";
+    }
+
     public static string UnknownRole => "Onbekende rol.";
     public static string UnknownCustomerType => "Onbekende soort.";
     public static string UnknownInstitution => "Onbekend instituut.";
