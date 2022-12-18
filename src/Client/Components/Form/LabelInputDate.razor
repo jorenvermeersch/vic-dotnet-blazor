@@ -1,0 +1,25 @@
+﻿@inherits InputBase<DateTime>
+
+@{
+    var inverse = InverseStyle ? "inverse" : "";
+}
+
+<div>
+    <div class="input-container">
+        <label for="@Label">
+            <text>@Label:</text>
+            @if (Required)
+            {
+                <sup class="required-input">*</sup>
+            }      
+        </label>
+        <input 
+            @bind="@CurrentValue"
+            type="date" 
+            class="input @inverse" 
+            placeholder="@Placeholder" />
+    </div>
+    <ValidationMessage For=@For />
+</div>
+
+

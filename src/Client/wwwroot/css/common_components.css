@@ -59,6 +59,7 @@ select {
     border: none;
     outline: none;
     padding: var(--card-padding);
+    color: var(--black); 
     background-color: var(--light-gray);
     border-radius: var( --border-radius);
 }

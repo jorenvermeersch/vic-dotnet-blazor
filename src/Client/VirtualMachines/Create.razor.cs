@@ -28,7 +28,7 @@ public partial class Create
 
     private SpecificationsDto? Specifications;
     // Credentials
-    private List<CredentialsDto> credentialList = new();
+    private List<CredentialsDto> credentialsList = new();
     private CredentialsDto? newCredential = new();
     //private string selectedAvailability;
     private string _customcss = "background-color: white";
@@ -142,11 +142,11 @@ public partial class Create
     }
 
     private HashSet<Availability> chosenAvailabilities = new();
-    private void SetAvailabilityValue(string value)
+    private void AddDay(string value)
     {
         chosenAvailabilities.Add((Availability)Enum.Parse(typeof(Availability), value, true));
     }
-    private void RemoveAvailabilityFromList(Availability value)
+    private void RemoveDay(Availability value)
     {
         chosenAvailabilities.Remove(value);
     }
@@ -217,14 +217,19 @@ public partial class Create
 
     private void AddCredential()
     {
-        credentialList.Add(newCredential!);
+        credentialsList.Add(newCredential!);
         newCredential = new();
+    }
+
+    private void RemoveCredentials(CredentialsDto credentials)
+    {
+
     }
 
     private async void HandleValidSubmit()
     {
 
-        VirtualMachine.Credentials = credentialList;
+        VirtualMachine.Credentials = credentialsList;
         VirtualMachine.Ports = selectedPorts.Select(x => x.Number).ToList();
         VirtualMachine.Availabilities = chosenAvailabilities.ToList();
 
