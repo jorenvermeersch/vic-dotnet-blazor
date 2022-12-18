@@ -70,7 +70,7 @@ public partial class Details
                 new()
                 {
                     { "Mode", machine.Mode.ToString() },
-                    { "Template", Localizer![machine.Template.ToString()] },
+                    { "Template", Localizer[machine.Template.ToString()] },
                     { "Reden", machine.Reason }
                 }
             },
@@ -127,8 +127,6 @@ public partial class Details
 
         // TODO: Ports do not get fetched properly. GetDetail. 
         // TODO: VirtualProcessors always have value 0 after creating manually. 
-
-        Console.WriteLine($"processsors: {machine.Specification.VirtualProcessors}");
 
         foreach (var credential in machine.Credentials)
         {
