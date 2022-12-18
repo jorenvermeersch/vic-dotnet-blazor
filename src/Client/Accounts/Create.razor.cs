@@ -17,15 +17,11 @@ public partial class Create
     [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = default!;
 
 
-    private List<string> roles = Enum.GetNames(typeof(Role)).ToList();
-    private List<string> translatedRoles = new();
+    private Dictionary<string, string> translatedRoles = new();
+
     protected override void OnInitialized()
     {
-        // Translate roles. 
-        foreach (var role in roles)
-        {
-            translatedRoles.Add(Localizer[role]);
-        }
+        TranslateRoleOptions();
     }
     private async void HandleValidSubmit()
     {
@@ -35,7 +31,17 @@ public partial class Create
         };
         AccountResponse.Create response = await AccountService!.CreateAsync(request);
         Navigation!.NavigateTo("account/" + response.AccountId);
+    }
 
+    private void TranslateRoleOptions()
+    {
+        List<string> roles = Enum.GetNames(typeof(Role)).ToList();
+        roles.ForEach(role => translatedRoles.Add(Localizer[role], role));
+    }
 
+    private void SetRole(string roleString)
+    {
+        bool success = Enum.TryParse(roleString, out Role role);
+        if (success) Account.Role = role;
     }
 }

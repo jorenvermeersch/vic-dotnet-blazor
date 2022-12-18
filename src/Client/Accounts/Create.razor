@@ -19,14 +19,10 @@
         <OneWidth>
             <Title Text="Algemene informatie" />
 
-@*            <LabelSelect Label="Rol"
-                         Required="@true"
-                         Options="@roles"
-                         DisplayOptions="@translatedRoles"
-                         @bind-Value="@Account.Role"
-                         For="@(()=>Account.Role)" />*@
-
-            @*TODO: Switch to DropDown after code clean-up*@
+            <DropDown Label="Rol"
+                      Options="translatedRoles"
+                      OnChange="SetRole" />
+            <ValidationMessage For="@(() => Account.Role)"/>
 
             <LabelInput Label="Departement"
                         Required="@true"
