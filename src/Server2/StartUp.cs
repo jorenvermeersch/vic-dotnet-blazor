@@ -1,21 +1,14 @@
-﻿using Client.VirtualMachines;
+﻿
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
-using Service.Accounts;
-using Service.VirtualMachines;
 using Services;
-using Services.Customers;
 using Services.FakeInitializer;
-using Services.Hosts;
-using Services.Processors;
-using Shared.Accounts;
-using Shared.Customers;
-using Shared.Hosts;
-using Shared.Ports;
-using Shared.VirtualMachines;
+using System.Security.Claims;
 
 namespace Server;
 
@@ -79,18 +72,18 @@ public class StartUp
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            options.Authority = $"https://{Configuration["Auth0:Domain"]}";
+            options.Authority = Configuration["Auth0:Authority"];
             options.Audience = Configuration["Auth0:ApiIdentifier"];
         });
 
-        //services.AddAuth0AuthenticationClient(config =>
-        //{
-        //    config.Domain = Configuration["Auth0:Authority"];
-        //    config.ClientId = Configuration["Auth0:ClientId"];
-        //    config.ClientSecret = Configuration["Auth0:ClientSecret"];
-        //});
+        services.AddAuth0AuthenticationClient(config =>
+        {
+            config.Domain = Configuration["Auth0:Authority"];
+            config.ClientId = Configuration["Auth0:ClientId"];
+            config.ClientSecret = Configuration["Auth0:ClientSecret"];
+        });
 
-        //services.AddAuth0ManagementClient().AddManagementAccessToken();
+        services.AddAuth0ManagementClient().AddManagementAccessToken();
 
 
         services.AddRazorPages();

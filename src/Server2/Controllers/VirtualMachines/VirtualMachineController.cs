@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
+using Shared.Hosts;
 using Shared.VirtualMachines;
 using Swashbuckle.AspNetCore.Annotations;
 
