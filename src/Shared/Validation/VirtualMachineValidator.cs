@@ -55,15 +55,16 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
 
         // Availability. 
         RuleFor(x => x.ApplicationDate)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Aangevraagd op"));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Aangevraagd op"))
+            .LessThanOrEqualTo(x => x.StartDate).WithMessage("Aanvragingsdatum moet eerder of gelijk zijn aan startdatum.");
 
         RuleFor(x => x.StartDate)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Start"))
-            .LessThan(x => x.EndDate).WithMessage(ValidationMessages.SMALLER_THAN_END_DATE());
+            .LessThan(x => x.EndDate).WithMessage("Startdatum moet eerder zijn dan einddatum");
 
         RuleFor(x => x.EndDate)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Eind"))
-            .GreaterThan(x => x.StartDate).WithMessage(ValidationMessages.GREATER_THAN_DATE());
+            .GreaterThan(x => x.StartDate).WithMessage("Einddatum moet later zijn dan startdatum.");
 
         RuleFor(x => x.Availabilities)
             .NotEmpty().WithMessage("Virtuele machine moet beschikbaar zijn op minstens één dag.");

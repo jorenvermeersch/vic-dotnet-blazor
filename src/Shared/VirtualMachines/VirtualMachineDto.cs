@@ -54,9 +54,9 @@ public static class VirtualMachineDto
         public long RequesterId { get; set; }
         public long UserId { get; set; }
         public long AdministratorId { get; set; }
-        public DateTime ApplicationDate { get; set; } = DateTime.Now;
-        public DateTime StartDate { get; set; } = DateTime.Now;
-        public DateTime EndDate { get; set; } = DateTime.Now;
+        public DateTime ApplicationDate { get; set; } = DateTime.UtcNow;
+        public DateTime StartDate { get; set; } = DateTime.UtcNow.AddDays(1);
+        public DateTime EndDate { get; set; } = DateTime.UtcNow.AddDays(2);
         public BackupFrequency? BackupFrequency { get; set; }
         public List<CredentialsDto> Credentials { get; set; } = default!;
         public List<int> Ports { get; set; } = new();
