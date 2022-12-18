@@ -15,15 +15,15 @@ public class SpecificationsValidator : AbstractValidator<SpecificationsDto>
         RuleLevelCascadeMode = CascadeMode.Stop;
 
         RuleFor(x => x.VirtualProcessors)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("vCPU"))
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("vCPUs"))
             .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Processoren", minProcessorCount));
 
         RuleFor(x => x.Memory)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Geheugen"))
-            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Geheugen", minMemory));
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Geheugen"))
+            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Geheugen", minMemory, "GB"));
 
         RuleFor(x => x.Storage)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Opslag"))
-            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Opslag", minStorage));
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Opslag"))
+            .GreaterThanOrEqualTo(minProcessorCount).WithMessage(ValidationMessages.GreaterThanOrEqual("Opslag", minStorage, "GB"));
     }
 }

@@ -65,8 +65,10 @@ else
                 </DropDown>
                 
                 <Title Text="Poorten" />
-                <DropDown Label="Poort" Options="@MakePortItems()" OnChange="@SetPortValue" />
-
+                <DropDown Label="Poort"
+                      Options="@MakePortItems()"
+                      OnChange="@SetPortValue" />
+                        
                 @if (selectedPorts is not null && selectedPorts.Any())
                 {
                     <ButtonGroup>
@@ -80,6 +82,7 @@ else
                 {
                     <NoResultsMessage Message="Geen poorten gekozen." InverseStyle=true />
                 }
+                <ValidationMessage For="@(() => VirtualMachine.Ports)" />
 
                 <Checkbox Label="VPN" @bind-Value="VirtualMachine.hasVpnConnection" />
 
@@ -132,8 +135,6 @@ else
                             For="@(()=>VirtualMachine.EndDate)"
                             TestValue="@DateTime.UtcNow.AddDays(2)" />
 
-
-
                 <DropDown Label="Beschikbaarheid"
                       Required="@true"
                       Options="@MakeAvailibilityItems()"
@@ -152,6 +153,7 @@ else
                 {
                     <NoResultsMessage Message="Geen dagen gekozen." InverseStyle=true />
                 }
+                <ValidationMessage For="@(() => VirtualMachine.Availabilities)" />
 
                 <Title Text="Back-ups" />
                 <DropDown Label="Regelmaat"
@@ -216,19 +218,26 @@ else
                     </OneWidth>
                 </EditForm>
 
-
-                @foreach (var credentials in credentialsList)
+                @if (credentialsList is not null && credentialsList.Any())
                 {
-                    Dictionary<string, string> entry = new() 
-                    { 
-                        { "Gebruikersnaam", credentials.Username }, 
-                        { "Rol", credentials.Role }, 
-                    };
-                    <DataCard Entries="@entry"
-                      InverseStyle="@true"
-                      HoverIcon="fa-solid fa-xmark fa-lg"
-                      OnClick="() => RemoveCredentials(credentials)" />
+                    @foreach (var credentials in credentialsList)
+                    {
+                        Dictionary<string, string> entry = new()
+                        {
+                        { "Gebruikersnaam", credentials.Username },
+                        { "Rol", credentials.Role },
+                        };
+                        <DataCard Entries="@entry"
+                            InverseStyle="@true"
+                            HoverIcon="fa-solid fa-xmark fa-lg"
+                            OnClick="() => RemoveCredentials(credentials)" />
+                    }
                 }
+                else 
+                {
+                    <NoResultsMessage Message="Geen logingegevens." InverseStyle=true />
+                }   
+                <ValidationMessage For="@(() => VirtualMachine.Credentials)" />
             </OneWidth>
         </ThreeColumnLayout>
     </EditForm>

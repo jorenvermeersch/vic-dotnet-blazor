@@ -8,6 +8,8 @@ public class CredentialsValidator : AbstractValidator<CredentialsDto>
     private readonly int minUsernameLength = 2;
     public CredentialsValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.Username)
             .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Gebruikersnaam")))
             .MinimumLength(minUsernameLength).WithMessage(ValidationMessages.MinimumLength("Gebruikersnaam", minUsernameLength));

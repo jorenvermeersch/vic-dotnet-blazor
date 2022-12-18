@@ -9,14 +9,12 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
     private readonly int minNameLength = 2;
     private readonly int minFqdnLength = 2;
     private readonly int minReasonLength = 5;
-    private readonly int minProcessorCount = 0;
-    private readonly int minMemory = 0;
-    private readonly int minStorage = 0;
 
     public VirtualMachineValidator()
     {
         RuleLevelCascadeMode = CascadeMode.Stop;
 
+        // Configuration. 
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Naam"))
             .MinimumLength(minNameLength).WithMessage(ValidationMessages.MinimumLength("Naam", minNameLength));
@@ -41,7 +39,21 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .NotNull().WithMessage(ValidationMessages.NotEmpty("Status"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Status", true));
 
+        // Ports. 
+        RuleFor(x => x.Ports)
+            .NotEmpty().WithMessage("Virtuele machine moet bereikbaar zijn via minstens één poort.");
 
+        RuleForEach(x => x.Ports)
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.GreaterThanOrEqual("Poortnummer", 1));
+
+        // Specifications. 
+        RuleFor(x => x.HostId)
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Host"));
+
+        RuleFor(x => x.Specifications)
+            .SetValidator(new SpecificationsValidator());
+
+        // Availability. 
         RuleFor(x => x.ApplicationDate)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Aangevraagd op"));
 
@@ -53,10 +65,18 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Eind"))
             .GreaterThan(x => x.StartDate).WithMessage(ValidationMessages.GREATER_THAN_DATE());
 
+        RuleFor(x => x.Availabilities)
+            .NotEmpty().WithMessage("Virtuele machine moet beschikbaar zijn op minstens één dag.");
+
+        RuleForEach(x => x.Availabilities)
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Beschikbaarheid", true));
+
+        // Back-ups. 
         RuleFor(x => x.BackupFrequency)
             .NotNull().WithMessage(ValidationMessages.NotEmpty("Regelmaat"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Regelmaat", true));
 
+        // Users. 
         RuleFor(x => x.RequesterId)
             .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Aanvrager"));
 
@@ -66,7 +86,10 @@ public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutat
         RuleFor(x => x.AdministratorId)
             .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Beheerder"));
 
-        RuleFor(x => x.HostId)
-            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Host"));
+        // Credentials. 
+        RuleFor(x => x.Credentials)
+            .NotEmpty().WithMessage("Virtuele machine moet beschikbaar via minstens één paar logingegevens.");
+
+        RuleForEach(x => x.Credentials).SetValidator(new CredentialsValidator());
     }
 }
