@@ -24,6 +24,9 @@ public partial class LabelInputNumber : InputBase<int>
     public bool InverseStyle { get; set; } = true;
 
     [Parameter]
+    public int? DefaultValue { get; set; }
+
+    [Parameter]
     public int? TestValue { get; set; }
 
     [Parameter]
@@ -35,6 +38,7 @@ public partial class LabelInputNumber : InputBase<int>
 
     protected override void OnInitialized()
     {
+        if (DefaultValue.HasValue) CurrentValue = DefaultValue.Value;
         if (TestValue.HasValue) CurrentValue = TestValue.Value;
         base.OnInitialized();
     }

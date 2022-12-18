@@ -16,7 +16,7 @@ else
                 <FormHeader Icon="fa-solid fa-microchip" Text="Host toevoegen" />
             </ButtonGroup>
             <span class="outline-end">
-                <button class="button" type="submit">Toevoegen</button>
+                <button class="button" type="submit">Host toevoegen</button>
             </span>
         </TopBar>
         
@@ -31,20 +31,26 @@ else
 
                 <LabelInputNumber Label="Geheugen"
                               Required="@true"
+                              DefaultValue="1"
                               @bind-Value="Host.Specifications.Memory"
                               For="@(()=> Host.Specifications.Memory)" />
 
                 <LabelInputNumber Label="Opslag"
                               Required="@true"
+                              DefaultValue="1"
                               @bind-Value="Host.Specifications.Storage"
                               For="@(()=> Host.Specifications.Storage)" />
 
-                <Title Text="Kies processoren"></Title>
+                <Title Text="Kies processoren" />
                 <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@ChosenProcessor">
+                    <FluentValidationValidator />
                     <OneWidth>
                         <DropDown Label="Type"
-                                    Items="@SerializeProcessorsForDropDown()"
-                                    Action="@SetChosenProcessor" />
+                              Items="@SerializeProcessorsForDropDown()"
+                              Action="@SetChosenProcessor">
+                            <ValidationMessage For="@(()=> ChosenProcessor.Processor)" />
+                        </DropDown>
+                       
 
                         @if (ChosenProcessor.Processor is not null)
                         {
@@ -52,6 +58,7 @@ else
                         }
 
                         <LabelInputNumber Label="Virtualisatiefactor"
+                                      DefaultValue="1"
                                       @bind-Value="ChosenProcessor.VirtualisationFactor"
                                       For="@(()=> ChosenProcessor.VirtualisationFactor)" />
 
@@ -63,7 +70,7 @@ else
                 </EditForm>
             </OneWidth>
             <OneWidth>
-                <Title Text="Gekozen processoren" />
+                <Title Text="Gekozen processoren" Required="@true"/>
                 @if (Host.Specifications.Processors.Any())
                 {
                     @foreach (var processor in Host.Specifications.Processors)
@@ -88,6 +95,7 @@ else
                 {
                     <NoResultsMessage Message="Geen processoren gekozen." InverseStyle=true />
                 }
+                <ValidationMessage For="@(()=> Host.Specifications.Processors)" />
             </OneWidth>
             <OneWidth>
 

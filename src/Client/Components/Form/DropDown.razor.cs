@@ -10,6 +10,9 @@ public partial class DropDown
     private string style = "display: none";
 
     [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
     public Dictionary<string, string> Items { get; set; } = default!;
 
     [Parameter]

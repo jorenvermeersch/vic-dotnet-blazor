@@ -18,8 +18,8 @@ public partial class Create
             {
                 RuleLevelCascadeMode = CascadeMode.Stop;
 
-                RuleFor(x => x.Processor).NotEmpty();
-                RuleFor(x => x.VirtualisationFactor).GreaterThanOrEqualTo(1);
+                RuleFor(x => x.Processor).NotEmpty().WithMessage("Type is verplicht.");
+                RuleFor(x => x.VirtualisationFactor).GreaterThanOrEqualTo(1).WithMessage("Virtualisatiefactor moet groter of gelijk zijn aan 1.");
             }
         }
 

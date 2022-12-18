@@ -18,6 +18,6 @@ public class HostSpecificationsValidator : AbstractValidator<HostSpecificationsD
         RuleFor(x => x.Memory)
             .GreaterThanOrEqualTo(minMemory).WithMessage(ValidationMessages.GreaterThanOrEqual("Geheugen", minMemory, "GB"));
 
-        RuleFor(x => x.Processors).NotNull().WithMessage(ValidationMessages.NotEmpty("Aantal"));
+        RuleFor(x => x.Processors).NotEmpty().WithMessage(ValidationMessages.NotEmpty("Aantal"));
     }
 }
