@@ -11,7 +11,7 @@
             <button type="button" class="drop-down-button" @onclick="ToggleDropDown">@ChosenOption</button>
             <div class="drop-down-items" style=@style>
                 <input placeholder="Zoeken..." @oninput="ShowSearchResults" />
-                @foreach (var item in filteredItems)
+                @foreach (var item in filteredOptions)
                 {
                     <button type="button" class="drop-down-button-item" onclick="@(() => UpdateChosenOption(item.Key, item.Value))">@item.Key</button>
                 }

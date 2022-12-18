@@ -5,7 +5,7 @@ namespace Client.Components.Form;
 
 public partial class DropDown
 {
-    private Dictionary<string, string> filteredItems = new();
+    private Dictionary<string, string> filteredOptions = new();
 
     private string chosenOption = "Kies...";
     private bool shown = false;
@@ -34,7 +34,7 @@ public partial class DropDown
 
     protected override void OnInitialized()
     {
-        filteredItems = Options;
+        filteredOptions = Options;
     }
 
     private void ToggleDropDown()
@@ -52,12 +52,12 @@ public partial class DropDown
 
     private void ShowSearchResults(ChangeEventArgs args)
     {
-        filteredItems = new();
+        filteredOptions = Options;
         var searchTerm = args.Value?.ToString() ?? "";
 
         if (!searchTerm.IsNullOrEmpty())
         {
-            filteredItems = Options
+            filteredOptions = filteredOptions
                 .Where(item => item.Key.ToLower().Contains(searchTerm.ToLower()))
                 .ToDictionary(item => item.Key, item => item.Value);
         }
