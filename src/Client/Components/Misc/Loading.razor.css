@@ -12,3 +12,8 @@
     --search-bar-height: calc(2 * var(--card-height));
     height: calc(100vh - var(--nav-height) - var(--search-bar-height) - var(--padding-lg));
 }
+
+p {
+    color: var(--dark-blue); 
+    font-size: var(--text-md); 
+}
