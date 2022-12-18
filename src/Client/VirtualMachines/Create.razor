@@ -24,49 +24,103 @@ else
         <ThreeColumnLayout>
             <OneWidth>
                 <Title Text="Configuratie" />
-                <RequiredInput Type="@Input.InputType.TEXT" Label="Naam" @bind-Value="VirtualMachine.Name" For="@(()=>VirtualMachine.Name)" />
-                <RequiredInput Type="@Input.InputType.TEXT" Label="FQDN" @bind-Value="VirtualMachine.Fqdn" For="@(()=>VirtualMachine.Fqdn)" />
 
-                <DropDown Label="Mode" Options="@MakeModeItems()" OnChange="@SetModeValue" />
-                <ValidationMessage For=@(() => VirtualMachine.Mode) />
+                <LabelInput Label="Naam"
+                        Required="@true"
+                        @bind-Value="VirtualMachine.Name"
+                        For="@(() => VirtualMachine.Name)"
+                        TestValue="WebServer 1" />
 
-                <DropDown Label="Template" Options="@MakeTemplateItems()" OnChange="@SetTemplateValue" />
-                <ValidationMessage For=@(() => VirtualMachine.Template) />
+                <LabelInput Label="FQDN"
+                        Required="@true"
+                        @bind-Value="VirtualMachine.Fqdn"
+                        For="@(() => VirtualMachine.Fqdn)"
+                        TestValue="vic-devops-eu-webserver-1" />
 
-                <RequiredInput Type="@Input.InputType.TEXT" Label="Reden" @bind-Value="@VirtualMachine.Reason" For="@(()=>VirtualMachine.Reason)" />
+                <DropDown Label="Mode"
+                      Required="@true"
+                      Options="@MakeModeItems()"
+                      OnChange="@SetMode">
+                    <ValidationMessage For=@(() => VirtualMachine.Mode) />
+                </DropDown>
 
-                <DropDown Label="Status" Options="@MakeStatusItems()" OnChange="@SetStatusValue" />
-                <ValidationMessage For=@(() => VirtualMachine.Status) />
+                <DropDown Label="Template"
+                      Required="@true"
+                      Options="@MakeTemplateItems()"
+                      OnChange="@SetTemplate">
+                    <ValidationMessage For=@(() => VirtualMachine.Template) />
+                </DropDown>
 
+                <LabelInput Label="Reden"
+                        Required="@true"
+                        @bind-Value="VirtualMachine.Reason"
+                        For="@(() => VirtualMachine.Reason)"
+                        TestValue="Bachelorproef" />
+
+                <DropDown Label="Status"
+                      Required="@true"
+                      Options="@MakeStatusItems()"
+                      OnChange="@SetStatus">
+                    <ValidationMessage For=@(() => VirtualMachine.Status) />
+                </DropDown>
+                
                 <Title Text="Poorten" />
-
                 <DropDown Label="Poort" Options="@MakePortItems()" OnChange="@SetPortValue" />
 
-                <div class="button-list">
-                    @foreach (var item in selectedPorts)
-                    {
-                        <PortButton Text="@item.Service" OnClick="@(() => RemovePortFromList(item))" />
-                    }
-                </div>
+                @if (selectedPorts is not null && selectedPorts.Any())
+                {
+                    <ButtonGroup>
+                        @foreach (var port in selectedPorts)
+                        {
+                            <PortButton Text="@port.Service" OnClick="@(() => UnSelectPort(port))" />
+                        }
+                    </ButtonGroup>
+                }
+                else
+                {
+                    <NoResultsMessage Message="Geen poorten gekozen." InverseStyle=true />
+                }
 
                 <Checkbox Label="VPN" @bind-Value="VirtualMachine.hasVpnConnection" />
 
             </OneWidth>
             <OneWidth>
                 <Title Text="Specificaties" />
-                <DropDown Label="Host" Options="@MakeHostItems()" OnChange="@SetHostValue" />
-                <ValidationMessage For=@(() => VirtualMachine.HostId) />
 
-                <CustomInputNumber Label="vCPUs" @bind-Value="@VirtualMachine.Specifications.VirtualProcessors" For="@(()=>VirtualMachine.Specifications.VirtualProcessors)" Required=true />
-                <CustomInputNumber Label="Geheugen" @bind-Value="@VirtualMachine.Specifications.Memory" For="@(()=>VirtualMachine.Specifications.Memory)" Required=true />
-                <CustomInputNumber Label="Opslag" @bind-Value="@VirtualMachine.Specifications.Storage" For="@(()=>VirtualMachine.Specifications.Storage)" Required=true />
+                <DropDown Label="Host"
+                      Required="@true"
+                      Options="@MakeHostItems()"
+                      OnChange="@SetHostValue">
+                    <ValidationMessage For=@(() => VirtualMachine.HostId) />
+                </DropDown>
 
+                <LabelInputNumber Label="vCPUs"
+                              Required="@true"
+                              @bind-Value="@VirtualMachine.Specifications.VirtualProcessors"
+                              For="@(()=>VirtualMachine.Specifications.VirtualProcessors)"
+                              DefaultValue="1" />
+
+                <LabelInputNumber Label="Geheugen"
+                              Required="@true"
+                              @bind-Value="@VirtualMachine.Specifications.Memory"
+                              For="@(()=>VirtualMachine.Specifications.Memory)"
+                              DefaultValue="1" />
+
+                <LabelInputNumber Label="Opslag"
+                              Required="@true"
+                              @bind-Value="@VirtualMachine.Specifications.Storage"
+                              For="@(()=>VirtualMachine.Specifications.Storage)"
+                              DefaultValue="1" />
+                
                 <Title Text="Beschikbaarheid" />
                 <CustomInputDate Label="Aangevraagd op" @bind-Value="@VirtualMachine.ApplicationDate" For="@(()=>VirtualMachine.ApplicationDate)" Required=true />
                 <CustomInputDate Label="Start" @bind-Value="@VirtualMachine.StartDate" For="@(()=>VirtualMachine.StartDate)" Required=true />
                 <CustomInputDate Label="Eind" @bind-Value="@VirtualMachine.EndDate" For="@(()=>VirtualMachine.EndDate)" Required=true />
 
-                <DropDown Label="Beschikbaarheid" Items="@MakeAvailibilityItems()" OnChange="@SetAvailabilityValue" />
+                <DropDown Label="Beschikbaarheid"
+                      Required="@true"
+                      Options="@MakeAvailibilityItems()"
+                      OnChange="@SetAvailabilityValue" />
 
                 <div class="button-list">
                     @foreach (var item in chosenAvailabilities)
@@ -77,18 +131,18 @@ else
 
 
                 <Title Text="Back-ups" />
-                <DropDown Label="Status" Options="@MakeBackUpFrequencyItems()" OnChange="@SetBackUpFrequencyValue" />
+                <DropDown Label="Status" Options="@MakeBackUpFrequencyItems()" OnChange="@SetBackUpFrequency" />
                 <ValidationMessage For=@(() => VirtualMachine.BackupFrequency) />
             </OneWidth>
             <OneWidth>
                 <Title Text="Gebruikers"></Title>
 
-                <DropDown Label="Aanvrager" Options="@MakeCustomerItems()" OnChange="@SetRequesterValue" />
+                <DropDown Label="Aanvrager" Options="@MakeCustomerItems()" OnChange="@SetRequester" />
                 <ValidationMessage For=@(() => VirtualMachine.RequesterId) />
-                <DropDown Label="Gebruiker" Options="@MakeCustomerItems()" OnChange="@SetUserValue" />
+                <DropDown Label="Gebruiker" Options="@MakeCustomerItems()" OnChange="@SetUser" />
                 <ValidationMessage For=@(() => VirtualMachine.UserId) />
 
-                <DropDown Label="Beheerder" Options="@MakeAccountItems()" Action="@SetAccountValue" />
+                <DropDown Label="Beheerder" Options="@MakeAccountItems()" OnChange="@SetAccount" />
                 <ValidationMessage For=@(() => VirtualMachine.AdministratorId) />
 
                 <Title Text="Logingegevens" />

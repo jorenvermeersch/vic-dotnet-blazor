@@ -42,7 +42,8 @@ public partial class Create
     private List<CustomerDto.Index>? Customers { get; set; }
     private List<AccountDto.Index>? Accounts { get; set; }
     public List<PortDto>? Ports { get; set; } = new();
-    public HashSet<PortDto>? selectedPorts = new();
+
+    public HashSet<PortDto> selectedPorts = new();
 
     private Dictionary<int, Dictionary<string, string>> _entries = new();
 
@@ -96,9 +97,9 @@ public partial class Create
         return Enum.GetValues(typeof(Status)).Cast<Status>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
-    private void SetStatusValue(string value)
+    private void SetStatus(string statusString)
     {
-        VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), value);
+        VirtualMachine.Status = (Status)Enum.Parse(typeof(Status), statusString);
     }
 
     //MODE
@@ -107,9 +108,9 @@ public partial class Create
         return Enum.GetValues(typeof(Mode)).Cast<Mode>().ToDictionary(x => x.ToString(), x => x.ToString());
     }
 
-    private void SetModeValue(string value)
+    private void SetMode(string modeString)
     {
-        VirtualMachine.Mode = (Mode)Enum.Parse(typeof(Mode), value);
+        VirtualMachine.Mode = (Mode)Enum.Parse(typeof(Mode), modeString);
     }
 
     //TEMPLATE
@@ -118,9 +119,9 @@ public partial class Create
         return Enum.GetValues(typeof(Template)).Cast<Template>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
-    private void SetTemplateValue(string value)
+    private void SetTemplate(string templateString)
     {
-        VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), value);
+        VirtualMachine.Template = (Template)Enum.Parse(typeof(Template), templateString);
     }
 
     //BACKUPFREQUENCY
@@ -129,9 +130,9 @@ public partial class Create
         return Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToDictionary(x => Localizer[x.ToString()].ToString(), x => x.ToString());
     }
 
-    private void SetBackUpFrequencyValue(string value)
+    private void SetBackUpFrequency(string backupFrequencyString)
     {
-        VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), value);
+        VirtualMachine.BackupFrequency = (BackupFrequency)Enum.Parse(typeof(BackupFrequency), backupFrequencyString);
     }
 
     //AVAILABILITIES
@@ -165,7 +166,7 @@ public partial class Create
         }
 
     }
-    public void RemovePortFromList(PortDto port)
+    public void UnSelectPort(PortDto port)
     {
         selectedPorts.Remove(port);
     }
@@ -187,13 +188,13 @@ public partial class Create
         return Customers.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
     }
 
-    private void SetRequesterValue(string value)
+    private void SetRequester(string requesterIdString)
     {
-        VirtualMachine.RequesterId = JsonConvert.DeserializeObject<CustomerDto.Index>(value)!.Id;
+        VirtualMachine.RequesterId = JsonConvert.DeserializeObject<CustomerDto.Index>(requesterIdString)!.Id;
     }
-    private void SetUserValue(string value)
+    private void SetUser(string userIdString)
     {
-        VirtualMachine.UserId = JsonConvert.DeserializeObject<CustomerDto.Index>(value)!.Id;
+        VirtualMachine.UserId = JsonConvert.DeserializeObject<CustomerDto.Index>(userIdString)!.Id;
     }
 
     //ACCOUNT
@@ -202,9 +203,9 @@ public partial class Create
         return Accounts.ToDictionary(x => string.Format("{0} {1}", x.Firstname, x.Lastname).ToString(), x => JsonConvert.SerializeObject(x));
     }
 
-    private void SetAccountValue(string value)
+    private void SetAccount(string accountIdString)
     {
-        VirtualMachine.AdministratorId = JsonConvert.DeserializeObject<AccountDto.Index>(value)!.Id;
+        VirtualMachine.AdministratorId = JsonConvert.DeserializeObject<AccountDto.Index>(accountIdString)!.Id;
     }
 
 
