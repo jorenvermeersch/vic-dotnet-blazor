@@ -29,11 +29,17 @@ else
                         @bind-Value="Host.Name"
                         For="@(() => Host.Name)" />
 
+                <LabelInputNumber Label="Geheugen"
+                              Required="@true"
+                              @bind-Value="Host.Specifications.Memory"
+                              For="@(()=> Host.Specifications.Memory)" />
 
-                <CustomInputNumber Type="Input.InputType.TEXT" Label="Geheugen" @bind-Value="Host.Specifications.Memory" For="@(()=> Host.Specifications.Memory)" Required=true />
-                <CustomInputNumber Type="Input.InputType.TEXT" Label="Opslag" @bind-Value="Host.Specifications.Storage" For="@(()=> Host.Specifications.Storage)" Required=true />
-                
-                <Title Text="Processoren"></Title>
+                <LabelInputNumber Label="Opslag"
+                              Required="@true"
+                              @bind-Value="Host.Specifications.Storage"
+                              For="@(()=> Host.Specifications.Storage)" />
+
+                <Title Text="Kies processoren"></Title>
                 <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@ChosenProcessor">
                     <OneWidth>
                         <DropDown Label="Type"
@@ -45,11 +51,9 @@ else
                             <DataCard Entries="@chosenProcessorSpecifications" InverseStyle=true />
                         }
 
-                        <CustomInputNumber 
-                            Type="Input.InputType.TEXT"
-                            Label="Virtualisatiefactor"
-                            @bind-Value="ChosenProcessor.VirtualisationFactor"
-                            For="@(()=> ChosenProcessor.VirtualisationFactor)" />
+                        <LabelInputNumber Label="Virtualisatiefactor"
+                                      @bind-Value="ChosenProcessor.VirtualisationFactor"
+                                      For="@(()=> ChosenProcessor.VirtualisationFactor)" />
 
                         <span class="outline-end">
                             <button type="submit" class="button">Toevoegen</button>

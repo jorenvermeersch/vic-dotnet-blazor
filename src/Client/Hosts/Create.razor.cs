@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using Shared.Hosts;
@@ -6,23 +7,33 @@ namespace Client.Hosts;
 
 public partial class Create
 {
-    public class VirtualProcessor
+    public class ProcessorFactorPair
     {
         public ProcessorDto? Processor { get; set; }
         public int VirtualisationFactor { get; set; }
+
+        public class ProcessorFactorPairValidator : AbstractValidator<ProcessorFactorPair>
+        {
+            public ProcessorFactorPairValidator()
+            {
+                RuleLevelCascadeMode = CascadeMode.Stop;
+
+                RuleFor(x => x.Processor).NotEmpty();
+                RuleFor(x => x.VirtualisationFactor).GreaterThanOrEqualTo(1);
+            }
+        }
 
     }
 
     [Inject] public NavigationManager Navigation { get; set; } = default!;
     [Inject] public IHostService HostService { get; set; } = default!;
     [Inject] public IProcessorService ProcessorService { get; set; } = default!;
+
     private HostDto.Mutate Host { get; set; } = new();
 
     private List<ProcessorDto>? Processors { get; set; }
-    public VirtualProcessor ChosenProcessor { get; set; } = new();
+    public ProcessorFactorPair ChosenProcessor { get; set; } = new();
     private Dictionary<string, string> chosenProcessorSpecifications = new();
-
-    private string customcss = "background-color: white";
 
 
     protected override async Task OnInitializedAsync()
