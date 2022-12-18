@@ -1,4 +1,3 @@
-using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using Shared.Hosts;
@@ -7,24 +6,6 @@ namespace Client.Hosts;
 
 public partial class Create
 {
-    public class ProcessorFactorPair
-    {
-        public ProcessorDto? Processor { get; set; }
-        public int VirtualisationFactor { get; set; }
-
-        public class ProcessorFactorPairValidator : AbstractValidator<ProcessorFactorPair>
-        {
-            public ProcessorFactorPairValidator()
-            {
-                RuleLevelCascadeMode = CascadeMode.Stop;
-
-                RuleFor(x => x.Processor).NotEmpty().WithMessage("Type is verplicht.");
-                RuleFor(x => x.VirtualisationFactor).GreaterThanOrEqualTo(1).WithMessage("Virtualisatiefactor moet groter of gelijk zijn aan 1.");
-            }
-        }
-
-    }
-
     [Inject] public NavigationManager Navigation { get; set; } = default!;
     [Inject] public IHostService HostService { get; set; } = default!;
     [Inject] public IProcessorService ProcessorService { get; set; } = default!;
@@ -32,7 +13,7 @@ public partial class Create
     private HostDto.Mutate Host { get; set; } = new();
 
     private List<ProcessorDto>? Processors { get; set; }
-    public ProcessorFactorPair ChosenProcessor { get; set; } = new();
+    public ProcessorVirtualisationFactorPair ChosenProcessor { get; set; } = new();
     private Dictionary<string, string> chosenProcessorSpecifications = new();
 
 

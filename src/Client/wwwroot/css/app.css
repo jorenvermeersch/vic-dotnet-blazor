@@ -64,12 +64,3 @@
     color: var(--dark-blue);
     padding-top: var(--padding-sm); 
 }
-
-.valid {
-    border: 1px solid green; 
-}
-
-.invalid {
-    border: 1px solid red;
-}
-
