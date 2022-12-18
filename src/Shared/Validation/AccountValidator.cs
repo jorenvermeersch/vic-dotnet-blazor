@@ -22,8 +22,7 @@ public class AccountValidator : AbstractValidator<AccountDto.Mutate>
             .EmailAddress().WithMessage(ValidationMessages.InvalidEmailAddress);
 
         RuleFor(x => x.Role)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Rol"))
-            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Rol", true));
+            .IsInEnum().WithMessage(ValidationMessages.NotEmpty("Rol"));
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Wachtwoord"))

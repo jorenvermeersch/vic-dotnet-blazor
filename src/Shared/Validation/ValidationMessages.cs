@@ -38,7 +38,7 @@ public static class ValidationMessages
     public static string UnknownEnumValue(string field, bool addLetter = false)
     {
         string e = addLetter ? "e" : "";
-        return $"Onbekend{e} {field}";
+        return $"Onbekend{e} {field.ToLower()}";
     }
 
     public static string UnknownRole => "Onbekende rol.";

@@ -22,6 +22,10 @@ public partial class DropDown
 
     [Parameter, EditorRequired]
     public string Label { get; set; } = default!;
+
+    [Parameter]
+    public bool Required { get; set; } = false;
+
     public string ChosenOption
     {
         get => shown ? "Menu sluiten" : chosenOption;

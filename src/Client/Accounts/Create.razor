@@ -20,9 +20,10 @@
             <Title Text="Algemene informatie" />
 
             <DropDown Label="Rol"
+                      Required="@true"
                       Options="translatedRoles"
                       OnChange="SetRole" />
-            <ValidationMessage For="@(() => Account.Role)"/>
+            <ValidationMessage For="@(() => Account.Role)" />
 
             <LabelInput Label="Departement"
                         Required="@true"

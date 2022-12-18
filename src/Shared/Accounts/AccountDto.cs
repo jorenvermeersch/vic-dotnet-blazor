@@ -24,7 +24,7 @@ public static class AccountDto
         public string Firstname { get; set; } = default!;
         public string Lastname { get; set; } = default!;
         public string Email { get; set; } = default!;
-        public Role Role { get; set; } = default!;
+        public Role Role { get; set; } = (Role)(-1);
         public bool IsActive { get; set; } = true;
         public string? Password { get; set; } = default!;
         public string Department { get; set; } = default!;

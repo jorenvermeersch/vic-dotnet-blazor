@@ -20,6 +20,7 @@
         <OneWidth>
             <Title Text="Algemene informatie" />
             <DropDown Label="Soort"
+                      Required="@true"
                       Options="translatedCustomerTypes"
                       OnChange="SetCustomerType" />
             <ValidationMessage For="@(() => Customer.CustomerType)" />
@@ -27,6 +28,7 @@
             @if (Customer.IsInternal())
             {
                 <DropDown Label="Instituut"
+                      Required="@true"
                       Options="translatedInstitutions"
                       OnChange="SetInstitution" />
                 <ValidationMessage For="@(() => Customer.Institution)" />

@@ -1,7 +1,11 @@
 ﻿<div>
     <div class="input-container">
         <label for="">
-            @Label:
+            <text>@Label:</text>
+            @if (Required)
+            {
+                <sup class="required-input">*</sup>
+            }
         </label>
         <div class="dropdown">
             <button type="button" class="drop-down-button" @onclick="ToggleDropDown">@ChosenOption</button>

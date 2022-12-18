@@ -12,7 +12,7 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
         RuleLevelCascadeMode = CascadeMode.Stop;
 
         RuleFor(x => x.CustomerType)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Soort"))
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Soort"))
             .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Soort", true));
 
         // Internal customer. 

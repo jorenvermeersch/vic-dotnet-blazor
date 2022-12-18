@@ -28,7 +28,7 @@ public static class CustomerDto
     }
     public class Mutate
     {
-        public CustomerType CustomerType { get; set; }
+        public CustomerType? CustomerType { get; set; }
         public Institution? Institution { get; set; }
         public string? Department { get; set; }
         public string? CompanyType { get; set; }
