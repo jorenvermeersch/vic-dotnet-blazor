@@ -183,21 +183,21 @@ else
 
                 <DropDown Label="Aanvrager"
                       Required="@true"
-                      Options="@MakeCustomerItems()"
+                      Options="@CreateCustomerOptions()"
                       OnChange="@SetRequester">
                     <ValidationMessage For=@(() => VirtualMachine.RequesterId) />
                 </DropDown>
 
                 <DropDown Label="Gebruiker"
                       Required="@true"
-                      Options="@MakeCustomerItems()"
+                      Options="@CreateCustomerOptions()"
                       OnChange="@SetUser">
                     <ValidationMessage For=@(() => VirtualMachine.UserId) />
                 </DropDown>
 
                 <DropDown Label="Beheerder"
                       Required="@true"
-                      Options="@MakeAccountItems()"
+                      Options="@CreateAccountOptions()"
                       OnChange="@SetAccount">
                     <ValidationMessage For=@(() => VirtualMachine.AdministratorId) />
                 </DropDown>
@@ -232,9 +232,9 @@ else
                     </OneWidth>
                 </EditForm>
 
-                @if (credentialsList is not null && credentialsList.Any())
+                @if (VirtualMachine.Credentials is not null && VirtualMachine.Credentials.Any())
                 {
-                    @foreach (var credentials in credentialsList)
+                    @foreach (var credentials in VirtualMachine.Credentials)
                     {
                         Dictionary<string, string> entry = new()
                         {

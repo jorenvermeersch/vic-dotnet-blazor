@@ -1,7 +1,7 @@
+using Client.Extensions;
 using Client.SharedFiles.Resources;
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Shared.Accounts;
@@ -20,19 +20,13 @@ public partial class Create
     [Inject] public IPortService PortService { get; set; } = default!;
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
     [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = default!;
-    [Inject] public NavigationManager? Navigation { get; set; }
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
 
-    private EditForm? Editform { get; set; } = new();
     private VirtualMachineDto.Mutate VirtualMachine { get; set; } = new();
-    private PortDto Port { get; set; } = new();
 
-
-    private List<CredentialsDto> credentialsList = new();
     private HashSet<PortDto> chosenPorts = new();
     public HostDto.Detail? chosenHost;
     private CredentialsDto NewCredentials = new();
-
-
 
     public List<string> Backups { get; set; } = Enum.GetNames(typeof(BackupFrequency)).ToList();
     public List<string> Modes { get; set; } = Enum.GetNames(typeof(Mode)).ToList();
@@ -67,7 +61,6 @@ public partial class Create
         {
             Templates[i] = Localizer[Templates[i]];
         }
-        //editContext = new(selectedAvailability);
     }
 
     protected override async Task OnInitializedAsync()
@@ -196,15 +189,6 @@ public partial class Create
     }
     #endregion
     #region DropDown Host
-
-    #endregion
-    #region MyRegion
-
-    #endregion
-    #region MyRegion
-
-    #endregion
-
     private Dictionary<string, string> CreateHostOptions()
     {
         return Hosts!.ToDictionary(host => host.Name.ToString(), host => host.Id.ToString());
@@ -220,64 +204,56 @@ public partial class Create
             var response = await HostService.GetDetailAsync(new HostRequest.GetDetail() { HostId = hostId });
             chosenHost = response.Host;
         }
-
-
     }
-
-    //TODO - REQUESTER & USER (Key has dupplicates?)
-    private Dictionary<string, string> MakeCustomerItems()
+    #endregion
+    #region DropDown Requester and User
+    private Dictionary<string, string> CreateCustomerOptions()
     {
-        return Customers!.ToDictionary(x => x.Id + " " + x.Name, x => JsonConvert.SerializeObject(x));
+        return Customers!.ToDictionary(customer => $"{customer.Id}. {customer.Name}", x => JsonConvert.SerializeObject(x));
     }
 
-    private void SetRequester(string requesterIdString)
+    private void SetRequester(string requesterString)
     {
-        VirtualMachine.RequesterId = JsonConvert.DeserializeObject<CustomerDto.Index>(requesterIdString)!.Id;
+        VirtualMachine.RequesterId = JsonConvert.DeserializeObject<CustomerDto.Index>(requesterString)!.Id;
     }
-    private void SetUser(string userIdString)
+
+    private void SetUser(string userString)
     {
-        VirtualMachine.UserId = JsonConvert.DeserializeObject<CustomerDto.Index>(userIdString)!.Id;
+        VirtualMachine.UserId = JsonConvert.DeserializeObject<CustomerDto.Index>(userString)!.Id;
     }
-
-    //ACCOUNT
-    private Dictionary<string, string> MakeAccountItems()
+    #endregion
+    #region DropDown Account
+    private Dictionary<string, string> CreateAccountOptions()
     {
-        return Accounts.ToDictionary(x => string.Format("{0} {1}", x.Firstname, x.Lastname).ToString(), x => JsonConvert.SerializeObject(x));
+        return Accounts!.ToDictionary(account => account.GetFullName(), account => JsonConvert.SerializeObject(account));
     }
 
-    private void SetAccount(string accountIdString)
+    private void SetAccount(string accountString)
     {
-        VirtualMachine.AdministratorId = JsonConvert.DeserializeObject<AccountDto.Index>(accountIdString)!.Id;
+        VirtualMachine.AdministratorId = JsonConvert.DeserializeObject<AccountDto.Index>(accountString)!.Id;
     }
-
-
-    private void ClickHandler(int id)
-    {
-        _entries.Remove(id);
-    }
-
-
+    #endregion
+    #region Credentials
     private void AddCredential()
     {
-        credentialsList.Add(NewCredentials);
+        VirtualMachine.Credentials.Add(NewCredentials);
         NewCredentials = new();
     }
 
     private void RemoveCredentials(CredentialsDto credentials)
     {
-        credentialsList.Remove(credentials);
+        VirtualMachine.Credentials.Remove(credentials);
     }
 
     private async void HandleValidSubmit()
     {
-
-        VirtualMachine.Credentials = credentialsList;
-        VirtualMachine.Ports = chosenPorts.Select(x => x.Number).ToList();
-
         VirtualMachineResponse.Create response = await VirtualMachineService.CreateAsync(new VirtualMachineRequest.Create
         {
             VirtualMachine = VirtualMachine
         });
-        Navigation!.NavigateTo("virtual-machine/" + response.MachineId);
+        Navigation.NavigateTo($"virtual-machine/{response.MachineId}");
     }
+    #endregion
+
+
 }

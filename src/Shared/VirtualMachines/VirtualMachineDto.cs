@@ -58,7 +58,7 @@ public static class VirtualMachineDto
         public DateTime StartDate { get; set; } = DateTime.UtcNow.AddDays(1);
         public DateTime EndDate { get; set; } = DateTime.UtcNow.AddDays(2);
         public BackupFrequency? BackupFrequency { get; set; }
-        public List<CredentialsDto> Credentials { get; set; } = default!;
+        public List<CredentialsDto> Credentials { get; set; } = new();
         public List<int> Ports { get; set; } = new();
         public List<Availability> Availabilities { get; set; } = new();
         public bool hasVpnConnection { get; set; }
