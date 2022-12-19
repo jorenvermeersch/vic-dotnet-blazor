@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-public abstract class Entity
+﻿public abstract class Entity
 {
-    [Key]
     public virtual long Id { get; init; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 
     protected Entity() { }
 
@@ -62,7 +61,7 @@ public abstract class Entity
         string typeString = type.ToString();
 
         if (typeString.Contains(EFCoreProxyPrefix) || typeString.EndsWith(NHibernateProxyPostfix))
-            return type.BaseType;
+            return type.BaseType!;
 
         return type;
     }

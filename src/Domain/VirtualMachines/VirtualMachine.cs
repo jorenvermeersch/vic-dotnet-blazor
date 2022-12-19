@@ -4,7 +4,6 @@ using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;
 using Domain.Hosts;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.VirtualMachines;
 
@@ -15,7 +14,6 @@ public class VirtualMachine : Machine
     #endregion
 
     #region Properties
-    [NotMapped]
     public new Specifications Specifications
     {
         get => base.Specifications;
@@ -36,36 +34,16 @@ public class VirtualMachine : Machine
         }
     }
 
-    [NotMapped]
     public Template Template { get; set; }
-
-    [NotMapped]
     public Mode Mode { get; set; }
-
     public string Fqdn { get; set; } = default!;
-
-    [NotMapped]
     public IList<Availability> Availabilities { get; set; } = new List<Availability>();
-
-    [NotMapped]
     public BackupFrequency BackupFrequency { get; set; }
-
-    [NotMapped]
     public DateTime ApplicationDate { get; set; }
-
-    [NotMapped]
     public TimeSpan TimeSpan { get; set; } = default!;
-
-    [NotMapped]
     public Status Status { get; set; }
-
-    [NotMapped]
     public string Reason { get; set; } = default!;
-
-    [NotMapped]
     public IList<Port> Ports { get; set; } = new List<Port>();
-
-    [NotMapped]
     public Host<VirtualMachine> Host
     {
         get => _host;
@@ -86,19 +64,10 @@ public class VirtualMachine : Machine
             }
         }
     }
-
-    [NotMapped]
     public IList<Credentials> Credentials { get; set; } = new List<Credentials>();
-
-    [NotMapped]
     public Account Account { get; set; } = default!;
-
-    [NotMapped]
     public Customer Requester { get; set; } = default!;
-
-    [NotMapped]
     public Customer User { get; set; } = default!;
-
     public bool HasVpnConnection { get; set; }
     #endregion
 
