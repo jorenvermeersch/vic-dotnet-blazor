@@ -1,12 +1,19 @@
-﻿using Shared.Accounts;
+﻿using Domain.Accounts;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Data;
+using Shared.Accounts;
 
 namespace Services.Accounts;
 
 public class AccountService : IAccountService
 {
-    public AccountService()
-    {
+    private readonly VicDBContext _dbContext;
+    private readonly DbSet<Account> _accounts;
 
+    public AccountService(VicDBContext dbContext)
+    {
+        _dbContext = dbContext;
+        _accounts = _dbContext.Accounts;
     }
 
     public Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)

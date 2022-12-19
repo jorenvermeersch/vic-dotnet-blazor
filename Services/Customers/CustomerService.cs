@@ -42,7 +42,7 @@ public class CustomerService : ICustomerService
 
         }
 
-        if (createdCustomer.CustomerType == CustomerType.Intern)
+        if (createdCustomer.CustomerType == CustomerType.Intern.ToString())
         {
             customer = new InternalCustomer(
                 createdCustomer.Institution!.Value,
