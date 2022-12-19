@@ -42,6 +42,8 @@
 
 //app.Run();
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace Server;
 
 public class Program
@@ -49,6 +51,7 @@ public class Program
     public static void Main(string[] args)
     {
         CreateHostBuilder(args).Build().Run();
+
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)

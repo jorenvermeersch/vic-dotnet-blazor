@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
+using Shared.Hosts;
 using Shared.VirtualMachines;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -6,6 +9,7 @@ namespace Server.Controllers.VirtualMachines;
 
 [ApiController]
 [Route("/api/virtual-machines/")]
+[Authorize]
 public class VirtualMachineController : ControllerBase
 {
     private readonly IVirtualMachineService virtualMachineService;
@@ -44,6 +48,7 @@ public class VirtualMachineController : ControllerBase
 
     [SwaggerOperation("Creates a new virtual malchine.")]
     [HttpPost]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> CreateAsync([FromBody] VirtualMachineRequest.Create request)
     {
         VirtualMachineResponse.Create response = await virtualMachineService.CreateAsync(request);
@@ -52,6 +57,7 @@ public class VirtualMachineController : ControllerBase
 
     [SwaggerOperation("Edits a virtual machine.")]
     [HttpPut]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> EditAsync(VirtualMachineRequest.Edit request)
     {
         VirtualMachineResponse.Edit response = await virtualMachineService.EditAsync(request);
@@ -60,6 +66,7 @@ public class VirtualMachineController : ControllerBase
 
     [SwaggerOperation("Deletes a virtual machine")]
     [HttpDelete("{machineId}")]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> Delete(VirtualMachineRequest.Delete request)
     {
         await virtualMachineService.DeleteAsync(request);

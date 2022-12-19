@@ -1,13 +1,23 @@
 ﻿<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(SharedFiles.MainLayout)" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(SharedFiles.MainLayout)">
+                 <Authorizing>
+                    @*<p>Determining session state, please wait...</p>*@
+                    <Loading />
+                </Authorizing>
+                <NotAuthorized>
+                    @*<p>Gelieve in te loggen om dit pagina te raadplegen.</p>*@
+                    <LoginRedirect />
+                </NotAuthorized>
+            </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+           
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>
             <LayoutView Layout="@typeof(SharedFiles.MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
+                <p role="alert">Deze pagina bestaat niet.</p>
             </LayoutView>
         </NotFound>
     </Router>

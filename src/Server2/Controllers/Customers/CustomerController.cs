@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Customers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -6,6 +7,7 @@ namespace Server.Controllers.Customers;
 
 [ApiController]
 [Route("/api/customers/")]
+[Authorize]
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService customerService;
@@ -31,6 +33,7 @@ public class CustomerController : ControllerBase
 
     [SwaggerOperation("Creates a new customer.")]
     [HttpPost]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> Create(CustomerRequest.Create request)
     {
         CustomerResponse.Create customer =  await customerService.CreateAsync(request);
@@ -39,6 +42,7 @@ public class CustomerController : ControllerBase
 
     [SwaggerOperation("Edits an existing customer.")]
     [HttpPut]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> EditAsync(CustomerRequest.Edit request)
     {
         var response = await customerService.EditAsync(request);
@@ -47,6 +51,7 @@ public class CustomerController : ControllerBase
 
     [SwaggerOperation("Deletes an existing customer.")]
     [HttpDelete("{CustomerId}")]
+    [Authorize(Roles = "Administrator, Master")]
     public async Task<IActionResult> Delete([FromRoute] CustomerRequest.Delete request)
     {
         await customerService.DeleteAsync(request);

@@ -1,9 +1,14 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services;
 using Services.FakeInitializer;
+using System.Security.Claims;
 
 namespace Server;
 
@@ -25,6 +30,8 @@ public class StartUp
         var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("VirtualItCompany"));
         services.AddServices();
 
+        
+
 
         services.AddDbContextFactory<VicDBContext>(options =>
             options.UseSqlServer(builder.ConnectionString, opt => opt.EnableRetryOnFailure()).EnableSensitiveDataLogging(Configuration.GetValue<bool>("Logging:EnableSqlParameterLogging"))
@@ -35,10 +42,42 @@ public class StartUp
             c.CustomSchemaIds(type => type.FullName.Replace("+", "."));
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Virtual IT Company API", Version = "v1" });
             c.EnableAnnotations();
+
+            var securitySchema = new OpenApiSecurityScheme
+            {
+                Description = "Using the Authorization header with the Bearer scheme.",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            };
+
+            c.AddSecurityDefinition("Bearer", securitySchema);
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+          {
+              { securitySchema, new[] { "Bearer" } }
+          });
         });
 
-        services.AddRazorPages();
 
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.Authority = Configuration["Auth0:Authority"];
+            options.Audience = Configuration["Auth0:ApiIdentifier"];
+        });
+
+
+        services.AddRazorPages();
         services.AddScoped<FakeSeeder>();
     }
 
@@ -50,7 +89,10 @@ public class StartUp
             app.UseDeveloperExceptionPage();
             app.UseWebAssemblyDebugging();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virtual IT Company API"));
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virtual IT Company API");
+            });
         }
         else
         {
@@ -69,6 +111,7 @@ public class StartUp
 
         app.UseAuthentication();
         app.UseAuthorization();
+
 
         app.UseEndpoints(endpoints =>
         {
