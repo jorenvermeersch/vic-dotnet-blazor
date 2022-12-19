@@ -1,5 +1,6 @@
 ﻿using Domain.Accounts;
 using Domain.Customers;
+using Domain.Hosts;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -19,6 +20,7 @@ public class VicDBContext : DbContext
     public DbSet<ExternalCustomer> ExternalCustomers => Set<ExternalCustomer>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
+    public DbSet<Server> Hosts => Set<Server>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

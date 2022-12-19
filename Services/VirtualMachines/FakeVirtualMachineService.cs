@@ -54,7 +54,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
             Status = model.Status!.Value,
             Reason = model.Reason,
-            Ports = new List<Port>(),
+            Ports = new List<Port>(), //todo
             Host = host,
             Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
             Account = account,
@@ -62,7 +62,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             User = user,
             Name = model.Name,
             HasVpnConnection = model.hasVpnConnection,
-            Specifications = new Domain.Common.Specifications(memory: model.Specifications.Memory, storage: model.Specifications.Storage)
+            Specifications = new Domain.Common.Specifications(model.Specifications.VirtualProcessors,model.Specifications.Memory, model.Specifications.Storage),
         };
         return args;
     }
