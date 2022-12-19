@@ -5,17 +5,17 @@ using Shared.VirtualMachines;
 
 namespace Client.VirtualMachines;
 
-public partial class AdvancedIndex
+public partial class Table
 {
     private bool dense = false;
     private bool hover = true;
     private bool striped = false;
     private bool bordered = false;
-    private string searchString1 = "";
+    private string searchString = "";
 
     private string style = "white-space: nowrap";
 
-    private VirtualMachineDto.Detail? selectedItem1 = null;
+    private VirtualMachineDto.Detail? chosenMachine = null;
     private IEnumerable<VirtualMachineDto.Detail>? virtualMachines = null;
 
     [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
@@ -28,12 +28,12 @@ public partial class AdvancedIndex
         virtualMachines = response.VirtualMachines;
     }
 
-    private bool FilterFunc1(VirtualMachineDto.Detail element)
+    private bool FilterTable(VirtualMachineDto.Detail element)
     {
-        return FilterFunc(element, searchString1);
+        return FilterTable(element, searchString);
     }
 
-    private bool FilterFunc(VirtualMachineDto.Detail element, string searchString)
+    private bool FilterTable(VirtualMachineDto.Detail element, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;

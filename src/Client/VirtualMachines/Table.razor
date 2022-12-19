@@ -1,4 +1,4 @@
-﻿@page "/virtual-machine/advanced-list"
+﻿@page "/virtual-machine/table"
 @layout NoGlobalSearchLayout
 @attribute [Authorize]
 
@@ -19,11 +19,11 @@ else {
                   Hover="true"
                   Bordered="true"
                   Striped="false"
-                  Filter="new Func<Shared.VirtualMachines.VirtualMachineDto.Detail,bool>(FilterFunc1)"
-                  @bind-SelectedItem="selectedItem1">
+                  Filter="new Func<VirtualMachineDto.Detail,bool>(FilterTable)"
+                  @bind-SelectedItem="chosenMachine">
                 <ToolBarContent>
                     <MudSpacer />
-                    <MudTextField @bind-Value="searchString1"
+                    <MudTextField @bind-Value="searchString"
                               Placeholder="Search"
                               Adornment="Adornment.Start"
                               AdornmentIcon="@Icons.Material.Filled.Search"

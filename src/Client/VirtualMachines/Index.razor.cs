@@ -29,9 +29,9 @@ public partial class Index
         selectedPage = Page > 0 ? Page : 1;
     }
 
-    private async Task ShowMoreDetails()
+    private void NavigateToTable()
     {
-        NavigationManager.NavigateTo("/virtual-machine/advanced-list");
+        NavigationManager.NavigateTo("/virtual-machine/table");
     }
 
     private async Task ClickHandler(int pageNr)
