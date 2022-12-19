@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
@@ -8,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services;
 using Services.FakeInitializer;
+using Shared.Validation;
 using System.Security.Claims;
 
 namespace Server;
@@ -30,7 +32,14 @@ public class StartUp
         var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("VirtualItCompany"));
         services.AddServices();
 
-        
+        services.AddControllersWithViews().AddFluentValidation(config =>
+        {
+            config.RegisterValidatorsFromAssemblyContaining<AccountValidator>();
+            config.RegisterValidatorsFromAssemblyContaining<HostValidator>();
+            config.RegisterValidatorsFromAssemblyContaining<VirtualMachineValidator>();
+            config.RegisterValidatorsFromAssemblyContaining<CustomerValidator>();
+            config.ImplicitlyValidateChildProperties = true;
+        });
 
 
         services.AddDbContextFactory<VicDBContext>(options =>
