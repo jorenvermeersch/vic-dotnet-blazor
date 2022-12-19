@@ -55,27 +55,27 @@ else {
                     <MudTh>VPN</MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd Style="@style" DataLabel="Id"><a href="/virtual-machine/@context.Id">@context.Id</a></MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Name</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Fqdn</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@Localizer[context.Status.ToString()]</MudTd>
-                    <MudTd Style="@style" DataLabel="Id"> @Localizer[context.Template.ToString()]</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Mode.ToString()</MudTd>
-                    <MudTd Style="@style" DataLabel="Id"><a href="/host/@context.Host.Id">@context.Host.Name</a></MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@string.Join(", ", context.Availabilities.Select(a=>Localizer[a]))</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@Localizer[context.BackupFrequenty.ToString()]</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.ApplicationDate.FormatDate()</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.TimeSpan.StartDate.FormatDate()</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.TimeSpan.EndDate.FormatDate()</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Reason</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@string.Join(", ", context.Ports.Select(x => x.Service))</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Specification.VirtualProcessors</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Specification.Memory</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Specification.Storage</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Account.GetFullName()</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Requester.Name</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.User.Name</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@Localizer[context.hasVpnConnection.ToString()]</MudTd>
+                    <MudTd Style="@style" DataLabel="ID"><a href="/virtual-machine/@context.Id">@context.Id</a></MudTd>
+                    <MudTd Style="@style" DataLabel="Naam">@context.Name</MudTd>
+                    <MudTd Style="@style" DataLabel="FQDN">@context.Fqdn</MudTd>
+                    <MudTd Style="@style" DataLabel="Status">@Localizer[context.Status.ToString()]</MudTd>
+                    <MudTd Style="@style" DataLabel="Template"> @Localizer[context.Template.ToString()]</MudTd>
+                    <MudTd Style="@style" DataLabel="Mode">@context.Mode.ToString()</MudTd>
+                    <MudTd Style="@style" DataLabel="Host"><a href="/host/@context.Host.Id">@context.Host.Name</a></MudTd>
+                    <MudTd Style="@style" DataLabel="Beschikbaar op">@string.Join(", ", context.Availabilities.Select(a=>Localizer[a]))</MudTd>
+                    <MudTd Style="@style" DataLabel="Back-ups">@Localizer[context.BackupFrequenty.ToString()]</MudTd>
+                    <MudTd Style="@style" DataLabel="Aanvragingsdatum">@context.ApplicationDate.FormatDate()</MudTd>
+                    <MudTd Style="@style" DataLabel="Startdatum">@context.TimeSpan.StartDate.FormatDate()</MudTd>
+                    <MudTd Style="@style" DataLabel="Einddatum">@context.TimeSpan.EndDate.FormatDate()</MudTd>
+                    <MudTd Style="@style" DataLabel="Reden">@context.Reason</MudTd>
+                    <MudTd Style="@style" DataLabel="Poorten">@string.Join(", ", context.Ports.Select(x => x.Service))</MudTd>
+                    <MudTd Style="@style" DataLabel="vCPUs">@context.Specification.VirtualProcessors</MudTd>
+                    <MudTd Style="@style" DataLabel="Geheugen">@context.Specification.Memory</MudTd>
+                    <MudTd Style="@style" DataLabel="Opslag">@context.Specification.Storage</MudTd>
+                    <MudTd Style="@style" DataLabel="Beheerder">@context.Account.GetFullName()</MudTd>
+                    <MudTd Style="@style" DataLabel="Aanvrager">@context.Requester.Name</MudTd>
+                    <MudTd Style="@style" DataLabel="Gebruiker">@context.User.Name</MudTd>
+                    <MudTd Style="@style" DataLabel="VPN">@Localizer[context.hasVpnConnection.ToString()]</MudTd>
                 </RowTemplate>
                 <PagerContent>
                     <MudTablePager />
