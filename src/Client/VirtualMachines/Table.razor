@@ -72,7 +72,7 @@ else {
                     <MudTd Style="@style" DataLabel="Id">@context.Specification.VirtualProcessors</MudTd>
                     <MudTd Style="@style" DataLabel="Id">@context.Specification.Memory</MudTd>
                     <MudTd Style="@style" DataLabel="Id">@context.Specification.Storage</MudTd>
-                    <MudTd Style="@style" DataLabel="Id">@context.Account.Firstname @context.Account.Lastname</MudTd>
+                    <MudTd Style="@style" DataLabel="Id">@context.Account.GetFullName()</MudTd>
                     <MudTd Style="@style" DataLabel="Id">@context.Requester.Name</MudTd>
                     <MudTd Style="@style" DataLabel="Id">@context.User.Name</MudTd>
                     <MudTd Style="@style" DataLabel="Id">@Localizer[context.hasVpnConnection.ToString()]</MudTd>
