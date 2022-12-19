@@ -19,7 +19,7 @@
     overflow: hidden;
     border: 1px solid var(--dark-blue);
     max-height: 250px;
-    /*overflow-y:scroll;*/ /* Causes issue with width of items. */
+    overflow-y: scroll; /* Causes issue with width of items. */
 }
 
 .dropdown {
