@@ -15,11 +15,11 @@
     background-color: white;
     z-index: 1000;
     width: 100%;
-    border-radius: 0px;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--dark-blue);
     max-height: 250px;
-    overflow-y:scroll;
+    /*overflow-y:scroll;*/ /* Causes issue with width of items. */
 }
 
 .dropdown {
