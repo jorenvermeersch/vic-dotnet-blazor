@@ -115,18 +115,21 @@ else
                               Required="@true"
                               @bind-Value="@VirtualMachine.Specifications.VirtualProcessors"
                               For="@(()=>VirtualMachine.Specifications.VirtualProcessors)"
+                              Maximum="@chosenHost?.RemainingResources.VirtualProcessors"
                               DefaultValue="1" />
 
                 <LabelInputNumber Label="Geheugen"
                               Required="@true"
                               @bind-Value="@VirtualMachine.Specifications.Memory"
                               For="@(()=>VirtualMachine.Specifications.Memory)"
+                              Maximum="@chosenHost?.RemainingResources.Memory"
                               DefaultValue="1" />
 
                 <LabelInputNumber Label="Opslag"
                               Required="@true"
                               @bind-Value="@VirtualMachine.Specifications.Storage"
                               For="@(()=>VirtualMachine.Specifications.Storage)"
+                              Maximum="@chosenHost?.RemainingResources.Storage"
                               DefaultValue="1" />
                 
                 <Title Text="Beschikbaarheid" />
