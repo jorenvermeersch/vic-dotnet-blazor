@@ -12,10 +12,14 @@ public class FakeSeeder
         this.dbContext = dbContext;
     }
 
+    private readonly bool seed = true;
+
     public void Seed()
     {
         dbContext.Database.EnsureDeleted();
-        if (dbContext.Database.EnsureCreated())
+        dbContext.Database.EnsureCreated();
+
+        if (seed)
         {
             SeedCustomers();
             SeedAccounts();
@@ -25,9 +29,23 @@ public class FakeSeeder
 
     private void SeedAccounts()
     {
-
         var accounts = new AccountFaker().UseSeed(1337).Generate(100);
-        dbContext.Accounts.AddRange(accounts.Select(x => new Account { Firstname = x.Firstname, Lastname = x.Lastname, Email = x.Email, Role = x.Role, PasswordHash = x.PasswordHash, IsActive = x.IsActive, Department = x.Department, Education = x.Education }));
+
+        dbContext.Accounts.AddRange(
+            accounts.Select(
+                x => new Account
+                {
+                    Firstname = x.Firstname,
+                    Lastname = x.Lastname,
+                    Email = x.Email,
+                    Role = x.Role,
+                    PasswordHash = x.PasswordHash,
+                    IsActive = x.IsActive,
+                    Department = x.Department,
+                    Education = x.Education
+                }
+                )
+            );
         dbContext.SaveChanges();
     }
 

@@ -38,12 +38,17 @@ public class VicDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(VicDbContext).Assembly);
 
+        // You need to define each subclass explicitly if you don't want to create a DbSet for each subclass. 
+        // 1. Customer. 
+        modelBuilder.Entity<InternalCustomer>();
+        modelBuilder.Entity<ExternalCustomer>();
+
         //modelBuilder.Ignore<Account>();
         modelBuilder.Ignore<Specifications>();
-        modelBuilder.Ignore<ContactPerson>();
-        modelBuilder.Ignore<Customer>();
-        modelBuilder.Ignore<InternalCustomer>();
-        modelBuilder.Ignore<ExternalCustomer>();
+        //modelBuilder.Ignore<ContactPerson>();
+        //modelBuilder.Ignore<Customer>();
+        //modelBuilder.Ignore<InternalCustomer>();
+        //modelBuilder.Ignore<ExternalCustomer>();
         modelBuilder.Ignore<Machine>();
         modelBuilder.Ignore<Server>();
         modelBuilder.Ignore<HostSpecifications>();
@@ -55,4 +60,8 @@ public class VicDbContext : DbContext
         modelBuilder.Ignore<VirtualMachine>();
     }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+    {
+        builder.Properties<string>().HaveMaxLength(4_000); // Maximum length that can still be indexed. 
+    }
 }

@@ -1,12 +1,12 @@
 ﻿using Domain.Accounts;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Data.Configurations.Accounts;
 
-class AccountConfiguration : IEntityTypeConfiguration<Account>
+internal class AccountConfiguration : EntityConfiguration<Account>
 {
-    public void Configure(EntityTypeBuilder<Account> builder)
+    public override void Configure(EntityTypeBuilder<Account> builder)
     {
+        base.Configure(builder);
     }
 }
