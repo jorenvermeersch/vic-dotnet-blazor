@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Client.SharedFiles.Resources;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.VirtualMachines;
 
@@ -12,20 +13,25 @@ public partial class AdvancedIndex
     private bool bordered = false;
     private string searchString1 = "";
 
-    private VirtualMachineDto.Detail selectedItem1 = null;
+    private string style = "white-space: nowrap";
+
+    private VirtualMachineDto.Detail? selectedItem1 = null;
     private IEnumerable<VirtualMachineDto.Detail>? virtualMachines = null;
 
     [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
-    [Inject] public IStringLocalizer<SharedFiles.Resources.Resource> localizer { get; set; } = default!;
+    [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = default!;
 
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         VirtualMachineResponse.GetAllDetails response = await VirtualMachineService.GetAllDetailsAsync(new VirtualMachineRequest.GetAllDetails()) ?? new VirtualMachineResponse.GetAllDetails();
         virtualMachines = response.VirtualMachines;
     }
 
-    private bool FilterFunc1(VirtualMachineDto.Detail element) => FilterFunc(element, searchString1);
+    private bool FilterFunc1(VirtualMachineDto.Detail element)
+    {
+        return FilterFunc(element, searchString1);
+    }
 
     private bool FilterFunc(VirtualMachineDto.Detail element, string searchString)
     {
