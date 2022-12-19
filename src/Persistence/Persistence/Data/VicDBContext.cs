@@ -17,6 +17,8 @@ public class VicDbContext : DbContext
 
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Port> Ports => Set<Port>();
+    public DbSet<Processor> Processors => Set<Processor>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -52,10 +54,10 @@ public class VicDbContext : DbContext
         modelBuilder.Ignore<Machine>();
         modelBuilder.Ignore<Server>();
         modelBuilder.Ignore<HostSpecifications>();
-        modelBuilder.Ignore<Processor>();
+        //modelBuilder.Ignore<Processor>();
         modelBuilder.Ignore<VirtualMachine>();
         modelBuilder.Ignore<Credentials>();
-        modelBuilder.Ignore<Port>();
+        //modelBuilder.Ignore<Port>();
         modelBuilder.Ignore<Domain.VirtualMachines.TimeSpan>();
         modelBuilder.Ignore<VirtualMachine>();
     }
