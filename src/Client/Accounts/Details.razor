@@ -30,7 +30,7 @@ else
         </OneWidth>
         <TwoWidth>
             <Title Text="Virtuele machines" />
-            <NoResultsMessage Message="Deze beheerder is voorlopig nog geen virtuele machines toegewezen" />
+            <NoResultsMessage Message="@string.Format($"{account.GetFullName()} is nog geen verantwoordelijke voor virtuele machines.")"/>
         </TwoWidth>
     </ThreeColumnLayout>
 }

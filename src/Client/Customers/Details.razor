@@ -58,7 +58,7 @@ else
             }
             else
             {
-                <NoResultsMessage Message="Deze klant heeft geen virtuele machines" />
+                <NoResultsMessage Message="@string.Format($"{customer.GetFullName()} heeft nog geen virtuele machines.")" />
             }
         </TwoWidth>
     </ThreeColumnLayout>
