@@ -1,43 +1,58 @@
 ﻿using Domain.Accounts;
+using Domain.Common;
 using Domain.Customers;
+using Domain.Hosts;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.Reflection;
+using Persistence.Data.Triggers;
 
 namespace Persistence.Data;
 
-public class VicDBContext : DbContext
+public class VicDbContext : DbContext
 {
-    public VicDBContext(DbContextOptions<VicDBContext> options)
-            : base(options)
+    public VicDbContext(DbContextOptions<VicDbContext> options) : base(options)
     {
+
     }
 
     public DbSet<Account> Accounts => Set<Account>();
-    public DbSet<InternalCustomer> InternalCustomers => Set<InternalCustomer>();
-    public DbSet<ExternalCustomer> ExternalCustomers => Set<ExternalCustomer>();
     public DbSet<Customer> Customers => Set<Customer>();
-    public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        // More detailed errors for development. 
+        optionsBuilder.EnableDetailedErrors();
+        optionsBuilder.EnableSensitiveDataLogging();
+
+        // Triggers. 
+        optionsBuilder.UseTriggers(options =>
+        {
+            options.AddTrigger<EntityBeforeSaveTrigger>();
+        });
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-        .Entity<Customer>()
-        .Property(e => e.ContactPerson)
-        .IsRequired(false)
-        .HasConversion(v => JsonConvert.SerializeObject(v),
-                     v => JsonConvert.DeserializeObject<ContactPerson>(v));
-
-        modelBuilder
-        .Entity<Customer>()
-        .Property(e => e.BackupContactPerson)
-        .IsRequired(false)
-        .HasConversion(v => JsonConvert.SerializeObject(v),
-                     v => JsonConvert.DeserializeObject<ContactPerson>(v));
-        //modelBuilder.Entity<Customer>();
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VicDbContext).Assembly);
+
+        //modelBuilder.Ignore<Account>();
+        modelBuilder.Ignore<Specifications>();
+        modelBuilder.Ignore<ContactPerson>();
+        modelBuilder.Ignore<Customer>();
+        modelBuilder.Ignore<InternalCustomer>();
+        modelBuilder.Ignore<ExternalCustomer>();
+        modelBuilder.Ignore<Machine>();
+        modelBuilder.Ignore<Server>();
+        modelBuilder.Ignore<HostSpecifications>();
+        modelBuilder.Ignore<Processor>();
+        modelBuilder.Ignore<VirtualMachine>();
+        modelBuilder.Ignore<Credentials>();
+        modelBuilder.Ignore<Port>();
+        modelBuilder.Ignore<Domain.VirtualMachines.TimeSpan>();
+        modelBuilder.Ignore<VirtualMachine>();
     }
 
 }

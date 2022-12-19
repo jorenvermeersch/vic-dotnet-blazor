@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Configurations\Customers\" />
+    <Folder Include="Data\Configurations\Hosts\" />
+    <Folder Include="Data\Configurations\Common\" />
+    <Folder Include="Data\Configurations\VirtualMachines\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

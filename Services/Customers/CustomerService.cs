@@ -10,7 +10,7 @@ namespace Services.Customers;
 public class CustomerService : ICustomerService
 {
 
-    private readonly VicDBContext _dbContext;
+    private readonly VicDbContext _dbContext;
     private readonly DbSet<Customer> _customers;
 
     private IQueryable<Customer> GetCustomerById(long id)
@@ -20,7 +20,7 @@ public class CustomerService : ICustomerService
                 .Where(p => p.Id == id);
     }
 
-    public CustomerService(VicDBContext dbContext)
+    public CustomerService(VicDbContext dbContext)
     {
         _dbContext = dbContext;
         _customers = _dbContext.Customers;

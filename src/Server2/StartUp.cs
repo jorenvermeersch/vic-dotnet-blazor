@@ -1,14 +1,11 @@
 ﻿
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services;
 using Services.FakeInitializer;
-using System.Security.Claims;
 
 namespace Server;
 
@@ -27,16 +24,19 @@ public class StartUp
         {
             options.SuppressAsyncSuffixInActionNames = false;
         });
-        var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("VirtualItCompany"));
+
         services.AddServices();
 
-        
+        // Database context. 
+        var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("SqlServer"));
+        services.AddDbContextFactory<VicDbContext>(options =>
+        {
+            options
+            .UseSqlServer(builder.ConnectionString, optionsBuilder => optionsBuilder.EnableRetryOnFailure())
+            .EnableSensitiveDataLogging(Configuration.GetValue<bool>("Logging:EnableSqlParameterLogging"));
+        });
 
-
-        services.AddDbContextFactory<VicDBContext>(options =>
-            options.UseSqlServer(builder.ConnectionString, opt => opt.EnableRetryOnFailure()).EnableSensitiveDataLogging(Configuration.GetValue<bool>("Logging:EnableSqlParameterLogging"))
-        );
-
+        // Swagger. 
         services.AddSwaggerGen(c =>
         {
             c.CustomSchemaIds(type => type.FullName.Replace("+", "."));
@@ -82,7 +82,7 @@ public class StartUp
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDBContext dbContext, FakeSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDbContext dbContext, FakeSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
     {
         if (env.IsDevelopment())
         {

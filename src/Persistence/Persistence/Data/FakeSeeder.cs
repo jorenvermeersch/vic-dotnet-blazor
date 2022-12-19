@@ -5,9 +5,9 @@ namespace Persistence.Data;
 
 public class FakeSeeder
 {
-    private readonly VicDBContext dbContext;
+    private readonly VicDbContext dbContext;
 
-    public FakeSeeder(VicDBContext dbContext)
+    public FakeSeeder(VicDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
