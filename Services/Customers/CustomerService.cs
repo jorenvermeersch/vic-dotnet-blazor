@@ -26,8 +26,6 @@ public class CustomerService : ICustomerService
         _customers = _dbContext.Customers;
     }
 
-
-    //CREATE DOESNT WORK YET
     public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
     {
         CustomerResponse.Create response = new();
@@ -42,7 +40,7 @@ public class CustomerService : ICustomerService
 
         }
 
-        if (createdCustomer.CustomerType == CustomerType.Intern.ToString())
+        if (createdCustomer.CustomerType == CustomerType.Intern)
         {
             customer = new InternalCustomer(
                 createdCustomer.Institution!.Value,
@@ -50,10 +48,7 @@ public class CustomerService : ICustomerService
                 createdCustomer.Education,
                 contactperson,
                 backupContactperson
-                )
-            {
-                Id = _customers.Max(x => x.Id) + 1
-            };
+                );
         }
         else
         {
@@ -75,8 +70,7 @@ public class CustomerService : ICustomerService
 
     public async Task DeleteAsync(CustomerRequest.Delete request)
     {
-        Customer customer = await _customers.FindAsync(request.CustomerId);
-        _customers.Remove(customer);
+        _customers.RemoveIf(customer => customer.Id == request.CustomerId);
         await _dbContext.SaveChangesAsync();
     }
 

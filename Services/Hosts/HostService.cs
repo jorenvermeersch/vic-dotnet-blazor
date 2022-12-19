@@ -59,7 +59,7 @@ public class HostService : IHostService
     {
         HostResponse.GetDetail response = new();
 
-        Host host = await GetHostById(request.HostId).SingleOrDefaultAsync();
+        Server host = await GetHostById(request.HostId).SingleOrDefaultAsync();
 
         response.Host = new HostDto.Detail
         {
