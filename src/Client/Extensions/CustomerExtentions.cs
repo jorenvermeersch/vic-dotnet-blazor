@@ -22,6 +22,16 @@ public static class CustomerExtentions
         return customer.CustomerType == CustomerType.Intern;
     }
 
+    public static bool IsInternal(this CustomerDto.Mutate customer)
+    {
+        return customer.CustomerType == CustomerType.Intern;
+    }
+
+    public static bool IsExternal(this CustomerDto.Mutate customer)
+    {
+        return customer.CustomerType == CustomerType.Extern;
+    }
+
     public static string GetDetailUrl(this CustomerDto.Index customer)
     {
         return $"{route}/{customer.Id}";

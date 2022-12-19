@@ -18,17 +18,56 @@
     <ThreeColumnLayout>
         <OneWidth>
             <Title Text="Algemene informatie" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Rol" Required="@true" Items="@roles" @bind-Value="Account.Role" For="@(()=>Account.Role)"/>
-            <AddInput Type="@Input.InputType.TEXT" Label="Departement" Required="@true" @bind-Value="Account.Department" For="@(() => Account.Department)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Opleiding" Required="@false" @bind-Value="Account.Education" For="@(() => Account.Education)" />
-            <CustomCheckbox Label="Actief" @bind-Value="@Account.IsActive" />
+
+            <DropDown Label="Rol"
+                      Required="@true"
+                      Options="translatedRoles"
+                      OnChange="SetRole" />
+            <ValidationMessage For="@(() => Account.Role)" />
+
+            <LabelInput Label="Departement"
+                        Required="@true"
+                        @bind-Value="Account.Department"
+                        For="@(() => Account.Department)" 
+                        TestValue="IT en Digitale Innovatie"/>
+
+            <LabelInput Label="Opleiding"
+                        @bind-Value="Account.Education"
+                        For="@(() => Account.Education)" 
+                        TestValue="Toegepaste Informatica"/>
+
+            <Checkbox Label="Actief"
+                      @bind-Value="@Account.IsActive" />
+
         </OneWidth>
         <OneWidth>
             <Title Text="Accountgegevens" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@true" @bind-Value="Account.Firstname" For="@(() => Account.Firstname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Account.Lastname" For="@(() => Account.Lastname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@true" @bind-Value="Account.Email" For="@(() => Account.Email)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Wachtwoord" Required="@true" @bind-Value="Account.Password" For="@(() => Account.Password)" />
+
+            <LabelInput Label="Voornaam"
+                        Required="@true"
+                        @bind-Value="Account.Firstname"
+                        For="@(() => Account.Firstname)"
+                        TestValue="Joren"/>
+
+            <LabelInput Label="Naam"
+                        Required="@true"
+                        @bind-Value="Account.Lastname"
+                        For="@(() => Account.Lastname)" 
+                        TestValue="Vermeersch"/>
+
+            <LabelInput Label="E-mailadres"
+                        Required="@true"
+                        InputType="email"
+                        @bind-Value="Account.Email"
+                        For="@(() => Account.Email)"
+                        TestValue="joren.vermeersch@student.hogent.be"/>
+
+            <LabelInput Label="Wachtwoord"
+                        Required="@true"
+                        InputType="password"
+                        @bind-Value="Account.Password"
+                        For="@(() => Account.Password)"
+                        TestValue="JoR3n!-53"/>
         </OneWidth>
         <OneWidth>
 

@@ -7,15 +7,20 @@ public class ContactPersonValidator : AbstractValidator<ContactPersonDto>
 {
     public ContactPersonValidator()
     {
-        RuleFor(x => x.Firstname).NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Voornaam")))
-            .Matches(ValidationRegex.Name).WithMessage(string.Format(ValidationMessages.INVALID_NAME("Voornaam")));
-        RuleFor(x => x.Lastname).NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Naam")))
-            .Matches(ValidationRegex.Name).WithMessage(string.Format(ValidationMessages.INVALID_NAME("Naam")));
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
+        RuleFor(x => x.Firstname).NotEmpty().WithMessage(ValidationMessages.NotEmpty("Voornaam"))
+            .Matches(ValidationRegex.Name).WithMessage(ValidationMessages.InvalidName("Voornaam"));
+
+        RuleFor(x => x.Lastname).NotEmpty().WithMessage(ValidationMessages.NotEmpty("Naam"))
+            .Matches(ValidationRegex.Name).WithMessage(ValidationMessages.InvalidName("Naam"));
+
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Email")))
-            .EmailAddress().WithMessage(string.Format(ValidationMessages.INVALID_EMAIL()));
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("E-mailadres"))
+            .EmailAddress().WithMessage(ValidationMessages.InvalidEmailAddress);
+
         RuleFor(x => x.Phonenumber)
-            .Matches(ValidationRegex.PhoneNumber);
+            .Matches(ValidationRegex.PhoneNumber).WithMessage(ValidationMessages.InvalidPhoneNumber);
 
     }
 }

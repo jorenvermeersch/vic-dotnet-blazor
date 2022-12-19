@@ -3,6 +3,7 @@
 }
 
 .title h2 {
+  display: inline-block; 
   color: var(--black); 
   font-size: var(--text-md);
   font-weight: 600;

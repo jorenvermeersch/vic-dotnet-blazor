@@ -1,5 +1,6 @@
 using Domain.Constants;
 using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 using Shared.Customers;
 
 namespace Client.Customers;
@@ -12,66 +13,53 @@ public partial class Create
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
     [Inject] public NavigationManager Navigation { get; set; } = default!;
 
+    private Dictionary<string, string> translatedCustomerTypes = new();
+    private Dictionary<string, string> translatedInstitutions = new();
 
-    private List<string> _typesClient = Enum.GetNames(typeof(CustomerType)).ToList();
-    private List<string> _institution = Enum.GetNames(typeof(Institution)).ToList();
-    private string _customcss = "background-color: white";
-    private bool _backuprequired = false;
-    private string[] _values = new string[3] { "", "", "" };
+    private bool backupRequired = false;
+    private string?[] backupContactValues = new string?[4] { "", "", "", "" };
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnInitialized()
     {
-        if (Convert.ToBoolean(Id))
-        {
-            CustomerResponse.GetDetail response = await CustomerService.GetDetailAsync(new CustomerRequest.GetDetail
-            {
-                CustomerId = Id
-            });
-            Customer = new CustomerDto.Mutate()
-            {
-                CustomerType = response.Customer.CustomerType.ToString(),
-                Department = response.Customer.Department,
-                Education = response.Customer.Education,
-                Institution = response.Customer.Institution.ToString(),
-                CompanyType = response.Customer.CompanyType,
-                CompanyName = response.Customer.CompanyName,
-                ContactPerson = response.Customer.ContactPerson,
-                BackupContactPerson = response.Customer.BackupContactPerson?? new ContactPersonDto()
-            };
-        }
+        TranslateCustomerTypes();
+        TranslateInstitutions();
     }
 
-    public void Makerequired(string value)
+    private void UpdateBackupContactRequired(string? value, int index)
     {
-        int index = int.Parse(value.Substring(0, 1));
-        string txt = value.Substring(1);
-        _values[index] = txt;
-        _backuprequired = _values.All(e => (e == "" || e == null)) ? false : true;
+        backupContactValues[index] = value;
+        backupRequired = backupContactValues.Any(value => !value.IsNullOrEmpty());
     }
 
     private async void HandleValidSubmit()
     {
-        if (Convert.ToBoolean(Id))
-        {
+        CustomerRequest.Create request = new() { Customer = Customer };
+        var response = await CustomerService.CreateAsync(request);
+        Navigation.NavigateTo($"customer/{response.CustomerId}");
+    }
 
-            CustomerRequest.Edit request = new()
-            {
-                CustomerId = Id,
-                Customer = Customer
-            };
-            var response =  await CustomerService.EditAsync(request);
-            Navigation.NavigateTo($"customer/{response.CustomerId}");
-        }
-        else
-        {
-            CustomerRequest.Create request = new CustomerRequest.Create
-            {
-                Customer = Customer
-            };
-            var response = await CustomerService!.CreateAsync(request);
+    // Functions and set-up required for drop-down. 
+    private void TranslateCustomerTypes()
+    {
+        List<string> customerTypes = Enum.GetNames(typeof(CustomerType)).ToList();
+        customerTypes.ForEach(customerType => translatedCustomerTypes.Add(customerType, customerType));
+    }
 
-            Navigation!.NavigateTo("customer/" + response.CustomerId);
-        }
+    private void SetCustomerType(string typeString)
+    {
+        bool success = Enum.TryParse(typeString, out CustomerType type);
+        if (success) Customer.CustomerType = type;
+    }
 
+    private void TranslateInstitutions()
+    {
+        List<string> institutions = Enum.GetNames(typeof(Institution)).ToList();
+        institutions.ForEach(institution => translatedInstitutions.Add(institution, institution));
+    }
+
+    private void SetInstitution(string institutionString)
+    {
+        bool success = Enum.TryParse(institutionString, out Institution institution);
+        if (success) Customer.Institution = institution;
     }
 }

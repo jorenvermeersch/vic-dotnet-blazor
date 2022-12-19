@@ -12,12 +12,6 @@
 
 <Footer InverseStyle=true />
 
-
-@code {
-    private string _currentUrl = "";
-
-    protected override void OnInitialized()
-    {
-        _currentUrl = NavigationManager.Uri;
-    }
-}
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />

@@ -1,0 +1,19 @@
+﻿::deep .mud-table {
+    border-radius: var(--border-radius); 
+    transition: none; 
+    color: var(--black);
+    background-color: var(--white); 
+}
+
+::deep .mud-elevation-1 {
+    box-shadow: none; 
+}
+
+::deep .mud-table-cell {
+    line-height: initial !important; 
+
+}
+
+.padding-bottom {
+    padding-bottom: var(--padding-md); 
+}

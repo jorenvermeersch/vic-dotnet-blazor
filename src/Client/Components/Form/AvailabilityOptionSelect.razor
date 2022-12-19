@@ -1,0 +1,17 @@
+﻿<div class="input-container multi-option">
+    <select class="input" type="text" style="@customCss" @bind="Value">
+        @foreach (string day in Enum.GetNames(typeof(DayOfWeek)))
+        {
+            <option value="@day">@Localizer[day]</option>
+        }
+    </select>
+
+    <select class="input" type="text" style="@customCss" disabled>
+        @foreach (string partofday in new List<string>(Enum.GetValues(typeof(PartOfDay)).Cast<PartOfDay>().Select(v => v.ToString().Replace("_", " "))))
+        {
+            <option value="@partofday">@Localizer[partofday]</option>
+        }
+    </select>
+</div>
+
+

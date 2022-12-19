@@ -1,0 +1,28 @@
+﻿@inherits InputBase<string>
+
+@{
+    var inverse = InverseStyle ? "inverse" : ""; 
+}
+
+<div>
+    <div class="input-container">
+        <label for="@Label">
+            <text>@Label:</text>
+            @if (Required)
+            {
+                <sup class="required-input">*</sup>
+            }
+        </label>
+        <select @bind="@CurrentValue" class="input @inverse">
+            <option value="" disabled selected hidden>@Placeholder</option>
+            @for (var index = 0; index < Options.Count; index++)
+            {
+                <option value="@Options[index]">
+                    @(HasDisplayOptions ? DisplayOptions[index] : Options[index])
+                </option>
+            }
+        </select>  
+    </div> 
+    <ValidationMessage For=@For />
+</div>
+

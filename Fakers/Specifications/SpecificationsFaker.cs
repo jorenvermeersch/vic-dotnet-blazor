@@ -1,5 +1,6 @@
 ﻿using Bogus;
 
+
 namespace Fakers.Specifications;
 
 public class SpecificationsFaker : Faker<Domain.Common.Specifications>

@@ -19,37 +19,91 @@
     <ThreeColumnLayout>
         <OneWidth>
             <Title Text="Algemene informatie" />
-            <AddInput Type="@Input.InputType.SELECT" Label="Soort" Required="@true" Items="@_typesClient" @bind-Value="@Customer.CustomerType" For="@(() => Customer.CustomerType)" IsDisabled="@Convert.ToBoolean(Id)" />
-            @if (Customer.CustomerType == "Intern")
-            {
+            <DropDown Label="Soort"
+                      Required="@true"
+                      Options="translatedCustomerTypes"
+                      OnChange="SetCustomerType" />
+            <ValidationMessage For="@(() => Customer.CustomerType)" />
 
-                <AddInput Type="@Input.InputType.SELECT" Label="Instituut" Required="@true" Items="@_institution" @bind-Value="Customer.Institution" For="@(() => Customer.Institution)" />
-                <AddInput Type="@Input.InputType.TEXT" Label="Departement" Required="@true" @bind-Value="Customer.Department" For="@(() => Customer.Department)" />
-                <AddInput Type="@Input.InputType.TEXT" Label="Opleiding" Required="@false" @bind-Value="Customer.Education" For="@(() => Customer.Education)" />
-            }
-            else if (Customer.CustomerType == "Extern")
+            @if (Customer.IsInternal())
             {
-                <AddInput PlaceHolder="" Type="@Input.InputType.TEXT" Label="Type extern" Required="@true" @bind-Value="Customer.CompanyType" For="@(() => Customer.CompanyType)" />
-                <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Customer.CompanyName" For="@(() => Customer.CompanyName)" />
+                <DropDown Label="Instituut"
+                      Required="@true"
+                      Options="translatedInstitutions"
+                      OnChange="SetInstitution" />
+                <ValidationMessage For="@(() => Customer.Institution)" />
+
+                <LabelInput Label="Departement"
+                        Required="@true"
+                        @bind-Value="Customer.Department"
+                        For="@(() => Customer.Department)"
+                        TestValue="IT en Digitale Innovatie" />
+
+                <LabelInput Label="Opleiding"
+                        @bind-Value="Customer.Education"
+                        For="@(() => Customer.Education)"
+                        TestValue="Toegepaste Informatica" />
             }
-            else
+            else if (Customer.IsExternal())
             {
-                <div></div>
+                <LabelInput Label="Type extern"
+                        Required="@true"
+                        @bind-Value="Customer.CompanyType"
+                        For="@(() => Customer.CompanyType)"
+                        TestValue="Besloten vennootschap (BV)" />
+
+                <LabelInput Label="Naam"
+                        Required="@true"
+                        @bind-Value="Customer.CompanyName"
+                        For="@(() => Customer.CompanyName)"
+                        TestValue="Virtual IT Company" />
             }
         </OneWidth>
         <OneWidth>
             <Title Text="Contactgegevens" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@true" @bind-Value="Customer.ContactPerson.Firstname" For="@(() => Customer.ContactPerson.Firstname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@true" @bind-Value="Customer.ContactPerson.Lastname" For="@(() => Customer.ContactPerson.Lastname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@true" @bind-Value="Customer.ContactPerson.Email" For="@(() => Customer.ContactPerson.Email)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" @bind-Value="Customer.ContactPerson.Phonenumber" For="@(() => Customer.ContactPerson.Phonenumber)" />
+            <LabelInput Label="Voornaam"
+                        Required="@true"
+                        @bind-Value="Customer.ContactPerson.Firstname"
+                        For="@(() => Customer.ContactPerson.Firstname)"
+                        TestValue="Joren" />
+
+            <LabelInput Label="Naam"
+                        Required="@true"
+                        @bind-Value="Customer.ContactPerson.Lastname"
+                        For="@(() => Customer.ContactPerson.Lastname)"
+                        TestValue="Vermeersch" />
+
+            <LabelInput Label="E-mailadres"
+                        Required="@true"
+                        @bind-Value="Customer.ContactPerson.Email"
+                        For="@(() => Customer.ContactPerson.Email)"
+                        TestValue="joren.vermeersch@student.hogent.be" />
+
+            <LabelInput Label="Telefoonnummer"
+                        @bind-Value="Customer.ContactPerson.Phonenumber"
+                        For="@(() => Customer.ContactPerson.Phonenumber)"
+                        TestValue="0482455642" />
         </OneWidth>
         <OneWidth>
             <Title Text="Back-up contactgegevens" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Voornaam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="0" @bind-Value="@Customer.BackupContactPerson.Firstname" For="@(() => Customer.BackupContactPerson.Firstname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Naam" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="1" @bind-Value="@Customer.BackupContactPerson.Lastname" For="@(() => Customer.BackupContactPerson.Lastname)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="E-mailadres" Required="@_backuprequired" Action="(value) => Makerequired(value)" OptionalId="2" @bind-Value="@Customer.BackupContactPerson.Email" For="@(() => Customer.BackupContactPerson.Email)" />
-            <AddInput Type="@Input.InputType.TEXT" Label="Telefoonnummer" @bind-Value="@Customer.BackupContactPerson.Phonenumber" For="@(() => Customer.BackupContactPerson.Phonenumber)" />
+            <LabelInput Label="Voornaam"
+                        Required="@backupRequired"
+                        @bind-Value="Customer.BackupContactPerson.Firstname"
+                        For="@(() => Customer.BackupContactPerson.Firstname)" />
+
+            <LabelInput Label="Naam"
+                        Required="@backupRequired"
+                        @bind-Value="Customer.BackupContactPerson.Lastname"
+                        For="@(() => Customer.BackupContactPerson.Lastname)" />
+
+            <LabelInput Label="E-mailadres"
+                        Required="@backupRequired"
+                        @bind-Value="Customer.BackupContactPerson.Email"
+                        For="@(() => Customer.BackupContactPerson.Email)" />
+
+            <LabelInput Label="Telefoonnummer"
+                        @bind-Value="Customer.BackupContactPerson.Phonenumber"
+                        For="@(() => Customer.BackupContactPerson.Phonenumber)" />
         </OneWidth>
     </ThreeColumnLayout>
 </EditForm>

@@ -1,5 +1,4 @@
 ﻿using Domain.Accounts;
-using Domain.Constants;
 using Services.FakeInitializer;
 using Shared.Accounts;
 
@@ -23,7 +22,7 @@ public class FakeAccountService : IAccountService
 
         AccountDto.Mutate model = request.Account;
 
-        Account acc = new(model.Firstname, model.Lastname, model.Email, Enum.Parse<Role>(model.Role, true), model.Password, model.Department, model.Education, model.IsActive)
+        Account acc = new(model.Firstname, model.Lastname, model.Email, model.Role, model.Password, model.Department, model.Education, model.IsActive)
         {
             Id = Accounts.Max(x => x.Id) + 1
         };
@@ -56,7 +55,7 @@ public class FakeAccountService : IAccountService
         account.Firstname = model.Firstname;
         account.Lastname = model.Lastname;
         account.Email = model.Email;
-        account.Role = (Role)Enum.Parse(typeof(Role), model.Role);
+        account.Role = model.Role;
         account.Department = model.Department;
         account.Education = model.Education;
         account.IsActive = model.IsActive;

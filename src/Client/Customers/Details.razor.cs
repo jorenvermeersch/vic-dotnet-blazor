@@ -76,8 +76,8 @@ public partial class Details
                new()
                {
                    { "Soort", customer.CustomerType.ToString() },
-                   { "Naam", customer.CompanyType! },
-                   { "Type", customer.CompanyName! },
+                   { "Naam", customer.CompanyName! },
+                   { "Type", customer.CompanyType! },
                }
            );
         }

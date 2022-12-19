@@ -1,9 +1,9 @@
-﻿using Domain.Customers;
+﻿using Domain.Constants;
+using Domain.Customers;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Customers;
-using Domain.Constants;
 using Shared.VirtualMachines;
-using Microsoft.EntityFrameworkCore;
 
 namespace Services.Customers;
 
@@ -13,10 +13,12 @@ public class CustomerService : ICustomerService
     private readonly VicDBContext _dbContext;
     private readonly DbSet<Customer> _customers;
 
-    private IQueryable<Customer> GetCustomerById(long id) => _customers
+    private IQueryable<Customer> GetCustomerById(long id)
+    {
+        return _customers
                 .AsNoTracking()
                 .Where(p => p.Id == id);
-
+    }
 
     public CustomerService(VicDBContext dbContext)
     {
@@ -40,10 +42,10 @@ public class CustomerService : ICustomerService
 
         }
 
-        if (createdCustomer.CustomerType.ToLower().Equals("intern"))
+        if (createdCustomer.CustomerType == CustomerType.Intern)
         {
             customer = new InternalCustomer(
-                (Institution)Enum.Parse(typeof(Institution), createdCustomer.Institution, true),
+                createdCustomer.Institution!.Value,
                 createdCustomer.Department,
                 createdCustomer.Education,
                 contactperson,
@@ -62,7 +64,7 @@ public class CustomerService : ICustomerService
                backupContactperson
                );
         }
-        
+
         var addedCustomer = _customers.Add(customer);
         await _dbContext.SaveChangesAsync();
 
@@ -83,16 +85,16 @@ public class CustomerService : ICustomerService
         CustomerResponse.Edit response = new();
         var customer = await GetCustomerById(request.CustomerId).SingleOrDefaultAsync();
 
-        if(customer is not null)
+        if (customer is not null)
         {
-            ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
-            ContactPerson backupContactPerson = new ContactPerson(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Phonenumber);
+            ContactPerson contactPerson = new(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
+            ContactPerson backupContactPerson = new(request.Customer.BackupContactPerson.Firstname, request.Customer.BackupContactPerson.Lastname, request.Customer.BackupContactPerson.Email, request.Customer.BackupContactPerson.Phonenumber);
 
 
             if (customer is InternalCustomer)
             {
                 InternalCustomer inCus = (InternalCustomer)customer;
-                inCus.Institution = (Institution)Enum.Parse(typeof(Institution), request.Customer.Institution, true);
+                inCus.Institution = request.Customer.Institution!.Value;
                 inCus.Education = request.Customer.Education;
                 inCus.Department = request.Customer.Department;
                 inCus.ContactPerson = contactPerson;
@@ -119,7 +121,7 @@ public class CustomerService : ICustomerService
         }
 
         return response;
-        
+
     }
 
     public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
@@ -196,7 +198,7 @@ public class CustomerService : ICustomerService
 
         query = query.Skip(request.Offset);
         query = query.Take(request.Amount);
-        
+
         response.Customers = await query.Select(x => new CustomerDto.Index
         {
             Id = x.Id,

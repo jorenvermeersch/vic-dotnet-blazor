@@ -29,10 +29,10 @@ public class FakeCustomerService : ICustomerService
         }
 
 
-        if (createdCustomer.CustomerType.ToLower().Equals("intern"))
+        if (createdCustomer.CustomerType == CustomerType.Intern)
         {
             customer = new InternalCustomer(
-                (Institution)Enum.Parse(typeof(Institution), createdCustomer.Institution, true),
+                createdCustomer.Institution!.Value,
                 createdCustomer.Department,
                 createdCustomer.Education,
                 contactperson,
@@ -79,7 +79,7 @@ public class FakeCustomerService : ICustomerService
         Customer customer = Customers.SingleOrDefault(x => x.Id == request.CustomerId);
         int index = Customers.IndexOf(customer);
 
-        ContactPerson contactPerson = new ContactPerson(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
+        ContactPerson contactPerson = new(request.Customer.ContactPerson.Firstname, request.Customer.ContactPerson.Lastname, request.Customer.ContactPerson.Email, request.Customer.ContactPerson.Phonenumber);
         ContactPerson backupContactPerson = null;
         if (request.Customer.BackupContactPerson is not null && !string.IsNullOrEmpty(request.Customer.BackupContactPerson.Firstname))
         {
@@ -89,7 +89,7 @@ public class FakeCustomerService : ICustomerService
         if (customer is InternalCustomer)
         {
             InternalCustomer inCus = (InternalCustomer)customer;
-            inCus.Institution = (Institution)Enum.Parse(typeof(Institution), request.Customer.Institution, true);
+            inCus.Institution = request.Customer.Institution!.Value;
             inCus.Education = request.Customer.Education;
             inCus.Department = request.Customer.Department;
             inCus.ContactPerson = contactPerson;

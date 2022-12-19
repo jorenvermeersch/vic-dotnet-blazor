@@ -6,23 +6,15 @@ namespace Client.Hosts;
 
 public partial class Create
 {
-    public class VirtualProcessor
-    {
-        public ProcessorDto? Processor { get; set; }
-        public int VirtualisationFactor { get; set; }
-
-    }
-
     [Inject] public NavigationManager Navigation { get; set; } = default!;
     [Inject] public IHostService HostService { get; set; } = default!;
     [Inject] public IProcessorService ProcessorService { get; set; } = default!;
+
     private HostDto.Mutate Host { get; set; } = new();
 
     private List<ProcessorDto>? Processors { get; set; }
-    public VirtualProcessor ChosenProcessor { get; set; } = new();
+    public ProcessorVirtualisationFactorPair ChosenProcessor { get; set; } = new();
     private Dictionary<string, string> chosenProcessorSpecifications = new();
-
-    private string customcss = "background-color: white";
 
 
     protected override async Task OnInitializedAsync()

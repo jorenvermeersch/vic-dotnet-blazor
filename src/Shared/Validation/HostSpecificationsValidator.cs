@@ -5,12 +5,19 @@ namespace Shared.Validation;
 
 public class HostSpecificationsValidator : AbstractValidator<HostSpecificationsDto>
 {
+    private readonly int minStorage = 1;
+    private readonly int minMemory = 1;
+
     public HostSpecificationsValidator()
     {
-        RuleFor(x=>x.Storage)
-            .GreaterThan(10).WithMessage(ValidationMessages.GREATER_THAN(10));
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
+        RuleFor(x => x.Storage)
+            .GreaterThanOrEqualTo(minStorage).WithMessage(ValidationMessages.GreaterThanOrEqual("Opslag", minStorage, "GB"));
+
         RuleFor(x => x.Memory)
-            .GreaterThan(10).WithMessage(ValidationMessages.GREATER_THAN(10));
-        RuleFor(x => x.Processors).NotNull().WithMessage(ValidationMessages.NotEmpty("Aantal"));
+            .GreaterThanOrEqualTo(minMemory).WithMessage(ValidationMessages.GreaterThanOrEqual("Geheugen", minMemory, "GB"));
+
+        RuleFor(x => x.Processors).NotEmpty().WithMessage("Host moet minstens één processor huizen.");
     }
 }

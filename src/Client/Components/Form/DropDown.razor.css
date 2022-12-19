@@ -15,11 +15,11 @@
     background-color: white;
     z-index: 1000;
     width: 100%;
-    border-radius: 0px;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--dark-blue);
     max-height: 250px;
-    overflow-y:scroll;
+    overflow-y: scroll; 
 }
 
 .dropdown {
@@ -43,6 +43,7 @@
 }
 
 .drop-down-button {
+    color: var(--black); 
     background: var(--white);
     width: 100%; 
     height: 100%;
@@ -51,9 +52,14 @@
     
 }
 
-.drop-down-button:hover{
-    background-color: var(--dark-blue); 
-    color: var(--white); 
+.drop-down-button.left-align {
+    justify-content: start; 
+    padding-inline-start: var(--card-padding); 
+}
+
+.drop-down-button:hover {
+    background-color: var(--dark-blue);
+    color: var(--white);
 }
 
 .drop-down-items .drop-down-button-item:last-child {

@@ -24,8 +24,8 @@
     top: 0.5rem;
 }
 
-.center-table{
-    margin-top: 100px;
+.center-table {
+    margin-top: var(--padding-lg); 
     width: 100%;
     display: flex;
     justify-content: center;
@@ -58,10 +58,9 @@
     color: #508bcb;
 }
 
+/* Validation styling */
 .validation-message {
-    color: red;
     font-size: var(--text-sm);
     color: var(--dark-blue);
     padding-top: var(--padding-sm); 
 }
-

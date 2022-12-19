@@ -16,34 +16,51 @@ else
                 <FormHeader Icon="fa-solid fa-microchip" Text="Host toevoegen" />
             </ButtonGroup>
             <span class="outline-end">
-                <button class="button" type="submit">Toevoegen</button>
+                <button class="button" type="submit">Host toevoegen</button>
             </span>
         </TopBar>
         
         <ThreeColumnLayout>
             <OneWidth>
                 <Title Text="Algemene informatie" />
-                <AddInput Type="Input.InputType.TEXT" Label="Naam" @bind-Value="Host.Name" For="@(()=> Host.Name)" Required=true />
-                <CustomInputNumber Type="Input.InputType.TEXT" Label="Geheugen" @bind-Value="Host.Specifications.Memory" For="@(()=> Host.Specifications.Memory)" Required=true />
-                <CustomInputNumber Type="Input.InputType.TEXT" Label="Opslag" @bind-Value="Host.Specifications.Storage" For="@(()=> Host.Specifications.Storage)" Required=true />
-                <Title Text="Processoren"></Title>
 
+                <LabelInput Label="Naam"
+                        Required="@true"
+                        @bind-Value="Host.Name"
+                        For="@(() => Host.Name)" />
+
+                <LabelInputNumber Label="Geheugen"
+                              Required="@true"
+                              DefaultValue="1"
+                              @bind-Value="Host.Specifications.Memory"
+                              For="@(()=> Host.Specifications.Memory)" />
+
+                <LabelInputNumber Label="Opslag"
+                              Required="@true"
+                              DefaultValue="1"
+                              @bind-Value="Host.Specifications.Storage"
+                              For="@(()=> Host.Specifications.Storage)" />
+
+                <Title Text="Kies processoren" />
                 <EditForm Context="ProcessorContext" OnValidSubmit="@AddProcessor" Model="@ChosenProcessor">
+                    <FluentValidationValidator />
                     <OneWidth>
-                        <CustomDropDown Label="Type"
-                                    Items="@SerializeProcessorsForDropDown()"
-                                    Action="@SetChosenProcessor" />
+                        <DropDown Label="Type"
+                              Options="@SerializeProcessorsForDropDown()"
+                              OnChange="@SetChosenProcessor">
+                            <ValidationMessage For="@(()=> ChosenProcessor.Processor)" />
+                        </DropDown>
+                       
 
                         @if (ChosenProcessor.Processor is not null)
                         {
                             <DataCard Entries="@chosenProcessorSpecifications" InverseStyle=true />
                         }
 
-                        <CustomInputNumber 
-                            Type="Input.InputType.TEXT"
-                            Label="Virtualisatiefactor"
-                            @bind-Value="ChosenProcessor.VirtualisationFactor"
-                            For="@(()=> ChosenProcessor.VirtualisationFactor)" />
+                        <LabelInputNumber Label="Virtualisatiefactor"
+                                      DefaultValue="1"
+                                      @bind-Value="ChosenProcessor.VirtualisationFactor"
+                                      For="@(()=> ChosenProcessor.VirtualisationFactor)" />
 
                         <span class="outline-end">
                             <button type="submit" class="button">Toevoegen</button>
@@ -53,7 +70,7 @@ else
                 </EditForm>
             </OneWidth>
             <OneWidth>
-                <Title Text="Gekozen processoren" />
+                <Title Text="Gekozen processoren" Required="@true"/>
                 @if (Host.Specifications.Processors.Any())
                 {
                     @foreach (var processor in Host.Specifications.Processors)
@@ -70,7 +87,7 @@ else
                             Entries="@specifications"
                             OnClick="() => RemoveProcessor(processor)"
                             HoverIcon="fa-solid fa-xmark fa-lg"
-                            customCss="@customcss" />
+                            InverseStyle="@true" />
                     }
 
                 }
@@ -78,6 +95,7 @@ else
                 {
                     <NoResultsMessage Message="Geen processoren gekozen." InverseStyle=true />
                 }
+                <ValidationMessage For="@(()=> Host.Specifications.Processors)" />
             </OneWidth>
             <OneWidth>
 

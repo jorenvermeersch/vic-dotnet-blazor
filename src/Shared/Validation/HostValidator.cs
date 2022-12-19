@@ -5,12 +5,15 @@ namespace Shared.Validation;
 
 public class HostValidator : AbstractValidator<HostDto.Mutate>
 {
-    private readonly int _nameLength = 2;
+    private readonly int minNameLength = 3;
     public HostValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage(string.Format(ValidationMessages.NotEmpty("Naam")))
-            .MinimumLength(_nameLength).WithMessage($"Naam heeft minstens {_nameLength} characters");
+            .MinimumLength(minNameLength).WithMessage(ValidationMessages.MinimumLength("Naam", minNameLength));
+
         RuleFor(x => x.Specifications).SetValidator(new HostSpecificationsValidator());
 
     }

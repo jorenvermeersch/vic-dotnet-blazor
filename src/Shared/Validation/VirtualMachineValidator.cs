@@ -6,75 +6,91 @@ namespace Shared.Validation;
 [Obsolete]
 public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutate>
 {
-    private readonly int _nameLenght = 2;
-    private readonly int _fqdnLenght = 2;
-    private readonly int _reasonLenght = 5;
-    private readonly int _minProcessorCount = 0;
-    private readonly int _minMemoryCount = 0;
-    private readonly int _minStorageCount = 0;
+    private readonly int minNameLength = 2;
+    private readonly int minFqdnLength = 2;
+    private readonly int minReasonLength = 5;
 
     public VirtualMachineValidator()
     {
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
+        // Configuration. 
         RuleFor(x => x.Name)
-            .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Naam"))
-            .MinimumLength(_nameLenght).WithMessage(ValidationMessages.MIN_LENGTH(_nameLenght));
+            .MinimumLength(minNameLength).WithMessage(ValidationMessages.MinimumLength("Naam", minNameLength));
+
         RuleFor(x => x.Fqdn)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            //.Matches("\"^(?!:\\\\/\\\\/)(?=.{1,255}$)((.{1,63}\\\\.){1,127}(?![0-9]*$)[a-z0-9-]+\\\\.?)$\"").WithMessage(string.Format("Dit is geen geldige FQDN."))
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("FQDN"))
-            .MinimumLength(_fqdnLenght).WithMessage(ValidationMessages.MIN_LENGTH(_fqdnLenght));
+            .MinimumLength(minFqdnLength).WithMessage(ValidationMessages.MinimumLength("FQDN", minFqdnLength));
+
         RuleFor(x => x.Mode)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Mode"));
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Mode"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Mode", true));
+
         RuleFor(x => x.Template)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Template"));
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Template"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Template", true));
+
         RuleFor(x => x.Reason)
-            .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Reden"))
-            .MinimumLength(_reasonLenght).WithMessage(ValidationMessages.MIN_LENGTH(_reasonLenght));
+            .MinimumLength(minReasonLength).WithMessage(ValidationMessages.MinimumLength("Reden", minReasonLength));
+
         RuleFor(x => x.Status)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Status"));
-        //RuleFor(x => x.hostId)
-        //    .Cascade(CascadeMode.StopOnFirstFailure)
-        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Host"));
-        RuleFor(x => x.ApplicationDate)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Datum van aanvraag"));
-        RuleFor(x => x.StartDate)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Startdatum"))
-            .LessThan(x => x.EndDate).WithMessage(ValidationMessages.SMALLER_THAN_END_DATE());
-        RuleFor(x => x.EndDate)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Einddatum"))
-            .GreaterThan(x => x.StartDate).WithMessage(ValidationMessages.GREATER_THAN_DATE());
-        RuleFor(x => x.BackupFrequency)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Regelmaat"));
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Status"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Status", true));
 
-        // TODO: Not objects, but Id of request, user and account are given!
-        RuleFor(x => x.RequesterId)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Aanvrager"));
-        RuleFor(x => x.UserId)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Gebruiker"));
-        RuleFor(x => x.AdministratorId)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Verantwoordelijke"));
+        // Ports. 
+        RuleFor(x => x.Ports)
+            .NotEmpty().WithMessage("Virtuele machine moet bereikbaar zijn via minstens één poort.");
+
+        RuleForEach(x => x.Ports)
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.GreaterThanOrEqual("Poortnummer", 1));
+
+        // Specifications. 
         RuleFor(x => x.HostId)
-            .Cascade(CascadeMode.StopOnFirstFailure)
-            .GreaterThan(0).WithMessage(ValidationMessages.NotEmpty("Host"));
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Host"));
 
-        //RuleFor(x => x.UserId)
-        //    .Cascade(CascadeMode.StopOnFirstFailure)
-        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Gebruiker"));
-        //RuleFor(x => x.AdministratorId)
-        //    .Cascade(CascadeMode.StopOnFirstFailure)
-        //    .NotEmpty().WithMessage(FormMessages.NOTEMPTY("Verantwoordelijke"));
-        //RuleFor(x => x.Specifications).SetValidator(new SpecificationValidation());
+        RuleFor(x => x.Specifications)
+            .SetValidator(new SpecificationsValidator());
+
+        // Availability. 
+        RuleFor(x => x.ApplicationDate)
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Aangevraagd op"))
+            .LessThanOrEqualTo(x => x.StartDate).WithMessage("Aanvragingsdatum moet eerder of gelijk zijn aan startdatum.");
+
+        RuleFor(x => x.StartDate)
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Start"))
+            .LessThan(x => x.EndDate).WithMessage("Startdatum moet eerder zijn dan einddatum");
+
+        RuleFor(x => x.EndDate)
+            .NotEmpty().WithMessage(ValidationMessages.NotEmpty("Eind"))
+            .GreaterThan(x => x.StartDate).WithMessage("Einddatum moet later zijn dan startdatum.");
+
+        RuleFor(x => x.Availabilities)
+            .NotEmpty().WithMessage("Virtuele machine moet beschikbaar zijn op minstens één dag.");
+
+        RuleForEach(x => x.Availabilities)
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Beschikbaarheid", true));
+
+        // Back-ups. 
+        RuleFor(x => x.BackupFrequency)
+            .NotNull().WithMessage(ValidationMessages.NotEmpty("Regelmaat"))
+            .IsInEnum().WithMessage(ValidationMessages.UnknownEnumValue("Regelmaat", true));
+
+        // Users. 
+        RuleFor(x => x.RequesterId)
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Aanvrager"));
+
+        RuleFor(x => x.UserId)
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Gebruiker"));
+
+        RuleFor(x => x.AdministratorId)
+            .GreaterThanOrEqualTo(1).WithMessage(ValidationMessages.NotEmpty("Beheerder"));
+
+        // Credentials. 
+        RuleFor(x => x.Credentials)
+            .NotEmpty().WithMessage("Virtuele machine moet beschikbaar via minstens één paar logingegevens.");
+
+        RuleForEach(x => x.Credentials).SetValidator(new CredentialsValidator());
     }
 }

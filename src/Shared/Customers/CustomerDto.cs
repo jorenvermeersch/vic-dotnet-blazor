@@ -28,8 +28,8 @@ public static class CustomerDto
     }
     public class Mutate
     {
-        public string CustomerType { get; set; } = default!;
-        public string? Institution { get; set; }
+        public CustomerType? CustomerType { get; set; }
+        public Institution? Institution { get; set; }
         public string? Department { get; set; }
         public string? CompanyType { get; set; }
         public string? Education { get; set; }
@@ -37,6 +37,6 @@ public static class CustomerDto
         public ContactPersonDto ContactPerson { get; set; } = new();
         public ContactPersonDto? BackupContactPerson { get; set; } = new();
 
-        
+
     }
 }

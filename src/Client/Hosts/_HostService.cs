@@ -14,7 +14,8 @@ public class HostService : IHostService
     public async Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
     {
         var response = await client.PostAsJsonAsync($"api/hosts", request);
-        return await response.Content.ReadFromJsonAsync<HostResponse.Create>();
+        var content = await response.Content.ReadFromJsonAsync<HostResponse.Create>();
+        return content!;
     }
 
     public Task DeleteAsync(HostRequest.Delete request)
@@ -29,15 +30,14 @@ public class HostService : IHostService
 
     public async Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request)
     {
-        var queryParameters = request.GetQueryString();
         var response = await client.GetFromJsonAsync<HostResponse.GetDetail>($"api/hosts/{request.HostId}");
         return response!;
     }
-    
+
     public async Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request)
     {
-        var queryParameters = request.GetQueryString();
-        var response = await client.GetFromJsonAsync<HostResponse.GetIndex>($"api/hosts?{queryParameters}");
+        var queryString = request.GetQueryString();
+        var response = await client.GetFromJsonAsync<HostResponse.GetIndex>($"api/hosts?{queryString}");
         return response!;
     }
 }

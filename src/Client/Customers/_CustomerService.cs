@@ -15,7 +15,8 @@ public class CustomerService : ICustomerService
     public async Task<CustomerResponse.Create> CreateAsync(CustomerRequest.Create request)
     {
         var response = await authenticatedClient.PostAsJsonAsync(endpoint, request);
-        return await response.Content.ReadFromJsonAsync<CustomerResponse.Create>();
+        var content = await response.Content.ReadFromJsonAsync<CustomerResponse.Create>();
+        return content!;
     }
 
     public Task DeleteAsync(CustomerRequest.Delete request)
@@ -26,19 +27,20 @@ public class CustomerService : ICustomerService
     public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
     {
         var response = await authenticatedClient.PutAsJsonAsync(endpoint, request);
-        return await response.Content.ReadFromJsonAsync<CustomerResponse.Edit>();
+        var content = await response.Content.ReadFromJsonAsync<CustomerResponse.Edit>();
+        return content!;
     }
 
     public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
     {
         var response = await authenticatedClient.GetFromJsonAsync<CustomerResponse.GetDetail>($"{endpoint}/{request.CustomerId}");
-        return response;
+        return response!;
     }
 
     public async Task<CustomerResponse.GetIndex> GetIndexAsync(CustomerRequest.GetIndex request)
     {
         var queryParameters = request.GetQueryString();
         var response = await authenticatedClient.GetFromJsonAsync<CustomerResponse.GetIndex>($"{endpoint}?{queryParameters}");
-        return response;
+        return response!;
     }
 }

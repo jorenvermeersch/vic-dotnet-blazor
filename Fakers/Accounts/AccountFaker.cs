@@ -17,6 +17,8 @@ public class AccountFaker : EntityFaker<Account>
             f.Internet.Password(),
             f.PickRandom(departments),
             f.PickRandom(educations),
-            true));
+            true
+            )
+        );
     }
 }

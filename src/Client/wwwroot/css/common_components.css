@@ -1,5 +1,4 @@
 ﻿/* Top Bar */
-
 .top-bar-label {
     flex: 1;
     font-size: var(--text-md);
@@ -60,6 +59,7 @@ select {
     border: none;
     outline: none;
     padding: var(--card-padding);
+    color: var(--black); 
     background-color: var(--light-gray);
     border-radius: var( --border-radius);
 }
@@ -168,3 +168,10 @@ select {
     margin-inline-start: auto; 
 }
 
+.form-label {
+    display: inline-block; 
+    color: var(--dark-blue); 
+    font-size: var(--text-sm); 
+    font-weight: 600; 
+    padding-bottom: var(--padding-md); 
+}
