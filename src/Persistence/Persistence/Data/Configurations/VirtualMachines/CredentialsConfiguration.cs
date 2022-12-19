@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Data.Configurations.VirtualMachines;
 
-public class PortConfiguration : EntityConfiguration<Port>
+public class CredentialsConfiguration : EntityConfiguration<Credentials>
 {
-    public override void Configure(EntityTypeBuilder<Port> builder)
+    public override void Configure(EntityTypeBuilder<Credentials> builder)
     {
         base.Configure(builder);
     }

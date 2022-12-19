@@ -56,7 +56,7 @@ public class VicDbContext : DbContext
         modelBuilder.Ignore<HostSpecifications>();
         //modelBuilder.Ignore<Processor>();
         modelBuilder.Ignore<VirtualMachine>();
-        modelBuilder.Ignore<Credentials>();
+        //modelBuilder.Ignore<Credentials>();
         //modelBuilder.Ignore<Port>();
         modelBuilder.Ignore<Domain.VirtualMachines.TimeSpan>();
         modelBuilder.Ignore<VirtualMachine>();
