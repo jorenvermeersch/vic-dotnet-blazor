@@ -3,11 +3,9 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(SharedFiles.MainLayout)">
                  <Authorizing>
-                    @*<p>Determining session state, please wait...</p>*@
-                    <Loading />
+                    <Loading Text="Authorisatie" />
                 </Authorizing>
                 <NotAuthorized>
-                    @*<p>Gelieve in te loggen om dit pagina te raadplegen.</p>*@
                     <LoginRedirect />
                 </NotAuthorized>
             </AuthorizeRouteView>

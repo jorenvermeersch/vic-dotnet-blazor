@@ -5,6 +5,7 @@ li {
     cursor: pointer; 
 }
 
+
 .navigation-bar-narrow-wrapper .navigation-bar-narrow,
 .navigation-bar-wide {
   display: flex;
@@ -126,11 +127,6 @@ li {
 .navigation-bar-wide ul li:first-of-type i {
     color: var(--blue);
     padding-right: var(--padding-sm); 
-}
-
-#logout-button {
-    color: var(--dark-blue); 
-    padding-left: var(--padding-sm); 
 }
 
 .navigation-bar-wide ul li a:hover {
