@@ -50,9 +50,26 @@ public class HostService : IHostService
         await _dbContext.SaveChangesAsync();
     }
 
-    public Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
+    public async Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
     {
-        throw new NotImplementedException();
+        HostResponse.Edit response = new();
+        var host = await GetHostById(request.HostId).SingleOrDefaultAsync();
+
+        if (host is not null)
+        {
+            var model = request.Host;
+
+            host.Name = model.Name;
+            host.Specifications = new HostSpecifications(model.Specifications.Processors.Select(x =>
+                new KeyValuePair<Processor, int>(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
+                model.Specifications.Storage, model.Specifications.Memory);
+
+            _dbContext.Entry(host).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            response.HostId = host.Id;
+        }
+
+        return response;
     }
 
     public async Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request)

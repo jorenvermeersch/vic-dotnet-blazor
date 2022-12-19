@@ -5,18 +5,20 @@ namespace Services.Ports;
 
 public class FakePortService : IPortService
 {
-    private static readonly List<Port> ports = new();
+    //private static readonly List<Port> Ports = new();
+
+    public static List<Port> Ports { get;private set; } = new List<Port>();
 
     static FakePortService()
     {
-        ports.AddRange(new List<Port> { new Port(443, "HTTPS") { Id = 1 }, new Port(80, "HTTP") { Id = 2 }, new Port(22, "SSH") { Id = 3 } });
+        Ports.AddRange(new List<Port> { new Port(443, "HTTPS") { Id = 1 }, new Port(80, "HTTP") { Id = 2 }, new Port(22, "SSH") { Id = 3 } });
     }
 
     public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
     {
         // FILTEREN OP NUMMER
 
-        var query = ports.AsQueryable();
+        var query = Ports.AsQueryable();
 
         int totalAmount = query.Count();
 
@@ -43,7 +45,7 @@ public class FakePortService : IPortService
     {
         PortResponse.GetDetail response = new();
 
-        response.Port = ports.Where(x => x.Id == request.PortId).Select(x => new PortDto
+        response.Port = Ports.Where(x => x.Id == request.PortId).Select(x => new PortDto
         {
             Number = x.Number,
             Service = x.Service

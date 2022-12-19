@@ -8,6 +8,7 @@ using Service.Accounts;
 using Services.Customers;
 using Services.FakeInitializer;
 using Services.Hosts;
+using Services.Ports;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
@@ -38,10 +39,15 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
     private VirtualMachineArgs createArgsVirtualMachine(VirtualMachineDto.Mutate model)
     {
-        Server host = FakeHostService.Hosts.Where(x => x.Id == model.HostId).SingleOrDefault();
-        Customer user = FakeCustomerService.Customers.Where(x => x.Id == model.UserId).SingleOrDefault();
-        Customer requester = FakeCustomerService.Customers.Where(x => x.Id == model.RequesterId).SingleOrDefault();
-        Account account = FakeAccountService.Accounts.Where(x => x.Id == model.AdministratorId).SingleOrDefault();
+        Server host = FakeHostService.Hosts.Where(x => x.Id == model.HostId).SingleOrDefault()!;
+        Customer user = FakeCustomerService.Customers.Where(x => x.Id == model.UserId).SingleOrDefault()!;
+        Customer requester = FakeCustomerService.Customers.Where(x => x.Id == model.RequesterId).SingleOrDefault()!;
+        Account account = FakeAccountService.Accounts.Where(x => x.Id == model.AdministratorId).SingleOrDefault()!;
+        List<Port> ports = new List<Port>();
+        foreach (var port in model.Ports)
+        {
+            ports.Add(FakePortService.Ports.SingleOrDefault(x => x.Number == port));
+        }
 
         var args = new VirtualMachineArgs
         {
@@ -54,7 +60,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
             Status = model.Status!.Value,
             Reason = model.Reason,
-            Ports = new List<Port>(), //todo
+            Ports = ports, 
             Host = host,
             Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
             Account = account,
@@ -212,11 +218,6 @@ public class FakeVirtualMachineService : IVirtualMachineService
             hasVpnConnection = x.HasVpnConnection
         }).ToList();
         return response;
-    }
-
-    public Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request)
-    {
-        throw new NotImplementedException();
     }
 
 
