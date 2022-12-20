@@ -1,0 +1,37 @@
+﻿
+.error-message-wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--dark-blue);
+    border-radius: var(--border-radius) var(--border-radius) 0px 0px;
+    padding: var(--padding-md); 
+}
+
+.error-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    max-width: var(--extremely-large);
+    margin: auto; 
+
+    font-size: var(--text-md); 
+    color: var(--white);
+}
+
+.content {
+    padding-bottom: var(--padding-sm);  
+}
+
+.title {
+    font-weight: 600; 
+    padding-top: var(--padding-sm); 
+}
+
+@media screen and (min-width: 1600px) {
+    .error-message-wrapper {
+        padding: var(--padding-md) 0px;
+    }
+}
