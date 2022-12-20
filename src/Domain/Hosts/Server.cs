@@ -7,7 +7,18 @@ namespace Domain.Hosts;
 public class Server : Host<VirtualMachine>
 {
     #region Properties
-    public new List<ServerHistory> History => (List<ServerHistory>)base.History;
+    public new List<ServerHistory> History =>
+        base.History
+            .Select(
+                history =>
+                    new ServerHistory()
+                    {
+                        Host = (Server)history.Host,
+                        Specifications = history.Specifications,
+                        SpecificationsUsed = history.SpecificationsUsed,
+                    }
+            )
+            .ToList();
     public List<ServerProcessor> Processors
     {
         get =>

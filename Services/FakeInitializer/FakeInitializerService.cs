@@ -42,9 +42,9 @@ public class FakeInitializerService : IFakeInitializerService
         FakeCustomers.AddRange(new CustomerFaker.InternalCustomerFaker(FakeContactPersons, id: FakeCustomers.Count() + 1).UseSeed(seed).Generate(25));
         FakeAccounts = new AccountFaker().UseSeed(seed).Generate(25);
         FakeProcessors = new ProcessorFaker().UseSeed(seed).Generate(25);
-        FakeHostSpecifications = new HostSpecificationsFaker().UseSeed(seed).Generate(20);
+        FakeHostSpecifications = new HostSpecificationsFaker(FakeProcessors).UseSeed(seed).Generate(20);
 
-        VirtualMachineFaker vmFaker = new VirtualMachineFaker()
+        VirtualMachineFaker vmFaker = new()
         {
             Customers = FakeCustomers,
             Accounts = FakeAccounts,

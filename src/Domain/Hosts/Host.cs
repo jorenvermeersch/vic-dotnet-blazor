@@ -36,7 +36,7 @@ public abstract class Host<T> : Machine where T : Machine
     public ISet<T> Machines { get; set; } = new HashSet<T>();
 
     [NotMapped]
-    public IList<History<Host<T>, T>> History => _history.AsReadOnly();
+    public IList<History<Host<T>, T>> History => _history;
     #endregion
 
     #region Constructors
@@ -57,7 +57,6 @@ public abstract class Host<T> : Machine where T : Machine
                 $"{GetType().Name} {name} does not have enough resources to support all machines"
             );
         }
-
         UpdateHistory();
     }
     #endregion

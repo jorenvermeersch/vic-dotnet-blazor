@@ -12,9 +12,9 @@ public class HostFaker : EntityFaker<Server>
         CustomInstantiator(f => new Server(
             name: f.Internet.UserName(),
             resources: f.PickRandom(hostSpecifications),
-            virtualMachines: virtualMachines.Count() > 0 ? Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(virtualMachines)).ToHashSet() : new()
+            new HashSet<VirtualMachine>()
         ));
 
-        // virtualMachines.Count() == 0 ? virtualMachines : Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(virtualMachines)).ToHashSet()
+        // virtualMachines: virtualMachines.Count() > 0 ? Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(virtualMachines)).ToHashSet() : new()
     }
 }

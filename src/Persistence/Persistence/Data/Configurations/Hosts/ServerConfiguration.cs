@@ -15,6 +15,7 @@ public class ServerConfiguration : EntityConfiguration<Server>
         builder.OwnsOne(x => x.Specifications, specifications =>
         {
             specifications.Ignore(x => x.VirtualisationFactors); // Workaround. 
+            specifications.Ignore(x => x.Values); // Calculated property. 
             specifications.Ignore(x => x.Processors); // Calculated property. 
             specifications.Property(x => x.Memory).HasColumnName(nameof(Server.Specifications.Memory));
             specifications.Property(x => x.Storage).HasColumnName(nameof(Server.Specifications.Storage));

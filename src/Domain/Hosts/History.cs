@@ -9,11 +9,10 @@ public class History<T, U> : Entity
     where U : Machine
 {
     #region Properties
-    public T Host { get; } = default!;
+    public T Host { get; set; } = default!;
 
-    // public DateTime Date { get; } = DateTime.UtcNow;
-    public Specifications Specifications { get; } = default!;
-    public Specifications SpecificationsUsed { get; } = default!;
+    public Specifications Specifications { get; set; } = default!;
+    public Specifications SpecificationsUsed { get; set; } = default!;
     #endregion
 
     #region Constructors
@@ -22,7 +21,11 @@ public class History<T, U> : Entity
     public History(T host)
     {
         Host = host;
-        Specifications = host.Specifications;
+        Specifications = new Specifications(
+            host.Specifications.Processors,
+            host.Specifications.Memory,
+            host.Specifications.Storage
+        );
         SpecificationsUsed = CalculateSpecificationsUsed();
     }
     #endregion
