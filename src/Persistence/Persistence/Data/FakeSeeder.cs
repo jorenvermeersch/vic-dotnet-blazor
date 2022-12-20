@@ -1,4 +1,5 @@
 ﻿using Domain.Customers;
+using Domain.Hosts;
 using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.ContactPersons;
@@ -126,7 +127,15 @@ public class FakeSeeder
         var hostSpecifications = new HostSpecificationsFaker(dbContext.Processors.ToList()).UseSeed(seedValue).Generate(50);
         var fakeHosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).UseSeed(seedValue).Generate(25);
 
-        dbContext.Hosts.AddRange(fakeHosts);
+        foreach (var host in fakeHosts)
+        {
+            var processor = dbContext.Processors.ToList()[0];
+            List<KeyValuePair<Processor, int>> p = new() { new KeyValuePair<Processor, int>(processor, 5000) };
+            host.Specifications = new(p, int.MaxValue, int.MaxValue);
+            dbContext.Hosts.Add(host);
+
+        }
+        //dbContext.Hosts.AddRange(fakeHosts);
         dbContext.SaveChanges();
     }
 }

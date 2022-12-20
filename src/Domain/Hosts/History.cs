@@ -10,7 +10,6 @@ public class History<T, U> : Entity
 {
     #region Properties
     public T Host { get; set; } = default!;
-
     public Specifications Specifications { get; set; } = default!;
     public Specifications SpecificationsUsed { get; set; } = default!;
     #endregion

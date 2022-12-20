@@ -6,13 +6,15 @@ public class HostProcessor<T, U> : Entity
     where T : Host<U>
     where U : Machine
 {
-	#region Fields
-    public T Host { get; set; } = default!;
-    public Processor Processor { get; set; } = default!;
+    #region Fields
+    public long HostId { get; set; }
+    public long ProcessorId { get; set; }
+    public virtual T Host { get; set; } = default!;
+    public virtual Processor Processor { get; set; } = default!;
     public int VirtualisationFactor { get; set; } = default!;
-	#endregion
+    #endregion
 
-	#region Constructors
+    #region Constructors
     protected HostProcessor() { }
 
     public HostProcessor(T host, Processor processor, int virtualisationFactor)
@@ -21,5 +23,5 @@ public class HostProcessor<T, U> : Entity
         Processor = processor;
         VirtualisationFactor = virtualisationFactor;
     }
-	#endregion
+    #endregion
 }
