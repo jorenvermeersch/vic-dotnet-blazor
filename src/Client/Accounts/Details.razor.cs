@@ -66,4 +66,11 @@ public partial class Details
     {
         Navigation!.NavigateTo("account/list");
     }
+
+    //private async Task ChangePage(int pageNr)
+    //{
+    //    offset = (pageNr - 1) * 10;
+    //    selectedPage = pageNr;
+    //    // TODO: Implement. 
+    //}
 }

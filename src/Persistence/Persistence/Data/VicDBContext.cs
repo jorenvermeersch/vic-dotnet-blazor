@@ -20,9 +20,9 @@ public class VicDBContext : DbContext
     public DbSet<ExternalCustomer> ExternalCustomers => Set<ExternalCustomer>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
-    public DbSet<Server> Hosts => Set<Server>();
-    public DbSet<Port> Ports => Set<Port>();
-    public DbSet<Processor> Processors => Set<Processor>();
+    //public DbSet<Server> Hosts => Set<Server>();
+    //public DbSet<Port> Ports => Set<Port>();
+    //public DbSet<Processor> Processors => Set<Processor>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,6 +1,8 @@
 ﻿using Domain.Accounts;
+using Service.VirtualMachines;
 using Services.FakeInitializer;
 using Shared.Accounts;
+using Shared.VirtualMachines;
 
 namespace Service.Accounts;
 
@@ -67,6 +69,7 @@ public class FakeAccountService : IAccountService
 
     public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
     {
+        var vms = FakeVirtualMachineService.Machines.Where(x=>x.Account.Id== request.AccountId);
         AccountResponse.GetDetail response = new();
         var query = Accounts.AsQueryable();
 
@@ -79,7 +82,13 @@ public class FakeAccountService : IAccountService
             Firstname = x.Firstname,
             Lastname = x.Lastname,
             IsActive = x.IsActive,
-            Role = x.Role
+            Role = x.Role,
+            VirtualMachines = vms.Select(x => new VirtualMachineDto.Index
+            {
+                Id = x.Id,
+                Fqdn = x.Fqdn,
+                Status = x.Status
+            }).ToList(),
         }).SingleOrDefault(x => x.Id == request.AccountId) ?? new AccountDto.Detail();
         return response;
     }
@@ -110,7 +119,7 @@ public class FakeAccountService : IAccountService
             Firstname = x.Firstname,
             IsActive = x.IsActive,
             Lastname = x.Lastname,
-            Role = x.Role
+            Role = x.Role,
         }).ToList();
         return response;
     }

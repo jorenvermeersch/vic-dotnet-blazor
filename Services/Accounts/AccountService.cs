@@ -102,7 +102,7 @@ public class AccountService : IAccountService
         {
             query = query.Where(x => request.Roles.Contains(x.Role.ToString()));
         }
-        response.TotalAmount = query.Count();
+        response.TotalAmount = await query.CountAsync();
 
         query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);

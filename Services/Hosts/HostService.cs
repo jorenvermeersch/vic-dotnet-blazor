@@ -20,7 +20,7 @@ public class HostService : IHostService
     public HostService(VicDBContext dbContext)
     {
         _dbContext = dbContext;
-        _hosts = dbContext.Hosts;
+        //_hosts = dbContext.Hosts;
     }
 
     private IQueryable<Server> GetHostById(long id) => _hosts

@@ -12,7 +12,7 @@ public class PortService : IPortService
     public PortService(VicDBContext dbContext)
     {
         _dbContext= dbContext;
-        _ports = dbContext.Ports;
+       // _ports = dbContext.Ports;
     }
 
     public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)

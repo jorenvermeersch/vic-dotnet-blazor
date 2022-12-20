@@ -13,7 +13,7 @@ public class ProcessorService : IProcessorService
     public ProcessorService(VicDBContext dbContext)
     {
         _dbContext= dbContext;
-        _processors = _dbContext.Processors;
+       // _processors = _dbContext.Processors;
     }
     public async Task<ProcessorResponse.GetDetail> GetDetailAsync(ProcessorRequest.GetDetail request)
     {

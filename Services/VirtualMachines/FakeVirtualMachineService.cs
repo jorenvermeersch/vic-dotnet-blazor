@@ -19,10 +19,11 @@ namespace Service.VirtualMachines;
 
 public class FakeVirtualMachineService : IVirtualMachineService
 {
-    private static readonly List<VirtualMachine> machines = new();
+   // private static readonly List<VirtualMachine> Machines = new();
+   public static List<VirtualMachine> Machines { get; set; } = new List<VirtualMachine>();
     static FakeVirtualMachineService()
     {
-        machines = FakeInitializerService.FakeVirtualMachines ?? new List<VirtualMachine>();
+        Machines = FakeInitializerService.FakeVirtualMachines ?? new List<VirtualMachine>();
     }
 
     // Helper Function
@@ -78,8 +79,8 @@ public class FakeVirtualMachineService : IVirtualMachineService
         VirtualMachineResponse.Create response = new();
         var model = request.VirtualMachine;
         var args = createArgsVirtualMachine(model);
-        var machine = new VirtualMachine(args) { Id = machines.Max(x => x.Id) + 1 };
-        machines.Add(machine);
+        var machine = new VirtualMachine(args) { Id = Machines.Max(x => x.Id) + 1 };
+        Machines.Add(machine);
         response.MachineId = machine.Id;
 
         return response;
@@ -87,7 +88,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request)
     {
         VirtualMachineResponse.Edit response = new();
-        var machine = machines.SingleOrDefault(x => x.Id == request.MachineId);
+        var machine = Machines.SingleOrDefault(x => x.Id == request.MachineId);
 
         var model = request.VirtualMachine;
 
@@ -119,12 +120,12 @@ public class FakeVirtualMachineService : IVirtualMachineService
     {
         //machines.RemoveAll(x => x.Id == request.MachineId);
 
-        VirtualMachine? machine = machines.SingleOrDefault(x => x.Id == request.MachineId);
+        VirtualMachine? machine = Machines.SingleOrDefault(x => x.Id == request.MachineId);
 
         if (machine is null)
             throw new EntityNotFoundException(nameof(VirtualMachine), request.MachineId);
 
-        machines.Remove(machine);
+        Machines.Remove(machine);
     }
 
 
@@ -132,7 +133,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         VirtualMachineResponse.GetDetail response = new();
-        var query = machines.AsQueryable();
+        var query = Machines.AsQueryable();
 
         response.VirtualMachine = query.Select(x => new VirtualMachineDto.Detail
         {
@@ -164,7 +165,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         VirtualMachineResponse.GetIndex response = new();
-        var query = machines.AsQueryable();
+        var query = Machines.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             query = query.Where(x => x.Fqdn.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
@@ -191,7 +192,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
     {
         VirtualMachineResponse.GetAllDetails response = new();
-        var query = machines.AsQueryable();
+        var query = Machines.AsQueryable();
 
         response.TotalAmount = query.Count();
         response.VirtualMachines = query.Select(x => new VirtualMachineDto.Detail

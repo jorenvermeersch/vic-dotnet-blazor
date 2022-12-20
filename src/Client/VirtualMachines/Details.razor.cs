@@ -160,7 +160,7 @@ public partial class Details
 
     private void NavigateToAdministrator()
     {
-        Navigation.NavigateTo($"host/{machine!.Account.Id}");
+        Navigation.NavigateTo($"account/{machine!.Account.Id}");
     }
     #endregion
 }

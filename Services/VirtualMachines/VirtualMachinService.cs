@@ -30,10 +30,10 @@ public class VirtualMachinService : IVirtualMachineService
     {
         _dbContext = dbContact;
         _virtualMachines = _dbContext.VirtualMachines;
-        _hosts = _dbContext.Hosts;
+       // _hosts = _dbContext.Hosts;
         _customers = _dbContext.Customers;
         _accounts = _dbContext.Accounts;
-        _ports = _dbContext.Ports;
+       // _ports = _dbContext.Ports;
     }
 
     private IQueryable<VirtualMachine> GetMachineById(long id) => _virtualMachines

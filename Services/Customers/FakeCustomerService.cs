@@ -1,5 +1,6 @@
 ﻿using Domain.Constants;
 using Domain.Customers;
+using Service.VirtualMachines;
 using Services.FakeInitializer;
 using Shared.Customers;
 using Shared.VirtualMachines;
@@ -118,6 +119,8 @@ public class FakeCustomerService : ICustomerService
 
     public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
     {
+        var vms = FakeVirtualMachineService.Machines.Where(x => x.User.Id == request.CustomerId).ToList();
+
         CustomerResponse.GetDetail response = new();
         //.Where(x => customertype.ToLower() == "extern" ? x is ExternalCustomer : x is InternalCustomer)
         response.Customer = Customers.Where(x => x.Id == request.CustomerId).Select(x =>
@@ -146,7 +149,13 @@ public class FakeCustomerService : ICustomerService
                     Phonenumber = x.ContactPerson.PhoneNumber
                 },
                 BackupContactPerson = backup,
-                VirtualMachines = x.VirtualMachines.Select(x => new VirtualMachineDto.Index
+                //VirtualMachines = x.VirtualMachines.Select(x => new VirtualMachineDto.Index
+                //{
+                //    Id = x.Id,
+                //    Fqdn = x.Fqdn,
+                //    Status = x.Status
+                //}).ToList(),
+                VirtualMachines = vms.Select(x=> new VirtualMachineDto.Index
                 {
                     Id = x.Id,
                     Fqdn = x.Fqdn,
