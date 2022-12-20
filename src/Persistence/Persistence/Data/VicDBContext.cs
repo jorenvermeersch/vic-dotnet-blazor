@@ -17,6 +17,8 @@ public class VicDbContext : DbContext
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
+    public DbSet<Server> Hosts => Set<Server>();
+    public DbSet<ServerHistory> History => Set<ServerHistory>();
     public DbSet<Port> Ports => Set<Port>();
     public DbSet<Processor> Processors => Set<Processor>();
 

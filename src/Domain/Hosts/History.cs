@@ -4,19 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Hosts;
 
 [NotMapped]
-public class History<T, U>
+public class History<T, U> : Entity
     where T : Host<U>
     where U : Machine
 {
     #region Properties
     public T Host { get; } = default!;
-    public DateTime Date { get; } = DateTime.UtcNow;
+
+    // public DateTime Date { get; } = DateTime.UtcNow;
     public Specifications Specifications { get; } = default!;
     public Specifications SpecificationsUsed { get; } = default!;
     #endregion
 
     #region Constructors
-    private History() { }
+    protected History() { }
 
     public History(T host)
     {

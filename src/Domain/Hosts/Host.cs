@@ -35,11 +35,12 @@ public abstract class Host<T> : Machine where T : Machine
     public Specifications RemainingResources => CalculateRemainingResources();
     public ISet<T> Machines { get; set; } = new HashSet<T>();
 
-    public IReadOnlyList<History<Host<T>, T>> History => _history.AsReadOnly();
+    [NotMapped]
+    public IList<History<Host<T>, T>> History => _history.AsReadOnly();
     #endregion
 
     #region Constructors
-    private Host() { }
+    protected Host() { }
 
     public Host(string name, HostSpecifications specifications, ISet<T>? machines)
         : base(name, specifications)
