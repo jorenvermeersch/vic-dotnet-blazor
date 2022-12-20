@@ -35,7 +35,7 @@ public class FakeSeeder
             SeedAccounts();
             SeedPorts();
             SeedHost();
-            // SeedVirtualMachines();
+            SeedVirtualMachines();
         }
     }
 
@@ -105,14 +105,14 @@ public class FakeSeeder
             Name = x.Name,
             Reason = x.Reason,
             HasVpnConnection = x.HasVpnConnection,
-            // Host= x.Host,
+            Host= dbContext.Hosts.ToList()[new Random().Next(9)],
             Mode = x.Mode,
             Ports = x.Ports,
             Requester = x.Requester,
             Status = x.Status,
             Template = x.Template,
-            TimeSpan = x.TimeSpan,
-            User = x.User
+            TimeSpan = new Domain.VirtualMachines.TimeSpan(x.TimeSpan.StartDate, x.TimeSpan.EndDate),
+            User = x.User,
         })));
         dbContext.SaveChanges();
     }
@@ -123,8 +123,8 @@ public class FakeSeeder
         dbContext.Processors.AddRange(processors);
         dbContext.SaveChanges();
 
-        var hostSpecifications = new HostSpecificationsFaker(dbContext.Processors.ToList()).UseSeed(seedValue).Generate(10);
-        var fakeHosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).AsTransient().UseSeed(seedValue).Generate(2);
+        var hostSpecifications = new HostSpecificationsFaker(dbContext.Processors.ToList()).UseSeed(seedValue).Generate(40);
+        var fakeHosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).AsTransient().UseSeed(seedValue).Generate(9);
 
         dbContext.Hosts.AddRange(fakeHosts);
         dbContext.SaveChanges();
