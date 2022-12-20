@@ -1,47 +1,59 @@
 ﻿@page "/"
 @attribute [Authorize]
 
+@if (FetchingResources())
+{
+    <Loading />
+}
+else
+{
+    <TopBar>
+        <ButtonGroup>
+            <AuthorizeView Roles="Master, Administrator">
+                <Label Text="Toevoegen" />
+            </AuthorizeView>
+            <AuthorizeView Roles="Master">
+                <Button Text="Beheerder" Href="/account/add" />
+            </AuthorizeView>
+            <AuthorizeView Roles="Master, Administrator">
+                <Button Text="Klant" Href="/customer/add" />
+                <Button Text="Virtuele machine" Href="/virtual-machine/add" />
+                <Button Text="Host" Href="/host/add" />
+            </AuthorizeView>
+        </ButtonGroup>
+    </TopBar>
 
-<TopBar>
-    <ButtonGroup>
-        <AuthorizeView Roles="Master, Administrator">
-            <Label Text="Toevoegen" />
-        </AuthorizeView>
-        <AuthorizeView Roles="Master">
-            <Button Text="Beheerder" Href="/account/add" />
-        </AuthorizeView>
-        <AuthorizeView Roles="Master, Administrator">
-            <Button Text="Klant" Href="/customer/add" />
-            <Button Text="Virtuele machine" Href="/virtual-machine/add" />
-            <Button Text="Host" Href="/host/add" />
-        </AuthorizeView>
-    </ButtonGroup>
-</TopBar>
+    <ThreeColumnLayout>
+        <OneWidth>
+            <Title Text="Onafgewerkte virtuele machines" />
+            @if (virtualMachines!.Any())
+            {
+                @foreach (var machine in virtualMachines!)
+                {
+                    <StatusCard Value="@machine.Fqdn"
+                    Active=@false
+                    Href="@machine.GetDetailUrl()" />
+                }
+            }
+            else
+            {
+                <NoResultsMessage Message="Er zijn geen onafgewerkte machines." />
+            }
 
-<ThreeColumnLayout>
-    <OneWidth>
-        <Title Text="Onafgewerkte virtuele machines" />
-        @foreach (var machine in virtualMachines)
-        {
-            <StatusCard 
-                Value="@machine.Fqdn" 
-                Active=@false
-                Href="@machine.GetDetailUrl()" />
-        }
+            <PageSelector OnClick="@ChangePage" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+        </OneWidth>
+        <TwoWidth>
+            <Title Text="Verbruik deze maand" />
+            <WithTwoColumns>
+                <div>
+                </div>
+                <div>
+                </div>
+            </WithTwoColumns>
+        </TwoWidth>
+    </ThreeColumnLayout>
+}
 
-        <PageSelector OnClick="@ChangePage" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
-    </OneWidth>
-    <TwoWidth>
-        <Title Text="Verbruik deze week" />
-        <WithTwoColumns>
-            <div>
-                
-            </div>
-            <div>
-                
-            </div>
-        </WithTwoColumns>
-    </TwoWidth>
-</ThreeColumnLayout>
+
 
 

@@ -1,3 +1,4 @@
+using Client.SharedFiles.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Shared.VirtualMachines;
@@ -6,14 +7,19 @@ namespace Client._Pages;
 
 public partial class Index
 {
-    [Inject] public IVirtualMachineService? VirtualMachineService { get; set; }
-    [Inject] public IStringLocalizer<Client.SharedFiles.Resources.Resource> localizer { get; set; }
+    [Inject] public IVirtualMachineService? VirtualMachineService { get; set; } = default!;
+    [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = default!;
 
     private string _startLabel = "24/10", _endLabel = "30/10";
-    private List<VirtualMachineDto.Index> virtualMachines = new();
+    private List<VirtualMachineDto.Index>? virtualMachines;
     private int totalVirtualMachines, totalPages = 0;
     private int selectedPage = 1;
     private readonly int amount = 10;
+
+    private bool FetchingResources()
+    {
+        return virtualMachines is null;
+    }
 
     protected override async Task OnInitializedAsync()
     {
