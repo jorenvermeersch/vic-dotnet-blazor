@@ -16,6 +16,7 @@ public class Server : Host<VirtualMachine>
                     entry =>
                         new ServerProcessor()
                         {
+                            Host = this,
                             Processor = entry.Key,
                             VirtualisationFactor = entry.Value
                         }
