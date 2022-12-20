@@ -18,7 +18,6 @@ public class VicDbContext : DbContext
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
     public DbSet<Server> Hosts => Set<Server>();
-    public DbSet<ServerProcessor> HostProcessors => Set<ServerProcessor>();
     public DbSet<Processor> Processors => Set<Processor>();
     public DbSet<ServerHistory> History => Set<ServerHistory>();
     public DbSet<Port> Ports => Set<Port>();
@@ -48,11 +47,6 @@ public class VicDbContext : DbContext
         // 1. Customer. 
         modelBuilder.Entity<InternalCustomer>();
         modelBuilder.Entity<ExternalCustomer>();
-
-        // Intermediate table. 
-        modelBuilder.Entity<ServerProcessor>().HasKey(x => new { x.Id, x.HostId, x.ProcessorId });
-        modelBuilder.Entity<ServerProcessor>().HasOne(x => x.Host).WithMany(x => x.Processors).HasForeignKey(x => x.Id);
-        modelBuilder.Entity<ServerProcessor>().HasOne(x => x.Processor).WithMany(x => x.HostProcessors).HasForeignKey(x => x.Id);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder builder)

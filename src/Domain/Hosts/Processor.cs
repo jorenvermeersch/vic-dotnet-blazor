@@ -7,7 +7,6 @@ public class Processor : Entity
     public int Cores { get; set; } = default!;
     public int Threads { get; set; } = default!;
     #endregion
-    public List<ServerProcessor> HostProcessors { get; set; } = default!;
 
     #region Constructors
     private Processor() { }

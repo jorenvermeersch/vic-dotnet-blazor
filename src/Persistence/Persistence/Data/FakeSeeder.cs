@@ -35,7 +35,7 @@ public class FakeSeeder
             SeedCustomers();
             SeedAccounts();
             SeedPorts();
-            SeedHost();
+            // SeedHost();
             // SeedVirtualMachines();
         }
     }
