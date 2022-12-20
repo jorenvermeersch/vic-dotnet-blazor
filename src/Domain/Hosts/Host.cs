@@ -29,7 +29,7 @@ public abstract class Host<T> : Machine where T : Machine
                     "New specifications are insufficient for running existing machines"
                 );
             }
-            UpdateHistory();
+            // UpdateHistory();
         }
     }
     public Specifications RemainingResources => CalculateRemainingResources();
@@ -57,7 +57,7 @@ public abstract class Host<T> : Machine where T : Machine
                 $"{GetType().Name} {name} does not have enough resources to support all machines"
             );
         }
-        UpdateHistory();
+        // UpdateHistory();
     }
     #endregion
 
@@ -109,21 +109,21 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         Machines.Add(machine);
-        UpdateHistory();
+        // UpdateHistory();
     }
 
     public void RemoveMachine(T machine)
     {
         Guard.Against.Null(machine, nameof(machine));
         Machines.Remove(machine);
-        UpdateHistory();
+        // UpdateHistory();
     }
 
     public void AddProcessor(Processor processor, int virtualisationFactor)
     {
         // Check for negative or zero virtualisation factor happens in HostSpecifications.
         _specifications.AddProccessor(processor, virtualisationFactor);
-        UpdateHistory();
+        // UpdateHistory();
     }
 
     public void RemoveProcessor(Processor processor, int virtualisationFactor)
@@ -136,7 +136,7 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         _specifications.RemoveProcessor(processor, virtualisationFactor);
-        UpdateHistory();
+        // UpdateHistory();
     }
 
     public void UpdateHistory()

@@ -19,7 +19,7 @@ public class VicDbContext : DbContext
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
     public DbSet<Server> Hosts => Set<Server>();
     public DbSet<Processor> Processors => Set<Processor>();
-    public DbSet<ServerHistory> History => Set<ServerHistory>();
+    //public DbSet<ServerHistory> History => Set<ServerHistory>();
     public DbSet<Port> Ports => Set<Port>();
 
 
@@ -47,6 +47,7 @@ public class VicDbContext : DbContext
         // 1. Customer. 
         modelBuilder.Entity<InternalCustomer>();
         modelBuilder.Entity<ExternalCustomer>();
+        modelBuilder.Entity<ServerHistory>();
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder builder)

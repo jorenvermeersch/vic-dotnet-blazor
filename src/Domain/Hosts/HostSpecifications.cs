@@ -10,8 +10,12 @@ public class HostSpecifications : Specifications
     #region Properties
     public IList<KeyValuePair<Processor, int>> VirtualisationFactors { get; set; } =
         new List<KeyValuePair<Processor, int>>(); // Key : Value => Processor : Virtualisation factor.
-    public new int Processors =>
-        VirtualisationFactors.Select(pair => pair.Key.Cores * pair.Value).Sum(); // Sum of: Cores * virtualisation factor.
+    public new int Processors
+    {
+        get => CalculateVirtualProcessors();
+        private set => base.Processors = value;
+    }
+
     #endregion
 
     #region Constructors
@@ -24,12 +28,19 @@ public class HostSpecifications : Specifications
     ) : base(memory, storage)
     {
         VirtualisationFactors = processors;
+        Processors = CalculateVirtualProcessors();
         Storage = storage;
         Memory = memory;
     }
     #endregion
 
     #region Methods
+    private int CalculateVirtualProcessors()
+    {
+        // Sum of: Cores * virtualisation factor.
+        return VirtualisationFactors.Select(pair => pair.Key.Cores * pair.Value).Sum();
+    }
+
     public void AddProccessor(Processor processor, int virtualisationFactor)
     {
         Guard.Against.NegativeOrZero(virtualisationFactor, nameof(virtualisationFactor));

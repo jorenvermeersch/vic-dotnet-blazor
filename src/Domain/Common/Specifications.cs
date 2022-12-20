@@ -3,7 +3,7 @@
 public class Specifications
 {
     #region Properties
-    public int Processors { get; set; }
+    public virtual int Processors { get; set; }
     public int Memory { get; set; }
     public int Storage { get; set; }
     public IReadOnlyList<int> Values => new List<int>() { Processors, Memory, Storage };
