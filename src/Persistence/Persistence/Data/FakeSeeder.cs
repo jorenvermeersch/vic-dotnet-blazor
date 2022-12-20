@@ -124,9 +124,9 @@ public class FakeSeeder
         dbContext.SaveChanges();
 
         var hostSpecifications = new HostSpecificationsFaker(dbContext.Processors.ToList()).UseSeed(seedValue).Generate(40);
-        var fakeHosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).AsTransient().UseSeed(seedValue).Generate(9);
+        var fakeHosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).AsTransient().UseSeed(seedValue).Generate(25);
 
-        dbContext.Hosts.AddRange(fakeHosts);
+        dbContext.Hosts.AddRange(fakeHosts.Select(h => new Domain.Hosts.Server(h.Name, new Domain.Common.HostSpecifications(h.Specifications.VirtualisationFactors,h.Specifications.Storage, h.Specifications.Memory), h.Machines)));
         dbContext.SaveChanges();
     }
 }
