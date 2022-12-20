@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.VirtualMachines;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Customers;
 
@@ -34,7 +33,6 @@ public abstract class Customer : Entity
         }
     }
 
-    [NotMapped]
     public IList<VirtualMachine> VirtualMachines { get; set; } = default!;
     #endregion
 

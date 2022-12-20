@@ -1,8 +1,10 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Hosts;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Common;
 
+[NotMapped]
 public class HostSpecifications : Specifications
 {
     #region Properties

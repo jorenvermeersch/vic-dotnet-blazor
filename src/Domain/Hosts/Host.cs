@@ -1,8 +1,10 @@
 ﻿using Ardalis.GuardClauses;
 using Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Hosts;
 
+[NotMapped]
 public abstract class Host<T> : Machine where T : Machine
 {
     #region Fields
@@ -32,6 +34,7 @@ public abstract class Host<T> : Machine where T : Machine
     }
     public Specifications RemainingResources => CalculateRemainingResources();
     public ISet<T> Machines { get; set; } = new HashSet<T>();
+
     public IReadOnlyList<History<Host<T>, T>> History => _history.AsReadOnly();
     #endregion
 

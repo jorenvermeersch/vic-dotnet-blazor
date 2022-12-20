@@ -1,5 +1,4 @@
 ﻿using Domain.Accounts;
-using Domain.Common;
 using Domain.Customers;
 using Domain.Hosts;
 using Domain.VirtualMachines;
@@ -17,6 +16,7 @@ public class VicDbContext : DbContext
 
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
     public DbSet<Port> Ports => Set<Port>();
     public DbSet<Processor> Processors => Set<Processor>();
 
@@ -44,22 +44,6 @@ public class VicDbContext : DbContext
         // 1. Customer. 
         modelBuilder.Entity<InternalCustomer>();
         modelBuilder.Entity<ExternalCustomer>();
-
-        //modelBuilder.Ignore<Account>();
-        modelBuilder.Ignore<Specifications>();
-        //modelBuilder.Ignore<ContactPerson>();
-        //modelBuilder.Ignore<Customer>();
-        //modelBuilder.Ignore<InternalCustomer>();
-        //modelBuilder.Ignore<ExternalCustomer>();
-        modelBuilder.Ignore<Machine>();
-        modelBuilder.Ignore<Server>();
-        modelBuilder.Ignore<HostSpecifications>();
-        //modelBuilder.Ignore<Processor>();
-        modelBuilder.Ignore<VirtualMachine>();
-        //modelBuilder.Ignore<Credentials>();
-        //modelBuilder.Ignore<Port>();
-        modelBuilder.Ignore<Domain.VirtualMachines.TimeSpan>();
-        modelBuilder.Ignore<VirtualMachine>();
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder builder)

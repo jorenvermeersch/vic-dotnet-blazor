@@ -4,6 +4,7 @@ using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;
 using Domain.Hosts;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.VirtualMachines;
 
@@ -44,6 +45,8 @@ public class VirtualMachine : Machine
     public Status Status { get; set; }
     public string Reason { get; set; } = default!;
     public IList<Port> Ports { get; set; } = new List<Port>();
+
+    [NotMapped]
     public Host<VirtualMachine> Host
     {
         get => _host;

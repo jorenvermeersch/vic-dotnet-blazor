@@ -1,7 +1,9 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Hosts;
 
+[NotMapped]
 public class History<T, U>
     where T : Host<U>
     where U : Machine
