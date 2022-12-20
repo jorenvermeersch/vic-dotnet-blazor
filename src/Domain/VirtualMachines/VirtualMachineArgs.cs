@@ -15,7 +15,7 @@ public class VirtualMachineArgs
     public Template Template { get; set; } = default!;
     public string Reason { get; set; } = default!;
     public Status Status { get; set; } = default!;
-    public Host<VirtualMachine> Host { get; set; } = default!;
+    public Server Host { get; set; } = default!;
     public Specifications Specifications { get; set; } = default!;
     public Customer Requester { get; set; } = default!;
     public Customer User { get; set; } = default!;

@@ -4,14 +4,13 @@ using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;
 using Domain.Hosts;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.VirtualMachines;
 
 public class VirtualMachine : Machine
 {
     #region Fields
-    private Host<VirtualMachine> _host = default!;
+    private Server _host = default!;
     #endregion
 
     #region Properties
@@ -46,8 +45,7 @@ public class VirtualMachine : Machine
     public string Reason { get; set; } = default!;
     public IList<Port> Ports { get; set; } = new List<Port>();
 
-    [NotMapped]
-    public Host<VirtualMachine> Host
+    public Server Host
     {
         get => _host;
         set
