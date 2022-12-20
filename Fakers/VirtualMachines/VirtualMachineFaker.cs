@@ -43,7 +43,7 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
             BackupFrequency = f.PickRandom(Enum.GetValues(typeof(BackupFrequency)).Cast<BackupFrequency>().ToList()),
             Status = f.PickRandom(Enum.GetValues(typeof(Status)).Cast<Status>().ToList()),
 
-            // Other fakers. 
+            //// Other fakers. 
             User = f.PickRandom(Customers),
             Requester = f.PickRandom(Customers),
             Account = f.PickRandom(Accounts),
