@@ -6,7 +6,7 @@ namespace Client.Accounts;
 
 public partial class Index
 {
-    [Inject] public IAccountService? AccountService { get; set; }
+    [Inject] public IAccountService AccountService { get; set; } = default!;
 
     [Parameter, SupplyParameterFromQuery] public string SearchValue { get; set; } = "";
     [Parameter, SupplyParameterFromQuery] public int Page { get; set; } = 1;
@@ -17,13 +17,14 @@ public partial class Index
     private int selectedPage = 1;
     private int amount = 20;
     private bool toggleAdmin, toggleObserver, toggleMaster;
+
     private List<string> filterRoles;
 
     protected override async Task OnParametersSetAsync()
     {
-        AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
+        AccountResponse.GetIndex response = await AccountService.GetIndexAsync(new AccountRequest.GetIndex
         {
-            Page=Page,
+            Page = 1,
             Amount = amount,
             SearchTerm = SearchValue,
         });
@@ -38,7 +39,7 @@ public partial class Index
         Page = pageNr;
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
-            Page=pageNr,
+            Page = pageNr,
             Amount = amount,
             SearchTerm = SearchValue,
             Roles = filterRoles
@@ -76,7 +77,7 @@ public partial class Index
             Amount = amount,
             SearchTerm = SearchValue,
             Roles = filterRoles
-        }); 
+        });
         accounts = response.Accounts;
         totalAccounts = response.TotalAmount;
         totalPages = totalAccounts / amount + (totalAccounts % amount > 0 ? 1 : 0);
@@ -88,20 +89,20 @@ public partial class Index
     }
     private async void HandleFilter()
     {
-        
-        if(toggleAdmin || toggleMaster || toggleObserver)
+
+        if (toggleAdmin || toggleMaster || toggleObserver)
         {
             filterRoles = new List<string>();
             if (toggleAdmin) filterRoles.Add(Role.Admin.ToString());
             if (toggleMaster) filterRoles.Add(Role.Master.ToString());
             if (toggleObserver) filterRoles.Add(Role.Observer.ToString());
         }
-        
+
 
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
         {
             Page = 1,
-            Amount= amount,
+            Amount = amount,
             SearchTerm = SearchValue,
             Roles = filterRoles
         });

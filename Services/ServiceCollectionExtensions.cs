@@ -1,8 +1,8 @@
 ﻿namespace Services;
 
 using Microsoft.Extensions.DependencyInjection;
-using Service.Accounts;
 using Service.VirtualMachines;
+using Services.Accounts;
 using Services.Customers;
 using Services.FakeInitializer;
 using Services.Hosts;
@@ -18,7 +18,9 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IAccountService, FakeAccountService>();
+        // services.AddScoped<IAccountService, FakeAccountService>();
+        services.AddScoped<IAccountService, AccountService>();
+
         services.AddScoped<ICustomerService, FakeCustomerService>();
         services.AddScoped<IHostService, FakeHostService>();
         services.AddScoped<IVirtualMachineService, FakeVirtualMachineService>();

@@ -1,8 +1,10 @@
 ﻿using Domain.Accounts;
 using Domain.Exceptions;
+using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Accounts;
+using Shared.VirtualMachines;
 
 namespace Services.Accounts;
 
@@ -80,6 +82,20 @@ public class AccountService : IAccountService
             throw new EntityNotFoundException(nameof(Account), request.AccountId);
         }
 
+        // Fetch virtual machines of account.
+        List<VirtualMachine>? machines = await dbContext.VirtualMachines.Where(machine => machine.Account.Id == request.AccountId).ToListAsync();
+
+        List<VirtualMachineDto.Index>? machineIndexes = null;
+        if (machines is not null)
+        {
+            machineIndexes = machines.Select(machine => new VirtualMachineDto.Index()
+            {
+                Id = machine.Id,
+                Fqdn = machine.Fqdn,
+                Status = machine.Status,
+            }).ToList();
+        }
+
         response.Account = new AccountDto.Detail
         {
             Id = account.Id,
@@ -89,7 +105,8 @@ public class AccountService : IAccountService
             Firstname = account.Firstname,
             Lastname = account.Lastname,
             IsActive = account.IsActive,
-            Role = account.Role
+            Role = account.Role,
+            VirtualMachines = machineIndexes,
         };
 
         return response;
@@ -97,9 +114,9 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
     {
-
         AccountResponse.GetIndex response = new();
         var query = accounts.AsQueryable().AsNoTracking();
+
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
             query = query.Where(x => $"{x.Firstname} {x.Lastname}".Contains(request.SearchTerm));
