@@ -87,6 +87,8 @@ public class HostService : IHostService
         HostResponse.GetDetail response = new();
 
         Server? host = await GetHostById(request.HostId)
+            .Include(x => x.VirtualisationFactors)
+            .ThenInclude(x => x.Processor)
             .Include(x => x.Specifications)
             .Include(x => x.Machines)
             .SingleOrDefaultAsync();
@@ -96,10 +98,10 @@ public class HostService : IHostService
             throw new EntityNotFoundException(nameof(Server), request.HostId);
         }
 
-        // Fetch virtual machines of server. 
+        // Format virtual machines of server. 
         List<VirtualMachineDto.Index>? machineIndexes = null;
 
-        List<VirtualMachine> machines = await dbContext.VirtualMachines.Where(machine => machine.Host.Id == request.HostId).ToListAsync();
+        List<VirtualMachine> machines = host.Machines.ToList();
         if (machines is not null)
         {
             machineIndexes = machines.Select(machine =>
@@ -112,7 +114,18 @@ public class HostService : IHostService
             }).ToList();
         }
 
-        // 
+        // Format virtualisation factors. 
+        List<KeyValuePair<ProcessorDto, int>> virtualisationFactors = host.VirtualisationFactors.Select(vf =>
+            new KeyValuePair<ProcessorDto, int>(
+                new ProcessorDto()
+                {
+                    Name = vf.Processor.Name,
+                    Cores = vf.Processor.Cores,
+                    Threads = vf.Processor.Threads,
+                },
+                vf.Factor
+                )
+        ).ToList();
 
         response.Host = new HostDto.Detail
         {
@@ -129,15 +142,7 @@ public class HostService : IHostService
             {
                 Memory = host.Specifications.Memory,
                 Storage = host.Specifications.Storage,
-                Processors = host.Specifications.VirtualisationFactors.Select(
-                    vf => new KeyValuePair<ProcessorDto, int>(new ProcessorDto()
-                    {
-                        Cores = vf.Processor.Cores,
-                        Name = vf.Processor.Name,
-                        Threads = vf.Processor.Threads
-                    },
-                    vf.Factor
-                    )).ToList()
+                Processors = virtualisationFactors
             }
         };
 

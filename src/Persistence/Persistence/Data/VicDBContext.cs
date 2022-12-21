@@ -19,6 +19,7 @@ public class VicDbContext : DbContext
     public DbSet<VirtualMachine> VirtualMachines => Set<VirtualMachine>();
     public DbSet<Server> Hosts => Set<Server>();
     public DbSet<Processor> Processors => Set<Processor>();
+    public DbSet<VirtualisationFactor> VirtualisationFactor => Set<VirtualisationFactor>();
     public DbSet<ServerHistory> History => Set<ServerHistory>();
     public DbSet<Port> Ports => Set<Port>();
 

@@ -24,15 +24,17 @@ public class FakeSeeder
         this.dbContext = dbContext;
     }
 
-    private readonly bool seed = true;
+    private readonly bool seed = false;
 
     public void Seed()
     {
-        dbContext.Database.EnsureDeleted();
-        dbContext.Database.EnsureCreated();
+
 
         if (seed)
         {
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
+
             SeedCustomers();
             SeedAccounts();
             SeedPorts();
