@@ -1,6 +1,7 @@
 ﻿using Domain.Constants;
 using Domain.Customers;
 using Domain.Exceptions;
+using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Customers;
@@ -145,11 +146,31 @@ public class CustomerService : ICustomerService
     public async Task<CustomerResponse.GetDetail> GetDetailAsync(CustomerRequest.GetDetail request)
     {
         CustomerResponse.GetDetail response = new();
-        Customer? customer = await GetCustomerById(request.CustomerId).SingleOrDefaultAsync();
+        Customer? customer = await GetCustomerById(request.CustomerId)
+            .Include(x => x.ContactPerson)
+            .Include(x => x.BackupContactPerson)
+            .SingleOrDefaultAsync();
 
         if (customer is null)
         {
             throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
+        }
+
+        // Fetch virtual machines of customer. 
+        List<VirtualMachine>? machines = await dbContext.VirtualMachines
+            .Where(machine => machine.Requester.Id == request.CustomerId || machine.User.Id == request.CustomerId)
+            .ToListAsync();
+
+        List<VirtualMachineDto.Index>? machineIndexes = null;
+
+        if (machines is not null)
+        {
+            machineIndexes = machines.Select(machine => new VirtualMachineDto.Index()
+            {
+                Id = machine.Id,
+                Fqdn = machine.Fqdn,
+                Status = machine.Status,
+            }).ToList();
         }
 
         ContactPersonDto? backupContact = null;
@@ -165,16 +186,6 @@ public class CustomerService : ICustomerService
             };
         }
 
-
-        var virtualMachines = customer.VirtualMachines.Select(machine =>
-            new VirtualMachineDto.Index()
-            {
-                Id = machine.Id,
-                Fqdn = machine.Fqdn,
-                Status = machine.Status,
-            }
-        ).ToList();
-
         CustomerDto.Detail model = new()
         {
             Id = customer.Id,
@@ -186,7 +197,7 @@ public class CustomerService : ICustomerService
                 Phonenumber = customer.ContactPerson.PhoneNumber
             },
             BackupContactPerson = backupContact,
-            VirtualMachines = virtualMachines, // TODO: Do you need to fetch virtual machines explicitly. 
+            VirtualMachines = machineIndexes, // TODO: Do you need to fetch virtual machines explicitly. 
         };
 
         if (customer is ExternalCustomer externalCustomer)
@@ -215,7 +226,8 @@ public class CustomerService : ICustomerService
         // Searchterm. 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            query = query.Where(x => x.ContactPerson.Firstname.Contains(request.SearchTerm));
+            var searchTerm = request.SearchTerm.ToLower();
+            query = query.Where(x => x.ContactPerson.Firstname.Contains(searchTerm) || x.ContactPerson.Lastname.Contains(searchTerm));
         }
 
         // CustomerType. 
@@ -228,7 +240,8 @@ public class CustomerService : ICustomerService
 
         response.TotalAmount = query.Count();
 
-        query = query.Skip(request.Offset);
+        query = query.OrderByDescending(x => x.CreatedAt);
+        query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 
         response.Customers = await query.Select(x => new CustomerDto.Index

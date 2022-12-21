@@ -38,7 +38,7 @@ else
         </OneWidth>
         <TwoWidth>
             <Title Text="Alle klanten" />
-            @if (customers.Any())
+            @if (customers is not null && customers.Any())
             {
                 <WithTwoColumns>
                     <div>

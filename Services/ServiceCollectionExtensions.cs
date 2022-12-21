@@ -21,7 +21,9 @@ public static class ServiceCollectionExtensions
         // services.AddScoped<IAccountService, FakeAccountService>();
         services.AddScoped<IAccountService, AccountService>();
 
-        services.AddScoped<ICustomerService, FakeCustomerService>();
+        // services.AddScoped<ICustomerService, FakeCustomerService>();
+        services.AddScoped<ICustomerService, CustomerService>();
+
         services.AddScoped<IHostService, FakeHostService>();
         services.AddScoped<IVirtualMachineService, FakeVirtualMachineService>();
 

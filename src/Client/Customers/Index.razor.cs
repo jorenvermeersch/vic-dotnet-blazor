@@ -5,32 +5,35 @@ namespace Client.Customers;
 
 public partial class Index
 {
+
+    private IList<CustomerDto.Index>? customers;
+
     [Inject] public ICustomerService CustomerService { get; set; } = default!;
+    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
+
+    // Filtering. 
     [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
     [Parameter, SupplyParameterFromQuery] public string? Type { get; set; }
     [Parameter, SupplyParameterFromQuery] public int Page { get; set; }
-    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
-    private IEnumerable<CustomerDto.Index>? customers;
     private int totalCustomers = 0, totalPages = 0;
     private int selectedPage = 1;
     private bool toggleIntern, toggleExtern = false;
     private readonly int amount = 20;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         CustomerResponse.GetIndex response = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex
         {
-            Page = 1,
+            Page = selectedPage,
             SearchTerm = SearchValue,
             CustomerType = Type,
             Amount = amount,
         });
-        customers = response.Customers;
+        customers = response.Customers ?? new();
         totalCustomers = response.TotalAmount;
         totalPages = totalCustomers / amount + (totalCustomers % amount > 0 ? 1 : 0);
         selectedPage = Page > 0 ? Page : 1;
-
     }
 
     private void FilterIntern()
@@ -111,7 +114,7 @@ public partial class Index
         {
             Page = pageNr,
             Amount = amount,
-            SearchTerm= SearchValue,
+            SearchTerm = SearchValue,
             CustomerType = Type,
         });
         customers = response.Customers;

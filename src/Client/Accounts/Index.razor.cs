@@ -6,14 +6,15 @@ namespace Client.Accounts;
 
 public partial class Index
 {
-    [Inject] public IAccountService AccountService { get; set; } = default!;
+    private IList<AccountDto.Index>? accounts;
 
-    private List<AccountDto.Index>? accounts;
+    [Inject] public IAccountService AccountService { get; set; } = default!;
+    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
     // Filtering. 
     [Parameter, SupplyParameterFromQuery] public string SearchValue { get; set; } = "";
     [Parameter, SupplyParameterFromQuery] public int Page { get; set; } = 1;
-    [Inject] public NavigationManager NavigationManager { get; set; } = default!;
+
 
     private bool toggleAdmin, toggleObserver, toggleMaster;
     private List<string> filterRoles;
@@ -31,7 +32,7 @@ public partial class Index
             Amount = amount,
             SearchTerm = SearchValue,
         });
-        accounts = response.Accounts;
+        accounts = response.Accounts ?? new();
         totalAccounts = response.TotalAmount;
         totalPages = totalAccounts / amount + (totalAccounts % amount > 0 ? 1 : 0);
         selectedPage = Page > 0 ? Page : 1;

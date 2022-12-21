@@ -24,7 +24,7 @@ public static class CustomerDto
         public string? CompanyName { get; set; }
         public ContactPersonDto ContactPerson { get; set; } = default!;
         public ContactPersonDto? BackupContactPerson { get; set; }
-        public List<VirtualMachineDto.Index> VirtualMachines { get; set; } = new();
+        public List<VirtualMachineDto.Index>? VirtualMachines { get; set; }
     }
     public class Mutate
     {
