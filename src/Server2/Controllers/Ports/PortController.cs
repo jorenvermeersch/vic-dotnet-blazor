@@ -24,16 +24,6 @@ public class PortController : ControllerBase
         PortResponse.GetAll response = await portService.GetAllAsync(new PortRequest.GetAll());
         return response;
     }
-
-
-    [SwaggerOperation("Returns a specific port")]
-    [HttpGet("{PortId}")]
-    public async Task<PortResponse.GetDetail> GetDetails([FromRoute] PortRequest.GetDetail request)
-    {
-        PortResponse.GetDetail response = await portService.GetDetailAsync(request);
-        return response;
-    }
-
 }
 
 

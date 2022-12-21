@@ -11,7 +11,7 @@ public class PortService : IPortService
     public PortService(VicDbContext dbContext)
     {
         this.dbContext = dbContext;
-        // _ports = dbContext.Ports;
+        ports = dbContext.Ports;
     }
 
     public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
@@ -28,19 +28,6 @@ public class PortService : IPortService
         ).ToListAsync();
 
         response.TotalAmount = query.Count();
-
-        return response;
-    }
-
-    public async Task<PortResponse.GetDetail> GetDetailAsync(PortRequest.GetDetail request)
-    {
-        PortResponse.GetDetail response = new();
-
-        response.Port = await ports.AsNoTracking().Where(p => p.Id == request.PortId).Select(p => new PortDto
-        {
-            Number = p.Number,
-            Service = p.Service,
-        }).SingleOrDefaultAsync();
 
         return response;
     }

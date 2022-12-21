@@ -18,9 +18,4 @@ public class PortService : IPortService
         var response = await client.GetFromJsonAsync<PortResponse.GetAll>($"api/ports?{queryParameters}");
         return response!;
     }
-
-    public Task<PortResponse.GetDetail> GetDetailAsync(PortRequest.GetDetail request)
-    {
-        throw new NotImplementedException();
-    }
 }
