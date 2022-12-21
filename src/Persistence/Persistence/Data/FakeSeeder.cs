@@ -1,4 +1,6 @@
-﻿using Domain.Customers;
+﻿using Domain.Common;
+using Domain.Customers;
+using Domain.Hosts;
 using Domain.VirtualMachines;
 using Fakers.Accounts;
 using Fakers.ContactPersons;
@@ -105,7 +107,7 @@ public class FakeSeeder
             Name = x.Name,
             Reason = x.Reason,
             HasVpnConnection = x.HasVpnConnection,
-            Host= dbContext.Hosts.ToList()[new Random().Next(9)],
+            Host = dbContext.Hosts.ToList()[new Random().Next(9)],
             Mode = x.Mode,
             Ports = x.Ports,
             Requester = x.Requester,
@@ -124,9 +126,11 @@ public class FakeSeeder
         dbContext.SaveChanges();
 
         var hostSpecifications = new HostSpecificationsFaker(dbContext.Processors.ToList()).UseSeed(seedValue).Generate(40);
-        var fakeHosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).AsTransient().UseSeed(seedValue).Generate(25);
+        var hosts = new HostFaker(hostSpecifications, dbContext.VirtualMachines.ToList()).AsTransient().UseSeed(seedValue).Generate(25);
 
-        dbContext.Hosts.AddRange(fakeHosts.Select(h => new Domain.Hosts.Server(h.Name, new Domain.Common.HostSpecifications(h.Specifications.VirtualisationFactors,h.Specifications.Storage, h.Specifications.Memory), h.Machines)));
+        dbContext.Hosts.AddRange(hosts.Select(host =>
+            new Server(host.Name, new HostSpecifications(host.Specifications.VirtualisationFactors, host.Specifications.Storage, host.Specifications.Memory), host.Machines)
+        ));
         dbContext.SaveChanges();
     }
 }
