@@ -1,6 +1,5 @@
 ﻿using Domain.Accounts;
 using Domain.Customers;
-using Domain.Hosts;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;

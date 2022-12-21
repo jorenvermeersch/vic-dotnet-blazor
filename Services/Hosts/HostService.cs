@@ -1,11 +1,8 @@
-﻿using Domain.Accounts;
-using Domain.Common;
+﻿using Domain.Common;
 using Domain.Hosts;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Persistence.Data;
-using Shared.Accounts;
 using Shared.Hosts;
 using Shared.VirtualMachines;
 
@@ -21,11 +18,15 @@ public class HostService : IHostService
     {
         _dbContext = dbContext;
         //_hosts = dbContext.Hosts;
+        // TODO: Uncomment after merge. 
     }
 
-    private IQueryable<Server> GetHostById(long id) => _hosts
+    private IQueryable<Server> GetHostById(long id)
+    {
+        return _hosts
                .AsNoTracking()
                .Where(p => p.Id == id);
+    }
 
     public async Task<HostResponse.Create> CreateAsync(HostRequest.Create request)
     {

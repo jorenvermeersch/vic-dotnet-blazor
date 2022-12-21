@@ -1,13 +1,12 @@
 ﻿using Domain.Accounts;
+using Domain.Common;
 using Domain.Constants;
 using Domain.Customers;
+using Domain.Exceptions;
 using Domain.Hosts;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
-using Service.Accounts;
-using Services.Customers;
-using Services.Hosts;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
@@ -18,49 +17,65 @@ namespace Services.VirtualMachines;
 
 public class VirtualMachinService : IVirtualMachineService
 {
-    private readonly VicDBContext _dbContext;
-    private readonly DbSet<VirtualMachine> _virtualMachines;
-    private readonly DbSet<Server> _hosts;
-    private readonly DbSet<Port> _ports;
-    private readonly DbSet<Customer> _customers;
-    private readonly DbSet<Account> _accounts;
+    private readonly VicDBContext dbContext;
+    private readonly DbSet<VirtualMachine> virtualMachines;
+    private readonly DbSet<Server> hosts;
+    private readonly DbSet<Port> ports;
+    private readonly DbSet<Customer> customers;
+    private readonly DbSet<Account> accounts;
 
 
     public VirtualMachinService(VicDBContext dbContact)
     {
-        _dbContext = dbContact;
-        _virtualMachines = _dbContext.VirtualMachines;
-       // _hosts = _dbContext.Hosts;
-        _customers = _dbContext.Customers;
-        _accounts = _dbContext.Accounts;
-       // _ports = _dbContext.Ports;
+        dbContext = dbContact;
+        virtualMachines = dbContext.VirtualMachines;
+        // _hosts = _dbContext.Hosts;
+        customers = dbContext.Customers;
+        accounts = dbContext.Accounts;
+        // _ports = _dbContext.Ports;
     }
 
-    private IQueryable<VirtualMachine> GetMachineById(long id) => _virtualMachines
+    private IQueryable<VirtualMachine> GetMachineById(long id)
+    {
+        return virtualMachines
                 .AsNoTracking()
                 .Where(p => p.Id == id);
-    private static CustomerType ReturnsCustomerType(string type)
-    {
-        CustomerType customerType = new();
-        switch (type)
-        {
-            case "InternalCustomer": customerType = CustomerType.Intern; break;
-            case "ExternalCustomer": customerType = CustomerType.Extern; break;
-        };
-        return customerType;
     }
 
-    private async Task<VirtualMachineArgs> createArgsVirtualMachine(VirtualMachineDto.Mutate model)
+    private static CustomerType GetCustomerType(Customer customer)
     {
-        Server host = await _hosts.SingleOrDefaultAsync(x => x.Id == model.HostId)!;
-        Customer user = await _customers.SingleOrDefaultAsync(x => x.Id == model.UserId)!;
-        Customer requester = await _customers.SingleOrDefaultAsync(x => x.Id == model.RequesterId)!;
-        Account account = await _accounts.SingleOrDefaultAsync(x => x.Id == model.AdministratorId)!;
+        return customer is InternalCustomer ? CustomerType.Intern : CustomerType.Extern;
+    }
 
-        List<Port> ports = new List<Port>();
-        foreach (var port in model.Ports)
+    private static string GetFullName(ContactPerson contactPerson)
+    {
+        return $"{contactPerson.Firstname} {contactPerson.Lastname}";
+    }
+
+    private async Task<VirtualMachineArgs> CreateArgsVirtualMachine(VirtualMachineDto.Mutate model)
+    {
+        // Fetch host. 
+        Server? host = await hosts.SingleOrDefaultAsync(x => x.Id == model.HostId);
+        if (host is null) throw new EntityNotFoundException(nameof(Server), model.HostId);
+
+        // Fetch user, requester and administrator. 
+        Customer? user = await customers.SingleOrDefaultAsync(x => x.Id == model.UserId);
+        if (user is null) throw new EntityNotFoundException(nameof(VirtualMachine.User), model.UserId);
+
+        Customer? requester = await customers.SingleOrDefaultAsync(x => x.Id == model.RequesterId);
+        if (requester is null) throw new EntityNotFoundException(nameof(VirtualMachine.Requester), model.RequesterId);
+
+        Account? account = await accounts.SingleOrDefaultAsync(x => x.Id == model.AdministratorId);
+        if (account is null) throw new EntityNotFoundException(nameof(VirtualMachine.Account), model.AdministratorId);
+
+        // Fetch ports. 
+        List<Port> ports = new();
+
+        foreach (var portNumber in model.Ports)
         {
-            ports.Add(await _ports.SingleOrDefaultAsync(x => x.Number == port)!);
+            Port? port = await this.ports.SingleOrDefaultAsync(x => x.Number == portNumber);
+            if (port is null) throw new EntityNotFoundException(nameof(Port), portNumber);
+            ports.Add(port);
         }
 
         var args = new VirtualMachineArgs
@@ -74,100 +89,144 @@ public class VirtualMachinService : IVirtualMachineService
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
             Status = model.Status!.Value,
             Reason = model.Reason,
-            Ports = ports, 
+            Ports = ports,
             Host = host,
-            Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
+            Credentials = model.Credentials.Select(credential => new Credentials(credential.Username, credential.PasswordHash, credential.Role)).ToList(),
             Account = account,
             Requester = requester,
             User = user,
             Name = model.Name,
             HasVpnConnection = model.hasVpnConnection,
-            Specifications = new Domain.Common.Specifications(model.Specifications.VirtualProcessors, model.Specifications.Memory, model.Specifications.Storage),
+            Specifications = new Specifications(model.Specifications.VirtualProcessors, model.Specifications.Memory, model.Specifications.Storage),
         };
+
         return args;
     }
 
     public async Task<VirtualMachineResponse.Create> CreateAsync(VirtualMachineRequest.Create request)
     {
         VirtualMachineResponse.Create response = new();
-        var machine = _virtualMachines.Add(new VirtualMachine(await createArgsVirtualMachine(request.VirtualMachine)));
-        await _dbContext.SaveChangesAsync();
+        VirtualMachineArgs arguments = await CreateArgsVirtualMachine(request.VirtualMachine);
+        var machine = virtualMachines.Add(new VirtualMachine(arguments));
+
+        await dbContext.SaveChangesAsync();
         response.MachineId = machine.Entity.Id;
+
         return response;
     }
 
     public async Task DeleteAsync(VirtualMachineRequest.Delete request)
     {
-        _virtualMachines.RemoveIf(vm => vm.Id == request.MachineId);
-        await _dbContext.SaveChangesAsync();
+        virtualMachines.RemoveIf(machine => machine.Id == request.MachineId);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request)
     {
         VirtualMachineResponse.Edit response = new();
-        var machine = await GetMachineById(request.MachineId).SingleOrDefaultAsync();
+        VirtualMachine? machine = await GetMachineById(request.MachineId).SingleOrDefaultAsync();
 
-        var model = request.VirtualMachine;
-
-        var args = await createArgsVirtualMachine(model);
-
-        if(machine is not null)
+        if (machine is null)
         {
-            machine.Template = args.Template;
-            machine.Mode = args.Mode;
-            machine.Fqdn = args.Fqdn;
-            machine.Availabilities = args.Availabilities;
-            machine.BackupFrequency = args.BackupFrequency;
-            machine.ApplicationDate = args.ApplicationDate;
-            machine.Specifications = args.Specifications;
-            machine.TimeSpan = args.TimeSpan;
-            machine.Status = args.Status;
-            machine.Reason = args.Reason;
-            machine.Ports = args.Ports;
-            machine.Host = args.Host;
-            machine.Credentials = args.Credentials;
-            machine.Account = args.Account;
-            machine.Requester = args.Requester;
-            machine.User = args.User;
-            machine.HasVpnConnection = args.HasVpnConnection;
-            machine.Credentials = args.Credentials;
-
-            _dbContext.Entry(machine).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            response.MachineId = machine.Id;
+            throw new EntityNotFoundException(nameof(VirtualMachine), request.MachineId);
         }
 
+        var model = request.VirtualMachine;
+        var arguments = await CreateArgsVirtualMachine(model);
+
+        machine.Template = arguments.Template;
+        machine.Mode = arguments.Mode;
+        machine.Fqdn = arguments.Fqdn;
+        machine.Availabilities = arguments.Availabilities;
+        machine.BackupFrequency = arguments.BackupFrequency;
+        machine.ApplicationDate = arguments.ApplicationDate;
+        machine.Specifications = arguments.Specifications;
+        machine.TimeSpan = arguments.TimeSpan;
+        machine.Status = arguments.Status;
+        machine.Reason = arguments.Reason;
+        machine.Ports = arguments.Ports;
+        machine.Host = arguments.Host;
+        machine.Credentials = arguments.Credentials;
+        machine.Account = arguments.Account;
+        machine.Requester = arguments.Requester;
+        machine.User = arguments.User;
+        machine.HasVpnConnection = arguments.HasVpnConnection;
+        machine.Credentials = arguments.Credentials;
+
+        dbContext.Entry(machine).State = EntityState.Modified;
+        await dbContext.SaveChangesAsync();
+        response.MachineId = machine.Id;
+
         return response;
+    }
+
+    private VirtualMachineDto.Detail ToVirtualMachineDetail(VirtualMachine machine)
+    {
+        return new VirtualMachineDto.Detail
+        {
+            Id = machine.Id,
+            Fqdn = machine.Fqdn,
+            Status = machine.Status,
+            Name = machine.Name,
+            Template = machine.Template,
+            Mode = machine.Mode,
+            Availabilities = machine.Availabilities.Select(x => x.ToString()).ToList()!,
+            BackupFrequenty = machine.BackupFrequency,
+            ApplicationDate = machine.ApplicationDate,
+            TimeSpan = new TimeSpanDto()
+            {
+                StartDate = machine.TimeSpan.StartDate,
+                EndDate = machine.TimeSpan.EndDate
+            },
+            Reason = machine.Reason,
+            Ports = machine.Ports.Select(PORT => new PortDto { Number = PORT.Number, Service = PORT.Service }).ToList(),
+            Specification = new SpecificationsDto()
+            {
+                Memory = machine.Specifications.Memory,
+                Storage = machine.Specifications.Storage,
+                VirtualProcessors = machine.Specifications.Processors
+            },
+            Host = new HostDto.Index() { Id = machine.Host.Id, Name = machine.Host.Name },
+            Credentials = machine.Credentials.Select(credential => new CredentialsDto
+            {
+                Username = credential.Username,
+                Role = credential.Role,
+                PasswordHash = credential.PasswordHash
+            }).ToList(),
+            Account = new AccountDto.Index()
+            {
+                Id = machine.Account.Id,
+                Email = machine.Account.Email,
+                Firstname = machine.Account.Firstname,
+                Lastname = machine.Account.Lastname,
+                IsActive = machine.Account.IsActive,
+                Role = machine.Account.Role
+            },
+            Requester = new CustomerDto.Index()
+            {
+                Id = machine.Requester.Id
+                ,
+                Name = GetFullName(machine.Requester.ContactPerson),
+                Email = machine.Requester.ContactPerson.Email,
+                CustomerType = GetCustomerType(machine.Requester),
+            },
+            User = new CustomerDto.Index()
+            {
+                Id = machine.User.Id,
+                Name = GetFullName(machine.User.ContactPerson),
+                Email = machine.User.ContactPerson.Email,
+                CustomerType = GetCustomerType(machine.User),
+            },
+            hasVpnConnection = machine.HasVpnConnection
+        };
     }
 
     public async Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
     {
         VirtualMachineResponse.GetAllDetails response = new();
-        var query = _virtualMachines.AsQueryable().AsNoTracking();
+        var query = virtualMachines.AsQueryable().AsNoTracking();
 
-        response.VirtualMachines = await query.Select(vm => new VirtualMachineDto.Detail
-        {
-            Id = vm.Id,
-            Fqdn = vm.Fqdn,
-            Status = vm.Status,
-            Name = vm.Name,
-            Template = vm.Template,
-            Mode = vm.Mode,
-            Availabilities = vm.Availabilities.Select(x => x.ToString()).ToList() ?? new List<string>(),
-            BackupFrequenty = vm.BackupFrequency,
-            ApplicationDate = vm.ApplicationDate,
-            TimeSpan = new TimeSpanDto() { StartDate = vm.TimeSpan.StartDate, EndDate = vm.TimeSpan.EndDate },
-            Reason = vm.Reason,
-            Ports = vm.Ports.Select(y => new PortDto { Number = y.Number, Service = y.Service }).ToList(),
-            Specification = new SpecificationsDto() { Memory = vm.Specifications.Memory, Storage = vm.Specifications.Storage, VirtualProcessors = vm.Specifications.Processors },
-            Host = new HostDto.Index() { Id = vm.Host.Id, Name = vm.Host.Name },
-            Credentials = vm.Credentials.Select(y => new CredentialsDto { Username = y.Username, Role = y.Role, PasswordHash = y.PasswordHash }).ToList(),
-            Account = new AccountDto.Index() { Id = vm.Account.Id, Email = vm.Account.Email, Firstname = vm.Account.Firstname, Lastname = vm.Account.Lastname, IsActive = vm.Account.IsActive, Role = vm.Account.Role },
-            Requester = new CustomerDto.Index() { Id = vm.Requester.Id, Name = (vm.Requester.ContactPerson.Firstname + " " + vm.Requester.ContactPerson.Lastname), Email = vm.Requester.ContactPerson.Email, CustomerType = ReturnsCustomerType(vm.Requester.GetType().ToString()) },
-            User = new CustomerDto.Index() { Id = vm.User.Id, Name = (vm.User.ContactPerson.Firstname + " " + vm.User.ContactPerson.Lastname), Email = vm.User.ContactPerson.Email, CustomerType = ReturnsCustomerType(vm.User.GetType().ToString()) },
-            hasVpnConnection = vm.HasVpnConnection
-        }).ToListAsync();
-
+        response.VirtualMachines = await query.Select(machine => ToVirtualMachineDetail(machine)).ToListAsync();
         response.TotalAmount = query.Count();
 
         return response;
@@ -175,51 +234,41 @@ public class VirtualMachinService : IVirtualMachineService
 
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
-        VirtualMachineResponse.GetDetail response = new()
+        VirtualMachineResponse.GetDetail response = new();
+        VirtualMachine? machine = await GetMachineById(request.MachineId).SingleOrDefaultAsync();
+
+        if (machine is null)
         {
-            VirtualMachine = await GetMachineById(request.MachineId).Select(x => new VirtualMachineDto.Detail
-            {
-                Id = x.Id,
-                Fqdn = x.Fqdn,
-                Status = x.Status,
-                Name = x.Name,
-                Template = x.Template,
-                Mode = x.Mode,
-                Availabilities = x.Availabilities.Select(x => x.ToString()).ToList() ?? new List<string>(),
-                BackupFrequenty = x.BackupFrequency,
-                ApplicationDate = x.ApplicationDate,
-                TimeSpan = new TimeSpanDto() { StartDate = x.TimeSpan.StartDate, EndDate = x.TimeSpan.EndDate },
-                Reason = x.Reason,
-                Ports = x.Ports.Select(y => new PortDto { Number = y.Number, Service = y.Service }).ToList(),
-                Specification = new SpecificationsDto() { Memory = x.Specifications.Memory, Storage = x.Specifications.Storage, VirtualProcessors = x.Specifications.Processors },
-                Host = new HostDto.Index() { Id = x.Host.Id, Name = x.Host.Name },
-                Credentials = x.Credentials.Select(y => new CredentialsDto { Username = y.Username, Role = y.Role, PasswordHash = y.PasswordHash }).ToList(),
-                Account = new AccountDto.Index() { Id = x.Account.Id, Email = x.Account.Email, Firstname = x.Account.Firstname, Lastname = x.Account.Lastname, IsActive = x.Account.IsActive, Role = x.Account.Role },
-                Requester = new CustomerDto.Index() { Id = x.Requester.Id, Name = (x.Requester.ContactPerson.Firstname + " " + x.Requester.ContactPerson.Lastname), Email = x.Requester.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.Requester.GetType().ToString()) },
-                User = new CustomerDto.Index() { Id = x.User.Id, Name = (x.User.ContactPerson.Firstname + " " + x.User.ContactPerson.Lastname), Email = x.User.ContactPerson.Email, CustomerType = ReturnsCustomerType(x.User.GetType().ToString()) },
-                hasVpnConnection = x.HasVpnConnection
-            })!.SingleOrDefaultAsync(),
-        };  
+            throw new EntityNotFoundException(nameof(VirtualMachine), request.MachineId);
+        }
+
+        response.VirtualMachine = ToVirtualMachineDetail(machine);
+
         return response;
     }
 
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         VirtualMachineResponse.GetIndex response = new();
-        var query = _virtualMachines.AsQueryable().AsNoTracking();
+        var query = virtualMachines.AsQueryable().AsNoTracking();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        {
             query = query.Where(x => x.Fqdn.Contains(request.SearchTerm));
+        }
+
         if (request.IsUnfinished)
         {
-            query = query.Where(x => x.Status == Status.InProgress || x.Status == Status.Requested);
+            query = query.Where(x => x.Status != Status.Deployed);
         }
+
         response.TotalAmount = query.Count();
 
         query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 
-        query.OrderBy(x => x.Name);
+        query.OrderByDescending(x => x.ApplicationDate);
+
         response.VirtualMachines = await query.Select(x => new VirtualMachineDto.Index
         {
             Id = x.Id,

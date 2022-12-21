@@ -42,8 +42,6 @@
 
 //app.Run();
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 namespace Server;
 
 public class Program

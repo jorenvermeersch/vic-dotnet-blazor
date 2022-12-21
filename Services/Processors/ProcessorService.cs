@@ -1,4 +1,5 @@
-﻿using Domain.Hosts;
+﻿using Domain.Exceptions;
+using Domain.Hosts;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Hosts;
@@ -7,19 +8,24 @@ namespace Services.Processors;
 
 public class ProcessorService : IProcessorService
 {
-    private readonly VicDBContext _dbContext;
-    private readonly DbSet<Processor> _processors;
+    private readonly VicDBContext dbContext;
+    private readonly DbSet<Processor> processors;
 
     public ProcessorService(VicDBContext dbContext)
     {
-        _dbContext= dbContext;
-       // _processors = _dbContext.Processors;
+        this.dbContext = dbContext;
+        // _processors = _dbContext.Processors;
     }
     public async Task<ProcessorResponse.GetDetail> GetDetailAsync(ProcessorRequest.GetDetail request)
     {
         ProcessorResponse.GetDetail response = new();
 
-        Processor processor = await _processors.Where(p => p.Id == request.ProcessorId).AsNoTracking().SingleOrDefaultAsync();
+        Processor? processor = await processors.Where(p => p.Id == request.ProcessorId).AsNoTracking().SingleOrDefaultAsync();
+
+        if (processor is null)
+        {
+            throw new EntityNotFoundException(nameof(Processor), request.ProcessorId);
+        }
 
         response.Processor = new ProcessorDto
         {
@@ -35,11 +41,11 @@ public class ProcessorService : IProcessorService
     {
         ProcessorResponse.GetIndex response = new();
 
-        var query = _processors.AsQueryable().AsNoTracking();
+        var query = processors.AsQueryable().AsNoTracking();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            query = query.Where(p=>p.Name== request.SearchTerm);
+            query = query.Where(p => p.Name.Contains(request.SearchTerm));
         }
 
         response.TotalAmount = query.Count();
