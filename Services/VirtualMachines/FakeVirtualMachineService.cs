@@ -8,6 +8,7 @@ using Service.Accounts;
 using Services.Customers;
 using Services.FakeInitializer;
 using Services.Hosts;
+using Services.Ports;
 using Shared.Accounts;
 using Shared.Customers;
 using Shared.Hosts;
@@ -18,10 +19,11 @@ namespace Service.VirtualMachines;
 
 public class FakeVirtualMachineService : IVirtualMachineService
 {
-    private static readonly List<VirtualMachine> machines = new();
+   // private static readonly List<VirtualMachine> Machines = new();
+   public static List<VirtualMachine> Machines { get; set; } = new List<VirtualMachine>();
     static FakeVirtualMachineService()
     {
-        machines = FakeInitializerService.FakeVirtualMachines ?? new List<VirtualMachine>();
+        Machines = FakeInitializerService.FakeVirtualMachines ?? new List<VirtualMachine>();
     }
 
     // Helper Function
@@ -38,10 +40,15 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
     private VirtualMachineArgs createArgsVirtualMachine(VirtualMachineDto.Mutate model)
     {
-        Server host = FakeHostService.Hosts.Where(x => x.Id == model.HostId).SingleOrDefault();
-        Customer user = FakeCustomerService.Customers.Where(x => x.Id == model.UserId).SingleOrDefault();
-        Customer requester = FakeCustomerService.Customers.Where(x => x.Id == model.RequesterId).SingleOrDefault();
-        Account account = FakeAccountService.Accounts.Where(x => x.Id == model.AdministratorId).SingleOrDefault();
+        Server host = FakeHostService.Hosts.Where(x => x.Id == model.HostId).SingleOrDefault()!;
+        Customer user = FakeCustomerService.Customers.Where(x => x.Id == model.UserId).SingleOrDefault()!;
+        Customer requester = FakeCustomerService.Customers.Where(x => x.Id == model.RequesterId).SingleOrDefault()!;
+        Account account = FakeAccountService.Accounts.Where(x => x.Id == model.AdministratorId).SingleOrDefault()!;
+        List<Port> ports = new List<Port>();
+        foreach (var port in model.Ports)
+        {
+            ports.Add(FakePortService.Ports.SingleOrDefault(x => x.Number == port));
+        }
 
         var args = new VirtualMachineArgs
         {
@@ -54,7 +61,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             TimeSpan = new Domain.VirtualMachines.TimeSpan(startDate: model.StartDate, endDate: model.EndDate),
             Status = model.Status!.Value,
             Reason = model.Reason,
-            Ports = new List<Port>(),
+            Ports = ports, 
             Host = host,
             Credentials = model.Credentials.Select(y => new Credentials(y.Username, y.PasswordHash, y.Role)).ToList(),
             Account = account,
@@ -62,7 +69,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
             User = user,
             Name = model.Name,
             HasVpnConnection = model.hasVpnConnection,
-            Specifications = new Domain.Common.Specifications(memory: model.Specifications.Memory, storage: model.Specifications.Storage)
+            Specifications = new Domain.Common.Specifications(model.Specifications.VirtualProcessors,model.Specifications.Memory, model.Specifications.Storage),
         };
         return args;
     }
@@ -72,8 +79,8 @@ public class FakeVirtualMachineService : IVirtualMachineService
         VirtualMachineResponse.Create response = new();
         var model = request.VirtualMachine;
         var args = createArgsVirtualMachine(model);
-        var machine = new VirtualMachine(args) { Id = machines.Max(x => x.Id) + 1 };
-        machines.Add(machine);
+        var machine = new VirtualMachine(args) { Id = Machines.Max(x => x.Id) + 1 };
+        Machines.Add(machine);
         response.MachineId = machine.Id;
 
         return response;
@@ -81,7 +88,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request)
     {
         VirtualMachineResponse.Edit response = new();
-        var machine = machines.SingleOrDefault(x => x.Id == request.MachineId);
+        var machine = Machines.SingleOrDefault(x => x.Id == request.MachineId);
 
         var model = request.VirtualMachine;
 
@@ -113,12 +120,12 @@ public class FakeVirtualMachineService : IVirtualMachineService
     {
         //machines.RemoveAll(x => x.Id == request.MachineId);
 
-        VirtualMachine? machine = machines.SingleOrDefault(x => x.Id == request.MachineId);
+        VirtualMachine? machine = Machines.SingleOrDefault(x => x.Id == request.MachineId);
 
         if (machine is null)
             throw new EntityNotFoundException(nameof(VirtualMachine), request.MachineId);
 
-        machines.Remove(machine);
+        Machines.Remove(machine);
     }
 
 
@@ -126,7 +133,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         VirtualMachineResponse.GetDetail response = new();
-        var query = machines.AsQueryable();
+        var query = Machines.AsQueryable();
 
         response.VirtualMachine = query.Select(x => new VirtualMachineDto.Detail
         {
@@ -158,7 +165,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
         VirtualMachineResponse.GetIndex response = new();
-        var query = machines.AsQueryable();
+        var query = Machines.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             query = query.Where(x => x.Fqdn.Contains(request.SearchTerm, StringComparison.OrdinalIgnoreCase));
@@ -185,7 +192,7 @@ public class FakeVirtualMachineService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
     {
         VirtualMachineResponse.GetAllDetails response = new();
-        var query = machines.AsQueryable();
+        var query = Machines.AsQueryable();
 
         response.TotalAmount = query.Count();
         response.VirtualMachines = query.Select(x => new VirtualMachineDto.Detail
@@ -212,11 +219,6 @@ public class FakeVirtualMachineService : IVirtualMachineService
             hasVpnConnection = x.HasVpnConnection
         }).ToList();
         return response;
-    }
-
-    public Task<VirtualMachineResponse.GetIndex> GetUnfinishedAsync(VirtualMachineRequest.GetIndex request)
-    {
-        throw new NotImplementedException();
     }
 
 

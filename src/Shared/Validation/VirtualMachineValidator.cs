@@ -3,7 +3,6 @@ using Shared.VirtualMachines;
 
 namespace Shared.Validation;
 
-[Obsolete]
 public class VirtualMachineValidator : AbstractValidator<VirtualMachineDto.Mutate>
 {
     private readonly int minNameLength = 2;

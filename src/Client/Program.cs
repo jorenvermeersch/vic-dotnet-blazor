@@ -1,9 +1,7 @@
 using Client.Accounts;
 using Client.Customers;
 using Client.Hosts;
-using Client.Authentication;
 using Client.VirtualMachines;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;

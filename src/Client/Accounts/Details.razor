@@ -30,7 +30,33 @@ else
         </OneWidth>
         <TwoWidth>
             <Title Text="Virtuele machines" />
-            <NoResultsMessage Message="@string.Format($"{account.GetFullName()} is nog geen verantwoordelijke voor virtuele machines.")"/>
+            @if(account.VirtualMachines is not null && account.VirtualMachines.Any())
+            {
+                <WithTwoColumns>
+                    <div>
+                        @foreach (var machine in account.VirtualMachines.Take(5))
+                        {
+                            <StatusCard Value="@machine.Fqdn"
+                            Active="@machine.IsActive()"
+                            Href="@machine.GetDetailUrl()" />
+                        }
+                    </div>
+                    <div>
+                        @foreach (var machine in account.VirtualMachines.Skip(5).Take(5))
+                        {
+                            <StatusCard Value="@machine.Fqdn"
+                            Active="@machine.IsActive()"
+                            Href="@machine.GetDetailUrl()" />
+                        }
+                    </div>
+                </WithTwoColumns>
+                @*<PageSelector OnClick="@ChangePage" NumberOfPages=@totalPages SelectedPage="@selectedPage" />*@
+            }
+            else
+            {
+                <NoResultsMessage Message="@string.Format($"{account.GetFullName()} is nog geen verantwoordelijke voor virtuele machines.")" />
+            }
+            
         </TwoWidth>
     </ThreeColumnLayout>
 }

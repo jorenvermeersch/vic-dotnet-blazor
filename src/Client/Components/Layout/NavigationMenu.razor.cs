@@ -1,6 +1,4 @@
-using Client.Authentication;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Client.Components.Layout;
 

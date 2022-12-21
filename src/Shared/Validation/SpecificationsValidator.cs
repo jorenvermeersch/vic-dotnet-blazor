@@ -2,8 +2,6 @@
 using Shared.VirtualMachines;
 
 namespace Shared.Validation;
-
-[Obsolete]
 public class SpecificationsValidator : AbstractValidator<SpecificationsDto>
 {
     private readonly int minProcessorCount = 1;

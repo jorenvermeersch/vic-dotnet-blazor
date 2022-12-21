@@ -1,26 +1,48 @@
-﻿namespace Shared.Ports
+﻿using Domain.VirtualMachines;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Data;
+
+namespace Shared.Ports;
+
+public class PortService : IPortService
 {
-    public class PortService : IPortService
+    private readonly VicDbContext dbContext;
+    private readonly DbSet<Port> ports;
+    public PortService(VicDbContext dbContext)
     {
-        public PortService()
-        {
+        this.dbContext = dbContext;
+        // _ports = dbContext.Ports;
+    }
 
-        }
+    public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
+    {
+        PortResponse.GetAll response = new();
+        var query = ports.AsNoTracking();
 
-        public Task<PortResponse.GetAll> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
+        response.Ports = await query.Select(port =>
+            new PortDto
+            {
+                Number = port.Number,
+                Service = port.Service,
+            }
+        ).ToListAsync();
 
-        public Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
-        {
-            throw new NotImplementedException();
-        }
+        response.TotalAmount = query.Count();
 
-        public Task<PortResponse.GetDetail> GetDetailAsync(PortRequest.GetDetail request)
+        return response;
+    }
+
+    public async Task<PortResponse.GetDetail> GetDetailAsync(PortRequest.GetDetail request)
+    {
+        PortResponse.GetDetail response = new();
+
+        response.Port = await ports.AsNoTracking().Where(p => p.Id == request.PortId).Select(p => new PortDto
         {
-            throw new NotImplementedException();
-        }
+            Number = p.Number,
+            Service = p.Service,
+        }).SingleOrDefaultAsync();
+
+        return response;
     }
 }
 

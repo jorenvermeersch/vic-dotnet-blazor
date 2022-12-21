@@ -1,4 +1,4 @@
-﻿
+﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services;
 using Services.FakeInitializer;
+using Shared.Validation;
 
 namespace Server;
 
@@ -26,6 +27,16 @@ public class StartUp
         });
 
         services.AddServices();
+
+
+        services.AddControllersWithViews().AddFluentValidation(config =>
+        {
+            config.RegisterValidatorsFromAssemblyContaining<AccountValidator>();
+            config.RegisterValidatorsFromAssemblyContaining<HostValidator>();
+            config.RegisterValidatorsFromAssemblyContaining<VirtualMachineValidator>();
+            config.RegisterValidatorsFromAssemblyContaining<CustomerValidator>();
+            config.ImplicitlyValidateChildProperties = true;
+        });
 
         // Database context. 
         var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("SqlServer"));
