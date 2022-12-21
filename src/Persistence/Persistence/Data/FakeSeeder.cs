@@ -33,11 +33,11 @@ public class FakeSeeder
 
         if (seed)
         {
-            // SeedCustomers();
-            // SeedAccounts();
-            // SeedPorts();
-            // SeedHost();
-            // SeedVirtualMachines();
+            SeedCustomers();
+            SeedAccounts();
+            SeedPorts();
+            SeedHost();
+            SeedVirtualMachines();
         }
     }
 

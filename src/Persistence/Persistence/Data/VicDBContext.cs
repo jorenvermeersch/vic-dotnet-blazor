@@ -47,7 +47,9 @@ public class VicDbContext : DbContext
         // 1. Customer. 
         modelBuilder.Entity<InternalCustomer>();
         modelBuilder.Entity<ExternalCustomer>();
-        modelBuilder.Entity<ServerHistory>();
+
+
+        modelBuilder.Ignore<ServerHistory>();
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder builder)

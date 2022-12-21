@@ -13,6 +13,8 @@ public abstract class Host<T> : Machine where T : Machine
     #endregion
 
     #region Properties
+    public IList<VirtualisationFactor> VirtualisationFactors =>
+        _specifications.VirtualisationFactors;
     public new HostSpecifications Specifications
     {
         get => _specifications;

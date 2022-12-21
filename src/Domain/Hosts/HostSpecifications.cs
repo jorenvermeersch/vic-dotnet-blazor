@@ -7,7 +7,8 @@ namespace Domain.Common;
 public class HostSpecifications : Specifications
 {
     #region Properties
-    public List<VirtualisationFactor> VirtualisationFactors { get; set; } = new();
+    public IList<VirtualisationFactor> VirtualisationFactors { get; set; } =
+        new List<VirtualisationFactor>();
 
     public new int Processors => CalculateVirtualProcessors();
     #endregion
@@ -15,7 +16,7 @@ public class HostSpecifications : Specifications
     #region Constructors
     private HostSpecifications() { }
 
-    public HostSpecifications(List<VirtualisationFactor> processors, int storage, int memory)
+    public HostSpecifications(IList<VirtualisationFactor> processors, int storage, int memory)
         : base(memory, storage)
     {
         VirtualisationFactors = processors;
@@ -38,9 +39,9 @@ public class HostSpecifications : Specifications
 
     public void RemoveProcessor(Processor processor, int virtualisationFactor)
     {
-        VirtualisationFactor? item = VirtualisationFactors.Find(
-            vf => (vf.Processor == processor) && (vf.Factor == virtualisationFactor)
-        );
+        VirtualisationFactor? item = VirtualisationFactors
+            .ToList()
+            .Find(vf => (vf.Processor == processor) && (vf.Factor == virtualisationFactor));
 
         if (item is not null)
         {

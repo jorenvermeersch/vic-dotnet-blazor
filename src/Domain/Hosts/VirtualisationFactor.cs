@@ -1,6 +1,6 @@
 ﻿namespace Domain.Hosts;
 
-public class VirtualisationFactor
+public class VirtualisationFactor : Entity
 {
     public Processor Processor { get; set; } = default!;
     public int Factor { get; set; }
