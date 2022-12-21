@@ -58,35 +58,14 @@ public class HostService : IHostService
         return response;
     }
 
-    public async Task DeleteAsync(HostRequest.Delete request)
+    public Task DeleteAsync(HostRequest.Delete request)
     {
-        hosts.RemoveIf(host => host.Id == request.HostId);
-        await dbContext.SaveChangesAsync();
+        throw new NotImplementedException();
     }
 
-    public async Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
+    public Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
     {
-        HostResponse.Edit response = new();
-        Server? host = await GetHostById(request.HostId).SingleOrDefaultAsync();
-
-        if (host is null)
-        {
-            throw new EntityNotFoundException(nameof(Server), request.HostId);
-        }
-
-        var model = request.Host;
-
-        List<VirtualisationFactor> processors = new(); // TODO: Fetch processors. 
-
-        host.Name = model.Name;
-        host.Specifications = new HostSpecifications(processors, model.Specifications.Storage, model.Specifications.Memory);
-
-        dbContext.Entry(host).State = EntityState.Modified;
-        await dbContext.SaveChangesAsync();
-        response.HostId = host.Id;
-
-
-        return response;
+        throw new NotImplementedException();
     }
 
     public async Task<HostResponse.GetDetail> GetDetailAsync(HostRequest.GetDetail request)
