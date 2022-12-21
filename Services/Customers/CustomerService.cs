@@ -83,63 +83,12 @@ public class CustomerService : ICustomerService
 
     public async Task DeleteAsync(CustomerRequest.Delete request)
     {
-        customers.RemoveIf(customer => customer.Id == request.CustomerId);
-        await dbContext.SaveChangesAsync();
+        throw new NotImplementedException();
     }
 
     public async Task<CustomerResponse.Edit> EditAsync(CustomerRequest.Edit request)
     {
-        CustomerResponse.Edit response = new();
-        var customer = await GetCustomerById(request.CustomerId).SingleOrDefaultAsync();
-
-        if (customer is null)
-        {
-            throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
-        }
-
-        ContactPerson contactPerson = new(
-               request.Customer.ContactPerson.Firstname!,
-               request.Customer.ContactPerson.Lastname!,
-               request.Customer.ContactPerson.Email!,
-               request.Customer.ContactPerson.Phonenumber
-               );
-
-
-        ContactPerson? backupContactPerson = null;
-
-        if (request.Customer.BackupContactPerson is not null)
-        {
-            backupContactPerson = new(
-                request.Customer.BackupContactPerson.Firstname!,
-                request.Customer.BackupContactPerson.Lastname!,
-                request.Customer.BackupContactPerson.Email!,
-                request.Customer.BackupContactPerson.Phonenumber
-            );
-        }
-
-
-        customer.ContactPerson = contactPerson;
-        customer.BackupContactPerson = backupContactPerson;
-
-        if (customer is InternalCustomer internalCustomer)
-        {
-
-            internalCustomer.Institution = request.Customer.Institution!.Value;
-            internalCustomer.Education = request.Customer.Education!;
-            internalCustomer.Department = request.Customer.Department!;
-
-        }
-        else if (customer is ExternalCustomer externalCustomer)
-        {
-            externalCustomer.CompanyName = request.Customer.CompanyName!;
-            externalCustomer.Type = request.Customer.CompanyType!;
-        }
-
-        dbContext.Entry(customer).State = EntityState.Modified;
-        await dbContext.SaveChangesAsync();
-        response.CustomerId = customer.Id;
-
-        return response;
+        throw new NotImplementedException();
 
     }
 

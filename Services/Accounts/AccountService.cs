@@ -43,33 +43,12 @@ public class AccountService : IAccountService
 
     public async Task DeleteAsync(AccountRequest.Delete request)
     {
-        accounts.RemoveIf(account => account.Id == request.AccountId);
-        await dbContext.SaveChangesAsync();
+        throw new NotImplementedException();
     }
 
     public async Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)
     {
-        AccountResponse.Edit response = new();
-        var account = await GetAccountById(request.AccountId).SingleOrDefaultAsync();
-
-        if (account is not null)
-        {
-            var model = request.Account;
-
-            account.Firstname = model.Firstname;
-            account.Lastname = model.Lastname;
-            account.Email = model.Email;
-            account.Role = model.Role;
-            account.IsActive = model.IsActive;
-            account.Education = model.Education;
-            account.Department = model.Department;
-
-            dbContext.Entry(account).State = EntityState.Modified;
-            await dbContext.SaveChangesAsync();
-            response.AccountId = account.Id;
-        }
-
-        return response;
+        throw new NotImplementedException();
     }
 
     public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
