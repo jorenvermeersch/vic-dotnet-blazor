@@ -38,6 +38,7 @@ public class FakeSeeder
             SeedPorts();
             SeedHost();
             SeedVirtualMachines();
+            SeedHistory();
         }
     }
 
@@ -97,7 +98,7 @@ public class FakeSeeder
         var virtualmachines = vmfaker.AsTransient().UseSeed(1337).Generate(50);
         dbContext.VirtualMachines.AddRange(virtualmachines.Select(x => new VirtualMachine(new VirtualMachineArgs()
         {
-            Specifications = new Domain.Common.Specifications(x.Specifications.Processors, x.Specifications.Memory, x.Specifications.Storage),
+            Specifications = new Specifications(x.Specifications.Processors, x.Specifications.Memory, x.Specifications.Storage),
             Credentials = x.Credentials,
             Account = x.Account,
             ApplicationDate = x.ApplicationDate,
@@ -107,7 +108,7 @@ public class FakeSeeder
             Name = x.Name,
             Reason = x.Reason,
             HasVpnConnection = x.HasVpnConnection,
-            Host = dbContext.Hosts.ToList()[new Random().Next(9)],
+            Host = dbContext.Hosts.ToList()[new Random().Next(dbContext.Hosts.ToList().Count)],
             Mode = x.Mode,
             Ports = x.Ports,
             Requester = x.Requester,
@@ -131,6 +132,13 @@ public class FakeSeeder
         dbContext.Hosts.AddRange(hosts.Select(host =>
             new Server(host.Name, new HostSpecifications(host.Specifications.VirtualisationFactors, host.Specifications.Storage, host.Specifications.Memory), host.Machines)
         ));
+        dbContext.SaveChanges();
+    }
+
+    private void SeedHistory()
+    {
+        var history = dbContext.Hosts.ToList().Select(host => new ServerHistory(host));
+        dbContext.History.AddRange(history);
         dbContext.SaveChanges();
     }
 }

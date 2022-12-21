@@ -12,6 +12,8 @@ public class ServerHistoryConfiguration : EntityConfiguration<ServerHistory>
     {
         base.Configure(builder);
 
+
+
         builder.ToTable("History");
 
         builder.OwnsOne(x => x.Specifications, specifications =>

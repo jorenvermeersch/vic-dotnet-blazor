@@ -9,11 +9,10 @@ public abstract class Host<T> : Machine where T : Machine
 {
     #region Fields
     private HostSpecifications _specifications = default!;
-    private List<History<Host<T>, T>> _history = new();
     #endregion
 
     #region Properties
-    // Necessary for database mapping. 
+    // Necessary for database mapping.
     public IList<VirtualisationFactor> VirtualisationFactors
     {
         get => _specifications.VirtualisationFactors;
@@ -36,14 +35,10 @@ public abstract class Host<T> : Machine where T : Machine
                     "New specifications are insufficient for running existing machines"
                 );
             }
-            // UpdateHistory();
         }
     }
     public Specifications RemainingResources => CalculateRemainingResources();
     public ISet<T> Machines { get; set; } = new HashSet<T>();
-
-    [NotMapped]
-    public IList<History<Host<T>, T>> History => _history;
     #endregion
 
     #region Constructors
@@ -64,7 +59,6 @@ public abstract class Host<T> : Machine where T : Machine
                 $"{GetType().Name} {name} does not have enough resources to support all machines"
             );
         }
-        // UpdateHistory();
     }
     #endregion
 
@@ -116,21 +110,18 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         Machines.Add(machine);
-        // UpdateHistory();
     }
 
     public void RemoveMachine(T machine)
     {
         Guard.Against.Null(machine, nameof(machine));
         Machines.Remove(machine);
-        // UpdateHistory();
     }
 
     public void AddProcessor(Processor processor, int virtualisationFactor)
     {
         // Check for negative or zero virtualisation factor happens in HostSpecifications.
         _specifications.AddProccessor(processor, virtualisationFactor);
-        // UpdateHistory();
     }
 
     public void RemoveProcessor(Processor processor, int virtualisationFactor)
@@ -143,12 +134,6 @@ public abstract class Host<T> : Machine where T : Machine
         }
 
         _specifications.RemoveProcessor(processor, virtualisationFactor);
-        // UpdateHistory();
-    }
-
-    public void UpdateHistory()
-    {
-        _history.Add(new History<Host<T>, T>(this));
     }
     #endregion
 }

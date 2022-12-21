@@ -2,4 +2,9 @@
 
 namespace Domain.Hosts;
 
-public class ServerHistory : History<Server, VirtualMachine> { }
+public class ServerHistory : History<Server, VirtualMachine>
+{
+    private ServerHistory() { }
+
+    public ServerHistory(Server server) : base(server) { }
+}

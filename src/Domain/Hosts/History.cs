@@ -9,6 +9,7 @@ public class History<T, U> : Entity
     where U : Machine
 {
     #region Properties
+    public long HostId { get; set; }
     public T Host { get; set; } = default!;
     public Specifications Specifications { get; set; } = default!;
     public Specifications SpecificationsUsed { get; set; } = default!;
@@ -34,7 +35,7 @@ public class History<T, U> : Entity
         int processorsUsed,
             memoryUsed,
             storageUsed;
-        Specifications specifications = Host.Specifications;
+        Specifications specifications = Specifications;
         Specifications remainingResources = Host.RemainingResources;
 
         processorsUsed = specifications.Processors - remainingResources.Processors;
