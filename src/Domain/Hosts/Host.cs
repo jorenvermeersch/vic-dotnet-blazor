@@ -13,8 +13,13 @@ public abstract class Host<T> : Machine where T : Machine
     #endregion
 
     #region Properties
-    public IList<VirtualisationFactor> VirtualisationFactors =>
-        _specifications.VirtualisationFactors;
+    // Necessary for database mapping. 
+    public IList<VirtualisationFactor> VirtualisationFactors
+    {
+        get => _specifications.VirtualisationFactors;
+        set => _specifications.VirtualisationFactors = value;
+    }
+
     public new HostSpecifications Specifications
     {
         get => _specifications;
