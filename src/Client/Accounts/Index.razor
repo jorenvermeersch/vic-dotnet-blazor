@@ -62,7 +62,7 @@ else
                 <NoResultsMessage Message="Er zijn geen beheerders die overeenstemmen met opgegeven zoekcriteria" />
             }
 
-            <PageSelector OnClick="@ClickHandler" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
+            <PageSelector OnClick="@ChangePage" NumberOfPages=@totalPages SelectedPage="@selectedPage" />
         </TwoWidth>
     </ThreeColumnLayout>
 }

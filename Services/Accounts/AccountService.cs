@@ -1,4 +1,5 @@
 ﻿using Domain.Accounts;
+using Domain.Constants;
 using Domain.Exceptions;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
@@ -119,14 +120,17 @@ public class AccountService : IAccountService
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            query = query.Where(x => $"{x.Firstname} {x.Lastname}".Contains(request.SearchTerm));
+            var searchTerm = request.SearchTerm.ToLower();
+            query = query.Where(x => x.Firstname.Contains(searchTerm) || x.Lastname.Contains(searchTerm));
         }
         if (request.Roles is not null)
         {
-            query = query.Where(x => request.Roles.Contains(x.Role.ToString()));
+            var roles = request.Roles.Select(role => Enum.Parse(typeof(Role), role)).ToList();
+            query = query.Where(x => roles.Contains(x.Role));
         }
         response.TotalAmount = await query.CountAsync();
 
+        query = query.OrderByDescending(x => x.CreatedAt);
         query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 

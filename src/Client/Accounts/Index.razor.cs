@@ -8,23 +8,26 @@ public partial class Index
 {
     [Inject] public IAccountService AccountService { get; set; } = default!;
 
+    private List<AccountDto.Index>? accounts;
+
+    // Filtering. 
     [Parameter, SupplyParameterFromQuery] public string SearchValue { get; set; } = "";
     [Parameter, SupplyParameterFromQuery] public int Page { get; set; } = 1;
     [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
-    private List<AccountDto.Index>? accounts;
+    private bool toggleAdmin, toggleObserver, toggleMaster;
+    private List<string> filterRoles;
+
+    // Pagination. 
     private int totalAccounts, totalPages = 0;
     private int selectedPage = 1;
     private int amount = 20;
-    private bool toggleAdmin, toggleObserver, toggleMaster;
 
-    private List<string> filterRoles;
-
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         AccountResponse.GetIndex response = await AccountService.GetIndexAsync(new AccountRequest.GetIndex
         {
-            Page = 1,
+            Page = selectedPage,
             Amount = amount,
             SearchTerm = SearchValue,
         });
@@ -34,7 +37,7 @@ public partial class Index
         selectedPage = Page > 0 ? Page : 1;
     }
 
-    private async Task ClickHandler(int pageNr)
+    private async Task ChangePage(int pageNr)
     {
         Page = pageNr;
         AccountResponse.GetIndex response = await AccountService!.GetIndexAsync(new AccountRequest.GetIndex
