@@ -91,7 +91,8 @@ public class FakeHostService : IHostService
             {
                 Memory = x.Specifications.Memory,
                 Storage = x.Specifications.Storage,
-                Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Key.Cores, Name = y.Key.Name, Threads = y.Key.Threads }, y.Value)).ToList()
+                Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Key.Cores, Name = y.Key.Name, Threads = y.Key.Threads }, y.Value)).ToList(),
+                VirtualProcessors = x.Specifications.VirtualisationFactors.Select(y => y.Key.Cores * y.Value).Sum(),
             }
         }).SingleOrDefault() ?? new HostDto.Detail();
 

@@ -7,10 +7,6 @@ namespace Client.VirtualMachines;
 
 public partial class Table
 {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
     private string searchString = "";
 
     private string style = "white-space: nowrap";
