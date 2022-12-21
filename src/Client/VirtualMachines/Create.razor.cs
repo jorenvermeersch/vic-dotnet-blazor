@@ -28,40 +28,11 @@ public partial class Create
     public HostDto.Detail? chosenHost;
     private CredentialsDto NewCredentials = new();
 
-    public List<string> Backups { get; set; } = Enum.GetNames(typeof(BackupFrequency)).ToList();
-    public List<string> Modes { get; set; } = Enum.GetNames(typeof(Mode)).ToList();
-    public List<string> Templates { get; set; } = Enum.GetNames(typeof(Template)).ToList();
-    public List<string> Statuses { get; set; } = Enum.GetNames(typeof(Status)).ToList();
     private List<HostDto.Index>? Hosts { get; set; }
     private List<CustomerDto.Index>? Customers { get; set; }
     private List<AccountDto.Index>? Accounts { get; set; }
     public List<PortDto>? Ports { get; set; } = new();
 
-
-
-    private Dictionary<int, Dictionary<string, string>> _entries = new();
-
-    protected override void OnInitialized()
-    {
-        _entries.Add(0, new()
-        {{"Gebruikernaam", "admin"}, {"Rol", "Admin"}});
-        _entries.Add(1, new()
-        {{"Gebruikernaam", "admin"}, {"Rol", "User"}});
-        for (int i = 0; i < Statuses.Count; i++)
-        {
-            Statuses[i] = Localizer[Statuses[i]];
-        }
-
-        for (int i = 0; i < Backups.Count; i++)
-        {
-            Backups[i] = Localizer[Backups[i]];
-        }
-
-        for (int i = 0; i < Templates.Count; i++)
-        {
-            Templates[i] = Localizer[Templates[i]];
-        }
-    }
 
     protected override async Task OnInitializedAsync()
     {

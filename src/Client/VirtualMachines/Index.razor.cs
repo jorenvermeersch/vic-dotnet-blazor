@@ -5,21 +5,24 @@ namespace Client.VirtualMachines;
 
 public partial class Index
 {
-    [Inject] public IVirtualMachineService? VirtualMachineService { get; set; }
-    [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
-    [Parameter, SupplyParameterFromQuery] public int Page { get; set; }
+    private List<VirtualMachineDto.Index>? virtualMachines;
+
+    [Inject] public IVirtualMachineService VirtualMachineService { get; set; } = default!;
     [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
-    private List<VirtualMachineDto.Index>? virtualMachines;
+    // Filtering. 
+    [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
+    [Parameter, SupplyParameterFromQuery] public int Page { get; set; }
+
     private int totalVirtualMachines = 0;
     private int totalPages;
     private int selectedPage = 1;
     private readonly int amount = 20;
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         VirtualMachineResponse.GetIndex response = await VirtualMachineService!.GetIndexAsync(new VirtualMachineRequest.GetIndex
         {
-            Page = Page,
+            Page = selectedPage,
             SearchTerm = SearchValue,
             Amount = amount,
         });
@@ -87,7 +90,7 @@ public partial class Index
         totalVirtualMachines = response.TotalAmount;
         totalPages = totalVirtualMachines / amount + (totalVirtualMachines % amount > 0 ? 1 : 0);
         selectedPage = 1;
-        Dictionary<string, object> parameters = new()
+        Dictionary<string, object?> parameters = new()
         {
             {nameof(Page), 1 },
             {nameof(SearchValue), SearchValue }

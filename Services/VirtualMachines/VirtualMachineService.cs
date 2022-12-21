@@ -15,7 +15,7 @@ using Shared.VirtualMachines;
 
 namespace Services.VirtualMachines;
 
-public class VirtualMachinService : IVirtualMachineService
+public class VirtualMachineService : IVirtualMachineService
 {
     private readonly VicDbContext dbContext;
     private readonly DbSet<VirtualMachine> virtualMachines;
@@ -25,7 +25,7 @@ public class VirtualMachinService : IVirtualMachineService
     private readonly DbSet<Account> accounts;
 
 
-    public VirtualMachinService(VicDbContext dbContact)
+    public VirtualMachineService(VicDbContext dbContact)
     {
         dbContext = dbContact;
         virtualMachines = dbContext.VirtualMachines;
@@ -115,52 +115,17 @@ public class VirtualMachinService : IVirtualMachineService
         return response;
     }
 
-    public async Task DeleteAsync(VirtualMachineRequest.Delete request)
+    public Task DeleteAsync(VirtualMachineRequest.Delete request)
     {
-        virtualMachines.RemoveIf(machine => machine.Id == request.MachineId);
-        await dbContext.SaveChangesAsync();
+        throw new NotImplementedException();
     }
 
-    public async Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request)
+    public Task<VirtualMachineResponse.Edit> EditAsync(VirtualMachineRequest.Edit request)
     {
-        VirtualMachineResponse.Edit response = new();
-        VirtualMachine? machine = await GetMachineById(request.MachineId).SingleOrDefaultAsync();
-
-        if (machine is null)
-        {
-            throw new EntityNotFoundException(nameof(VirtualMachine), request.MachineId);
-        }
-
-        var model = request.VirtualMachine;
-        var arguments = await CreateArgsVirtualMachine(model);
-
-        machine.Template = arguments.Template;
-        machine.Mode = arguments.Mode;
-        machine.Fqdn = arguments.Fqdn;
-        machine.Availabilities = arguments.Availabilities;
-        machine.BackupFrequency = arguments.BackupFrequency;
-        machine.ApplicationDate = arguments.ApplicationDate;
-        machine.Specifications = arguments.Specifications;
-        machine.TimeSpan = arguments.TimeSpan;
-        machine.Status = arguments.Status;
-        machine.Reason = arguments.Reason;
-        machine.Ports = arguments.Ports;
-        machine.Host = arguments.Host;
-        machine.Credentials = arguments.Credentials;
-        machine.Account = arguments.Account;
-        machine.Requester = arguments.Requester;
-        machine.User = arguments.User;
-        machine.HasVpnConnection = arguments.HasVpnConnection;
-        machine.Credentials = arguments.Credentials;
-
-        dbContext.Entry(machine).State = EntityState.Modified;
-        await dbContext.SaveChangesAsync();
-        response.MachineId = machine.Id;
-
-        return response;
+        throw new NotImplementedException();
     }
 
-    private VirtualMachineDto.Detail ToVirtualMachineDetail(VirtualMachine machine)
+    private static VirtualMachineDto.Detail ToVirtualMachineDetail(VirtualMachine machine)
     {
         return new VirtualMachineDto.Detail
         {
@@ -179,7 +144,7 @@ public class VirtualMachinService : IVirtualMachineService
                 EndDate = machine.TimeSpan.EndDate
             },
             Reason = machine.Reason,
-            Ports = machine.Ports.Select(PORT => new PortDto { Number = PORT.Number, Service = PORT.Service }).ToList(),
+            Ports = machine.Ports.Select(port => new PortDto { Number = port.Number, Service = port.Service }).ToList(),
             Specification = new SpecificationsDto()
             {
                 Memory = machine.Specifications.Memory,
@@ -224,7 +189,18 @@ public class VirtualMachinService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetAllDetails> GetAllDetailsAsync(VirtualMachineRequest.GetAllDetails request)
     {
         VirtualMachineResponse.GetAllDetails response = new();
-        var query = virtualMachines.AsQueryable().AsNoTracking();
+        var query = virtualMachines.AsQueryable()
+            .Include(x => x.User)
+            .ThenInclude(x => x.ContactPerson)
+            .Include(x => x.Requester)
+            .ThenInclude(x => x.ContactPerson)
+            .Include(x => x.Account)
+            .Include(x => x.Host)
+            .Include(x => x.Ports)
+            .Include(x => x.Credentials)
+            .Include(x => x.Specifications)
+            .Include(x => x.TimeSpan)
+            .AsNoTracking();
 
         response.VirtualMachines = await query.Select(machine => ToVirtualMachineDetail(machine)).ToListAsync();
         response.TotalAmount = query.Count();
@@ -235,7 +211,17 @@ public class VirtualMachinService : IVirtualMachineService
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         VirtualMachineResponse.GetDetail response = new();
-        VirtualMachine? machine = await GetMachineById(request.MachineId).SingleOrDefaultAsync();
+        VirtualMachine? machine = await GetMachineById(request.MachineId)
+            .Include(x => x.User)
+            .ThenInclude(x => x.ContactPerson)
+            .Include(x => x.Requester)
+            .ThenInclude(x => x.ContactPerson)
+            .Include(x => x.Account)
+            .Include(x => x.Host)
+            .Include(x => x.Ports)
+            .Include(x => x.Credentials)
+            .Include(x => x.Specifications)
+            .Include(x => x.TimeSpan).SingleOrDefaultAsync();
 
         if (machine is null)
         {
@@ -264,10 +250,9 @@ public class VirtualMachinService : IVirtualMachineService
 
         response.TotalAmount = query.Count();
 
+        query = query.OrderByDescending(x => x.CreatedAt);
         query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
-
-        query.OrderByDescending(x => x.ApplicationDate);
 
         response.VirtualMachines = await query.Select(x => new VirtualMachineDto.Index
         {

@@ -21,6 +21,7 @@ public partial class Create
     {
         ProcessorResponse.GetIndex response = await ProcessorService.GetIndexAsync(new ProcessorRequest.GetIndex
         {
+            Page = 1,
             Amount = 5
         });
         Processors = response.Processors;
