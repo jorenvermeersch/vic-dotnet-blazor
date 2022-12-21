@@ -19,7 +19,7 @@ public static class AccountDto
     {
         public string Department { get; set; } = default!;
         public string Education { get; set; } = default!;
-        public List<VirtualMachineDto.Index> VirtualMachines { get; set; } = default!;
+        public List<VirtualMachineDto.Index>? VirtualMachines { get; set; }
     }
     public class Mutate
     {
