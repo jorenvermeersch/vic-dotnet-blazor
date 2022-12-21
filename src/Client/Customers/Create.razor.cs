@@ -33,9 +33,22 @@ public partial class Create
 
     private async void HandleValidSubmit()
     {
+        if (!AnyFieldsFilledIn(Customer.BackupContactPerson))
+        {
+            Customer.BackupContactPerson = null;
+        }
+
         CustomerRequest.Create request = new() { Customer = Customer };
         var response = await CustomerService.CreateAsync(request);
         Navigation.NavigateTo($"customer/{response.CustomerId}");
+
+    }
+
+    private bool AnyFieldsFilledIn(ContactPersonDto? contactPerson)
+    {
+        if (contactPerson is null) return false;
+        string?[] fields = new string?[4] { contactPerson.Firstname, contactPerson.Lastname, contactPerson.Email, contactPerson.Phonenumber };
+        return fields.Any(field => !field.IsNullOrEmpty());
     }
 
     // Functions and set-up required for drop-down. 
@@ -62,4 +75,6 @@ public partial class Create
         bool success = Enum.TryParse(institutionString, out Institution institution);
         if (success) Customer.Institution = institution;
     }
+
+
 }

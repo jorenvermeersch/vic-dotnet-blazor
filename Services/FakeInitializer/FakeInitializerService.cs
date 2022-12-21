@@ -24,6 +24,7 @@ public class FakeInitializerService : IFakeInitializerService
     public static List<Server>? FakeHosts { get; set; } = new();
     public static List<Server>? FakeHostsVirtualMachines { get; set; } = new();
     public static List<ContactPerson>? FakeContactPersons { get; set; } = new();
+    public static List<ContactPerson>? FakeBackupContactPersons { get; set; } = new();
     public static List<HostSpecifications>? FakeHostSpecifications { get; set; } = new();
     public static List<Account>? FakeAccounts { get; set; } = new();
     public static List<Processor>? FakeProcessors { get; set; } = new();
@@ -37,9 +38,10 @@ public class FakeInitializerService : IFakeInitializerService
         FakeSpecifications = new SpecificationsFaker().UseSeed(seed).Generate(20);
         FakeTimeSpans = new TimeSpanFaker().UseSeed(seed).Generate(20);
         FakeCredentials = new CredentialFaker().UseSeed(seed).Generate(20);
-        FakeContactPersons = new ContactPersonFaker().UseSeed(seed).Generate(100);
-        FakeCustomers.AddRange(new CustomerFaker.ExternalCustomerFaker(FakeContactPersons).UseSeed(seed + 1).Generate(20));
-        FakeCustomers.AddRange(new CustomerFaker.InternalCustomerFaker(FakeContactPersons, id: FakeCustomers.Count() + 1).UseSeed(seed).Generate(25));
+        FakeContactPersons = new ContactPersonFaker().UseSeed(seed).Generate(50);
+        FakeBackupContactPersons = new ContactPersonFaker(isBackupContact: true).UseSeed(seed).Generate(50);
+        FakeCustomers.AddRange(new CustomerFaker.ExternalCustomerFaker(FakeContactPersons, FakeBackupContactPersons).UseSeed(seed + 1).Generate(20));
+        FakeCustomers.AddRange(new CustomerFaker.InternalCustomerFaker(FakeContactPersons, FakeBackupContactPersons, id: FakeCustomers.Count() + 1).UseSeed(seed).Generate(25));
         FakeAccounts = new AccountFaker().UseSeed(seed).Generate(25);
         FakeProcessors = new ProcessorFaker().UseSeed(seed).Generate(25);
         FakeHostSpecifications = new HostSpecificationsFaker(FakeProcessors).UseSeed(seed).Generate(20);

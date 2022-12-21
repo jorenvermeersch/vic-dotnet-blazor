@@ -52,9 +52,10 @@ public class FakeSeeder
 
     public void SeedCustomers()
     {
-        var contacts = new ContactPersonFaker().AsTransient().UseSeed(seedValue).Generate(150);
-        var internalcustomers = new CustomerFaker.InternalCustomerFaker(contacts).AsTransient().UseSeed(seedValue).Generate(100);
-        var externalcustomers = new CustomerFaker.ExternalCustomerFaker(contacts).AsTransient().UseSeed(seedValue).Generate(100);
+        var contacts = new ContactPersonFaker().AsTransient().UseSeed(seedValue).Generate(75);
+        var backupContacts = new ContactPersonFaker(isBackupContact: true).AsTransient().UseSeed(seedValue).Generate(75);
+        var internalcustomers = new CustomerFaker.InternalCustomerFaker(contacts, backupContacts).AsTransient().UseSeed(seedValue).Generate(100);
+        var externalcustomers = new CustomerFaker.ExternalCustomerFaker(contacts, backupContacts).AsTransient().UseSeed(seedValue).Generate(100);
 
 
         dbContext.Customers.AddRange(internalcustomers.Select(

@@ -38,7 +38,7 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
             .NotEmpty().SetValidator(new ContactPersonValidator());
 
         RuleFor(x => x.BackupContactPerson)
-            .NotEmpty().SetValidator(new ContactPersonValidator()!).When(customer => AnyFieldsFilledIn(customer.BackupContactPerson!));
+            .SetValidator(new ContactPersonValidator()!).When(customer => AnyFieldsFilledIn(customer.BackupContactPerson));
     }
 
 
@@ -52,8 +52,9 @@ public class CustomerValidator : AbstractValidator<CustomerDto.Mutate>
         return customer.CustomerType == CustomerType.Extern;
     }
 
-    private bool AnyFieldsFilledIn(ContactPersonDto contactPerson)
+    private bool AnyFieldsFilledIn(ContactPersonDto? contactPerson)
     {
+        if (contactPerson is null) return false;
         string?[] fields = new string?[4] { contactPerson.Firstname, contactPerson.Lastname, contactPerson.Email, contactPerson.Phonenumber };
         return fields.Any(field => !field.IsNullOrEmpty());
     }

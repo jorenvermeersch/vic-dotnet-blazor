@@ -4,7 +4,6 @@
 
 <PageTitle>Klant toevoegen</PageTitle>
 
-
  <EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit">
     <FluentValidationValidator/>
     <TopBar>
@@ -105,7 +104,7 @@
                         @bind-Value="Customer.BackupContactPerson.Phonenumber"
                         For="@(() => Customer.BackupContactPerson.Phonenumber)" />
         </OneWidth>
-    </ThreeColumnLayout>
+    </ThreeColumnLayout>    
 </EditForm>
 
 
