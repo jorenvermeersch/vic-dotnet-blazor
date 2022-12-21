@@ -1,27 +1,28 @@
 ﻿using Domain.Accounts;
-using Domain.Constants;
-using Domain.Customers;
+using Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Accounts;
-using Shared.Customers;
 
 namespace Services.Accounts;
 
 public class AccountService : IAccountService
 {
-    private readonly VicDBContext _dbContext;
-    private readonly DbSet<Account> _accounts;
+    private readonly VicDBContext dbContext;
+    private readonly DbSet<Account> accounts;
 
     public AccountService(VicDBContext dbContext)
     {
-        _dbContext = dbContext;
-        _accounts = _dbContext.Accounts;
+        this.dbContext = dbContext;
+        accounts = this.dbContext.Accounts;
     }
 
-    private IQueryable<Account> GetAccountById(long id) => _accounts
+    private IQueryable<Account> GetAccountById(long id)
+    {
+        return accounts
                 .AsNoTracking()
                 .Where(p => p.Id == id);
+    }
 
     public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
     {
@@ -31,16 +32,16 @@ public class AccountService : IAccountService
         AccountDto.Mutate model = request.Account;
 
         Account account = new(model.Firstname, model.Lastname, model.Email, model.Role, model.Password, model.Department, model.Education, model.IsActive);
-       var addedCustomer =  _accounts.Add(account);
-        await _dbContext.SaveChangesAsync();
+        var addedCustomer = accounts.Add(account);
+        await dbContext.SaveChangesAsync();
         response.AccountId = addedCustomer.Entity.Id;
         return response;
     }
 
     public async Task DeleteAsync(AccountRequest.Delete request)
     {
-        _accounts.RemoveIf(account => account.Id == request.AccountId);
-        await _dbContext.SaveChangesAsync();
+        accounts.RemoveIf(account => account.Id == request.AccountId);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<AccountResponse.Edit> EditAsync(AccountRequest.Edit request)
@@ -52,16 +53,16 @@ public class AccountService : IAccountService
         {
             var model = request.Account;
 
-            account.Firstname= model.Firstname;
-            account.Lastname = model.Lastname; 
-            account.Email= model.Email;
-            account.Role= model.Role;
-            account.IsActive= model.IsActive;
-            account.Education= model.Education;
-            account.Department= model.Department;
+            account.Firstname = model.Firstname;
+            account.Lastname = model.Lastname;
+            account.Email = model.Email;
+            account.Role = model.Role;
+            account.IsActive = model.IsActive;
+            account.Education = model.Education;
+            account.Department = model.Department;
 
-            _dbContext.Entry(account).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+            dbContext.Entry(account).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync();
             response.AccountId = account.Id;
         }
 
@@ -71,7 +72,13 @@ public class AccountService : IAccountService
     public async Task<AccountResponse.GetDetail> GetDetailAsync(AccountRequest.GetDetail request)
     {
         AccountResponse.GetDetail response = new();
-        Account account = await GetAccountById(request.AccountId).SingleOrDefaultAsync();
+        Account? account = await GetAccountById(request.AccountId).SingleOrDefaultAsync();
+
+        // Account with given Id does not exist. 
+        if (account is null)
+        {
+            throw new EntityNotFoundException(nameof(Account), request.AccountId);
+        }
 
         response.Account = new AccountDto.Detail
         {
@@ -90,13 +97,12 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponse.GetIndex> GetIndexAsync(AccountRequest.GetIndex request)
     {
-        
+
         AccountResponse.GetIndex response = new();
-        var query = _accounts.AsQueryable().AsNoTracking();
+        var query = accounts.AsQueryable().AsNoTracking();
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            query = query.Where(x => x.Firstname.Contains(request.SearchTerm)
-                                  || x.Lastname.Contains(request.SearchTerm));
+            query = query.Where(x => $"{x.Firstname} {x.Lastname}".Contains(request.SearchTerm));
         }
         if (request.Roles is not null)
         {
