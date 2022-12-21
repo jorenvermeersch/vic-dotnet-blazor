@@ -8,6 +8,8 @@ public class Processor : Entity
     public int Threads { get; set; } = default!;
     #endregion
 
+    public List<VirtualisationFactor> VirtualisationFactors { get; set; } = new();
+
     #region Constructors
     private Processor() { }
 

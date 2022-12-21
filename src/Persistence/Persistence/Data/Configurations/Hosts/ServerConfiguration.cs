@@ -11,13 +11,13 @@ public class ServerConfiguration : EntityConfiguration<Server>
         base.Configure(builder);
 
         builder.Ignore(x => x.RemainingResources);
-        builder.Ignore(x => x.History);
+        builder.Ignore(x => x.History); // TODO: Fix history. 
 
         builder.OwnsOne(x => x.Specifications, specifications =>
         {
-            specifications.Ignore(x => x.VirtualisationFactors); // Workaround. 
             specifications.Ignore(x => x.Values); // Calculated property. 
             specifications.Property(x => x.Processors).HasColumnName(nameof(Server.Specifications.Processors));
+            specifications.Property(x => x.VirtualisationFactors).HasColumnName(nameof(Server.Specifications.VirtualisationFactors));
             specifications.Property(x => x.Memory).HasColumnName(nameof(Server.Specifications.Memory));
             specifications.Property(x => x.Storage).HasColumnName(nameof(Server.Specifications.Storage));
         });

@@ -24,7 +24,7 @@ public class FakeHostService : IHostService
 
         var host = new Server(model.Name, new HostSpecifications(
                 model.Specifications.Processors.Select(x =>
-                new KeyValuePair<Processor, int>(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
+                new VirtualisationFactor(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
                 model.Specifications.Storage, model.Specifications.Memory
             ), new HashSet<VirtualMachine>())
         {
@@ -60,7 +60,7 @@ public class FakeHostService : IHostService
         host.Name = model.Name;
         host.Specifications = new HostSpecifications(
                 model.Specifications.Processors.Select(x =>
-                new KeyValuePair<Processor, int>(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
+                new VirtualisationFactor(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
                 model.Specifications.Storage, model.Specifications.Memory);
 
         response.HostId = host.Id;
@@ -91,8 +91,7 @@ public class FakeHostService : IHostService
             {
                 Memory = x.Specifications.Memory,
                 Storage = x.Specifications.Storage,
-                Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Key.Cores, Name = y.Key.Name, Threads = y.Key.Threads }, y.Value)).ToList(),
-                VirtualProcessors = x.Specifications.VirtualisationFactors.Select(y => y.Key.Cores * y.Value).Sum(),
+                Processors = x.Specifications.VirtualisationFactors.Select(y => new KeyValuePair<ProcessorDto, int>(new ProcessorDto() { Cores = y.Processor.Cores, Name = y.Processor.Name, Threads = y.Processor.Threads }, y.Factor)).ToList(),
             }
         }).SingleOrDefault() ?? new HostDto.Detail();
 

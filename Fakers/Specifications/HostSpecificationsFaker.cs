@@ -9,7 +9,7 @@ public class HostSpecificationsFaker : Faker<HostSpecifications>
     public HostSpecificationsFaker(List<Processor> processors)
     {
         CustomInstantiator(f => new HostSpecifications(
-            processors: new List<KeyValuePair<Processor, int>> { new KeyValuePair<Processor, int>(f.PickRandom(processors), f.Random.Number(1000, 5000)) },
+            processors: new() { new(f.PickRandom(processors), f.Random.Number(1000, 5000)) },
             storage: int.MaxValue,
             memory: int.MaxValue
         ));
