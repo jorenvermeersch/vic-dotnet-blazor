@@ -29,6 +29,7 @@ public class ProcessorService : IProcessorService
 
         response.Processor = new ProcessorDto
         {
+            Id = processor.Id,
             Name = processor.Name,
             Cores = processor.Cores,
             Threads = processor.Threads,
@@ -55,6 +56,7 @@ public class ProcessorService : IProcessorService
 
         response.Processors = await query.Select(p => new ProcessorDto
         {
+            Id = p.Id,
             Name = p.Name,
             Cores = p.Cores,
             Threads = p.Threads,

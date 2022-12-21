@@ -1,12 +1,12 @@
-﻿using Shared.Hosts;
-using Domain.Hosts;
+﻿using Domain.Hosts;
 using Services.FakeInitializer;
+using Shared.Hosts;
 
 namespace Services.Processors;
 
 public class FakeProcessorService : IProcessorService
 {
-    private static readonly List<Processor> processors = new List<Processor>();
+    private static readonly List<Processor> processors = new();
 
     static FakeProcessorService()
     {
@@ -27,6 +27,7 @@ public class FakeProcessorService : IProcessorService
            .OrderBy(x => x.Id)
            .Select(x => new ProcessorDto
            {
+               Id = x.Id,
                Name = x.Name,
                Cores = x.Cores,
                Threads = x.Threads,
@@ -45,7 +46,9 @@ public class FakeProcessorService : IProcessorService
     {
         ProcessorResponse.GetDetail response = new();
 
-        response.Processor = processors.Where(x => x.Id == request.ProcessorId).Select(x => new ProcessorDto {
+        response.Processor = processors.Where(x => x.Id == request.ProcessorId).Select(x => new ProcessorDto
+        {
+            Id = x.Id,
             Name = x.Name,
             Cores = x.Cores,
             Threads = x.Threads,

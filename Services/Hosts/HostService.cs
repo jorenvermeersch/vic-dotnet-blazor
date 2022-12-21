@@ -34,7 +34,14 @@ public class HostService : IHostService
 
         HostDto.Mutate model = request.Host;
 
-        List<VirtualisationFactor> processors = new(); // TODO: Fetch processors. 
+        // Fetch and format processors. 
+        List<VirtualisationFactor> processors = new();
+        foreach (var entry in model.Specifications.Processors)
+        {
+            Processor? processor = await dbContext.Processors.Where(p => p.Id == entry.Key.Id).SingleOrDefaultAsync();
+            if (processor is null) throw new EntityNotFoundException(nameof(Processor), entry.Key.Id);
+            processors.Add(new VirtualisationFactor(processor, entry.Value));
+        }
 
         var host = new Server(
                 model.Name,
