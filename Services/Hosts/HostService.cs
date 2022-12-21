@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Exceptions;
 using Domain.Hosts;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
@@ -11,19 +12,18 @@ namespace Services.Hosts;
 public class HostService : IHostService
 {
 
-    private readonly VicDbContext _dbContext;
-    private readonly DbSet<Server> _hosts;
+    private readonly VicDbContext dbContext;
+    private readonly DbSet<Server> hosts;
 
     public HostService(VicDbContext dbContext)
     {
-        _dbContext = dbContext;
-        //_hosts = dbContext.Hosts;
-        // TODO: Uncomment after merge. 
+        this.dbContext = dbContext;
+        hosts = dbContext.Hosts;
     }
 
     private IQueryable<Server> GetHostById(long id)
     {
-        return _hosts
+        return hosts
                .AsNoTracking()
                .Where(p => p.Id == id);
     }
@@ -34,41 +34,50 @@ public class HostService : IHostService
 
         HostDto.Mutate model = request.Host;
 
-        var host = new Server(model.Name, new HostSpecifications(
-                model.Specifications.Processors.Select(x =>
-                new VirtualisationFactor(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
-                model.Specifications.Storage, model.Specifications.Memory
+        List<VirtualisationFactor> processors = new(); // TODO: Fetch processors. 
+
+        var host = new Server(
+                model.Name,
+                new HostSpecifications(
+                processors,
+                model.Specifications.Storage,
+                model.Specifications.Memory
             ), new HashSet<VirtualMachine>());
-        _hosts.Add(host);
-        await _dbContext.SaveChangesAsync();
+
+        hosts.Add(host);
+        await dbContext.SaveChangesAsync();
+
         response.HostId = host.Id;
         return response;
     }
 
     public async Task DeleteAsync(HostRequest.Delete request)
     {
-        _hosts.RemoveIf(host => host.Id == request.HostId);
-        await _dbContext.SaveChangesAsync();
+        hosts.RemoveIf(host => host.Id == request.HostId);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<HostResponse.Edit> EditAsync(HostRequest.Edit request)
     {
         HostResponse.Edit response = new();
-        var host = await GetHostById(request.HostId).SingleOrDefaultAsync();
+        Server? host = await GetHostById(request.HostId).SingleOrDefaultAsync();
 
-        if (host is not null)
+        if (host is null)
         {
-            var model = request.Host;
-
-            host.Name = model.Name;
-            host.Specifications = new HostSpecifications(model.Specifications.Processors.Select(x =>
-                new VirtualisationFactor(new Processor(x.Key.Name, x.Key.Cores, x.Key.Threads), x.Value)).ToList(),
-                model.Specifications.Storage, model.Specifications.Memory);
-
-            _dbContext.Entry(host).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            response.HostId = host.Id;
+            throw new EntityNotFoundException(nameof(Server), request.HostId);
         }
+
+        var model = request.Host;
+
+        List<VirtualisationFactor> processors = new(); // TODO: Fetch processors. 
+
+        host.Name = model.Name;
+        host.Specifications = new HostSpecifications(processors, model.Specifications.Storage, model.Specifications.Memory);
+
+        dbContext.Entry(host).State = EntityState.Modified;
+        await dbContext.SaveChangesAsync();
+        response.HostId = host.Id;
+
 
         return response;
     }
@@ -77,18 +86,39 @@ public class HostService : IHostService
     {
         HostResponse.GetDetail response = new();
 
-        Server host = await GetHostById(request.HostId).SingleOrDefaultAsync();
+        Server? host = await GetHostById(request.HostId)
+            .Include(x => x.Specifications)
+            .Include(x => x.Machines)
+            .SingleOrDefaultAsync();
+
+        if (host is null)
+        {
+            throw new EntityNotFoundException(nameof(Server), request.HostId);
+        }
+
+        // Fetch virtual machines of server. 
+        List<VirtualMachineDto.Index>? machineIndexes = null;
+
+        List<VirtualMachine> machines = await dbContext.VirtualMachines.Where(machine => machine.Host.Id == request.HostId).ToListAsync();
+        if (machines is not null)
+        {
+            machineIndexes = machines.Select(machine =>
+            new VirtualMachineDto.Index()
+            {
+                Id = machine.Id,
+                Fqdn = machine.Fqdn,
+                Status = machine.Status
+
+            }).ToList();
+        }
+
+        // 
 
         response.Host = new HostDto.Detail
         {
             Id = host.Id,
             Name = host.Name,
-            Machines = host.Machines.Select(y => new VirtualMachineDto.Index
-            {
-                Id = y.Id,
-                Fqdn = y.Fqdn,
-                Status = y.Status,
-            }).ToList(),
+            Machines = machineIndexes,
             RemainingResources = new SpecificationsDto()
             {
                 Memory = host.RemainingResources.Memory,
@@ -117,7 +147,7 @@ public class HostService : IHostService
     public async Task<HostResponse.GetIndex> GetIndexAsync(HostRequest.GetIndex request)
     {
         HostResponse.GetIndex response = new();
-        var query = _hosts.AsQueryable().AsNoTracking();
+        var query = hosts.AsQueryable().AsNoTracking();
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
@@ -126,6 +156,7 @@ public class HostService : IHostService
 
         response.TotalAmount = query.Count();
 
+        query = query.OrderByDescending(x => x.CreatedAt);
         query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 

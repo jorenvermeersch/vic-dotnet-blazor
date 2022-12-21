@@ -5,32 +5,35 @@ namespace Client.Hosts;
 
 public partial class Index
 {
+    private IEnumerable<HostDto.Index>? hosts;
+
     [Inject] public IHostService HostService { get; set; } = default!;
-    [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
-    [Parameter, SupplyParameterFromQuery] public int Page { get; set; } = 1;
     [Inject] public NavigationManager NavigationManager { get; set; } = default!;
 
-    private IEnumerable<HostDto.Index>? hosts;
+    // Filtering. 
+    [Parameter, SupplyParameterFromQuery] public string? SearchValue { get; set; }
+    [Parameter, SupplyParameterFromQuery] public int Page { get; set; } = 1;
 
     private int totalHosts, totalPages = 0;
     private readonly int amount = 20;
     private int selectedPage = 1;
 
-    protected override async Task OnParametersSetAsync()
+
+    protected override async Task OnInitializedAsync()
     {
         HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
         {
-            Page = Page,
+            Page = selectedPage,
             SearchTerm = SearchValue,
             Amount = amount,
         });
         hosts = response.Hosts;
         totalHosts = response.TotalAmount;
         totalPages = totalHosts / amount + (totalHosts % amount > 0 ? 1 : 0);
-        selectedPage = Page>0?Page:1;
+        selectedPage = Page > 0 ? Page : 1;
     }
 
-    private async Task ClickHandler(int pageNr)
+    private async Task ChangePage(int pageNr)
     {
         Page = pageNr;
         HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
@@ -42,14 +45,12 @@ public partial class Index
         hosts = response.Hosts;
         selectedPage = pageNr;
 
-        Dictionary<string, object> parameters = new()
+        Dictionary<string, object?> parameters = new()
         {
-            {nameof(Page), Page }
+            { nameof(Page), Page },
+            { nameof(SearchValue), SearchValue }
         };
-        if (!string.IsNullOrEmpty(SearchValue))
-        {
-            parameters.Add(nameof(SearchValue), SearchValue);
-        }
+
         var uri = NavigationManager.GetUriWithQueryParameters(parameters);
         NavigationManager.NavigateTo(uri);
 
@@ -77,7 +78,7 @@ public partial class Index
     {
         HostResponse.GetIndex response = await HostService.GetIndexAsync(new HostRequest.GetIndex
         {
-            Page=1,
+            Page = 1,
             Amount = amount,
             SearchTerm = SearchValue
         });
@@ -85,14 +86,13 @@ public partial class Index
         totalHosts = response.TotalAmount;
         totalPages = totalHosts / amount + (totalHosts % amount > 0 ? 1 : 0);
         selectedPage = 1;
-        Dictionary<string, object> parameters = new()
+        Dictionary<string, object?> parameters = new()
         {
             {nameof(Page), 1 },
             {nameof(SearchValue), SearchValue }
         };
         var uri = NavigationManager.GetUriWithQueryParameters(parameters);
         NavigationManager.NavigateTo(uri);
-
         StateHasChanged();
     }
 }

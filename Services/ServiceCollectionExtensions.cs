@@ -24,7 +24,9 @@ public static class ServiceCollectionExtensions
         // services.AddScoped<ICustomerService, FakeCustomerService>();
         services.AddScoped<ICustomerService, CustomerService>();
 
-        services.AddScoped<IHostService, FakeHostService>();
+        // services.AddScoped<IHostService, FakeHostService>();
+        services.AddScoped<IHostService, HostService>();
+
         services.AddScoped<IVirtualMachineService, FakeVirtualMachineService>();
 
         services.AddScoped<IPortService, FakePortService>();
