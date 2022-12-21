@@ -1,5 +1,4 @@
-﻿using Domain.Exceptions;
-using Domain.Hosts;
+﻿using Domain.Hosts;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Hosts;
@@ -14,28 +13,7 @@ public class ProcessorService : IProcessorService
     public ProcessorService(VicDbContext dbContext)
     {
         this.dbContext = dbContext;
-        // _processors = _dbContext.Processors;
-    }
-    public async Task<ProcessorResponse.GetDetail> GetDetailAsync(ProcessorRequest.GetDetail request)
-    {
-        ProcessorResponse.GetDetail response = new();
-
-        Processor? processor = await processors.Where(p => p.Id == request.ProcessorId).AsNoTracking().SingleOrDefaultAsync();
-
-        if (processor is null)
-        {
-            throw new EntityNotFoundException(nameof(Processor), request.ProcessorId);
-        }
-
-        response.Processor = new ProcessorDto
-        {
-            Id = processor.Id,
-            Name = processor.Name,
-            Cores = processor.Cores,
-            Threads = processor.Threads,
-        };
-
-        return response;
+        processors = dbContext.Processors;
     }
 
     public async Task<ProcessorResponse.GetIndex> GetIndexAsync(ProcessorRequest.GetIndex request)
@@ -51,6 +29,7 @@ public class ProcessorService : IProcessorService
 
         response.TotalAmount = query.Count();
 
+        query = query.OrderBy(x => x.Name);
         query = query.Skip((request.Page - 1) * request.Amount);
         query = query.Take(request.Amount);
 

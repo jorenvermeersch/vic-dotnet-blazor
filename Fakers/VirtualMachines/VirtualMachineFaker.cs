@@ -15,19 +15,13 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
     public List<Domain.VirtualMachines.Credentials>? Credentials { get; set; } = new();
     public List<Domain.VirtualMachines.TimeSpan>? TimeSpans { get; set; } = new();
     public List<Server> Hosts { get; set; } = new();
+    public List<Port> Ports { get; set; } = new();
+
+
 
 
     public VirtualMachineFaker(string locale = "nl")
     {
-        List<Port> ports = new();
-        ports.AddRange(
-            new List<Port>
-            {
-                new Port(number: 443, service: "HTTPS"),
-                new Port(number: 80, service: "HTTP"),
-                new Port(number: 22, "SSH")
-            }
-        );
 
         CustomInstantiator(f => new VirtualMachine(new VirtualMachineArgs
         {
@@ -49,7 +43,7 @@ public class VirtualMachineFaker : EntityFaker<VirtualMachine>
             Account = f.PickRandom(Accounts),
             Credentials = Enumerable.Range(1, f.Random.Int(1, 5)).Select(x => f.PickRandom(Credentials)).ToList(),
             Host = null, // Host gets initialized later on.
-            Ports = Enumerable.Range(1, f.Random.Int(1, 2)).Select(x => f.PickRandom(ports)).ToList(),
+            Ports = Enumerable.Range(1, f.Random.Int(1, 2)).Select(x => f.PickRandom(Ports)).ToList(),
             TimeSpan = f.PickRandom(TimeSpans),
             Specifications = f.PickRandom(Specifications)
         }));

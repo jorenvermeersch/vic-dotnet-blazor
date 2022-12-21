@@ -17,7 +17,7 @@ public class PortService : IPortService
     public async Task<PortResponse.GetAll> GetAllAsync(PortRequest.GetAll request)
     {
         PortResponse.GetAll response = new();
-        var query = ports.AsNoTracking();
+        var query = ports.AsNoTracking().OrderByDescending(x => x.Number);
 
         response.Ports = await query.Select(port =>
             new PortDto
@@ -26,6 +26,8 @@ public class PortService : IPortService
                 Service = port.Service,
             }
         ).ToListAsync();
+
+
 
         response.TotalAmount = query.Count();
 

@@ -24,16 +24,6 @@ public class ProcessorController : ControllerBase
         ProcessorResponse.GetIndex response = await processorService.GetIndexAsync(new ProcessorRequest.GetIndex());
         return response;
     }
-
-
-    [SwaggerOperation("Returns a specific processor")]
-    [HttpGet("{ProcessorId}")]
-    public async Task<ProcessorResponse.GetDetail> GetDetails([FromRoute] ProcessorRequest.GetDetail request)
-    {
-        ProcessorResponse.GetDetail response = await processorService.GetDetailAsync(request);
-        return response;
-    }
-
 }
 
 

@@ -35,6 +35,13 @@ public class FakeInitializerService : IFakeInitializerService
 
     public FakeInitializerService()
     {
+        List<Port> Ports = new()
+           {
+                 new Port(number: 443, service: "HTTPS"),
+                 new Port(number: 80, service: "HTTP"),
+                 new Port(number: 22, "SSH")
+           };
+
         FakeSpecifications = new SpecificationsFaker().UseSeed(seed).Generate(20);
         FakeTimeSpans = new TimeSpanFaker().UseSeed(seed).Generate(20);
         FakeCredentials = new CredentialFaker().UseSeed(seed).Generate(20);
@@ -54,6 +61,7 @@ public class FakeInitializerService : IFakeInitializerService
             Credentials = FakeCredentials,
             TimeSpans = FakeTimeSpans,
             Hosts = FakeHosts,
+            Ports = Ports,
         };
         FakeVirtualMachines = vmFaker.UseSeed(seed).Generate(30);
 

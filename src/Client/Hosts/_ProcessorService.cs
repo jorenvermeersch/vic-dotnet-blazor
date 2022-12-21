@@ -11,11 +11,6 @@ public class ProcessorService : IProcessorService
     {
         this.client = client;
     }
-    public async Task<ProcessorResponse.GetDetail> GetDetailAsync(ProcessorRequest.GetDetail request)
-    {
-        var response = await client.GetFromJsonAsync<ProcessorResponse.GetDetail>($"api/processors/{request.ProcessorId}");
-        return response!;
-    }
 
     public async Task<ProcessorResponse.GetIndex> GetIndexAsync(ProcessorRequest.GetIndex request)
     {

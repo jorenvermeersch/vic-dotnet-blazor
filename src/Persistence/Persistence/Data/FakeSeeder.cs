@@ -96,6 +96,7 @@ public class FakeSeeder
             Specifications = specifications,
             Credentials = creadentials,
             TimeSpans = timespans,
+            Ports = dbContext.Ports.ToList(),
         };
 
         var virtualmachines = vmfaker.AsTransient().UseSeed(1337).Generate(50);
