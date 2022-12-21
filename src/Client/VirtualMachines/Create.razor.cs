@@ -36,16 +36,13 @@ public partial class Create
 
     protected override async Task OnInitializedAsync()
     {
-        HostResponse.GetIndex hostResponse = await HostService.GetIndexAsync(new HostRequest.GetIndex
-        {
-            Amount = 50
-        });
+        HostResponse.GetIndex hostResponse = await HostService.GetIndexAsync(new HostRequest.GetIndex { Page = 1, Amount = 50 });
         Hosts = hostResponse.Hosts!;
 
-        CustomerResponse.GetIndex customerRequest = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex { Amount = 50 });
+        CustomerResponse.GetIndex customerRequest = await CustomerService.GetIndexAsync(new CustomerRequest.GetIndex { Amount = 50, Page = 1 });
         Customers = customerRequest.Customers!;
 
-        AccountResponse.GetIndex accountRequest = await AccountService.GetIndexAsync(new AccountRequest.GetIndex { Amount = 50 });
+        AccountResponse.GetIndex accountRequest = await AccountService.GetIndexAsync(new AccountRequest.GetIndex { Amount = 50, Page = 1 });
         Accounts = accountRequest.Accounts!;
 
         PortResponse.GetAll portRequest = await PortService.GetAllAsync(new PortRequest.GetAll());

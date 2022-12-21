@@ -55,7 +55,13 @@ public class VirtualMachineService : IVirtualMachineService
     private async Task<VirtualMachineArgs> CreateArgsVirtualMachine(VirtualMachineDto.Mutate model)
     {
         // Fetch host. 
-        Server? host = await hosts.SingleOrDefaultAsync(x => x.Id == model.HostId);
+        Server? host = await hosts
+            .Include(x => x.Specifications)
+            .Include(x => x.VirtualisationFactors)
+            .ThenInclude(x => x.Processor)
+            .Include(x => x.Machines)
+            .ThenInclude(x => x.Specifications)
+            .SingleOrDefaultAsync(x => x.Id == model.HostId);
         if (host is null) throw new EntityNotFoundException(nameof(Server), model.HostId);
 
         // Fetch user, requester and administrator. 

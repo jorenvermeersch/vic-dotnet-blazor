@@ -29,8 +29,6 @@ public class VirtualMachine : Machine
             }
 
             base.Specifications = value;
-            // Note: Host detects itself when the required resources of the virtual machines it houses change.
-            // Host.UpdateHistory();
         }
     }
 
