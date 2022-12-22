@@ -16,6 +16,10 @@ public class CustomerRequest
     {
         public long CustomerId { get; set; }
     }
+    public class GetAllDetails
+    {
+
+    }
 
     public class Delete
     {

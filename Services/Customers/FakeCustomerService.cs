@@ -7,6 +7,7 @@ using Shared.VirtualMachines;
 
 namespace Services.Customers;
 
+
 public class FakeCustomerService : ICustomerService
 {
 
@@ -214,5 +215,10 @@ public class FakeCustomerService : ICustomerService
         }).ToList();
 
         return response;
+    }
+
+    public Task<CustomerResponse.GetAllDetail> GetAllDetailAsync(CustomerRequest.GetAllDetails request)
+    {
+        throw new NotImplementedException();
     }
 }

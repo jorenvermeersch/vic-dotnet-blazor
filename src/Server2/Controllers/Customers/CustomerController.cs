@@ -31,6 +31,14 @@ public class CustomerController : ControllerBase
         return await customerService.GetDetailAsync(request);
     }
 
+    [SwaggerOperation("Returns the details of all customers.")]
+    [HttpGet("alldetails")]
+    [AllowAnonymous]
+    public async Task<CustomerResponse.GetAllDetail> GetAllDetails([FromRoute] CustomerRequest.GetAllDetails request)
+    {
+        return await customerService.GetAllDetailAsync(request);
+    }
+
     [SwaggerOperation("Creates a new customer.")]
     [HttpPost]
     [Authorize(Roles = "Administrator, Master")]

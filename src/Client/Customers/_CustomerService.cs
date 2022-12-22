@@ -43,4 +43,9 @@ public class CustomerService : ICustomerService
         var response = await authenticatedClient.GetFromJsonAsync<CustomerResponse.GetIndex>($"{endpoint}?{queryParameters}");
         return response!;
     }
+
+    public Task<CustomerResponse.GetAllDetail> GetAllDetailAsync(CustomerRequest.GetAllDetails request)
+    {
+        throw new NotImplementedException();
+    }
 }

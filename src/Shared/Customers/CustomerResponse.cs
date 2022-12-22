@@ -12,6 +12,11 @@ public class CustomerResponse
     {
         public CustomerDto.Detail Customer { get; set; } = default!;
     }
+    public class GetAllDetail
+    {
+        public List<CustomerDto.Detail> Customers { get; set; } = default!;
+        public int TotalAmount { get; set; }
+    }
 
     public class Delete
     {

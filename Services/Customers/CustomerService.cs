@@ -1,4 +1,5 @@
-﻿using Domain.Constants;
+﻿using Azure.Core;
+using Domain.Constants;
 using Domain.Customers;
 using Domain.Exceptions;
 using Domain.VirtualMachines;
@@ -146,7 +147,7 @@ public class CustomerService : ICustomerService
                 Phonenumber = customer.ContactPerson.PhoneNumber
             },
             BackupContactPerson = backupContact,
-            VirtualMachines = machineIndexes, // TODO: Do you need to fetch virtual machines explicitly. 
+            VirtualMachines = machineIndexes, 
         };
 
         if (customer is ExternalCustomer externalCustomer)
@@ -201,6 +202,91 @@ public class CustomerService : ICustomerService
             CustomerType = x is ExternalCustomer ? CustomerType.Extern : CustomerType.Intern
 
         }).ToListAsync();
+
+        return response;
+    }
+
+    private static CustomerDto.Detail ToCustomerDetail(Customer customer)
+    {
+
+        ContactPersonDto? backupContact = null;
+
+        if (customer.BackupContactPerson is not null)
+        {
+            backupContact = new ContactPersonDto
+            {
+                Firstname = customer.BackupContactPerson.Firstname!,
+                Lastname = customer.BackupContactPerson.Lastname!,
+                Email = customer.BackupContactPerson.Email!,
+                Phonenumber = customer.BackupContactPerson.PhoneNumber
+            };
+        }
+
+        CustomerDto.Detail customerDetails = new()
+        {
+            Id = customer.Id,
+            ContactPerson = new ContactPersonDto
+            {
+                Firstname = customer.ContactPerson.Firstname,
+                Lastname = customer.ContactPerson.Lastname,
+                Email = customer.ContactPerson.Email,
+                Phonenumber = customer.ContactPerson.PhoneNumber
+            },
+            BackupContactPerson = backupContact,
+            VirtualMachines = new List<VirtualMachineDto.Index>()
+        };
+
+        if (customer is ExternalCustomer externalCustomer)
+        {
+            customerDetails.CustomerType = CustomerType.Extern;
+            customerDetails.CompanyType = externalCustomer.Type;
+            customerDetails.CompanyName = externalCustomer.CompanyName;
+        }
+        else if (customer is InternalCustomer internalCustomer)
+        {
+            customerDetails.CustomerType = CustomerType.Intern;
+            customerDetails.Department = internalCustomer.Department;
+            customerDetails.Institution = internalCustomer.Institution;
+            customerDetails.Education = internalCustomer.Education;
+        }
+
+
+        return customerDetails;
+    }
+
+    public async Task<CustomerResponse.GetAllDetail> GetAllDetailAsync(CustomerRequest.GetAllDetails request)
+    {
+        CustomerResponse.GetAllDetail response = new();
+        var query = customers.AsQueryable()
+            .Include(x => x.ContactPerson)
+            .Include(x => x.BackupContactPerson)
+            .AsNoTracking();
+
+        List<CustomerDto.Detail> customerList = await query.Select(customer => ToCustomerDetail(customer)).ToListAsync();
+
+        //fetch virtual machine and add to customer
+        foreach (var c in customerList)
+        {
+            List<VirtualMachine>? machines = await dbContext.VirtualMachines
+                .Where(machine => machine.Requester.Id == c.Id || machine.User.Id == c.Id)
+                .ToListAsync();
+            List<VirtualMachineDto.Index>? machineIndexes = null;
+
+            if (machines is not null)
+            {
+                machineIndexes = machines.Select(machine => new VirtualMachineDto.Index()
+                {
+                    Id = machine.Id,
+                    Fqdn = machine.Fqdn,
+                    Status = machine.Status,
+                }).ToList();
+            }
+
+            c.VirtualMachines = machineIndexes;
+        }
+
+        response.Customers = customerList;
+        response.TotalAmount = query.Count();
 
         return response;
     }
