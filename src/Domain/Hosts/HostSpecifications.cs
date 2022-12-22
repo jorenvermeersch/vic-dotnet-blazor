@@ -6,7 +6,7 @@ namespace Domain.Common;
 [NotMapped]
 public class HostSpecifications : Specifications
 {
-    // VirtualisationFactors are now stored in Host itself. Did not have enough time to refactor this properly. 
+    // VirtualisationFactors are now stored in Host itself. Did not have enough time to refactor this properly.
     public IList<VirtualisationFactor> VirtualisationFactors { get; set; } =
         new List<VirtualisationFactor>();
 

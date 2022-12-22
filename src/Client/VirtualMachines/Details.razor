@@ -17,7 +17,7 @@ else
                     <StatusIndicator State="@machine.Status.ToString()" />
                 </span>
                 <AuthorizeView Roles="Master, Administrator">
-                    <Button Text="Beheren" />
+                    <Button Text="Beheren" IsEnabled="@false" />
                 </AuthorizeView>
             </ButtonGroup>
 

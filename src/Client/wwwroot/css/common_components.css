@@ -163,6 +163,18 @@ select {
     border: var(--border-size) solid var(--dark-blue);
 }
 
+.button.disabled {
+    color: var(--dark-gray);
+    background-color: var(--light-gray);
+    border: var(--border-size) solid var(--light-gray);
+}
+
+.button.disabled:hover {
+    color: var(--dark-gray);
+    background-color: var(--light-gray);
+    border: var(--border-size) solid var(--light-gray);
+}
+
 /* Testing */
 .outline-end {
     margin-inline-start: auto; 

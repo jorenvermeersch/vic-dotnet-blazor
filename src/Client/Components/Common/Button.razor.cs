@@ -20,11 +20,14 @@ public partial class Button
     public bool Toggle { get; set; } = false;
 
     [Parameter]
+    public bool IsEnabled { get; set; } = true;
+
+    [Parameter]
     public string customCss { get; set; } = "";
 
     private async Task HandleClick()
     {
-        if (OnClick.HasDelegate)
+        if (OnClick.HasDelegate && IsEnabled)
         {
             await OnClick.InvokeAsync();
         }

@@ -15,7 +15,7 @@ else
                 <BackButton Text="Terug" OnClick="NavigateBack"/>
                 <AuthorizeView Roles="Master, Administrator">
                     <span class="outline-end">
-                        <Button Text="Beheren" Href="@customer.GetEditUrl()" />
+                        <Button Text="Beheren" IsEnabled="@false" />
                     </span>
                 </AuthorizeView>
             </ButtonGroup>

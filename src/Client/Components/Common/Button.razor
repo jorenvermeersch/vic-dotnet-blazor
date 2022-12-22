@@ -1,11 +1,11 @@
 ﻿@{
     string style = "button" + (InverseStyle ? " button-inverse" : "");
     string toggle = Toggle? "toggle-on" : "toggle-off";
+    string enabled = IsEnabled ? "" : "disabled"; 
 }
 
-<a 
-    class="@toggle @style" 
-    style="@customCss" 
+<a class="@toggle @style @enabled"
+   style="@customCss" 
     href="@Href" 
     @onclick="HandleClick"
 >

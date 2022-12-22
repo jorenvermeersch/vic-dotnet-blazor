@@ -15,11 +15,10 @@ else
                 <BackButton Text="Terug" OnClick="NavigateBack" />
                 <AuthorizeView Roles="Master, Administrator">
                     <span class="outline-end">
-                        <Button Text="Beheren" />
+                        <Button Text="Beheren" IsEnabled="@false" />
                     </span>
                 </AuthorizeView>
             </ButtonGroup>
-
             <DataCard Entries="@datacards.GetValueOrDefault(NAME_KEY)" />
 
             <Title Text="Specificaties" />

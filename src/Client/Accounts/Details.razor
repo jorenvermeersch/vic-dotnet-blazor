@@ -16,7 +16,7 @@ else
                     <StatusIndicator State="@account.GetStateString()" />
                 </span>
                 <AuthorizeView Roles="Master, Administrator">
-                    <Button Text="Beheren" Href="@account.GetDetailUrl()" />
+                    <Button Text="Beheren" IsEnabled="@false" />
                 </AuthorizeView>
             </ButtonGroup>
             
