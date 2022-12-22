@@ -39,6 +39,7 @@ public class AccountService : IAccountService
             FirstName = request.Account.Firstname,
             LastName = request.Account.Lastname,
             Password = request.Account.Password,
+            Blocked = request.Account.IsActive,
             Connection = "Username-Password-Authentication"
         };
 
