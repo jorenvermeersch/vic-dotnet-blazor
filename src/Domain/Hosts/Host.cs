@@ -127,7 +127,7 @@ public abstract class Host<T> : Machine where T : Machine
     public void AddProcessor(Processor processor, int virtualisationFactor)
     {
         // Check for negative or zero virtualisation factor happens in HostSpecifications.
-        _specifications.AddProccessor(processor, virtualisationFactor);
+        VirtualisationFactors.Add(new VirtualisationFactor(processor, virtualisationFactor));
     }
 
     public void RemoveProcessor(Processor processor, int virtualisationFactor)
@@ -139,7 +139,14 @@ public abstract class Host<T> : Machine where T : Machine
             );
         }
 
-        _specifications.RemoveProcessor(processor, virtualisationFactor);
+        VirtualisationFactor? item = VirtualisationFactors
+            .ToList()
+            .Find(vf => (vf.Processor == processor) && (vf.Factor == virtualisationFactor));
+
+        if (item is not null)
+        {
+            VirtualisationFactors.Remove(item);
+        }
     }
     #endregion
 }
