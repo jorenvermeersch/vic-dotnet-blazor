@@ -12,7 +12,6 @@ public abstract class Host<T> : Machine where T : Machine
     #endregion
 
     #region Properties
-    // Necessary for database mapping.
     public IList<VirtualisationFactor> VirtualisationFactors { get; set; } =
         new List<VirtualisationFactor>();
 
