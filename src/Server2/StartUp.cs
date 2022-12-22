@@ -87,13 +87,23 @@ public class StartUp
             options.Audience = Configuration["Auth0:ApiIdentifier"];
         });
 
+        services.AddAuth0AuthenticationClient(config =>
+        {
+            config.Domain = Configuration["Auth0:Authority"];
+            config.ClientId = Configuration["Auth0:ClientId"];
+            config.ClientSecret = Configuration["Auth0:ClientSecret"];
+        });
+
+        services.AddAuth0ManagementClient().AddManagementAccessToken();
+
 
         services.AddRazorPages();
-        services.AddScoped<FakeSeeder>();
+        //services.AddScoped<FakeSeeder>();
+        services.AddScoped<DemoSeeder>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDbContext dbContext, FakeSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDbContext dbContext, DemoSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
     {
         if (env.IsDevelopment())
         {

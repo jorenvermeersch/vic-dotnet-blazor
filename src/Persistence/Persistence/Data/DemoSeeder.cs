@@ -22,19 +22,13 @@ public class DemoSeeder
 
     public void Seed()
     {
+        bool isNewDatabase = dbContext.Database.EnsureCreated();
 
-        if (seed)
+        if (isNewDatabase)
         {
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-
-            //SeedCustomers();
             SeedAccounts();
             SeedPorts();
             SeedProcessors();
-            //SeedHost();
-            //SeedVirtualMachines();
-            //SeedHistory();
         }
     }
 
@@ -73,11 +67,11 @@ public class DemoSeeder
           new Processor("i7-11600H", 6,12),
           new Processor("i7-11390H", 4,8),
           new Processor("i7-1195G7", 4,8),
-          new Processor("i7-1195G7", 4,8),
+          new Processor("i7-1195G8", 4,12),
           new Processor("i5-11500HE", 6,12),
           new Processor("i5-11320H", 4,8),
           new Processor("i5-1155G7", 4,8),
-          new Processor("i5-1155G7", 4,8),
+          new Processor("i5-1155G8", 4,12),
           new Processor("i5-11260H", 6,12)
         );
         dbContext.SaveChanges();
