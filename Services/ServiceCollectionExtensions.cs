@@ -1,5 +1,6 @@
 ﻿namespace Services;
 
+using Auth0.ManagementApi;
 using Microsoft.Extensions.DependencyInjection;
 using Services.Accounts;
 using Services.Customers;
@@ -23,10 +24,9 @@ public static class ServiceCollectionExtensions
 
         // services.AddScoped<IVirtualMachineService, FakeVirtualMachineService>();
         services.AddScoped<IVirtualMachineService, VirtualMachineService>();
-        ;
         services.AddScoped<IPortService, PortService>();
         services.AddScoped<IProcessorService, ProcessorService>();
-
+        
         services.AddScoped<IFakeInitializerService, FakeInitializerService>();
 
         return services;

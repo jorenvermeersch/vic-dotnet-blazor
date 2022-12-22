@@ -15,13 +15,13 @@ public class AccountService : IAccountService
 {
     private readonly VicDbContext dbContext;
     private readonly DbSet<Account> accounts;
-    private readonly ManagementApiClient _managementApiClient;
+    private readonly IManagementApiClient _managementApiClient;
 
-    public AccountService(VicDbContext dbContext/*, ManagementApiClient managementApiClient*/)
+    public AccountService(VicDbContext dbContext, IManagementApiClient managementApiClient)
     {
         this.dbContext = dbContext;
         accounts = this.dbContext.Accounts;
-        //_managementApiClient = managementApiClient;
+        _managementApiClient = managementApiClient;
     }
 
     private IQueryable<Account> GetAccountById(long id)
