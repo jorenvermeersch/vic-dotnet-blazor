@@ -1,9 +1,7 @@
 ﻿using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services;
@@ -79,10 +77,12 @@ public class StartUp
         });
 
 
-        services.AddAuthentication(options => {
+        services.AddAuthentication(options =>
+        {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options => {
+        }).AddJwtBearer(options =>
+        {
             options.Authority = Configuration["Auth0:Authority"];
             options.Audience = Configuration["Auth0:ApiIdentifier"];
         });
@@ -98,12 +98,12 @@ public class StartUp
 
 
         services.AddRazorPages();
-        //services.AddScoped<FakeSeeder>();
-        services.AddScoped<DemoSeeder>();
+        services.AddScoped<IDatabaseSeeder, DemoSeeder>();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDbContext dbContext, DemoSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VicDbContext dbContext, IDatabaseSeeder dataInitializer, IFakeInitializerService fakeInitializerService)
     {
         if (env.IsDevelopment())
         {

@@ -14,7 +14,7 @@ using Fakers.VirtualMachines;
 
 namespace Persistence.Data;
 
-public class FakeSeeder
+public class FakeSeeder : IDatabaseSeeder
 {
     private readonly VicDbContext dbContext;
     private readonly int seedValue = 1337;
@@ -24,12 +24,10 @@ public class FakeSeeder
         this.dbContext = dbContext;
     }
 
-    private readonly bool seed = false;
+    private readonly bool seed = true;
 
     public void Seed()
     {
-
-
         if (seed)
         {
             dbContext.Database.EnsureDeleted();
