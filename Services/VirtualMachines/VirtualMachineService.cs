@@ -56,12 +56,8 @@ public class VirtualMachineService : IVirtualMachineService
     {
         // Fetch host. 
         Server? host = await hosts
-            .Include(x => x.Specifications)
-            .Include(x => x.VirtualisationFactors)
-            .ThenInclude(x => x.Processor)
-            .Include(x => x.Machines)
-            .ThenInclude(x => x.Specifications)
             .SingleOrDefaultAsync(x => x.Id == model.HostId);
+
         if (host is null) throw new EntityNotFoundException(nameof(Server), model.HostId);
 
         // Fetch user, requester and administrator. 
@@ -241,6 +237,13 @@ public class VirtualMachineService : IVirtualMachineService
 
     public async Task<VirtualMachineResponse.GetIndex> GetIndexAsync(VirtualMachineRequest.GetIndex request)
     {
+        // Fetch host. 
+        Server? host = await hosts
+            .SingleOrDefaultAsync(x => x.Id == 1);
+
+        var testing = host;
+
+
         VirtualMachineResponse.GetIndex response = new();
         var query = virtualMachines.AsQueryable().AsNoTracking();
 

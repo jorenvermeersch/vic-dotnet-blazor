@@ -11,7 +11,7 @@ public class ServerConfiguration : EntityConfiguration<Server>
         base.Configure(builder);
 
         builder.Ignore(x => x.RemainingResources);
-        // builder.Ignore(x => x.History); // TODO: Fix history. 
+        builder.Ignore(x => x.Processors);
 
         builder.OwnsOne(x => x.Specifications, specifications =>
         {

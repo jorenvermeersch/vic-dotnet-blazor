@@ -13,11 +13,10 @@ public abstract class Host<T> : Machine where T : Machine
 
     #region Properties
     // Necessary for database mapping.
-    public IList<VirtualisationFactor> VirtualisationFactors
-    {
-        get => _specifications.VirtualisationFactors;
-        set => _specifications.VirtualisationFactors = value;
-    }
+    public IList<VirtualisationFactor> VirtualisationFactors { get; set; } =
+        new List<VirtualisationFactor>();
+
+    public int Processors => CalculateVirtualProcessors();
 
     public new HostSpecifications Specifications
     {
@@ -48,6 +47,7 @@ public abstract class Host<T> : Machine where T : Machine
         : base(name, specifications)
     {
         _specifications = specifications;
+        VirtualisationFactors = specifications.VirtualisationFactors;
         Machines = machines ?? new HashSet<T>();
 
         // Check if host has enough resources to run all machines.
@@ -63,6 +63,12 @@ public abstract class Host<T> : Machine where T : Machine
     #endregion
 
     #region Methods
+    private int CalculateVirtualProcessors()
+    {
+        // Sum of: Cores * virtualisation factor.
+        return VirtualisationFactors.Select(vf => vf.Processor.Cores * vf.Factor).Sum();
+    }
+
     private Specifications CalculateRemainingResources()
     {
         Specifications ms;
@@ -79,7 +85,7 @@ public abstract class Host<T> : Machine where T : Machine
             storage += ms.Storage;
         }
 
-        processors = Specifications.Processors - processors;
+        processors = Processors - processors;
         memory = Specifications.Memory - memory;
         storage = Specifications.Storage - storage;
 

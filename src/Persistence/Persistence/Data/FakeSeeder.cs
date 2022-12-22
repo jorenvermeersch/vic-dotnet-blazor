@@ -24,7 +24,7 @@ public class FakeSeeder
         this.dbContext = dbContext;
     }
 
-    private readonly bool seed = false;
+    private readonly bool seed = true;
 
     public void Seed()
     {
