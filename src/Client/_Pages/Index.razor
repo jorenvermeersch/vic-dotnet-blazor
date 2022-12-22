@@ -28,7 +28,7 @@ else
     <ThreeColumnLayout>
         <OneWidth>
             <Title Text="Onafgewerkte virtuele machines" />
-            @if (virtualMachines!.Any())
+            @if (virtualMachines is not null && virtualMachines.Any())
             {
                 @foreach (var machine in virtualMachines!)
                 {
@@ -48,10 +48,37 @@ else
             <Title Text="Verbruik deze maand" />
             <WithTwoColumns>
                 <div>
+                    <BarGraph Data="GenerateGraphMockData()"
+                          UpperBound="@upperbound"
+                          Title="Virtuele machines"
+                          Unit="Aantal"
+                          StartLabel="@startLabel"
+                          EndLabel="@endLabel" />
+
+                    <BarGraph Data="GenerateGraphMockData()"
+                          UpperBound="@upperbound"
+                          Title="Processoren"
+                          Unit="Aantal"
+                          StartLabel="@startLabel"
+                          EndLabel="@endLabel" />
                 </div>
                 <div>
+                    <BarGraph Data="GenerateGraphMockData()"
+                          UpperBound="@upperbound"
+                          Title="Geheugen"
+                          Unit="Aantal"
+                          StartLabel="@startLabel"
+                          EndLabel="@endLabel" />
+
+                    <BarGraph Data="GenerateGraphMockData()"
+                          UpperBound="@upperbound"
+                          Title="Opslag"
+                          Unit="Aantal"
+                          StartLabel="@startLabel"
+                          EndLabel="@endLabel" />
                 </div>
             </WithTwoColumns>
+            <NoResultsMessage Message="Historiek wordt correct opgeslagen, maar nog niet worden opgehaald en weergegeven." />
         </TwoWidth>
     </ThreeColumnLayout>
 }

@@ -10,7 +10,12 @@
                 
                 @if (value != 0)
                 {
-                    <div style="flex-grow: @value;" class="value">@value</div>
+                    <div style="flex-grow: @value;" class="value">
+                        @if (ShowValues)
+                        {
+                            @value
+                        }
+                    </div>
                 }
                 
             </div>

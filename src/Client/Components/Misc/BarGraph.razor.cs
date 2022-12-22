@@ -21,4 +21,7 @@ public partial class BarGraph
 
     [Parameter, EditorRequired]
     public string EndLabel { get; set; } = default!;
+
+    [Parameter]
+    public bool ShowValues { get; set; } = false;
 }
