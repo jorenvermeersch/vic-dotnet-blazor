@@ -17,6 +17,15 @@
     <LoggingIn>
         <Loading Text="U wordt doorverwezen naar Auth0"/>
     </LoggingIn>
+    <LogInFailed>
+        <ThreeColumnLayout>
+            <OneWidth></OneWidth>
+            <OneWidth>
+                <NoResultsMessage Message="Uw account is geblokkeerd. Gelieve de admin te contacteren."></NoResultsMessage>
+            </OneWidth>
+            <OneWidth></OneWidth>
+        </ThreeColumnLayout>
+    </LogInFailed>
 </RemoteAuthenticatorView>
 
 @code {
