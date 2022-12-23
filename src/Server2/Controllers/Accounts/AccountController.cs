@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Accounts;
 using Swashbuckle.AspNetCore.Annotations;
@@ -10,6 +11,7 @@ namespace Server.Controllers.Accounts;
 [Authorize]
 public class AccountController : ControllerBase {
     private readonly IAccountService accountService;
+
 
     public AccountController(IAccountService accountService) {
         this.accountService = accountService;

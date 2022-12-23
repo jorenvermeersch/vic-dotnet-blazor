@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Accounts;
 using Shared.VirtualMachines;
+using Auth0.ManagementApi;
+using Auth0.ManagementApi.Models;
 
 namespace Services.Accounts;
 
@@ -13,11 +15,13 @@ public class AccountService : IAccountService
 {
     private readonly VicDbContext dbContext;
     private readonly DbSet<Account> accounts;
+    private readonly IManagementApiClient _managementApiClient;
 
-    public AccountService(VicDbContext dbContext)
+    public AccountService(VicDbContext dbContext, IManagementApiClient managementApiClient)
     {
         this.dbContext = dbContext;
         accounts = this.dbContext.Accounts;
+        _managementApiClient = managementApiClient;
     }
 
     private IQueryable<Account> GetAccountById(long id)
@@ -29,6 +33,27 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponse.Create> CreateAsync(AccountRequest.Create request)
     {
+        var auth0Request = new UserCreateRequest
+        {
+            Email = request.Account.Email,
+            FirstName = request.Account.Firstname,
+            LastName = request.Account.Lastname,
+            Password = request.Account.Password,
+            Blocked = request.Account.IsActive,
+            Connection = "Username-Password-Authentication"
+        };
+
+        var createdUser = await _managementApiClient.Users.CreateAsync(auth0Request);
+
+        var allRoles = await _managementApiClient.Roles.GetAllAsync(new GetRolesRequest());
+        var userRole = allRoles.First(x => x.Name == request.Account.Role.ToString());
+
+        var assignRoleRequest = new AssignRolesRequest
+        {
+            Roles = new string[] { userRole.Id }
+        };
+
+        await _managementApiClient.Users.AssignRolesAsync(createdUser?.UserId, assignRoleRequest);
 
         AccountResponse.Create response = new();
 
@@ -104,7 +129,7 @@ public class AccountService : IAccountService
         }
         if (request.Roles is not null)
         {
-            var roles = request.Roles.Select(role => Enum.Parse(typeof(Role), role)).ToList();
+            var roles = request.Roles.Select(role => Enum.Parse(typeof(Domain.Constants.Role), role)).ToList();
             query = query.Where(x => roles.Contains(x.Role));
         }
         response.TotalAmount = await query.CountAsync();
