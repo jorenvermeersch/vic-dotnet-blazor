@@ -30,10 +30,10 @@ public class DemoSeeder : IDatabaseSeeder
     private void SeedAccounts()
     {
         dbContext.Accounts.AddRange(
-           new Account("Joren", "Vermeersch", "joren.vermeersch@student.hogent.be", Role.Admin, "DIT", "oE321^W0!%*d", "Toegepaste Informatica", true),
-           new Account("Robin", "Vermeir", "robin.vermeir@student.hogent.be", Role.Observer, "DIT", "n83NNH%2VTfQ", "Toegepaste Informatica", true),
-           new Account("Angela", "Degryse", "angela.degryse@student.hogent.be", Role.Master, "DIT", "Y1yG9tv$48YB", "", true),
-           new Account("Kerem", "Yilmaz", "kerem.yimaz@student.hogent.be", Role.Observer, "DIT", "Y1yG9tv$48YE", "", true)
+           new Account("Joren", "Vermeersch", "joren.vermeersch@student.hogent.be", Role.Admin, "oE321^W0!%*d", "DIT", "Toegepaste Informatica", true),
+           new Account("Robin", "Vermeir", "robin.vermeir@student.hogent.be", Role.Observer, "n83NNH%2VTfQ", "DIT", "Toegepaste Informatica", true),
+           new Account("Angela", "Degryse", "angela.degryse@student.hogent.be", Role.Master, "Y1yG9tv$48YB", "DIT", "Toegepaste Informatica", true),
+           new Account("Kerem", "Yilmaz", "kerem.yimaz@student.hogent.be", Role.Observer, "Y1yG9tv$48YE", "DIT", "Toegepaste Informatica", true)
         );
         dbContext.SaveChanges();
     }
