@@ -35,7 +35,7 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Creates hosts.")]
     [HttpPost]
-    [Authorize(Roles = "Administrator, Master")]
+    [Authorize(Roles = "Admin, Master")]
     public async Task<IActionResult> CreateAsync([FromBody] HostRequest.Create request)
     {
         HostResponse.Create response = await hostService.CreateAsync(request);
@@ -44,7 +44,7 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Edits hosts.")]
     [HttpPut("{hostId}")]
-    [Authorize(Roles = "Administrator, Master")]
+    [Authorize(Roles = "Admin, Master")]
     public async Task<IActionResult> EditAsync([FromBody] HostDto.Mutate model, long hostId)
     {
         HostResponse.Edit response = await hostService.EditAsync(new HostRequest.Edit { Host = model, HostId = hostId });
@@ -53,7 +53,7 @@ public class HostController : ControllerBase
 
     [SwaggerOperation("Deletes hosts.")]
     [HttpDelete("{hostId}")]
-    [Authorize(Roles = "Administrator, Master")]
+    [Authorize(Roles = "Admin, Master")]
     public async Task<IActionResult> Delete(int hostId)
     {
         await hostService.DeleteAsync(new HostRequest.Delete { HostId = hostId });

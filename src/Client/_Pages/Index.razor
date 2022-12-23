@@ -11,13 +11,13 @@ else
 {
     <TopBar>
         <ButtonGroup>
-            <AuthorizeView Roles="Master, Administrator">
+            <AuthorizeView Roles="Master, Admin">
                 <Label Text="Toevoegen" />
             </AuthorizeView>
             <AuthorizeView Roles="Master">
                 <Button Text="Beheerder" Href="/account/add" />
             </AuthorizeView>
-            <AuthorizeView Roles="Master, Administrator">
+            <AuthorizeView Roles="Master, Admin">
                 <Button Text="Klant" Href="/customer/add" />
                 <Button Text="Virtuele machine" Href="/virtual-machine/add" />
                 <Button Text="Host" Href="/host/add" />

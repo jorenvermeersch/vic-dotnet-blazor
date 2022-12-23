@@ -40,6 +40,7 @@ public class AccountService : IAccountService
             LastName = request.Account.Lastname,
             Password = request.Account.Password,
             Blocked = request.Account.IsActive,
+            FullName = $"{request.Account.Firstname} {request.Account.Lastname}",
             Connection = "Username-Password-Authentication"
         };
 
@@ -54,6 +55,17 @@ public class AccountService : IAccountService
         };
 
         await _managementApiClient.Users.AssignRolesAsync(createdUser?.UserId, assignRoleRequest);
+
+        // update user to blocked if account is inactive
+        if(!request.Account.IsActive)
+        {
+            var updateduser = new UserUpdateRequest
+            {
+                Blocked = true
+            };
+            await _managementApiClient.Users.UpdateAsync(createdUser.UserId, updateduser);
+        }
+        
 
         AccountResponse.Create response = new();
 
