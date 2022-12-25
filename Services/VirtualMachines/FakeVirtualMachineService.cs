@@ -118,7 +118,6 @@ public class FakeVirtualMachineService : IVirtualMachineService
 
     public async Task DeleteAsync(VirtualMachineRequest.Delete request)
     {
-        //machines.RemoveAll(x => x.Id == request.MachineId);
 
         VirtualMachine? machine = Machines.SingleOrDefault(x => x.Id == request.MachineId);
 
@@ -129,7 +128,6 @@ public class FakeVirtualMachineService : IVirtualMachineService
     }
 
 
-    //TODO: host returns null because faker is not set properly
     public async Task<VirtualMachineResponse.GetDetail> GetDetailAsync(VirtualMachineRequest.GetDetail request)
     {
         VirtualMachineResponse.GetDetail response = new();

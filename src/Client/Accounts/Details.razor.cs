@@ -58,19 +58,10 @@ public partial class Details
             }
         };
 
-        // TODO: Fetch virtual machines of admin. 
-
     }
 
     private void NavigateBack()
     {
         Navigation!.NavigateTo("account/list");
     }
-
-    //private async Task ChangePage(int pageNr)
-    //{
-    //    offset = (pageNr - 1) * 10;
-    //    selectedPage = pageNr;
-    //    // TODO: Implement. 
-    //}
 }

@@ -18,7 +18,7 @@ public class Account : Entity
     #endregion
 
     #region Constructors
-    public Account() { } // TODO: Change to private constructor after correct database mapping.
+    public Account() { }
 
     public Account(
         string firstname,

@@ -96,7 +96,6 @@ public partial class Details
             );
         }
 
-        // TODO: Properly do virtual machines. 
 
         virtualMachines = customer.VirtualMachines;
         totalVirtualMachines = customer.VirtualMachines.Count;
@@ -107,7 +106,6 @@ public partial class Details
     {
         offset = (pageNr - 1) * 10;
         selectedPage = pageNr;
-        // TODO: Implement. 
     }
 
     private void NavigateBack()

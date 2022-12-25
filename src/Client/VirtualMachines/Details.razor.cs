@@ -125,8 +125,6 @@ public partial class Details
 
         };
 
-        // TODO: Ports do not get fetched properly. GetDetail. 
-        // TODO: VirtualProcessors always have value 0 after creating manually. 
 
         foreach (var credential in machine.Credentials)
         {
