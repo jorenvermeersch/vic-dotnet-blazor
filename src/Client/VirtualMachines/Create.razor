@@ -28,14 +28,12 @@ else
                 <LabelInput Label="Naam"
                         Required="@true"
                         @bind-Value="VirtualMachine.Name"
-                        For="@(() => VirtualMachine.Name)"
-                        TestValue="WebServer 1" />
+                        For="@(() => VirtualMachine.Name)" />
 
                 <LabelInput Label="FQDN"
                         Required="@true"
                         @bind-Value="VirtualMachine.Fqdn"
-                        For="@(() => VirtualMachine.Fqdn)"
-                        TestValue="vic-devops-eu-webserver-1" />
+                        For="@(() => VirtualMachine.Fqdn)" />
 
                 <DropDown Label="Mode"
                       Required="@true"
@@ -54,8 +52,7 @@ else
                 <LabelInput Label="Reden"
                         Required="@true"
                         @bind-Value="VirtualMachine.Reason"
-                        For="@(() => VirtualMachine.Reason)"
-                        TestValue="Bachelorproef" />
+                        For="@(() => VirtualMachine.Reason)" />
 
                 <DropDown Label="Status"
                       Required="@true"
@@ -115,42 +112,36 @@ else
                               Required="@true"
                               @bind-Value="@VirtualMachine.Specifications.VirtualProcessors"
                               For="@(()=>VirtualMachine.Specifications.VirtualProcessors)"
-                              Maximum="@chosenHost?.RemainingResources.VirtualProcessors"
-                              DefaultValue="1" />
+                              Maximum="@chosenHost?.RemainingResources.VirtualProcessors" />
 
                 <LabelInputNumber Label="Geheugen"
                               Required="@true"
                               @bind-Value="@VirtualMachine.Specifications.Memory"
                               For="@(()=>VirtualMachine.Specifications.Memory)"
-                              Maximum="@chosenHost?.RemainingResources.Memory"
-                              DefaultValue="1" />
+                              Maximum="@chosenHost?.RemainingResources.Memory" />
 
                 <LabelInputNumber Label="Opslag"
                               Required="@true"
                               @bind-Value="@VirtualMachine.Specifications.Storage"
                               For="@(()=>VirtualMachine.Specifications.Storage)"
-                              Maximum="@chosenHost?.RemainingResources.Storage"
-                              DefaultValue="1" />
+                              Maximum="@chosenHost?.RemainingResources.Storage" />
                 
                 <Title Text="Beschikbaarheid" />
 
                 <LabelInputDate Label="Aangevraagd op"
                             Required="@true"
                             @bind-Value="@VirtualMachine.ApplicationDate"
-                            For="@(()=>VirtualMachine.ApplicationDate)"
-                            DefaultValue="@DateTime.UtcNow" />
+                            For="@(()=>VirtualMachine.ApplicationDate)" />
 
                 <LabelInputDate Label="Start"
                             Required="@true"
                             @bind-Value="@VirtualMachine.StartDate"
-                            For="@(()=>VirtualMachine.StartDate)"
-                            TestValue="@DateTime.UtcNow.AddDays(1)" />
+                            For="@(()=>VirtualMachine.StartDate)" />
 
                 <LabelInputDate Label="Eind"
                             Required="@true"
                             @bind-Value="@VirtualMachine.EndDate"
-                            For="@(()=>VirtualMachine.EndDate)"
-                            TestValue="@DateTime.UtcNow.AddDays(2)" />
+                            For="@(()=>VirtualMachine.EndDate)" />
 
                 <DropDown Label="Beschikbaarheid"
                       Required="@true"
@@ -212,21 +203,18 @@ else
                         <LabelInput Label="Gebruikersnaam"
                                 Required="@true"
                                 @bind-Value="NewCredentials.Username"
-                                For="@(() => NewCredentials.Username)"
-                                TestValue="Joren" />
+                                For="@(() => NewCredentials.Username)" />
 
                         <LabelInput Label="Rol"
                                 Required="@true"
                                 @bind-Value="NewCredentials.Role"
-                                For="@(() => NewCredentials.Role)"
-                                TestValue="Gebruiker" />
+                                For="@(() => NewCredentials.Role)" />
 
                         <LabelInput Label="Wachtwoord"
                                 Required="@true"
                                 InputType="password"
                                 @bind-Value="NewCredentials.PasswordHash"
-                                For="@(() => NewCredentials.PasswordHash)"
-                                TestValue="JoR3n!-53" />
+                                For="@(() => NewCredentials.PasswordHash)" />
                         <ButtonGroup>
                             <span class="outline-end">
                                 <button class="button" type="submit">Toevoegen</button>

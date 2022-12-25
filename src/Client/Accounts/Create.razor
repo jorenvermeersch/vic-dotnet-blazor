@@ -23,21 +23,19 @@
                       Required="@true"
                       Options="translatedRoles"
                       OnChange="SetRole" />
-            <ValidationMessage For="@(() => Account.Role)" />
+            <ValidationMessage For="@(() => Account.Role)"/>
 
             <LabelInput Label="Departement"
                         Required="@true"
                         @bind-Value="Account.Department"
-                        For="@(() => Account.Department)" 
-                        TestValue="IT en Digitale Innovatie"/>
+                        For="@(() => Account.Department)"/>
 
             <LabelInput Label="Opleiding"
                         @bind-Value="Account.Education"
-                        For="@(() => Account.Education)" 
-                        TestValue="Toegepaste Informatica"/>
+                        For="@(() => Account.Education)"/>
 
             <Checkbox Label="Actief"
-                      @bind-Value="@Account.IsActive" />
+                      @bind-Value="@Account.IsActive"/>
 
         </OneWidth>
         <OneWidth>
@@ -46,28 +44,24 @@
             <LabelInput Label="Voornaam"
                         Required="@true"
                         @bind-Value="Account.Firstname"
-                        For="@(() => Account.Firstname)"
-                        TestValue="Joren"/>
+                        For="@(() => Account.Firstname)"/>
 
             <LabelInput Label="Naam"
                         Required="@true"
                         @bind-Value="Account.Lastname"
-                        For="@(() => Account.Lastname)" 
-                        TestValue="Vermeersch"/>
+                        For="@(() => Account.Lastname)"/>
 
             <LabelInput Label="E-mailadres"
                         Required="@true"
                         InputType="email"
                         @bind-Value="Account.Email"
-                        For="@(() => Account.Email)"
-                        TestValue="joren.vermeersch@student.hogent.be"/>
+                        For="@(() => Account.Email)"/>
 
             <LabelInput Label="Wachtwoord"
                         Required="@true"
                         InputType="password"
                         @bind-Value="Account.Password"
-                        For="@(() => Account.Password)"
-                        TestValue="JoR3n!-53"/>
+                        For="@(() => Account.Password)"/>
         </OneWidth>
         <OneWidth>
 

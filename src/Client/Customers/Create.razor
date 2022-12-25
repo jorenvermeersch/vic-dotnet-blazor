@@ -35,27 +35,23 @@
                 <LabelInput Label="Departement"
                         Required="@true"
                         @bind-Value="Customer.Department"
-                        For="@(() => Customer.Department)"
-                        TestValue="IT en Digitale Innovatie" />
+                        For="@(() => Customer.Department)" />
 
                 <LabelInput Label="Opleiding"
                         @bind-Value="Customer.Education"
-                        For="@(() => Customer.Education)"
-                        TestValue="Toegepaste Informatica" />
+                        For="@(() => Customer.Education)" />
             }
             else if (Customer.IsExternal())
             {
                 <LabelInput Label="Type extern"
                         Required="@true"
                         @bind-Value="Customer.CompanyType"
-                        For="@(() => Customer.CompanyType)"
-                        TestValue="Besloten vennootschap (BV)" />
+                        For="@(() => Customer.CompanyType)" />
 
                 <LabelInput Label="Naam"
                         Required="@true"
                         @bind-Value="Customer.CompanyName"
-                        For="@(() => Customer.CompanyName)"
-                        TestValue="Virtual IT Company" />
+                        For="@(() => Customer.CompanyName)" />
             }
         </OneWidth>
         <OneWidth>
@@ -63,25 +59,21 @@
             <LabelInput Label="Voornaam"
                         Required="@true"
                         @bind-Value="Customer.ContactPerson.Firstname"
-                        For="@(() => Customer.ContactPerson.Firstname)"
-                        TestValue="Joren" />
+                        For="@(() => Customer.ContactPerson.Firstname)" />
 
             <LabelInput Label="Naam"
                         Required="@true"
                         @bind-Value="Customer.ContactPerson.Lastname"
-                        For="@(() => Customer.ContactPerson.Lastname)"
-                        TestValue="Vermeersch" />
+                        For="@(() => Customer.ContactPerson.Lastname)" />
 
             <LabelInput Label="E-mailadres"
                         Required="@true"
                         @bind-Value="Customer.ContactPerson.Email"
-                        For="@(() => Customer.ContactPerson.Email)"
-                        TestValue="joren.vermeersch@student.hogent.be" />
+                        For="@(() => Customer.ContactPerson.Email)" />
 
             <LabelInput Label="Telefoonnummer"
                         @bind-Value="Customer.ContactPerson.Phonenumber"
-                        For="@(() => Customer.ContactPerson.Phonenumber)"
-                        TestValue="0482455642" />
+                        For="@(() => Customer.ContactPerson.Phonenumber)" />
         </OneWidth>
         <OneWidth>
             <Title Text="Back-up contactgegevens" />
