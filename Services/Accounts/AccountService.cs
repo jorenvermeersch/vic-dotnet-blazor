@@ -1,13 +1,12 @@
-﻿using Domain.Accounts;
-using Domain.Constants;
+﻿using Auth0.ManagementApi;
+using Auth0.ManagementApi.Models;
+using Domain.Accounts;
 using Domain.Exceptions;
 using Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Shared.Accounts;
 using Shared.VirtualMachines;
-using Auth0.ManagementApi;
-using Auth0.ManagementApi.Models;
 
 namespace Services.Accounts;
 
@@ -39,7 +38,7 @@ public class AccountService : IAccountService
             FirstName = request.Account.Firstname,
             LastName = request.Account.Lastname,
             Password = request.Account.Password,
-            Blocked = request.Account.IsActive,
+            Blocked = !request.Account.IsActive,
             FullName = $"{request.Account.Firstname} {request.Account.Lastname}",
             Connection = "Username-Password-Authentication"
         };
@@ -57,15 +56,15 @@ public class AccountService : IAccountService
         await _managementApiClient.Users.AssignRolesAsync(createdUser?.UserId, assignRoleRequest);
 
         // update user to blocked if account is inactive
-        if(!request.Account.IsActive)
+        if (!request.Account.IsActive)
         {
             var updateduser = new UserUpdateRequest
             {
                 Blocked = true
             };
-            await _managementApiClient.Users.UpdateAsync(createdUser.UserId, updateduser);
+            await _managementApiClient.Users.UpdateAsync(createdUser!.UserId, updateduser);
         }
-        
+
 
         AccountResponse.Create response = new();
 
